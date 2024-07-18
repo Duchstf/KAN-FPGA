@@ -1,13 +1,13 @@
 <root versionMajor = "1" versionMinor = "5">
   <kernel src_name="activation" language="c" hwCtrl="ap_ctrl_hs" mem_layout="fpga64-xilinx-none">
     <args>
-      <arg id="0" access_type="r" src_name="input" src_type="float" src_isptr="0" src_bitwidth="32" src_size_or_depth="1">
-        <hw hw_usage="data" hw_interface="Register" hw_name="input_r" hw_bitwidth="32" hw_size_or_depth="1" hw_kernel_support="false">
+      <arg id="0" access_type="r" src_name="input" src_type="ap_fixed&lt;16, 6, AP_TRN, AP_WRAP, 0&gt;" src_isptr="1" src_bitwidth="16" src_size_or_depth="1">
+        <hw hw_usage="data" hw_interface="Register" hw_name="input_r" hw_bitwidth="16" hw_size_or_depth="1" hw_kernel_support="false">
           <constraint constraint_type="pragma interface" mode="ap_none" register_option="0"/>
         </hw>
       </arg>
-      <arg id="1" access_type="w" src_name="output" src_type="float&amp;" src_isptr="1" src_bitwidth="32" src_size_or_depth="1">
-        <hw hw_usage="data" hw_interface="Register" hw_name="output_r" hw_bitwidth="32" hw_size_or_depth="1" hw_kernel_support="false">
+      <arg id="1" access_type="w" src_name="output" src_type="ap_fixed&lt;16, 6, AP_TRN, AP_WRAP, 0&gt;&amp;" src_isptr="1" src_bitwidth="16" src_size_or_depth="1">
+        <hw hw_usage="data" hw_interface="Register" hw_name="output_r" hw_bitwidth="16" hw_size_or_depth="1" hw_kernel_support="false">
           <constraint constraint_type="pragma interface" mode="ap_none" register_option="0"/>
         </hw>
       </arg>

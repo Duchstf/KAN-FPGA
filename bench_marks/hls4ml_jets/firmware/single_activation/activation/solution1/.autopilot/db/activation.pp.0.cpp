@@ -5843,15 +5843,14 @@ class stream : public stream<__STREAM_T__, 0> {
 # 16 "/data/Xilinx/Vitis_HLS/2022.2/common/technology/autopilot/hls_stream.h" 2
 # 7 "./activation.h" 2
 
-__attribute__((sdx_kernel("activation", 0))) void activation(float input, float &output);
+void activation(float input, float &output);
 # 2 "activation.cpp" 2
 
 
 
 
 
-
-const float lut[256] = {
+const ap_fixed<16,6> lut[256] = {
         7.70446568e-05, 9.26214343e-05, 1.08394175e-04, 1.22931873e-04,
         1.34802976e-04, 1.42576464e-04, 1.44820850e-04, 1.40104967e-04,
         1.26997533e-04, 1.04157974e-04, 7.23003104e-05, 3.43402280e-05,
@@ -5919,27 +5918,33 @@ const float lut[256] = {
 };
 
 
-ap_uint<8> value_to_index(float value) {
-
-    if (value < -6.0) value = -6.0;
-    if (value > 6.0) value = 6.0;
+ap_uint<8> value_to_index(ap_fixed<16,6> value) {
 
 
-    float normalized_value = (value + 6.0) * (256 - 1) / 12.0;
+    const ap_fixed<16,6> min_val = -8.0;
+    const ap_fixed<16,6> max_val = 8.0;
+    const ap_fixed<16,6> offset = 8.0;
+
+
+    if (value < min_val) value = min_val;
+    if (value > max_val) value = max_val;
+
+
+    ap_fixed<16,6> normalized_value = (value + offset) * (256 - 1) >> 4;
     return (ap_uint<8>)normalized_value;
 }
 
 
-float lut_lookup(float input) {
+float lut_lookup(ap_fixed<16,6> input) {
     ap_uint<8> index = value_to_index(input);
     return lut[index];
 }
 
 
-__attribute__((sdx_kernel("activation", 0))) void activation(float input, float &output) {
+__attribute__((sdx_kernel("activation", 0))) void activation(ap_fixed<16,6> input, ap_fixed<16,6> &output) {
 #line 29 "/data/dhoang/KAN-FPGA/bench_marks/hls4ml_jets/firmware/single_activation/test.tcl"
 #pragma HLSDIRECTIVE TOP name=activation
-# 93 "activation.cpp"
+# 98 "activation.cpp"
 
 #pragma HLS interface mode=ap_none port=input
 #pragma HLS interface mode=ap_none port=output

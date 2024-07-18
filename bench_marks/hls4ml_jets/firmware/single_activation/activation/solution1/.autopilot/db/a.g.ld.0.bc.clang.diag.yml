@@ -1,28 +1,28 @@
 --- !Passed
 Pass:            reflow-inliner
 Name:            AutoInline
-DebugLoc:        { File: activation.cpp, Line: 87, Column: 0 }
-Function:        _Z10lut_lookupf
+DebugLoc:        { File: activation.cpp, Line: 92, Column: 0 }
+Function:        _Z10lut_lookup8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
 Args:            
   - String:          'Inlining function '''
-  - Callee:          'value_to_index(float)'
-    DebugLoc:        { File: activation.cpp, Line: 76, Column: 0 }
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: activation.cpp, Line: 75, Column: 0 }
   - String:          ''' into '''
-  - Caller:          'lut_lookup(float)'
-    DebugLoc:        { File: activation.cpp, Line: 87, Column: 0 }
+  - Caller:          'lut_lookup(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: activation.cpp, Line: 92, Column: 0 }
   - String:          ''''
 ...
 --- !Passed
-Pass:            reflow-inliner
-Name:            AutoInline
-DebugLoc:        { File: activation.cpp, Line: 93, Column: 0 }
-Function:        _Z10activationfRf
+Pass:            reflow-auto-inline-performance-driven
+Name:            AutoInlinePerf
+DebugLoc:        { File: activation.cpp, Line: 104, Column: 11 }
+Function:        _Z10activation8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EERS2_
 Args:            
-  - String:          'Inlining function '''
-  - Callee:          'lut_lookup(float)'
-    DebugLoc:        { File: activation.cpp, Line: 87, Column: 0 }
-  - String:          ''' into '''
-  - Caller:          'activation(float, float&)'
-    DebugLoc:        { File: activation.cpp, Line: 93, Column: 0 }
+  - String:          'Automatically inlining function '''
+  - Callee:          'lut_lookup(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: activation.cpp, Line: 92, Column: 0 }
+  - String:          ''' to improve effectiveness of pipeline pragma in function '''
+  - Caller:          'activation(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>, ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>&)'
+    DebugLoc:        { File: activation.cpp, Line: 98, Column: 0 }
   - String:          ''''
 ...

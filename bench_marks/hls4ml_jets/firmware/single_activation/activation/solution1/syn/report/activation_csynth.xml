@@ -19,18 +19,18 @@
 <PipelineType>yes</PipelineType>
 <SummaryOfTimingAnalysis>
 <unit>ns</unit>
-<EstimatedClockPeriod>1.840</EstimatedClockPeriod>
+<EstimatedClockPeriod>1.425</EstimatedClockPeriod>
 </SummaryOfTimingAnalysis>
 <SummaryOfOverallLatency>
 <unit>clock cycles</unit>
-<Best-caseLatency>104</Best-caseLatency>
-<Average-caseLatency>104</Average-caseLatency>
-<Worst-caseLatency>104</Worst-caseLatency>
-<Best-caseRealTimeLatency>0.208 us</Best-caseRealTimeLatency>
-<Average-caseRealTimeLatency>0.208 us</Average-caseRealTimeLatency>
-<Worst-caseRealTimeLatency>0.208 us</Worst-caseRealTimeLatency>
+<Best-caseLatency>18</Best-caseLatency>
+<Average-caseLatency>18</Average-caseLatency>
+<Worst-caseLatency>18</Worst-caseLatency>
+<Best-caseRealTimeLatency>36.000 ns</Best-caseRealTimeLatency>
+<Average-caseRealTimeLatency>36.000 ns</Average-caseRealTimeLatency>
+<Worst-caseRealTimeLatency>36.000 ns</Worst-caseRealTimeLatency>
 <PipelineInitiationInterval>1</PipelineInitiationInterval>
-<PipelineDepth>105</PipelineDepth>
+<PipelineDepth>19</PipelineDepth>
 <Interval-min>1</Interval-min>
 <Interval-max>1</Interval-max>
 </SummaryOfOverallLatency>
@@ -39,9 +39,9 @@
 <AreaEstimates>
 <Resources>
 <BRAM_18K>1</BRAM_18K>
-<DSP>6</DSP>
-<FF>2947</FF>
-<LUT>1454</LUT>
+<FF>1243</FF>
+<LUT>1804</LUT>
+<DSP>0</DSP>
 <URAM>0</URAM>
 </Resources>
 <AvailableResources>
@@ -128,9 +128,9 @@
 <IOProtocol>ap_none</IOProtocol>
 <IOConfig></IOConfig>
 <Dir>in</Dir>
-<Bits>32</Bits>
+<Bits>16</Bits>
 <Attribute>data</Attribute>
-<CType>float</CType>
+<CType>int</CType>
 </RtlPorts>
 <RtlPorts>
 <name>output_r</name>
@@ -140,7 +140,7 @@
 <IOProtocol>ap_none</IOProtocol>
 <IOConfig></IOConfig>
 <Dir>out</Dir>
-<Bits>32</Bits>
+<Bits>16</Bits>
 <Attribute>data</Attribute>
 <CType>int</CType>
 </RtlPorts>

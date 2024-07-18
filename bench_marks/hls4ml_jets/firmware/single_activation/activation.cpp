@@ -4,8 +4,7 @@
 #define LUT_SIZE 256
 
 // Precomputed values for the function f(x) over the range (-6, 6)
-// This should be replaced with your actual values
-const float lut[LUT_SIZE] = {
+const ap_fixed<16,6> lut[LUT_SIZE] = {
         7.70446568e-05,  9.26214343e-05,  1.08394175e-04,  1.22931873e-04,
         1.34802976e-04,  1.42576464e-04,  1.44820850e-04,  1.40104967e-04,
         1.26997533e-04,  1.04157974e-04,  7.23003104e-05,  3.43402280e-05,
@@ -72,25 +71,31 @@ const float lut[LUT_SIZE] = {
         1.32021224e+00,  1.33081639e+00,  1.34142053e+00,  1.35202467e+00
 };
 
-// Function to map input range (-6, 6) to LUT index range (0, 255)
-ap_uint<8> value_to_index(float value) {
+// Function to map input range (-8, 8) to LUT index range (0, 255)
+ap_uint<8> value_to_index(ap_fixed<16,6> value) {
+
+    // Define constants as ap_fixed
+    const ap_fixed<16,6> min_val = -8.0;
+    const ap_fixed<16,6> max_val = 8.0;
+    const ap_fixed<16,6> offset = 8.0;
+
     // Ensure the value is within the specified range
-    if (value < -6.0) value = -6.0;
-    if (value > 6.0) value = 6.0;
+    if (value < min_val) value = min_val;
+    if (value > max_val) value = max_val;
     
     // Normalize the value to range (0, 255)
-    float normalized_value = (value + 6.0) * (LUT_SIZE - 1) / 12.0;
+    ap_fixed<16,6> normalized_value = (value + offset) * (LUT_SIZE - 1) >> 4;
     return (ap_uint<8>)normalized_value;
 }
 
 // Function to get value from LUT
-float lut_lookup(float input) {
+float lut_lookup(ap_fixed<16,6> input) {
     ap_uint<8> index = value_to_index(input);
     return lut[index];
 }
 
 // Example top function
-void activation(float input, float &output) {
+void activation(ap_fixed<16,6> input, ap_fixed<16,6> &output) {
     #pragma HLS interface mode=ap_none port=input
     #pragma HLS interface mode=ap_none port=output
     

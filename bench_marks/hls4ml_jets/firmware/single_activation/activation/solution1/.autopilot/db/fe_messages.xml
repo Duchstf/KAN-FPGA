@@ -11,20 +11,20 @@
     <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="/data/dhoang/KAN-FPGA/bench_marks/hls4ml_jets/firmware/single_activation/test.tcl:29:9" msg_body="HLS pragma dump">
         <args ARG_PragmaContext="directive" ARG_PragmaFunction="activation" ARG_PragmaIsValid="1" ARG_PragmaOptions="name=activation" ARG_PragmaType="top" ClangWarningOption="dump-hls-pragmas"/>
     </msg>
-    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="activation.cpp:94:9" msg_body="HLS pragma dump">
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="activation.cpp:99:9" msg_body="HLS pragma dump">
         <args ARG_PragmaFunction="activation" ARG_PragmaIsValid="1" ARG_PragmaOptions="mode=ap_none port=input" ARG_PragmaType="interface" ClangWarningOption="dump-hls-pragmas"/>
     </msg>
-    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="activation.cpp:95:9" msg_body="HLS pragma dump">
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="activation.cpp:100:9" msg_body="HLS pragma dump">
         <args ARG_PragmaFunction="activation" ARG_PragmaIsValid="1" ARG_PragmaOptions="mode=ap_none port=output" ARG_PragmaType="interface" ClangWarningOption="dump-hls-pragmas"/>
     </msg>
-    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="activation.cpp:97:9" msg_body="HLS pragma dump">
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="activation.cpp:102:9" msg_body="HLS pragma dump">
         <args ARG_PragmaFunction="activation" ARG_PragmaIsValid="1" ARG_PragmaOptions="II=1" ARG_PragmaType="pipeline" ClangWarningOption="dump-hls-pragmas"/>
     </msg>
-    <msg msg_groups="PRAGMA_INLINE" msg_id="214-178" msg_severity="INFO" msg_loc="activation.cpp:87:0" msg_body="Inlining function 'value_to_index(float)' into 'lut_lookup(float)'">
-        <args Callee="value_to_index(float)" Caller="lut_lookup(float)"/>
+    <msg msg_groups="PRAGMA_INLINE" msg_id="214-178" msg_severity="INFO" msg_loc="activation.cpp:92:0" msg_body="Inlining function 'value_to_index(ap_fixed&lt;16, 6, (ap_q_mode)5, (ap_o_mode)3, 0&gt;)' into 'lut_lookup(ap_fixed&lt;16, 6, (ap_q_mode)5, (ap_o_mode)3, 0&gt;)'">
+        <args Callee="value_to_index(ap_fixed&lt;16, 6, (ap_q_mode)5, (ap_o_mode)3, 0&gt;)" Caller="lut_lookup(ap_fixed&lt;16, 6, (ap_q_mode)5, (ap_o_mode)3, 0&gt;)"/>
     </msg>
-    <msg msg_groups="PRAGMA_INLINE" msg_id="214-178" msg_severity="INFO" msg_loc="activation.cpp:93:0" msg_body="Inlining function 'lut_lookup(float)' into 'activation(float, float&amp;)'">
-        <args Callee="lut_lookup(float)" Caller="activation(float, float&amp;)"/>
+    <msg msg_groups="AUTOMATION" msg_id="214-364" msg_severity="INFO" msg_loc="activation.cpp:104:11" msg_body="Automatically inlining function 'lut_lookup(ap_fixed&lt;16, 6, (ap_q_mode)5, (ap_o_mode)3, 0&gt;)' to improve effectiveness of pipeline pragma in function 'activation(ap_fixed&lt;16, 6, (ap_q_mode)5, (ap_o_mode)3, 0&gt;, ap_fixed&lt;16, 6, (ap_q_mode)5, (ap_o_mode)3, 0&gt;&amp;)'">
+        <args Callee="lut_lookup(ap_fixed&lt;16, 6, (ap_q_mode)5, (ap_o_mode)3, 0&gt;)" Caller="activation(ap_fixed&lt;16, 6, (ap_q_mode)5, (ap_o_mode)3, 0&gt;, ap_fixed&lt;16, 6, (ap_q_mode)5, (ap_o_mode)3, 0&gt;&amp;)"/>
     </msg>
 </xilinx:hls_fe_msgs>
 

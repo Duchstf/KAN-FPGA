@@ -950,25 +950,25 @@ namespace hls::sim
 
 
 extern "C"
-void activation_hw_stub_wrapper(float, void*);
+void activation_hw_stub_wrapper(hls::sim::Byte<2>*, void*);
 
 extern "C"
-void apatb_activation_hw(float __xlx_apatb_param_input_r, void* __xlx_apatb_param_output_r)
+void apatb_activation_hw(hls::sim::Byte<2>* __xlx_apatb_param_input_r, void* __xlx_apatb_param_output_r)
 {
   static hls::sim::Register port0 {
     .name = "input_r",
-    .width = 32,
+    .width = 16,
 #ifdef POST_CHECK
 #else
     .owriter = nullptr,
     .iwriter = new hls::sim::Writer(AUTOTB_TVIN_input_r),
 #endif
   };
-  port0.param = &__xlx_apatb_param_input_r;
+  port0.param = __xlx_apatb_param_input_r;
 
   static hls::sim::Register port1 {
     .name = "output_r",
-    .width = 32,
+    .width = 16,
 #ifdef POST_CHECK
     .reader = new hls::sim::Reader(AUTOTB_TVOUT_PC_output_r),
 #else
