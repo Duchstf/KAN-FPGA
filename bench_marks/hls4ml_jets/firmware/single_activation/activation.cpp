@@ -1,6 +1,4 @@
-#include "hls_stream.h"
-#include "ap_int.h"
-#include "ap_fixed.h"
+#include "activation.h"
 
 // Define the size of the lookup table
 #define LUT_SIZE 256
@@ -92,10 +90,11 @@ float lut_lookup(float input) {
 }
 
 // Example top function
-void top_function(float input, float &output) {
-    #pragma HLS interface ap_ctrl_none port=return
-    #pragma HLS interface s_axilite port=input
-    #pragma HLS interface s_axilite port=output
+void activation(float input, float &output) {
+    #pragma HLS interface mode=ap_none port=input
+    #pragma HLS interface mode=ap_none port=output
+    
+    #pragma HLS PIPELINE II=1
     
     output = lut_lookup(input);
 }
