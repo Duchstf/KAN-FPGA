@@ -1,0 +1,20 @@
+{
+  "0": {
+    "basicblocks": 253,
+    "calls": "",
+    "file": "KAN.cpp",
+    "fileloc": 3,
+    "instructions": 4466,
+    "loads": {
+      "G": 84,
+      "L": 336,
+      "T": 16
+    },
+    "name": "KAN",
+    "stores": {
+      "L": 336,
+      "T": 5
+    },
+    "total_instructions": 4466
+  }
+}

@@ -1,0 +1,217 @@
+================================================================
+== Design Size Report
+================================================================
+
+* Total Instructions per Compilation Phase
++---------------+-----------------------------+--------------+----------------------------------------------------------------------------------------+
+| Phase         | Step                        | Instructions | Description                                                                            |
++---------------+-----------------------------+--------------+----------------------------------------------------------------------------------------+
+| Compile/Link  |                             | 56,941       | After all functions are compiled and linked into a single design                       |
+|               |                             |              |                                                                                        |
+| Unroll/Inline |                             |              | After user unroll and inline pragmas are applied                                       |
+|               | (1) unroll                  |  6,614       | user unroll pragmas are applied                                                        |
+|               | (2) simplification          |  3,878       | simplification of applied user unroll pragmas                                          |
+|               | (3) inline                  |  4,466       | user inline pragmas are applied                                                        |
+|               | (4) simplification          |  2,402       | simplification of applied user inline pragmas                                          |
+|               |                             |              |                                                                                        |
+| Array/Struct  |                             |              | After user array partition and struct aggregate/disaggregate pragmas are applied       |
+|               | (1) array partition         |  2,146       | user array partition pragmas are applied                                               |
+|               | (2) simplification          |  1,474       | simplification of applied user array partition & struct aggregate/disaggregate pragmas |
+|               | (3) aggregate/disaggregate  |  1,474       | user struct aggregate/disaggregate pragmas are applied                                 |
+|               | (4) array reshape           |  1,314       | apply array reshape pragmas                                                            |
+|               | (5) access patterns         |  1,314       | array access pattern optmizations                                                      |
+|               |                             |              |                                                                                        |
+| Performance   |                             |              | After transformations are applied to meet performance pragma targets                   |
+|               | (1) loop simplification     |  1,314       | loop and instruction simplification                                                    |
+|               | (2) parallelization         |  1,314       | loops are unrolled or pipelined to meet performance targets                            |
+|               | (3) array partition         |  1,314       | arrays are partitioned to meet performance targets                                     |
+|               | (4) simplification          |  1,314       | simplification of design after performance transformations                             |
+|               |                             |              |                                                                                        |
+| HW Transforms |                             |              | After hardware transfomations                                                          |
+|               | (1) lowering                |  1,335       | initial conversion to HW specific instructions                                         |
+|               | (2) optimizations           |  1,337       | high level synthesis optimizations                                                     |
++---------------+-----------------------------+--------------+----------------------------------------------------------------------------------------+
+
+* Instructions per Function for each Compilation Phase
++--------------------+---------------+--------------+---------------+--------------+-------------+---------------+
+| Function           | Location      | Compile/Link | Unroll/Inline | Array/Struct | Performance | HW Transforms |
++--------------------+---------------+--------------+---------------+--------------+-------------+---------------+
+| + KAN              | KAN.cpp:3     | 56,941       | 2,402         | 1,314        | 1,314       | 1,337         |
+|  + lut_lookup_0_0  | lookups.h:19  |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_0_1  | lookups.h:25  |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_0_2  | lookups.h:31  |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_0_3  | lookups.h:37  |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_0_4  | lookups.h:43  |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_0_5  | lookups.h:49  |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_0_6  | lookups.h:55  |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_0_7  | lookups.h:61  |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_0_8  | lookups.h:67  |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_0_9  | lookups.h:73  |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_0_10 | lookups.h:79  |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_0_11 | lookups.h:85  |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_0_12 | lookups.h:91  |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_0_13 | lookups.h:97  |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_0_14 | lookups.h:103 |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_0_15 | lookups.h:109 |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_0_16 | lookups.h:115 |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_0_17 | lookups.h:121 |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_0_18 | lookups.h:127 |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_0_19 | lookups.h:133 |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_0_20 | lookups.h:139 |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_0_21 | lookups.h:145 |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_0_22 | lookups.h:151 |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_0_23 | lookups.h:157 |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_0_24 | lookups.h:163 |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_0_25 | lookups.h:169 |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_0_26 | lookups.h:175 |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_0_27 | lookups.h:181 |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_0_28 | lookups.h:187 |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_0_29 | lookups.h:193 |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_0_30 | lookups.h:199 |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_0_31 | lookups.h:205 |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_0_32 | lookups.h:211 |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_0_33 | lookups.h:217 |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_0_34 | lookups.h:223 |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_0_35 | lookups.h:229 |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_0_36 | lookups.h:235 |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_0_37 | lookups.h:241 |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_0_38 | lookups.h:247 |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_0_39 | lookups.h:253 |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_0_40 | lookups.h:259 |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_0_41 | lookups.h:265 |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_0_42 | lookups.h:271 |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_0_43 | lookups.h:277 |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_0_44 | lookups.h:283 |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_0_45 | lookups.h:289 |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_0_46 | lookups.h:295 |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_0_47 | lookups.h:301 |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_0_48 | lookups.h:307 |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_0_49 | lookups.h:313 |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_0_50 | lookups.h:319 |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_0_51 | lookups.h:325 |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_0_52 | lookups.h:331 |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_0_53 | lookups.h:337 |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_0_54 | lookups.h:343 |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_0_55 | lookups.h:349 |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_0_56 | lookups.h:355 |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_0_57 | lookups.h:361 |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_0_58 | lookups.h:367 |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_0_59 | lookups.h:373 |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_0_60 | lookups.h:379 |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_0_61 | lookups.h:385 |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_0_62 | lookups.h:391 |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_0_63 | lookups.h:397 |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_1_0  | lookups.h:403 |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_1_1  | lookups.h:409 |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_1_2  | lookups.h:415 |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_1_3  | lookups.h:421 |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_1_4  | lookups.h:427 |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_1_5  | lookups.h:433 |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_1_6  | lookups.h:439 |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_1_7  | lookups.h:445 |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_1_8  | lookups.h:451 |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_1_9  | lookups.h:457 |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_1_10 | lookups.h:463 |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_1_11 | lookups.h:469 |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_1_12 | lookups.h:475 |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_1_13 | lookups.h:481 |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_1_14 | lookups.h:487 |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_1_15 | lookups.h:493 |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_1_16 | lookups.h:499 |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_1_17 | lookups.h:505 |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_1_18 | lookups.h:511 |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
+|  + lut_lookup_1_19 | lookups.h:517 |   494        |               |              |             |               |
+|     value_to_index | lookups.h:7   |   484        |               |              |             |               |
++--------------------+---------------+--------------+---------------+--------------+-------------+---------------+
+
+* Design Size Message Settings
++---------------------------------------------+--------+------------------------------------------------------------------+
+| Message Setting                             | Value  | Description                                                      |
++---------------------------------------------+--------+------------------------------------------------------------------+
+| config_compile -design_size_maximum_warning | 100000 | Show a warning when total design instructions exceeds this value |
++---------------------------------------------+--------+------------------------------------------------------------------+
+
+

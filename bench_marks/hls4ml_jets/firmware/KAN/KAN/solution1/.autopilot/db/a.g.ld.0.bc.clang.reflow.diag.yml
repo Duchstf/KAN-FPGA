@@ -1,0 +1,2388 @@
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 19, Column: 0 }
+Function:        _Z14lut_lookup_0_08ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_0_0(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 19, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 25, Column: 0 }
+Function:        _Z14lut_lookup_0_18ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_0_1(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 25, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 31, Column: 0 }
+Function:        _Z14lut_lookup_0_28ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_0_2(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 31, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 37, Column: 0 }
+Function:        _Z14lut_lookup_0_38ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_0_3(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 37, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 43, Column: 0 }
+Function:        _Z14lut_lookup_0_48ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_0_4(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 43, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 49, Column: 0 }
+Function:        _Z14lut_lookup_0_58ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_0_5(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 49, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 55, Column: 0 }
+Function:        _Z14lut_lookup_0_68ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_0_6(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 55, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 61, Column: 0 }
+Function:        _Z14lut_lookup_0_78ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_0_7(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 61, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 67, Column: 0 }
+Function:        _Z14lut_lookup_0_88ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_0_8(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 67, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 73, Column: 0 }
+Function:        _Z14lut_lookup_0_98ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_0_9(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 73, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 79, Column: 0 }
+Function:        _Z15lut_lookup_0_108ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_0_10(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 79, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 85, Column: 0 }
+Function:        _Z15lut_lookup_0_118ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_0_11(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 85, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 91, Column: 0 }
+Function:        _Z15lut_lookup_0_128ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_0_12(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 91, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 97, Column: 0 }
+Function:        _Z15lut_lookup_0_138ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_0_13(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 97, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 103, Column: 0 }
+Function:        _Z15lut_lookup_0_148ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_0_14(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 103, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 109, Column: 0 }
+Function:        _Z15lut_lookup_0_158ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_0_15(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 109, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 115, Column: 0 }
+Function:        _Z15lut_lookup_0_168ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_0_16(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 115, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 121, Column: 0 }
+Function:        _Z15lut_lookup_0_178ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_0_17(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 121, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 127, Column: 0 }
+Function:        _Z15lut_lookup_0_188ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_0_18(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 127, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 133, Column: 0 }
+Function:        _Z15lut_lookup_0_198ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_0_19(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 133, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 139, Column: 0 }
+Function:        _Z15lut_lookup_0_208ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_0_20(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 139, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 145, Column: 0 }
+Function:        _Z15lut_lookup_0_218ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_0_21(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 145, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 151, Column: 0 }
+Function:        _Z15lut_lookup_0_228ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_0_22(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 151, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 157, Column: 0 }
+Function:        _Z15lut_lookup_0_238ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_0_23(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 157, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 163, Column: 0 }
+Function:        _Z15lut_lookup_0_248ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_0_24(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 163, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 169, Column: 0 }
+Function:        _Z15lut_lookup_0_258ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_0_25(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 169, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 175, Column: 0 }
+Function:        _Z15lut_lookup_0_268ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_0_26(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 175, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 181, Column: 0 }
+Function:        _Z15lut_lookup_0_278ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_0_27(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 181, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 187, Column: 0 }
+Function:        _Z15lut_lookup_0_288ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_0_28(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 187, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 193, Column: 0 }
+Function:        _Z15lut_lookup_0_298ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_0_29(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 193, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 199, Column: 0 }
+Function:        _Z15lut_lookup_0_308ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_0_30(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 199, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 205, Column: 0 }
+Function:        _Z15lut_lookup_0_318ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_0_31(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 205, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 211, Column: 0 }
+Function:        _Z15lut_lookup_0_328ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_0_32(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 211, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 217, Column: 0 }
+Function:        _Z15lut_lookup_0_338ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_0_33(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 217, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 223, Column: 0 }
+Function:        _Z15lut_lookup_0_348ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_0_34(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 223, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 229, Column: 0 }
+Function:        _Z15lut_lookup_0_358ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_0_35(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 229, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 235, Column: 0 }
+Function:        _Z15lut_lookup_0_368ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_0_36(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 235, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 241, Column: 0 }
+Function:        _Z15lut_lookup_0_378ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_0_37(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 241, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 247, Column: 0 }
+Function:        _Z15lut_lookup_0_388ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_0_38(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 247, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 253, Column: 0 }
+Function:        _Z15lut_lookup_0_398ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_0_39(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 253, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 259, Column: 0 }
+Function:        _Z15lut_lookup_0_408ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_0_40(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 259, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 265, Column: 0 }
+Function:        _Z15lut_lookup_0_418ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_0_41(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 265, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 271, Column: 0 }
+Function:        _Z15lut_lookup_0_428ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_0_42(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 271, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 277, Column: 0 }
+Function:        _Z15lut_lookup_0_438ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_0_43(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 277, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 283, Column: 0 }
+Function:        _Z15lut_lookup_0_448ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_0_44(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 283, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 289, Column: 0 }
+Function:        _Z15lut_lookup_0_458ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_0_45(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 289, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 295, Column: 0 }
+Function:        _Z15lut_lookup_0_468ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_0_46(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 295, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 301, Column: 0 }
+Function:        _Z15lut_lookup_0_478ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_0_47(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 301, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 307, Column: 0 }
+Function:        _Z15lut_lookup_0_488ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_0_48(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 307, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 313, Column: 0 }
+Function:        _Z15lut_lookup_0_498ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_0_49(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 313, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 319, Column: 0 }
+Function:        _Z15lut_lookup_0_508ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_0_50(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 319, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 325, Column: 0 }
+Function:        _Z15lut_lookup_0_518ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_0_51(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 325, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 331, Column: 0 }
+Function:        _Z15lut_lookup_0_528ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_0_52(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 331, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 337, Column: 0 }
+Function:        _Z15lut_lookup_0_538ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_0_53(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 337, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 343, Column: 0 }
+Function:        _Z15lut_lookup_0_548ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_0_54(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 343, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 349, Column: 0 }
+Function:        _Z15lut_lookup_0_558ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_0_55(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 349, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 355, Column: 0 }
+Function:        _Z15lut_lookup_0_568ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_0_56(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 355, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 361, Column: 0 }
+Function:        _Z15lut_lookup_0_578ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_0_57(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 361, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 367, Column: 0 }
+Function:        _Z15lut_lookup_0_588ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_0_58(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 367, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 373, Column: 0 }
+Function:        _Z15lut_lookup_0_598ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_0_59(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 373, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 379, Column: 0 }
+Function:        _Z15lut_lookup_0_608ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_0_60(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 379, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 385, Column: 0 }
+Function:        _Z15lut_lookup_0_618ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_0_61(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 385, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 391, Column: 0 }
+Function:        _Z15lut_lookup_0_628ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_0_62(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 391, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 397, Column: 0 }
+Function:        _Z15lut_lookup_0_638ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_0_63(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 397, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 403, Column: 0 }
+Function:        _Z14lut_lookup_1_08ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_1_0(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 403, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 409, Column: 0 }
+Function:        _Z14lut_lookup_1_18ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_1_1(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 409, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 415, Column: 0 }
+Function:        _Z14lut_lookup_1_28ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_1_2(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 415, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 421, Column: 0 }
+Function:        _Z14lut_lookup_1_38ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_1_3(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 421, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 427, Column: 0 }
+Function:        _Z14lut_lookup_1_48ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_1_4(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 427, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 433, Column: 0 }
+Function:        _Z14lut_lookup_1_58ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_1_5(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 433, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 439, Column: 0 }
+Function:        _Z14lut_lookup_1_68ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_1_6(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 439, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 445, Column: 0 }
+Function:        _Z14lut_lookup_1_78ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_1_7(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 445, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 451, Column: 0 }
+Function:        _Z14lut_lookup_1_88ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_1_8(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 451, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 457, Column: 0 }
+Function:        _Z14lut_lookup_1_98ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_1_9(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 457, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 463, Column: 0 }
+Function:        _Z15lut_lookup_1_108ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_1_10(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 463, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 469, Column: 0 }
+Function:        _Z15lut_lookup_1_118ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_1_11(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 469, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 475, Column: 0 }
+Function:        _Z15lut_lookup_1_128ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_1_12(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 475, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 481, Column: 0 }
+Function:        _Z15lut_lookup_1_138ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_1_13(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 481, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 487, Column: 0 }
+Function:        _Z15lut_lookup_1_148ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_1_14(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 487, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 493, Column: 0 }
+Function:        _Z15lut_lookup_1_158ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_1_15(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 493, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 499, Column: 0 }
+Function:        _Z15lut_lookup_1_168ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_1_16(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 499, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 505, Column: 0 }
+Function:        _Z15lut_lookup_1_178ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_1_17(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 505, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 511, Column: 0 }
+Function:        _Z15lut_lookup_1_188ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_1_18(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 511, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: ./lookups.h, Line: 517, Column: 0 }
+Function:        _Z15lut_lookup_1_198ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'value_to_index(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 7, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'lut_lookup_1_19(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 517, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_0_0(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 19, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_0_1(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 25, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_0_2(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 31, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_0_3(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 37, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_0_4(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 43, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_0_5(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 49, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_0_6(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 55, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_0_7(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 61, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_0_8(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 67, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_0_9(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 73, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_0_10(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 79, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_0_11(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 85, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_0_12(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 91, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_0_13(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 97, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_0_14(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 103, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_0_15(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 109, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_0_16(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 115, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_0_17(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 121, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_0_18(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 127, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_0_19(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 133, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_0_20(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 139, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_0_21(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 145, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_0_22(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 151, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_0_23(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 157, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_0_24(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 163, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_0_25(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 169, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_0_26(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 175, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_0_27(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 181, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_0_28(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 187, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_0_29(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 193, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_0_30(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 199, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_0_31(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 205, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_0_32(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 211, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_0_33(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 217, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_0_34(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 223, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_0_35(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 229, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_0_36(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 235, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_0_37(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 241, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_0_38(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 247, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_0_39(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 253, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_0_40(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 259, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_0_41(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 265, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_0_42(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 271, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_0_43(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 277, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_0_44(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 283, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_0_45(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 289, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_0_46(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 295, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_0_47(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 301, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_0_48(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 307, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_0_49(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 313, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_0_50(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 319, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_0_51(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 325, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_0_52(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 331, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_0_53(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 337, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_0_54(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 343, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_0_55(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 349, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_0_56(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 355, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_0_57(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 361, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_0_58(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 367, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_0_59(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 373, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_0_60(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 379, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_0_61(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 385, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_0_62(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 391, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_0_63(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 397, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_1_0(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 403, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_1_1(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 409, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_1_2(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 415, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_1_3(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 421, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_1_4(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 427, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_1_5(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 433, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_1_6(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 439, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_1_7(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 445, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_1_8(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 451, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_1_9(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 457, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_1_10(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 463, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_1_11(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 469, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_1_12(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 475, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_1_13(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 481, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_1_14(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 487, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_1_15(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 493, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_1_16(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 499, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_1_17(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 505, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_1_18(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 511, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lut_lookup_1_19(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
+    DebugLoc:        { File: ./lookups.h, Line: 517, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<16, 6, (ap_q_mode)0, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-array-partition
+Name:            ArrayXform
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Applying '
+  - String:          array_partition
+  - String:          ' to '''
+  - UOName:          input
+  - String:          ''':'
+  - String:          ' '
+  - Mode:            Complete
+  - String:          ' partitioning'
+  - String:          ' on dimension '
+  - Dim:             '1'
+  - String:          .
+...
+--- !Passed
+Pass:            reflow-array-partition
+Name:            ArrayXform
+DebugLoc:        { File: KAN.cpp, Line: 3, Column: 0 }
+Function:        _Z3KANP8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EEPS_ILi16ELi6ELS0_0ELS1_0ELi0EE
+Args:            
+  - String:          'Applying '
+  - String:          array_partition
+  - String:          ' to '''
+  - UOName:          output
+  - String:          ''':'
+  - String:          ' '
+  - Mode:            Complete
+  - String:          ' partitioning'
+  - String:          ' on dimension '
+  - Dim:             '1'
+  - String:          .
+...

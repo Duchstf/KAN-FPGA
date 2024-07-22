@@ -1,0 +1,14 @@
+{
+    "0": {
+        "name": "KAN",
+        "file": "KAN.cpp",
+        "fileloc": "3",
+        "instructions": "859",
+        "total_instructions": "859",
+        "calls": "",
+        "basicblocks": "1",
+        "loads": {
+            "G": "84"
+        }
+    }
+}
