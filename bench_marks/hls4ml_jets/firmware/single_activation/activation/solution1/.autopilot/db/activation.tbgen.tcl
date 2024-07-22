@@ -10,12 +10,16 @@ set ProfileFlag 0
 set StallSigGenFlag 0
 set isEnableWaveformDebug 1
 set hasInterrupt 0
+set DLRegFirstOffset 0
+set DLRegItemOffset 0
 set C_modelName {activation}
 set C_modelType { void 0 }
 set C_modelArgList {
 	{ input_r int 16 regular  }
 	{ output_r int 16 regular {pointer 1}  }
 }
+set hasAXIMCache 0
+set AXIMCacheInstList { }
 set C_modelArgMapList {[ 
 	{ "Name" : "input_r", "interface" : "wire", "bitwidth" : 16, "direction" : "READONLY"} , 
  	{ "Name" : "output_r", "interface" : "wire", "bitwidth" : 16, "direction" : "WRITEONLY"} ]}
@@ -42,13 +46,13 @@ set NewPortList {[
  	{ "name": "output_r", "direction": "out", "datatype": "sc_lv", "bitwidth":16, "type": "signal", "bundle":{"name": "output_r", "role": "default" }}  ]}
 
 set RtlHierarchyInfo {[
-	{"ID" : "0", "Level" : "0", "Path" : "`AUTOTB_DUT_INST", "Parent" : "", "Child" : ["1", "2"],
+	{"ID" : "0", "Level" : "0", "Path" : "`AUTOTB_DUT_INST", "Parent" : "", "Child" : ["1"],
 		"CDFG" : "activation",
 		"Protocol" : "ap_ctrl_hs",
 		"ControlExist" : "1", "ap_start" : "1", "ap_ready" : "1", "ap_done" : "1", "ap_continue" : "0", "ap_idle" : "1", "real_start" : "0",
 		"Pipeline" : "Aligned", "UnalignedPipeline" : "0", "RewindPipeline" : "0", "ProcessNetwork" : "0",
 		"II" : "1",
-		"VariableLatency" : "0", "ExactLatency" : "18", "EstimateLatencyMin" : "18", "EstimateLatencyMax" : "18",
+		"VariableLatency" : "0", "ExactLatency" : "1", "EstimateLatencyMin" : "1", "EstimateLatencyMax" : "1",
 		"Combinational" : "0",
 		"Datapath" : "0",
 		"ClockEnable" : "0",
@@ -59,21 +63,20 @@ set RtlHierarchyInfo {[
 		"Port" : [
 			{"Name" : "input_r", "Type" : "None", "Direction" : "I"},
 			{"Name" : "output_r", "Type" : "None", "Direction" : "O"},
-			{"Name" : "lut_V", "Type" : "Memory", "Direction" : "I"}]},
-	{"ID" : "1", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.lut_V_U", "Parent" : "0"},
-	{"ID" : "2", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.fpext_32ns_64_3_no_dsp_1_U1", "Parent" : "0"}]}
+			{"Name" : "lut", "Type" : "Memory", "Direction" : "I"}]},
+	{"ID" : "1", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.lut_U", "Parent" : "0"}]}
 
 
 set ArgLastReadFirstWriteLatency {
 	activation {
 		input_r {Type I LastRead 0 FirstWrite -1}
-		output_r {Type O LastRead -1 FirstWrite 18}
-		lut_V {Type I LastRead -1 FirstWrite -1}}}
+		output_r {Type O LastRead -1 FirstWrite 1}
+		lut {Type I LastRead -1 FirstWrite -1}}}
 
 set hasDtUnsupportedChannel 0
 
 set PerformanceInfo {[
-	{"Name" : "Latency", "Min" : "18", "Max" : "18"}
+	{"Name" : "Latency", "Min" : "1", "Max" : "1"}
 	, {"Name" : "Interval", "Min" : "1", "Max" : "1"}
 ]}
 

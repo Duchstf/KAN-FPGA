@@ -72,26 +72,22 @@ const ap_fixed<16,6> lut[LUT_SIZE] = {
 };
 
 // Function to map input range (-8, 8) to LUT index range (0, 255)
-ap_uint<8> value_to_index(ap_fixed<16,6> value) {
+int value_to_index(ap_fixed<16,6> value) {
+    int data_round = value * LUT_SIZE >> 4;
+    int index = data_round + 8 * LUT_SIZE >> 4;
 
-    // Define constants as ap_fixed
-    const ap_fixed<16,6> min_val = -8.0;
-    const ap_fixed<16,6> max_val = 8.0;
-    const ap_fixed<16,6> offset = 8.0;
+    if (index < 0)
+        index = 0;
+    if (index > LUT_SIZE - 1)
+        index = LUT_SIZE - 1;
 
-    // Ensure the value is within the specified range
-    if (value < min_val) value = min_val;
-    if (value > max_val) value = max_val;
-    
-    // Normalize the value to range (0, 255)
-    ap_fixed<16,6> normalized_value = (value + offset) * (LUT_SIZE - 1) >> 4;
-    return (ap_uint<8>)normalized_value;
+    return index;
 }
 
 // Function to get value from LUT
-float lut_lookup(ap_fixed<16,6> input) {
-    ap_uint<8> index = value_to_index(input);
-    return lut[index];
+ap_fixed<16,6> lut_lookup(ap_fixed<16,6> input) {
+    #pragma HLS BIND_STORAGE variable=lut type=RAM_1P impl=LUTRAM
+    return lut[value_to_index(input)];
 }
 
 // Example top function

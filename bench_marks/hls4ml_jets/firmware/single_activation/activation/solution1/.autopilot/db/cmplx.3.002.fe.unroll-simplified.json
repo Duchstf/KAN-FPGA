@@ -1,0 +1,46 @@
+{
+  "0": {
+    "basicblocks": 1,
+    "calls": "1",
+    "file": "activation.cpp",
+    "fileloc": 94,
+    "instructions": 10,
+    "loads": {
+      "L": 1
+    },
+    "name": "activation",
+    "stores": {
+      "L": 1,
+      "T": 1
+    },
+    "total_instructions": 44
+  },
+  "1": {
+    "basicblocks": 1,
+    "calls": "2",
+    "file": "activation.cpp",
+    "fileloc": 88,
+    "instructions": 10,
+    "loads": {
+      "G": 1,
+      "L": 1
+    },
+    "name": "lut_lookup",
+    "stores": {
+      "L": 2
+    },
+    "total_instructions": 34
+  },
+  "2": {
+    "basicblocks": 4,
+    "calls": "",
+    "file": "activation.cpp",
+    "fileloc": 75,
+    "instructions": 24,
+    "loads": {
+      "L": 1
+    },
+    "name": "value_to_index",
+    "total_instructions": 24
+  }
+}

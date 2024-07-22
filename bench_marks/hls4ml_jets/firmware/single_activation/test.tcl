@@ -21,7 +21,7 @@ open_solution -reset "solution1"
 catch {config_array_partition -maximum_size 8192}
 config_compile -name_max_length 80
 set_part {xcvu13p-flga2577-2-e}
-create_clock -period 2.0 -name default
+create_clock -period 3.0 -name default
 
 #Synthethize
 puts "***** C/RTL SYNTHESIS *****"

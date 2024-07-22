@@ -1,0 +1,14 @@
+{
+    "0": {
+        "name": "activation",
+        "file": "activation.cpp",
+        "fileloc": "94",
+        "instructions": "28",
+        "total_instructions": "28",
+        "calls": "",
+        "basicblocks": "1",
+        "loads": {
+            "G": "1"
+        }
+    }
+}

@@ -2,48 +2,53 @@
 MainSourceFile:  /data/dhoang/KAN-FPGA/bench_marks/hls4ml_jets/firmware/single_activation/activation/solution1/.autopilot/db/activation.pp.0.cpp
 Diagnostics:     
   - DiagnosticName:  xilinx-label-all-loops
-    Message:         'Added loop label VITIS_LOOP_1211_1:  '
-    FileOffset:      1211
-    FilePath:        /data/Xilinx/Vitis_HLS/2022.2/common/technology/autopilot/ap_int_base.h
+    Message:         'Added loop label VITIS_LOOP_1207_1:  '
+    FileOffset:      1207
+    FilePath:        /data/Xilinx/Vitis_HLS/2023.2/common/technology/autopilot/etc/ap_int_base.h
     Replacements:    
       - FilePath:        /data/dhoang/KAN-FPGA/bench_marks/hls4ml_jets/firmware/single_activation/activation/solution1/.autopilot/db/activation.pp.0.cpp
-        Offset:          51781
+        Offset:          55362
         Length:          0
-        ReplacementText: 'VITIS_LOOP_1211_1: '
+        ReplacementText: 'VITIS_LOOP_1207_1: '
   - DiagnosticName:  xilinx-label-all-loops
     Message:         'Added loop label VITIS_LOOP_676_1:  '
     FileOffset:      676
-    FilePath:        /data/Xilinx/Vitis_HLS/2022.2/common/technology/autopilot/ap_int_ref.h
+    FilePath:        /data/Xilinx/Vitis_HLS/2023.2/common/technology/autopilot/etc/ap_int_ref.h
     Replacements:    
       - FilePath:        /data/dhoang/KAN-FPGA/bench_marks/hls4ml_jets/firmware/single_activation/activation/solution1/.autopilot/db/activation.pp.0.cpp
-        Offset:          258853
+        Offset:          282742
         Length:          0
         ReplacementText: 'VITIS_LOOP_676_1: '
   - DiagnosticName:  xilinx-label-all-loops
     Message:         'Added loop label VITIS_LOOP_690_1:  '
     FileOffset:      690
-    FilePath:        /data/Xilinx/Vitis_HLS/2022.2/common/technology/autopilot/ap_int_ref.h
+    FilePath:        /data/Xilinx/Vitis_HLS/2023.2/common/technology/autopilot/etc/ap_int_ref.h
     Replacements:    
       - FilePath:        /data/dhoang/KAN-FPGA/bench_marks/hls4ml_jets/firmware/single_activation/activation/solution1/.autopilot/db/activation.pp.0.cpp
-        Offset:          259292
+        Offset:          283206
         Length:          0
         ReplacementText: 'VITIS_LOOP_690_1: '
   - DiagnosticName:  xilinx-label-all-loops
     Message:         'Added loop label VITIS_LOOP_704_1:  '
     FileOffset:      704
-    FilePath:        /data/Xilinx/Vitis_HLS/2022.2/common/technology/autopilot/ap_int_ref.h
+    FilePath:        /data/Xilinx/Vitis_HLS/2023.2/common/technology/autopilot/etc/ap_int_ref.h
     Replacements:    
       - FilePath:        /data/dhoang/KAN-FPGA/bench_marks/hls4ml_jets/firmware/single_activation/activation/solution1/.autopilot/db/activation.pp.0.cpp
-        Offset:          259732
+        Offset:          283671
         Length:          0
         ReplacementText: 'VITIS_LOOP_704_1: '
   - DiagnosticName:  xilinx-label-all-loops
-    Message:         'Added loop label VITIS_LOOP_1245_1:  '
-    FileOffset:      1245
-    FilePath:        /data/Xilinx/Vitis_HLS/2022.2/common/technology/autopilot/ap_fixed_base.h
+    Message:         'Added loop label VITIS_LOOP_1247_1:  '
+    FileOffset:      1247
+    FilePath:        /data/Xilinx/Vitis_HLS/2023.2/common/technology/autopilot/etc/ap_fixed_base.h
     Replacements:    
       - FilePath:        /data/dhoang/KAN-FPGA/bench_marks/hls4ml_jets/firmware/single_activation/activation/solution1/.autopilot/db/activation.pp.0.cpp
-        Offset:          521527
+        Offset:          567023
         Length:          0
-        ReplacementText: 'VITIS_LOOP_1245_1: '
+        ReplacementText: 'VITIS_LOOP_1247_1: '
+  - DiagnosticName:  clang-diagnostic-error
+    Message:         'Invalid Directive: for current device, RAM_1P + LUTRAM is invalid combination for BIND_STORAGE''s option ''type + impl'''
+    FileOffset:      89
+    FilePath:        activation.cpp
+    Replacements:    
 ...

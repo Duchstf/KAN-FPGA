@@ -1,7 +1,7 @@
 --- !Passed
 Pass:            reflow-inliner
-Name:            AutoInline
-DebugLoc:        { File: activation.cpp, Line: 92, Column: 0 }
+Name:            Inline
+DebugLoc:        { File: activation.cpp, Line: 88, Column: 0 }
 Function:        _Z10lut_lookup8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EE
 Args:            
   - String:          'Inlining function '''
@@ -9,20 +9,20 @@ Args:
     DebugLoc:        { File: activation.cpp, Line: 75, Column: 0 }
   - String:          ''' into '''
   - Caller:          'lut_lookup(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
-    DebugLoc:        { File: activation.cpp, Line: 92, Column: 0 }
+    DebugLoc:        { File: activation.cpp, Line: 88, Column: 0 }
   - String:          ''''
 ...
 --- !Passed
-Pass:            reflow-auto-inline-performance-driven
-Name:            AutoInlinePerf
-DebugLoc:        { File: activation.cpp, Line: 104, Column: 11 }
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: activation.cpp, Line: 94, Column: 0 }
 Function:        _Z10activation8ap_fixedILi16ELi6EL9ap_q_mode5EL9ap_o_mode3ELi0EERS2_
 Args:            
-  - String:          'Automatically inlining function '''
+  - String:          'Inlining function '''
   - Callee:          'lut_lookup(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>)'
-    DebugLoc:        { File: activation.cpp, Line: 92, Column: 0 }
-  - String:          ''' to improve effectiveness of pipeline pragma in function '''
+    DebugLoc:        { File: activation.cpp, Line: 88, Column: 0 }
+  - String:          ''' into '''
   - Caller:          'activation(ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>, ap_fixed<16, 6, (ap_q_mode)5, (ap_o_mode)3, 0>&)'
-    DebugLoc:        { File: activation.cpp, Line: 98, Column: 0 }
+    DebugLoc:        { File: activation.cpp, Line: 94, Column: 0 }
   - String:          ''''
 ...

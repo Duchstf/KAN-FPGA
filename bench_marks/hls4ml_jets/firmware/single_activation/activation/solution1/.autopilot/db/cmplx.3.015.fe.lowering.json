@@ -1,0 +1,17 @@
+{
+  "0": {
+    "basicblocks": 4,
+    "calls": "",
+    "file": "activation.cpp",
+    "fileloc": 94,
+    "instructions": 32,
+    "loads": {
+      "G": 1
+    },
+    "name": "activation",
+    "stores": {
+      "T": 1
+    },
+    "total_instructions": 32
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "0": {
+    "basicblocks": 1,
+    "calls": "3",
+    "file": "activation.cpp",
+    "fileloc": 94,
+    "instructions": 13,
+    "loads": {
+      "L": 1
+    },
+    "name": "activation",
+    "stores": {
+      "L": 1,
+      "T": 1
+    },
+    "total_instructions": 507
+  },
+  "1": {
+    "basicblocks": 1,
+    "calls": "4",
+    "file": "activation.pp.0.cpp",
+    "fileloc": 0,
+    "instructions": 2,
+    "name": "",
+    "total_instructions": 98819
+  },
+  "2": {
+    "basicblocks": 5,
+    "calls": "",
+    "file": "activation.cpp",
+    "fileloc": 75,
+    "instructions": 18,
+    "name": "value_to_index",
+    "total_instructions": 484
+  },
+  "3": {
+    "basicblocks": 1,
+    "calls": "2",
+    "file": "activation.cpp",
+    "fileloc": 88,
+    "instructions": 10,
+    "loads": {
+      "G": 1,
+      "L": 1
+    },
+    "name": "lut_lookup",
+    "stores": {
+      "L": 2
+    },
+    "total_instructions": 494
+  },
+  "4": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "activation.cpp",
+    "fileloc": 7,
+    "instructions": 257,
+    "name": "__cxx_global_var_init",
+    "total_instructions": 98817
+  }
+}

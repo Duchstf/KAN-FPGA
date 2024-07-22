@@ -1,9 +1,9 @@
 <profile>
 
 <section name = "Vitis HLS Report for 'activation'" level="0">
-<item name = "Date">Thu Jul 18 08:45:10 2024
+<item name = "Date">Mon Jul 22 05:31:31 2024
 </item>
-<item name = "Version">2022.2 (Build 3670227 on Oct 13 2022)</item>
+<item name = "Version">2023.2 (Build 4023990 on Oct 11 2023)</item>
 <item name = "Project">activation</item>
 <item name = "Solution">solution1 (Vivado IP Flow Target)</item>
 <item name = "Product family">virtexuplus</item>
@@ -15,7 +15,7 @@
 <section name = "" level="1">
 <item name = "Summary"><table name="" hasTotal="0">
 <keys size="4">Clock, Target, Estimated, Uncertainty</keys>
-<column name="ap_clk">2.00 ns, 1.425 ns, 0.54 ns</column>
+<column name="ap_clk">3.00 ns, 1.674 ns, 0.81 ns</column>
 </table>
 </item>
 </section>
@@ -24,7 +24,7 @@
 <section name = "" level="1">
 <item name = "Summary"><table name="" hasTotal="0">
 <keys size="8">, min, max, min, max, min, max, Type</keys>
-<column name="">18, 18, 36.000 ns, 36.000 ns, 1, 1, yes</column>
+<column name="">1, 1, 3.000 ns, 3.000 ns, 1, 1, yes</column>
 </table>
 </item>
 <item name = "Detail">

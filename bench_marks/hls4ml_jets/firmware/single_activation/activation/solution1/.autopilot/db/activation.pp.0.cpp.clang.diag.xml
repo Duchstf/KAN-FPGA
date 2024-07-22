@@ -7,45 +7,43 @@
       <key>level</key>
       <string>warning</string>
       <key>filename</key>
-      <string>/data/Xilinx/Vitis_HLS/2022.2/common/technology/autopilot/ap_int_ref.h</string>
+      <string>activation.cpp</string>
       <key>line</key>
-      <integer>678</integer>
+      <integer>77</integer>
       <key>column</key>
-      <integer>9</integer>
+      <integer>28</integer>
       <key>message</key>
-      <string>HLS pragma dump _XLX_SEP_ PragmaIsValid=1_XLX_SEP_ PragmaType=unroll_XLX_SEP_ PragmaContext=_XLX_SEP_ PragmaFunction=and_reduce_XLX_SEP_ PragmaOptions=_XLX_SEP_</string>
+      <string>operator &apos;&gt;&gt;&apos; has lower precedence than &apos;+&apos;; &apos;+&apos; will be evaluated first</string>
       <key>ID</key>
-      <integer>5471</integer>
+      <integer>4591</integer>
       <key>WarningOption</key>
-      <string>dump-hls-pragmas</string>
+      <string>shift-op-parentheses</string>
+    </dict>
+    <dict>
+      <key>level</key>
+      <string>note</string>
+      <key>filename</key>
+      <string>activation.cpp</string>
+      <key>line</key>
+      <integer>77</integer>
+      <key>column</key>
+      <integer>28</integer>
+      <key>message</key>
+      <string>place parentheses around the &apos;+&apos; expression to silence this warning</string>
+      <key>ID</key>
+      <integer>4428</integer>
     </dict>
     <dict>
       <key>level</key>
       <string>warning</string>
       <key>filename</key>
-      <string>/data/Xilinx/Vitis_HLS/2022.2/common/technology/autopilot/ap_int_ref.h</string>
+      <string>activation.cpp</string>
       <key>line</key>
-      <integer>692</integer>
+      <integer>89</integer>
       <key>column</key>
       <integer>9</integer>
       <key>message</key>
-      <string>HLS pragma dump _XLX_SEP_ PragmaIsValid=1_XLX_SEP_ PragmaType=unroll_XLX_SEP_ PragmaContext=_XLX_SEP_ PragmaFunction=or_reduce_XLX_SEP_ PragmaOptions=_XLX_SEP_</string>
-      <key>ID</key>
-      <integer>5471</integer>
-      <key>WarningOption</key>
-      <string>dump-hls-pragmas</string>
-    </dict>
-    <dict>
-      <key>level</key>
-      <string>warning</string>
-      <key>filename</key>
-      <string>/data/Xilinx/Vitis_HLS/2022.2/common/technology/autopilot/ap_int_ref.h</string>
-      <key>line</key>
-      <integer>706</integer>
-      <key>column</key>
-      <integer>9</integer>
-      <key>message</key>
-      <string>HLS pragma dump _XLX_SEP_ PragmaIsValid=1_XLX_SEP_ PragmaType=unroll_XLX_SEP_ PragmaContext=_XLX_SEP_ PragmaFunction=xor_reduce_XLX_SEP_ PragmaOptions=_XLX_SEP_</string>
+      <string>HLS pragma dump _XLX_SEP_ PragmaIsValid=1_XLX_SEP_ PragmaType=bind_storage_XLX_SEP_ PragmaContext=_XLX_SEP_ PragmaFunction=lut_lookup_XLX_SEP_ PragmaOptions=variable=lut type=RAM_1P impl=LUTRAM_XLX_SEP_</string>
       <key>ID</key>
       <integer>5471</integer>
       <key>WarningOption</key>
@@ -73,7 +71,7 @@
       <key>filename</key>
       <string>activation.cpp</string>
       <key>line</key>
-      <integer>99</integer>
+      <integer>95</integer>
       <key>column</key>
       <integer>9</integer>
       <key>message</key>
@@ -89,7 +87,7 @@
       <key>filename</key>
       <string>activation.cpp</string>
       <key>line</key>
-      <integer>100</integer>
+      <integer>96</integer>
       <key>column</key>
       <integer>9</integer>
       <key>message</key>
@@ -105,7 +103,7 @@
       <key>filename</key>
       <string>activation.cpp</string>
       <key>line</key>
-      <integer>102</integer>
+      <integer>98</integer>
       <key>column</key>
       <integer>9</integer>
       <key>message</key>

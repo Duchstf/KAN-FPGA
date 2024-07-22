@@ -1,6 +1,6 @@
 
 set TopModule "activation"
-set ClockPeriod 2
+set ClockPeriod 3
 set ClockList ap_clk
 set HasVivadoClockPeriod 0
 set CombLogicFlag 0
@@ -8,7 +8,7 @@ set PipelineFlag 1
 set DataflowTaskPipelineFlag 1
 set TrivialPipelineFlag 0
 set noPortSwitchingFlag 0
-set FloatingPointFlag 1
+set FloatingPointFlag 0
 set FftOrFirFlag 0
 set NbRWValue 0
 set intNbAccess 0
@@ -44,7 +44,7 @@ set SCTraceOption all
 set TargetInfo xcvu13p:-flga2577:-2-e
 set SourceFiles {sc {} c ../../activation.cpp}
 set SourceFlags {sc {} c {{}}}
-set DirectiveFile /data/dhoang/KAN-FPGA/bench_marks/hls4ml_jets/firmware/single_activation/activation/solution1/solution1.directive
+set DirectiveFile {}
 set TBFiles {bc {} c {} sc {} cas {} vhdl {} verilog {}}
 set SpecLanguage C
 set TVInFiles {bc {} c {} sc {} cas {} vhdl {} verilog {}}
@@ -56,7 +56,7 @@ set ExtraGlobalOptions {"area_timing" 1 "clock_gate" 1 "impl_flow" map "power_ga
 set TBTVFileNotFound {}
 set AppFile ../hls.app
 set ApsFile solution1.aps
-set AvePath ../..
+set AvePath ../../.
 set DefaultPlatform DefaultPlatform
 set multiClockList {}
 set SCPortClockMap {}

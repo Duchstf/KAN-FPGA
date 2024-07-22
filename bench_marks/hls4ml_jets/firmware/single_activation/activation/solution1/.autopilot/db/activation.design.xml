@@ -11,34 +11,39 @@
 <Name>activation</Name>
 <PerformanceEstimates>
 <SummaryOfTimingAnalysis>
-<TargetClockPeriod>2.00</TargetClockPeriod>
-<ClockUncertainty>0.54</ClockUncertainty>
+<TargetClockPeriod>3.00</TargetClockPeriod>
+<ClockUncertainty>0.81</ClockUncertainty>
 <TargetInitiationInterval>1</TargetInitiationInterval>
-<EstimatedClockPeriod>1.425</EstimatedClockPeriod>
+<EstimatedClockPeriod>1.674</EstimatedClockPeriod>
 </SummaryOfTimingAnalysis>
 <SummaryOfOverallLatency>
-<Best-caseLatency>18</Best-caseLatency>
-<Average-caseLatency>18</Average-caseLatency>
-<Worst-caseLatency>18</Worst-caseLatency>
-<Best-caseRealTimeLatency>36.000 ns</Best-caseRealTimeLatency>
-<Average-caseRealTimeLatency>36.000 ns</Average-caseRealTimeLatency>
-<Worst-caseRealTimeLatency>36.000 ns</Worst-caseRealTimeLatency>
+<Best-caseLatency>1</Best-caseLatency>
+<Average-caseLatency>1</Average-caseLatency>
+<Worst-caseLatency>1</Worst-caseLatency>
+<Best-caseRealTimeLatency>3.000 ns</Best-caseRealTimeLatency>
+<Average-caseRealTimeLatency>3.000 ns</Average-caseRealTimeLatency>
+<Worst-caseRealTimeLatency>3.000 ns</Worst-caseRealTimeLatency>
 <PipelineInitiationInterval>1</PipelineInitiationInterval>
-<PipelineDepth>19</PipelineDepth>
+<PipelineDepth>2</PipelineDepth>
 <PipelineType>yes</PipelineType>
 </SummaryOfOverallLatency>
+<SummaryOfViolations>
+<IssueType>-</IssueType>
+<ViolationType>-</ViolationType>
+<SourceLocation>activation.cpp:98</SourceLocation>
+</SummaryOfViolations>
 </PerformanceEstimates>
 <AreaEstimates>
 <Resources>
-<BRAM_18K>1</BRAM_18K>
-<AVAIL_BRAM>5376</AVAIL_BRAM>
-<UTIL_BRAM>~0</UTIL_BRAM>
-<FF>1243</FF>
+<FF>18</FF>
 <AVAIL_FF>3456000</AVAIL_FF>
 <UTIL_FF>~0</UTIL_FF>
-<LUT>1804</LUT>
+<LUT>125</LUT>
 <AVAIL_LUT>1728000</AVAIL_LUT>
 <UTIL_LUT>~0</UTIL_LUT>
+<BRAM_18K>0</BRAM_18K>
+<AVAIL_BRAM>5376</AVAIL_BRAM>
+<UTIL_BRAM>0</UTIL_BRAM>
 <DSP>0</DSP>
 <AVAIL_DSP>12288</AVAIL_DSP>
 <UTIL_DSP>0</UTIL_DSP>

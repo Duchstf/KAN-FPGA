@@ -1,6 +1,4 @@
 <AutoPilot:project xmlns:AutoPilot="com.autoesl.autopilot.project" top="activation" name="activation">
-    <includePaths/>
-    <libraryFlag/>
     <files>
         <file name="activation.cpp" sc="0" tb="false" cflags="" csimflags="" blackbox="false"/>
     </files>

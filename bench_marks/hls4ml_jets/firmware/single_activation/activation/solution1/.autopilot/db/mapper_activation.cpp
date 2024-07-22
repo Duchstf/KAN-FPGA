@@ -1,3 +1,4 @@
+#include "hls_signal_handler.h"
 #include <algorithm>
 #include <cassert>
 #include <fstream>
@@ -32,20 +33,24 @@ namespace hls::sim
   };
 
   struct SimException : public std::exception {
-    const char *msg;
+    const std::string msg;
     const size_t line;
-    SimException(const char *msg, const size_t line)
+    SimException(const std::string &msg, const size_t line)
       : msg(msg), line(line)
     {
     }
   };
 
-  void errExit(const size_t line, const char *msg)
+  void errExit(const size_t line, const std::string &msg)
   {
     std::string s;
-    s += "at line ";
-    s += std::to_string(line);
-    s += " occurred problem: ";
+    s += "ERROR";
+//  s += '(';
+//  s += __FILE__;
+//  s += ":";
+//  s += std::to_string(line);
+//  s += ')';
+    s += ": ";
     s += msg;
     s += "\n";
     fputs(s.c_str(), stderr);

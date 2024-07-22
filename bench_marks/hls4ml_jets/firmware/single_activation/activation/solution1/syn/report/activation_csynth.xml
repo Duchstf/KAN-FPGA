@@ -1,7 +1,7 @@
 <profile>
 
 <ReportVersion>
-<Version>2022.2</Version>
+<Version>2023.2</Version>
 </ReportVersion>
 
 <UserAssignments>
@@ -9,8 +9,8 @@
 <ProductFamily>virtexuplus</ProductFamily>
 <Part>xcvu13p-flga2577-2-e</Part>
 <TopModelName>activation</TopModelName>
-<TargetClockPeriod>2.00</TargetClockPeriod>
-<ClockUncertainty>0.54</ClockUncertainty>
+<TargetClockPeriod>3.00</TargetClockPeriod>
+<ClockUncertainty>0.81</ClockUncertainty>
 <TargetInitiationInterval>1</TargetInitiationInterval>
 <FlowTarget>vivado</FlowTarget>
 </UserAssignments>
@@ -19,28 +19,33 @@
 <PipelineType>yes</PipelineType>
 <SummaryOfTimingAnalysis>
 <unit>ns</unit>
-<EstimatedClockPeriod>1.425</EstimatedClockPeriod>
+<EstimatedClockPeriod>1.674</EstimatedClockPeriod>
 </SummaryOfTimingAnalysis>
 <SummaryOfOverallLatency>
 <unit>clock cycles</unit>
-<Best-caseLatency>18</Best-caseLatency>
-<Average-caseLatency>18</Average-caseLatency>
-<Worst-caseLatency>18</Worst-caseLatency>
-<Best-caseRealTimeLatency>36.000 ns</Best-caseRealTimeLatency>
-<Average-caseRealTimeLatency>36.000 ns</Average-caseRealTimeLatency>
-<Worst-caseRealTimeLatency>36.000 ns</Worst-caseRealTimeLatency>
+<Best-caseLatency>1</Best-caseLatency>
+<Average-caseLatency>1</Average-caseLatency>
+<Worst-caseLatency>1</Worst-caseLatency>
+<Best-caseRealTimeLatency>3.000 ns</Best-caseRealTimeLatency>
+<Average-caseRealTimeLatency>3.000 ns</Average-caseRealTimeLatency>
+<Worst-caseRealTimeLatency>3.000 ns</Worst-caseRealTimeLatency>
 <PipelineInitiationInterval>1</PipelineInitiationInterval>
-<PipelineDepth>19</PipelineDepth>
+<PipelineDepth>2</PipelineDepth>
 <Interval-min>1</Interval-min>
 <Interval-max>1</Interval-max>
 </SummaryOfOverallLatency>
+<SummaryOfViolations>
+<IssueType>-</IssueType>
+<ViolationType>-</ViolationType>
+<SourceLocation>activation.cpp:98</SourceLocation>
+</SummaryOfViolations>
 </PerformanceEstimates>
 
 <AreaEstimates>
 <Resources>
-<BRAM_18K>1</BRAM_18K>
-<FF>1243</FF>
-<LUT>1804</LUT>
+<FF>18</FF>
+<LUT>125</LUT>
+<BRAM_18K>0</BRAM_18K>
 <DSP>0</DSP>
 <URAM>0</URAM>
 </Resources>

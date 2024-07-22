@@ -7,7 +7,6 @@
     </project>
     <flowTarget value="vivado"/>
     <config>
-        <config_interface m_axi_latency="0"/>
         <config_compile name_max_length="80"/>
     </config>
     <targetInfo>
@@ -17,7 +16,7 @@
         <library value="xilinx/virtexuplus/virtexuplus" name="DefaultPlatform"/>
     </libraryList>
     <clockList>
-        <clock name="default" period="2.0" default="false"/>
+        <clock name="default" period="3.0" default="false"/>
     </clockList>
 </AutoPilot:solution>
 
