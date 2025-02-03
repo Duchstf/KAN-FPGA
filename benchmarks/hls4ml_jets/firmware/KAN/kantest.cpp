@@ -1,3 +1,6 @@
+#include "defines.h"
+#include "lookups.h"
+
 lut_t output_0_0 = lut_lookup_0_0(input[0]);
 lut_t output_0_1 = lut_lookup_0_1(input[0]);
 lut_t output_0_2 = lut_lookup_0_2(input[0]);
