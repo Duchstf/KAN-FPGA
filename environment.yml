@@ -16,3 +16,5 @@ dependencies:
     - tensorflow[and-cuda]
     - pandas
     - moviepy
+    - librosa==0.6.0
+    - pyyaml
