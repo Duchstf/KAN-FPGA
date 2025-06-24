@@ -3,7 +3,7 @@ Implementations of KAN on FPGA Paper at FPGA'2025
 
 Authors: Aarush Gupta (MIT), Duc Hoang (MIT)
 
-# To train and evaluate the models on our benchmarks
+# Train and evaluate the models on our benchmarks
 
 
 
