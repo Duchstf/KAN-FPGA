@@ -3,13 +3,12 @@ Implementations of KAN on FPGA Paper at FPGA'2025
 
 Authors: Aarush Gupta (MIT), Duc Hoang (MIT)
 
-
 # Conda environment
 
 Create conda environment:
 
 ```
-conda-env create -f environment.yml
+conda env create -f environment.yml
 ```
 
 Activate the environment:

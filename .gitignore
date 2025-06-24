@@ -1,5 +1,5 @@
 # Custom git ignore
-**/dev_data**/**
+benchmarks/anomaly/data/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
