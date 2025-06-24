@@ -1,5 +1,7 @@
 # KAN-FPGA
-Implementations of KAN on FPGA
+Implementations of KAN on FPGA Paper at FPGA'2025
+
+Authors: Aarush Gupta (MIT), Duc Hoang (MIT)
 
 
 # Conda environment
