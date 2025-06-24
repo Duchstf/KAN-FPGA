@@ -1,2 +1,0 @@
-activation_lut_RAM_1P_LUTRAM_1R1W
-activation
