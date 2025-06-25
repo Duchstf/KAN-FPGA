@@ -38,6 +38,8 @@ grid_range = [-2**(TP - FP - 1), 2**(TP - FP - 1)]
 resolution = int(2 ** TP)
 batch_size = 64
 num_epochs = 30
+grid_size = 30
+spline_order = 10
 
 # === Load Data ===
 X_train = torch.from_numpy(np.load('data/X_train_val.npy')).float().to(device)
@@ -53,8 +55,8 @@ testloader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
 # === Initialize Model ===
 model = KAN(
     [16, 5, 5],
-    grid_size=30,
-    spline_order=10,
+    grid_size=grid_size,
+    spline_order=spline_order,
     grid_eps=0.05,
     base_activation=nn.GELU,
     grid_range=grid_range,
@@ -152,7 +154,7 @@ for epoch in range(num_epochs):
     # === Save Checkpoint if Best ===
     if val_accuracy > best_val_accuracy:
         best_val_accuracy = val_accuracy
-        checkpoint_path = 'checkpoints/best_model.pt'
+        checkpoint_path = f'models/jets_quant_tp{TP}_fp{FP}_grid{grid_size}_spline{spline_order}_acc{val_accuracy:.4f}.pt'
         torch.save({
             'epoch': epoch + 1,
             'model_state_dict': model.state_dict(),

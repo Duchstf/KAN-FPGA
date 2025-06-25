@@ -427,7 +427,6 @@ class KANLinear(torch.nn.Module):
             self.spline_selector[zero_cols, :] = 0
         
         new_fraction = self.spline_selector.sum() / self.spline_selector.numel() * 100
-        print(f"Pruned {prior_fraction - new_fraction:.2f}% splines, overall remaining {new_fraction:.2f}%")
     
     @torch.no_grad()
     def update_grid(self, x: torch.Tensor, margin: float = 0.01) -> None:
@@ -594,6 +593,8 @@ class KAN(torch.nn.Module):
         super(KAN, self).__init__()
         self.grid_size = grid_size
         self.spline_order = spline_order
+
+        if quantize: grid_range = [-2**(tp - fp - 1), 2**(tp - fp - 1)]
         
         # Create KAN layers
         self.layers = torch.nn.ModuleList()
