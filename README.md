@@ -5,12 +5,34 @@ Authors: Aarush Gupta (MIT), Duc Hoang (MIT)
 
 # Train and evaluate the models on our benchmarks
 
+1. (Optional, we provided the environment in the `environment.yml` file, see [Conda](#Conda) section for setting up) Activate the environment:
+```
+conda activate kan
+```
+2. Next, to train the model in each benchmark:
+
+```
+cd benchmarks/<bench-mark-name>
+```
+
+```
+python train.py
+```
+
+Where benchmark names could be `jets`, `anomaly` or `mnist`. This will generate the trained model saved in `benchmarks/<bench-mark-name>/models` 
+
+3. Then, to convert the trained model to hardware, in the same benchmark directory:
+
+```
+python convert.py
+```
+
 
 # Related FPGA benchmarks information
 * Xilinx Virtex UltraScale+ FPGA: `xcvu9p-flgb2104-2-i`
 * Vivado version: 
 
-# Conda environment
+# Conda 
 
 Create conda environment:
 
