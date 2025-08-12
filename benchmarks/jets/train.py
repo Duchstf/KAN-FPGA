@@ -11,6 +11,7 @@ import torch.optim as optim
 from torch.utils.data import TensorDataset, DataLoader
 from sklearn.metrics import roc_curve, auc
 from tqdm import tqdm
+import json
 
 # === Setup ===
 torch.cuda.empty_cache()
@@ -31,15 +32,40 @@ console.setFormatter(formatter)
 logging.getLogger().addHandler(console)
 
 # === Configuration ===
+#Model parameters
 TP = 7
 FP = 3
-REGULARIZE_ACTIVATION = 0.001
 grid_range = [-2**(TP - FP - 1), 2**(TP - FP - 1)]
 resolution = int(2 ** TP)
-batch_size = 64
-num_epochs = 30
 grid_size = 30
 spline_order = 10
+
+#Training parameters
+REGULARIZE_ACTIVATION = 0.001
+batch_size = 64
+num_epochs = 30
+
+#Save to a config json file
+config = {
+    "layers": [16, 5, 5],
+
+    "TP": TP,
+    "FP": FP,
+    "resolution": resolution,
+
+    "grid_size": grid_size,
+    "grid_range": grid_range,
+    "grid_eps": 0.05,
+
+    "spline_order": spline_order,
+    "base_activation": "nn.GELU",
+
+    "quantize_clip": True,
+    "quantize": True,
+}
+
+with open('models/config.json', 'w') as f:
+    json.dump(config, f)
 
 # === Load Data ===
 X_train = torch.from_numpy(np.load('data/X_train_val.npy')).float().to(device)
@@ -54,17 +80,17 @@ testloader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
 
 # === Initialize Model ===
 model = KAN(
-    [16, 5, 5],
-    grid_size=grid_size,
-    spline_order=spline_order,
-    grid_eps=0.05,
-    base_activation=nn.GELU,
-    grid_range=grid_range,
-    quantize=True,
-    tp=TP,
-    fp=FP,
-    lut_res=resolution,
-    quantize_clip=True
+    config["layers"],
+    grid_size=config["grid_size"],
+    spline_order=config["spline_order"],
+    grid_eps=config["grid_eps"],
+    base_activation=eval(config["base_activation"]),
+    grid_range=config["grid_range"],
+    quantize=config["quantize"],
+    tp=config["TP"],
+    fp=config["FP"],
+    lut_res=config["resolution"],
+    quantize_clip=config["quantize_clip"]
 ).to(device)
 
 param_count = sum(p.numel() for p in model.parameters())

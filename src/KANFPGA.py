@@ -1,13 +1,75 @@
-import json
-from efficient_kan import KAN
-import torch
-import os
-import math
+import json, os, math, shutil, argparse
 import numpy as np
-import argparse
-import shutil
+
+import torch
+import torch.nn as nn
 import torch.nn.functional as F
 
+from KANLinear import KAN
+
+device = 'cuda' if torch.cuda.is_available() else 'cpu'
+
+
+def converter(state_dict, config, output_dir):
+    """
+    model is the state_dict of the KAN model
+    config is the configuration of the KAN model
+    output_dir is the directory to store the hardware files
+    """
+    print(f"Converting KAN model to hardware ...")
+
+    #Get the model configs
+    layers = config["layers"]
+
+    TP = config["TP"] #Total precision
+    FP = config["FP"] #Floating point precision
+    resolution = config["resolution"] #Resolution of the grid
+
+    grid_size = config["grid_size"]
+    grid_range = config["grid_range"]
+    grid_eps = config["grid_eps"]
+
+    spline_order = config["spline_order"]
+    base_activation = config["base_activation"]
+
+    quantize = config["quantize"]
+    quantize_clip = config["quantize_clip"]
+
+    #Validity checks
+    assert grid_range[0] == -grid_range[1] and len(grid_range) == 2 and math.log(grid_range[1], 2).is_integer()
+    
+    #Initialize the KAN model
+    model = KAN(
+        config["layers"],
+        grid_size=config["grid_size"],
+        spline_order=config["spline_order"],
+        grid_eps=config["grid_eps"],
+        base_activation=eval(config["base_activation"]),
+        grid_range=config["grid_range"],
+        quantize=config["quantize"],
+        tp=config["TP"],
+        fp=config["FP"],
+        lut_res=config["resolution"],
+        quantize_clip=config["quantize_clip"]
+    ).to(device)
+
+    #Then load the model state_dict
+    model.load_state_dict(state_dict)
+
+    #Loop through each layer
+    for i, layer in enumerate(model.layers):
+        for j in range(layer.in_features):
+            for k in range(layer.out_features):
+                print(f"Processing lut_{i}_{j}_{k}...")
+                cache[f"lut_{i}_{j}_{k}"] = get_activation_values(model, i, j, k, config)
+
+                print(cache[f"lut_{i}_{j}_{k}"])
+                
+    pass
+
+
+#------------------------------------------------------------------------------------------------
+#------------------------------------------------------------------------------------------------
 from KANLinear import KANLinear
 
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
@@ -71,7 +133,7 @@ def generate_values_to_index(model, args):
     
     return file_contents
 
-def get_activation_values(model, layer_i, inp_node, out_node, args):
+def get_activation_values(model, layer_i, inp_node, out_node, config):
     """
     For the ith layer in the model, get the lookup table values for activation on edge from inp_node to out_node.
     """
@@ -79,7 +141,7 @@ def get_activation_values(model, layer_i, inp_node, out_node, args):
     layer = model.layers[layer_i]
 
     # Create dummy input
-    array = np.linspace(args.grid_range[0], args.grid_range[1], args.resolution)
+    array = np.linspace(config["grid_range"][0], config["grid_range"][1], config["resolution"])
     stacked_array = np.hstack([[array]*layer.in_features]).T
     x = torch.from_numpy(stacked_array).float().to(device)
 
