@@ -6,8 +6,9 @@ Authors: Aarush Gupta (MIT), Duc Hoang (MIT)
 # Train and evaluate the models on our benchmarks
 
 
-
-
+# Related FPGA benchmarks information
+* Xilinx Virtex UltraScale+ FPGA: `xcvu9p-flgb2104-2-i`
+* Vivado version: 
 
 # Conda environment
 
