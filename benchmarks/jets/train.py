@@ -154,7 +154,7 @@ for epoch in range(num_epochs):
     # === Save Checkpoint if Best ===
     if val_accuracy > best_val_accuracy:
         best_val_accuracy = val_accuracy
-        checkpoint_path = f'models/jets_quant_tp{TP}_fp{FP}_grid{grid_size}_spline{spline_order}_acc{val_accuracy:.4f}.pt'
+        checkpoint_path = f'models/jets_quant_tp{TP}_fp{FP}_grid{grid_size}_spline{spline_order}_acc{val_accuracy:.4f}_epoch{epoch + 1}.pt'
         torch.save({
             'epoch': epoch + 1,
             'model_state_dict': model.state_dict(),
