@@ -85,8 +85,7 @@ def converter(state_dict, config, output_dir):
         f.write(defines)
 
     vti = generate_values_to_index(model, args_ns)
-    with open(os.path.join(output_dir, 'values_to_index.h'), 'w') as f: f.write(vti)
-    shutil.copy(os.path.join(BASE_PATH, 'templates', 'value_to_index.h'), os.path.join(output_dir, 'value_to_index.h'))
+    with open(os.path.join(output_dir, 'value_to_index.h'), 'w') as f: f.write(vti)
 
     lookup_files = generate_all_lookups(model, args_ns, cache)
     for fname, contents in lookup_files.items():
@@ -159,7 +158,7 @@ def generate_values_to_index(model, args):
 
     shift_by = 1 + int(math.log(args.grid_range[1], 2))
 
-    with open(f"{BASE_PATH}/templates/lookup_header.template", "r") as f:
+    with open(f"{BASE_PATH}/templates/value_to_index.template", "r") as f:
         file_contents = f.read().replace("{ZERO_PT}", str(args.grid_range[1])).replace("{SHIFT_FACTOR}", str(shift_by))
     
     return file_contents
@@ -210,10 +209,19 @@ def generate_lookup_header_and_cpp(model, args, cache, i, j, k):
 
     value_table = cache[f"lut_{i}_{j}_{k}"][::MAX_RESOLUTION//args.resolution]
 
-    formatted_tbl = '\n'.join(
-        ', '.join(f"{' ' if x >= 0 else ''}(lut_t){quantize_value(x, tot_precision=args.tot_precision, float_precision=args.float_precision):.5e}" for x in value_table[i : i + 4]) + ","
-        for i in range(0, args.resolution, 4)
-    )[:-1] 
+    formatted_tbl_lines = []
+    for i in range(0, args.resolution, 4):
+        values = value_table[i:i+4]
+        # Pad with zeros if fewer than 4 elements
+        if len(values) < 4:
+            values += [0.0] * (4 - len(values))
+        line = ', '.join(
+            f"{' ' if x >= 0 else ''}(lut_t){quantize_value(x, tot_precision=args.tot_precision, float_precision=args.float_precision):.5e}"
+            for x in values
+        ) + ","
+        formatted_tbl_lines.append(line)
+
+    formatted_tbl = '\n'.join(formatted_tbl_lines)
 
     lookup_cpp_contents = lookup_cpp_contents.replace("{FORMATTED_VALUES}", formatted_tbl)
 

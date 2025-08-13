@@ -111,7 +111,7 @@ void KAN(input_t input[N_INPUT], result_t output[N_OUTPUT])
 
 #pragma HLS interface mode = ap_none port = input, output
 #pragma HLS PIPELINE II = 1
-}
+
 
 
 	//// LAYER 0 ////
