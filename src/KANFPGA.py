@@ -85,8 +85,8 @@ def converter(state_dict, config, output_dir):
         f.write(defines)
 
     vti = generate_values_to_index(model, args_ns)
-    with open(os.path.join(output_dir, 'values_to_index.h'), 'w') as f:
-        f.write(vti)
+    with open(os.path.join(output_dir, 'values_to_index.h'), 'w') as f: f.write(vti)
+    shutil.copy(os.path.join(BASE_PATH, 'templates', 'value_to_index.h'), os.path.join(output_dir, 'value_to_index.h'))
 
     lookup_files = generate_all_lookups(model, args_ns, cache)
     for fname, contents in lookup_files.items():
