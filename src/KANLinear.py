@@ -395,6 +395,7 @@ class KANLinear(torch.nn.Module):
             threshold: Threshold for pruning (splines with norm < threshold are pruned)
             next_layer_sparsity_matrix: Sparsity matrix of the next layer for backward pruning
         """
+        
         # Get grid range for evaluation
         grid_range = [self.grid[0, 0].item(), self.grid[0, -1].item()]
         array = torch.linspace(grid_range[0], grid_range[1], 1024, device=self.base_weight.device)

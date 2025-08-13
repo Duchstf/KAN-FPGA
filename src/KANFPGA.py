@@ -4,6 +4,7 @@ import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+import matplotlib.pyplot as plt
 
 from KANLinear import KAN
 
@@ -16,29 +17,21 @@ def converter(state_dict, config, output_dir):
     config is the configuration of the KAN model
     output_dir is the directory to store the hardware files
     """
+    from types import SimpleNamespace
+
     print(f"Converting KAN model to hardware ...")
 
-    #Get the model configs
-    layers = config["layers"]
+    # --- Pull config values (with a few safe defaults) ---
+    TP = config["TP"]                        # total precision
+    FP = config["FP"]                        # fractional precision
+    resolution = config["resolution"]        # LUT resolution
+    grid_range = config["grid_range"]        # e.g. [-8, 8]
+    prune_fraction = config.get("prune_fraction", 0.0)  # optional
 
-    TP = config["TP"] #Total precision
-    FP = config["FP"] #Floating point precision
-    resolution = config["resolution"] #Resolution of the grid
-
-    grid_size = config["grid_size"]
-    grid_range = config["grid_range"]
-    grid_eps = config["grid_eps"]
-
-    spline_order = config["spline_order"]
-    base_activation = config["base_activation"]
-
-    quantize = config["quantize"]
-    quantize_clip = config["quantize_clip"]
-
-    #Validity checks
+    # Validity checks (match CLI)
     assert grid_range[0] == -grid_range[1] and len(grid_range) == 2 and math.log(grid_range[1], 2).is_integer()
-    
-    #Initialize the KAN model
+
+    # --- Initialize and load the KAN model ---
     model = KAN(
         config["layers"],
         grid_size=config["grid_size"],
@@ -53,20 +46,58 @@ def converter(state_dict, config, output_dir):
         quantize_clip=config["quantize_clip"]
     ).to(device)
 
-    #Then load the model state_dict
     model.load_state_dict(state_dict)
+    model.eval()
 
-    #Loop through each layer
-    for i, layer in enumerate(model.layers):
-        for j in range(layer.in_features):
-            for k in range(layer.out_features):
-                print(f"Processing lut_{i}_{j}_{k}...")
-                cache[f"lut_{i}_{j}_{k}"] = get_activation_values(model, i, j, k, config)
+    # --- Prepare output dir and helper "args" namespace used by generators ---
+    output_dir = os.path.expanduser(output_dir)
+    os.makedirs(output_dir, exist_ok=True)
 
-                print(cache[f"lut_{i}_{j}_{k}"])
-                
-    pass
+    args_ns = SimpleNamespace(
+        tot_precision=TP,
+        float_precision=FP,
+        resolution=resolution,
+        grid_range=grid_range,
+        output_dir=output_dir,
+    )
 
+    # --- Copy TCL template (for synthesis projects) ---
+    shutil.copy(os.path.join(BASE_PATH, 'templates', 'tcl.template'),
+                os.path.join(output_dir, 'KAN.tcl'))
+
+    # --- Build or load the LUT cache at max internal resolution, then (optionally) prune ---
+    cache_file = os.path.join(output_dir, f'values_cache_{MAX_RESOLUTION}.json')
+    if not os.path.exists(cache_file):
+        # generate_values_cache expects a "config-like" dict that provides grid_range & resolution
+        cache = generate_values_cache(model, config)
+        with open(cache_file, 'w') as f:
+            json.dump(cache, f)
+    else:
+        with open(cache_file, 'r') as f:
+            cache = json.load(f)
+
+    if prune_fraction and prune_fraction > 0.0:
+        cache = prune_cache(cache, prune_fraction=prune_fraction)
+
+    # --- Write out the various headers and sources ---
+    defines = generate_defines_h(model, args_ns)
+    with open(os.path.join(output_dir, 'defines.h'), 'w') as f:
+        f.write(defines)
+
+    vti = generate_values_to_index(model, args_ns)
+    with open(os.path.join(output_dir, 'values_to_index.h'), 'w') as f:
+        f.write(vti)
+
+    lookup_files = generate_all_lookups(model, args_ns, cache)
+    for fname, contents in lookup_files.items():
+        with open(os.path.join(output_dir, fname), 'w') as f:
+            f.write(contents)
+
+    kan_cpp = generate_kan_cpp(model, cache)
+    with open(os.path.join(output_dir, 'KAN.cpp'), 'w') as f:
+        f.write(kan_cpp)
+
+    print(f"Done. Files are in: {output_dir}")
 
 #------------------------------------------------------------------------------------------------
 #------------------------------------------------------------------------------------------------
@@ -113,7 +144,7 @@ def prune_cache(cache, prune_fraction=0.1):
 
 def generate_defines_h(model, args):
 
-    with open(f"{BASE_PATH}/templates/defines.txt", "r") as f:
+    with open(f"{BASE_PATH}/templates/defines.template", "r") as f:
         defines_content = f.read()
 
     defines_content = defines_content.replace("{TOT_BITS}", str(args.tot_precision)) \
@@ -128,7 +159,7 @@ def generate_values_to_index(model, args):
 
     shift_by = 1 + int(math.log(args.grid_range[1], 2))
 
-    with open(f"{BASE_PATH}/templates/lookup_header.txt", "r") as f:
+    with open(f"{BASE_PATH}/templates/lookup_header.template", "r") as f:
         file_contents = f.read().replace("{ZERO_PT}", str(args.grid_range[1])).replace("{SHIFT_FACTOR}", str(shift_by))
     
     return file_contents
@@ -168,10 +199,10 @@ def generate_lookup_header_and_cpp(model, args, cache, i, j, k):
     if f"lut_{i}_{j}_{k}" not in cache:
         raise ValueError(f"lut_{i}_{j}_{k} not found in cache")
 
-    with open(f"{BASE_PATH}/templates/lookup_header.txt", "r") as f:
+    with open(f"{BASE_PATH}/templates/lookup_header.template", "r") as f:
         lookup_header_contents = f.read()
 
-    with open(f"{BASE_PATH}/templates/lookup_cpp.txt", "r") as f:
+    with open(f"{BASE_PATH}/templates/lookup_cpp.template", "r") as f:
         lookup_cpp_contents = f.read()
 
     lookup_header_contents = lookup_header_contents.replace("{i}", str(i)).replace("{j}", str(j)).replace("{k}", str(k))
@@ -218,7 +249,7 @@ def generate_kan_cpp(model, cache):
     
     file_contents += "\n"
 
-    with open(f"{BASE_PATH}/templates/kan_header.txt", "r") as f:
+    with open(f"{BASE_PATH}/templates/kan_header.template", "r") as f:
         file_contents += f.read() + "\n"
 
     for i, layer in enumerate(model.layers):
