@@ -1,6 +1,10 @@
 import os, re, shutil, json, math
+import numpy as np
+
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
+
 from KANLinear import KAN
 
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
@@ -44,6 +48,9 @@ def converter(state_dict, config, output_dir):
     #Write the KAN core VHDL
     write_kan_core(model, output_dir)
 
+    #Generate the LUT data files (mem files
+    generate_lut_data(model, config, output_dir)
+
     # #Make the PkgTypes.vhd file
     # with open(os.path.join(output_dir, "src", "PkgTypes.vhd"), "w") as f:
     #     f.write(f"library ieee;\nuse ieee.std_logic_1164.all;\nuse ieee.numeric_std.all;\n\npackage PkgTypes is\n\n")
@@ -79,7 +86,29 @@ def init_model(state_dict, config):
 
     return model
 
+def get_activation_values(model, layer_i, inp_node, out_node, config):
+    """
+    Get the activation values for a given LUT
+    """
+
+    layer = model.layers[layer_i]
+
+    # Create dummy input
+    array = np.linspace(config["grid_range"][0], config["grid_range"][1], config["resolution"])
+    stacked_array = np.hstack([[array]*layer.in_features]).T
+    x = torch.from_numpy(stacked_array).float().to(device)
+
+    #Loop through each activation function
+    base_output = layer.base_activation(x)[: , inp_node] * layer.base_weight[out_node, inp_node]
+
+    spline_output = F.linear(layer.b_splines(x)[:, inp_node, :], layer.scaled_spline_weight[out_node, inp_node, :])
+
+    return (layer.spline_selector[out_node, inp_node] * (base_output + spline_output)).tolist()
+    
+
+
 def write_kan_core(model, output_dir, max_per_line=16):
+
     """
     Write the KAN core VHDL file
     max_per_line is the maximum number of signals per line in the VHDL file
@@ -175,3 +204,87 @@ def write_kan_core(model, output_dir, max_per_line=16):
 
 
     pass
+
+def generate_lut_data(model, config, output_dir):
+    """
+    Generate per-LUT memory files for VHDL 'lut_lookup' blocks.
+
+    Output:
+      output_dir/mem/lut_{i}_{j}_{k}.mem   # ASCII hex, one word per line, two's-complement
+    Assumptions:
+      - config has attributes: tp (or tot_precision), fp (or float_precision),
+        lut_res (or resolution), grid_range ([-R, R]).
+      - If a pruned values_cache_*.json is present in output_dir, use it.
+      - Else compute values with get_activation_values(model, i, j, k, configlike).
+    """
+
+    # ---- pull numeric formats from model (with safe defaults) ----
+    tot_precision = config["TP"]
+    float_precision = config["FP"]
+    resolution = config["resolution"]
+    grid_range = config["grid_range"]
+
+    assert grid_range[0] == -grid_range[1] and len(grid_range) == 2 and math.log(grid_range[1], 2).is_integer()
+
+    # ---- initialize cache (if any) ----
+    cache = None
+    try:
+        candidates = [f for f in os.listdir(output_dir)
+                      if re.match(r"values_cache_\d+\.json$", f)]
+        if candidates:
+            with open(os.path.join(output_dir, candidates[0]), "r") as f:
+                cache = json.load(f)
+    except Exception:
+        cache = None
+
+    # ---- helpers ----
+    def to_fixed_int(x, tot_bits=tot_precision, frac_bits=float_precision):
+        """Quantize float x to Q format integer with clamp, then two's complement."""
+        scale = 1 << frac_bits
+        v = int(round(float(x) * scale))
+        min_int = -(1 << (tot_bits - 1))
+        max_int = (1 << (tot_bits - 1)) - 1
+        if v < min_int: v = min_int
+        if v > max_int: v = max_int
+        return v
+    
+    def int_to_hex_word(v, tot_bits=tot_precision):
+        """Two's complement as fixed-width uppercase hex (no 0x, one word)."""
+        if v < 0:
+            v = (1 << tot_bits) + v
+        width_nibbles = (tot_bits + 3) // 4
+        return f"{v:0{width_nibbles}X}"
+
+    # ---- compute-or-read values and write .mem files ----
+    # Fall back config-like dict if we need to compute fresh values
+    cfg_like = {"grid_range": grid_range, "resolution": resolution}
+
+    written = 0
+    for i, layer in enumerate(model.layers):
+        in_f  = layer.in_features
+        out_f = layer.out_features
+
+        for j in range(in_f):
+            for k in range(out_f):
+                key = f"lut_{i}_{j}_{k}"
+
+                # if we have a cache AND this LUT is not present (pruned), skip
+                if cache is not None and key not in cache:
+                    continue
+
+                if cache is not None:
+                    vals = cache[key]
+                else:
+                    vals = get_activation_values(model, i, j, k, config)
+
+                # quantize -> hex lines
+                hex_lines = [int_to_hex_word(to_fixed_int(v)) for v in vals]
+
+                # write file
+                mem_path = os.path.join(output_dir, "mem", f"{key}.mem")
+                with open(mem_path, "w") as f:
+                    f.write("\n".join(hex_lines) + "\n")
+                written += 1
+
+    # Small breadcrumb
+    print(f"Wrote {written} LUT .mem file(s) to {output_dir}/mem/ (TP={tot_precision}, FP={float_precision}, RES={resolution}).")
