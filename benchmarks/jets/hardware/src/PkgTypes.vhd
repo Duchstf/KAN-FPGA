@@ -4,12 +4,12 @@ use ieee.numeric_std.all;
 
 package PkgTypes is
   -- Model parameters
-  constant N_INPUT  : positive := {{N_INPUT}};
-  constant N_OUTPUT : positive := {{N_OUTPUT}};
+  constant N_INPUT  : positive := 16;
+  constant N_OUTPUT : positive := 5;
 
   -- Fixed-point formats
-  constant INPUT_WIDTH : positive := {{INPUT_WIDTH}};
-  constant INPUT_FRAC  : natural  := {{INPUT_FRAC}};  
+  constant INPUT_WIDTH : positive := 7;
+  constant INPUT_FRAC  : natural  := 3;  
 
   subtype input_t  is signed(INPUT_WIDTH-1 downto 0);
   subtype output_t is signed(INPUT_WIDTH-1 downto 0);

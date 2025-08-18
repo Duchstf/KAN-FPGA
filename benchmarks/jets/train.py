@@ -60,7 +60,7 @@ config = {
     "spline_order": spline_order,
     "base_activation": "nn.GELU",
 
-    "quantize_clip": True,
+    "quantize_clip": False,
     "quantize": True,
 }
 

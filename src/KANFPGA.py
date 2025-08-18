@@ -51,15 +51,12 @@ def converter(state_dict, config, output_dir):
     #Generate the LUT data files (mem files
     generate_lut_data(model, config, output_dir)
 
-    # #Make the PkgTypes.vhd file
-    # with open(os.path.join(output_dir, "src", "PkgTypes.vhd"), "w") as f:
-    #     f.write(f"library ieee;\nuse ieee.std_logic_1164.all;\nuse ieee.numeric_std.all;\n\npackage PkgTypes is\n\n")
+    #Make the PkgTypes.vhd file
+    generate_pkg_types(config, output_dir)
 
-    # from types import SimpleNamespace
+    #Make the PkgLUT.vhd file
+    generate_pkg_lut(config, output_dir)
 
-
-
-    # --- Pull config values (with a few safe defaults) ---
 
 ########################################################
 # Helper functions
@@ -105,8 +102,6 @@ def get_activation_values(model, layer_i, inp_node, out_node, config):
 
     return (layer.spline_selector[out_node, inp_node] * (base_output + spline_output)).tolist()
     
-
-
 def write_kan_core(model, output_dir, max_per_line=16):
 
     """
@@ -173,7 +168,7 @@ def write_kan_core(model, output_dir, max_per_line=16):
                 src = f"input({j})" if i == 0 else f"out{i-1}_{j}"
                 dst = f"act_{i}_{j}_{k}"
                 blk.append(
-                    f"  i{inst_idx:02d} : entity work.lut_lookup "
+                    f"  i{inst_idx:02d} : entity work.LUT "
                     f'generic map (MEMFILE=>"{mem}") '
                     f"port map (clk, '1', {src}, {dst});"
                 )
@@ -288,3 +283,41 @@ def generate_lut_data(model, config, output_dir):
 
     # Small breadcrumb
     print(f"Wrote {written} LUT .mem file(s) to {output_dir}/mem/ (TP={tot_precision}, FP={float_precision}, RES={resolution}).")
+
+def generate_pkg_types(config, output_dir):
+    """
+    Generate the PkgTypes.vhd file
+    """
+
+    with open(os.path.join(os.path.dirname(__file__), "templates", "PkgTypes.vhd"), "r") as tf:
+        tpl = tf.read()
+
+    #Replace the placeholders with the actual values
+    vhdl_text = tpl.replace("{{N_INPUT}}", str(config["layers"][0]))
+    vhdl_text = vhdl_text.replace("{{N_OUTPUT}}", str(config["layers"][-1]))
+
+    vhdl_text = vhdl_text.replace("{{INPUT_WIDTH}}", str(config["TP"]))
+    vhdl_text = vhdl_text.replace("{{INPUT_FRAC}}", str(config["FP"]))
+
+    vhdl_text = vhdl_text.replace("{{LUT_WIDTH}}", str(config["TP"]))
+    vhdl_text = vhdl_text.replace("{{LUT_FRAC}}", str(config["FP"]))
+    
+    vhdl_text = vhdl_text.replace("{{LUT_ADDR_WIDTH}}", str(config["resolution"]))
+
+    with open(os.path.join(output_dir, "src", "PkgTypes.vhd"), "w") as f:
+        f.write(vhdl_text)
+
+def generate_pkg_lut(config, output_dir):
+    """
+    Generate the PkgLUT.vhd file
+    """
+
+    with open(os.path.join(os.path.dirname(__file__), "templates", "PkgLUT.vhd"), "r") as tf:
+        tpl = tf.read()
+
+    vhdl_text = tpl.replace("{{LUT_SIZE}}", str(config["resolution"]))
+    vhdl_text = tpl.replace("{{LUT_ADDR_WIDTH}}", str(config["TP"]))
+    vhdl_text = tpl.replace("{{LUT_DATA_WIDTH}}", str(config["TP"]))
+
+    with open(os.path.join(output_dir, "src", "PkgLUT.vhd"), "w") as f:
+        f.write(vhdl_text)
