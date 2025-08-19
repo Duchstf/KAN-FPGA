@@ -37,19 +37,19 @@ python convert.py
 Create conda environment:
 
 ```
-conda env create -f environment.yml
+micromamba env create -f environment.yml
 ```
 
 Activate the environment:
 
 ```
-conda activate kan
+micromamba activate kan
 ```
 
 And then do whatever you want in this environment (edit files, open notebooks, etc.). To deactivate the environment:
 
 ```
-conda deactivate
+micromamba deactivate
 ```
 
 If you make any update for the environment, please edit the `environment.yml` file and run:

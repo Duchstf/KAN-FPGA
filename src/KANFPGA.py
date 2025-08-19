@@ -57,6 +57,9 @@ def converter(state_dict, config, output_dir):
     #Make the PkgLUT.vhd file
     generate_pkg_lut(config, output_dir)
 
+    #Copy the LUT.vhd file to src
+    shutil.copy(os.path.join(os.path.dirname(__file__), "templates", "LUT.vhd"), os.path.join(output_dir, "src", "LUT.vhd"))
+
     #Make the build.tcl file
     generate_build_tcl(config, output_dir)
 
@@ -130,7 +133,7 @@ def write_kan_core(model, output_dir, max_per_line=16):
     # ---------- Build SIGNAL_DECLS ----------
 
     #Helper function to emit a list of signals
-    def emit(names, typ="lut_t"):
+    def emit(names, typ="lut_output_t"):
         lines=[]; buf=[]
         for n in names:
             buf.append(n)
@@ -173,7 +176,7 @@ def write_kan_core(model, output_dir, max_per_line=16):
                 blk.append(
                     f"  i{inst_idx:02d} : entity work.LUT "
                     f'generic map (MEMFILE=>"{mem}") '
-                    f"port map (clk, '1', {src}, {dst});"
+                    f"port map (clk, {src}, {dst});"
                 )
                 sum_terms.append(dst)
                 inst_idx += 1

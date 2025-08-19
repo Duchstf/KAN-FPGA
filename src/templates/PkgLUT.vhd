@@ -1,7 +1,6 @@
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
-use ieee.fixed_pkg.all;
 
 package PkgLUT is
     constant LUT_SIZE : positive := {{LUT_SIZE}}; --LUT size

@@ -1,13 +1,14 @@
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
+use work.PkgTypes.all;
 
 entity top is
     port (
       clk    : in  std_logic;
       en     : in  std_logic := '1';
       din    : in  input_vec_t;
-      dout   : out result_vec_t
+      dout   : out output_vec_t
     );
 end entity;
 

@@ -1,6 +1,11 @@
 # Custom git ignore
 benchmarks/anomaly/data/
-
+*.jou
+*.log
+*.dcp
+*.Xil
+*-p
+*clockInfo.txt
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

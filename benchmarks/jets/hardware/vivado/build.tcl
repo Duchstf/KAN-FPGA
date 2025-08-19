@@ -1,44 +1,52 @@
-# vivado/build.tcl
+# vivado/ooc_build.tcl
 # Usage:
 #   vivado -mode batch -source vivado/build.tcl
 
-set PART "xcvu9p-flgb2104-2-i" ; 
-
+# Define project name and paths
 set PROJ "KAN_FPGA_PROJECT"
 set DIR  [file normalize [pwd]]
+set PART "xcvu9p-flgb2104-2-i"
 
-# Create project
-create_project $PROJ $DIR/$PROJ -part $PART -force
-set_property target_language VHDL [current_project]
-set_property default_lib work [current_project]
+# Create in-memory project with the specified part
+create_project -name $PROJ -part $PART -in_memory
 
-# VHDL 2008 for all VHDL files
-set_property file_type {VHDL 2008} [get_filesets sources_1]
+# Define output files
+set OOC_DCP_PATH "$DIR/$PROJ/KAN_FPGA.dcp"
+file mkdir -p "$DIR/$PROJ"
 
-# Add all .vhd files in $DIR/src
-add_files -norecurse [glob $DIR/src/*.vhd]
-
-# Add mem files (mark used in synth)
-set mems [glob -nocomplain $DIR/mem/*.mem]
-if {[llength $mems] > 0} {
-  add_files -fileset sources_1 -norecurse $mems
-  foreach f $mems {
-    set_property used_in_synthesis true [get_files $f]
-    set_property used_in_simulation true [get_files $f]
-  }
+# Clean previous DCP
+if {[file exists $OOC_DCP_PATH]} {
+    file delete -force $OOC_DCP_PATH
 }
 
-# Set top
-set_property top top [get_filesets sources_1]
+# Add VHDL sources
+add_files -norecurse [glob $DIR/src/*.vhd]
 
-# Out-of-context synthesis is fine
-launch_runs synth_1 -jobs 8
-wait_on_run synth_1
+# Add .mem files and mark for synthesis
+set mems [glob -nocomplain $DIR/mem/*.mem]
+if {[llength $mems] > 0} {
+    add_files -norecurse $mems
+    foreach f $mems {
+        set_property used_in_synthesis true [get_files $f]
+    }
+}
 
-# (Optional) Implement & bitstream
-launch_runs impl_1 -to_step write_bitstream -jobs 8
-wait_on_run impl_1
+# Set top-level entity
+set_property top top [current_fileset]
 
-# Reports
-report_utilization -file $DIR/utilization.rpt -hierarchical
-report_timing_summary -file $DIR/timing.rpt
+# Run out-of-context synthesis with aggressive optimization
+synth_design -top top -mode out_of_context -directive PerformanceOptimized
+create_clock -name clk -period 8.0 [get_ports clk]
+
+# Write synthesized checkpoint
+write_checkpoint -force $OOC_DCP_PATH
+
+# Post-synthesis optimization and full implementation
+opt_design
+place_design
+route_design
+phys_opt_design
+
+# Post-implementation utilization and timing
+report_utilization -file "$DIR/$PROJ/post_impl_util.rpt"
+report_timing_summary -file "$DIR/$PROJ/post_impl_timing.rpt"
