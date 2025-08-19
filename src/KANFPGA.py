@@ -29,7 +29,7 @@ def converter(state_dict, config, output_dir):
     │  ├─ lut_0_0_0.mem
     │  ├─ ...
     │  └─ lut_1_4_4.mem
-    └─ script/             
+    └─ vivado/             
         └─ build.tcl       --Build script
     """
 
@@ -38,7 +38,7 @@ def converter(state_dict, config, output_dir):
     #Make the directories within output_dir
     os.makedirs(os.path.join(output_dir, "src"), exist_ok=True)
     os.makedirs(os.path.join(output_dir, "mem"), exist_ok=True)
-    os.makedirs(os.path.join(output_dir, "script"), exist_ok=True)
+    os.makedirs(os.path.join(output_dir, "vivado"), exist_ok=True)
 
     model = init_model(state_dict, config)
 
@@ -56,6 +56,9 @@ def converter(state_dict, config, output_dir):
 
     #Make the PkgLUT.vhd file
     generate_pkg_lut(config, output_dir)
+
+    #Make the build.tcl file
+    generate_build_tcl(config, output_dir)
 
 
 ########################################################
@@ -316,8 +319,16 @@ def generate_pkg_lut(config, output_dir):
         tpl = tf.read()
 
     vhdl_text = tpl.replace("{{LUT_SIZE}}", str(config["resolution"]))
-    vhdl_text = tpl.replace("{{LUT_ADDR_WIDTH}}", str(config["TP"]))
-    vhdl_text = tpl.replace("{{LUT_DATA_WIDTH}}", str(config["TP"]))
+    vhdl_text = vhdl_text.replace("{{LUT_ADDR_WIDTH}}", str(config["TP"]))
+    vhdl_text = vhdl_text.replace("{{LUT_DATA_WIDTH}}", str(config["TP"]))
 
     with open(os.path.join(output_dir, "src", "PkgLUT.vhd"), "w") as f:
         f.write(vhdl_text)
+
+def generate_build_tcl(config, output_dir):
+    """
+    Generate the build.tcl file
+    """
+
+    #Just copy the template file
+    shutil.copy(os.path.join(os.path.dirname(__file__), "templates", "build.tcl"), os.path.join(output_dir, "vivado", "build.tcl"))
