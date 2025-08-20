@@ -1,6 +1,6 @@
 # vivado/ooc_build.tcl
 # Usage:
-#   vivado -mode batch -source vivado/build_ooc.tcl
+#   vivado -mode batch -source vivado/build.tcl
 
 # Define project name and paths
 set PROJ "KAN_FPGA_PROJECT"
