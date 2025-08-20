@@ -10,7 +10,7 @@ entity LUT is
     generic (
         MEMFILE          : string ;
         READ_LATENCY     : integer  := 1;
-        MEMORY_PRIMITIVE : string   := "auto"
+        MEMORY_PRIMITIVE : string   := "distributed"
     );
     port (
         clk : in std_logic;
