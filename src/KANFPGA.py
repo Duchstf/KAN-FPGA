@@ -30,7 +30,8 @@ def converter(state_dict, remaining_fraction, config, output_dir):
     │  ├─ ...
     │  └─ lut_1_4_4.mem
     └─ vivado/             
-        └─ build.tcl       --Build script
+        └─ build_full.tcl       --Build script
+        └─ build_ooc.tcl       --Build script
     """
 
     print(f"Converting KAN model to hardware ...")
@@ -335,4 +336,5 @@ def generate_build_tcl(config, output_dir):
     """
 
     #Just copy the template file
-    shutil.copy(os.path.join(os.path.dirname(__file__), "templates", "build.tcl"), os.path.join(output_dir, "vivado", "build.tcl"))
+    shutil.copy(os.path.join(os.path.dirname(__file__), "templates", "build_full.tcl"), os.path.join(output_dir, "vivado", "build_full.tcl"))
+    shutil.copy(os.path.join(os.path.dirname(__file__), "templates", "build_ooc.tcl"), os.path.join(output_dir, "vivado", "build_ooc.tcl"))
