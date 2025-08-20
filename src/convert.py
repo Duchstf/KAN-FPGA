@@ -20,7 +20,7 @@ files.sort(key=lambda x: float(x.split('_acc')[1].split('_epoch')[0]), reverse=T
 with open(os.path.join(model_dir, "config.json"), "r") as f: config = json.load(f)
 
 # Load the model with the best accuracy
-checkpoint = torch.load(os.path.join(model_dir, files[-1]), map_location=torch.device(device))
+checkpoint = torch.load(os.path.join(model_dir, files[0]), map_location=torch.device(device))
 state_dict = checkpoint["model_state_dict"]
 
 # --- 2. Handle hardware folder ---
@@ -36,5 +36,11 @@ if os.path.exists(hardware_dir):
 os.makedirs(hardware_dir, exist_ok=True)
 print(f"Created '{hardware_dir}' folder.")
 
+print(f"Loaded model from {files[0]}")
+print(f"Remaining fraction: {checkpoint['remaining_fraction']}")
+print(f"Epoch: {checkpoint['epoch']}")
+print(f"Val Accuracy: {checkpoint['val_accuracy']}")
+
+
 # ---- 3. Convert model to hardware-specific format ----
-KANFPGA.converter(state_dict, config, hardware_dir)
+KANFPGA.converter(state_dict, remaining_fraction=checkpoint['remaining_fraction'], config=config, output_dir=hardware_dir)

@@ -9,7 +9,7 @@ from KANLinear import KAN
 
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
-def converter(state_dict, config, output_dir):
+def converter(state_dict, remaining_fraction, config, output_dir):
     """
     model is the state_dict of the KAN model
     config is the configuration of the KAN model
@@ -34,6 +34,7 @@ def converter(state_dict, config, output_dir):
     """
 
     print(f"Converting KAN model to hardware ...")
+    print(f"Remaining fraction: {remaining_fraction}")
 
     #Make the directories within output_dir
     os.makedirs(os.path.join(output_dir, "src"), exist_ok=True)
@@ -45,11 +46,14 @@ def converter(state_dict, config, output_dir):
     #Copy the top file to src
     shutil.copy(os.path.join(os.path.dirname(__file__), "templates", "top.vhd"), os.path.join(output_dir, "src", "top.vhd"))
 
+    #Generate sprase cache
+    cache = generate_sparse_cache(model, remaining_fraction, config)
+
     #Write the KAN core VHDL
-    write_kan_core(model, output_dir)
+    write_kan_core(model, cache, output_dir)
 
     #Generate the LUT data files (mem files
-    generate_lut_data(model, config, output_dir)
+    generate_lut_data(model, config, cache, output_dir)
 
     #Make the PkgTypes.vhd file
     generate_pkg_types(config, output_dir)
@@ -107,28 +111,40 @@ def get_activation_values(model, layer_i, inp_node, out_node, config):
     spline_output = F.linear(layer.b_splines(x)[:, inp_node, :], layer.scaled_spline_weight[out_node, inp_node, :])
 
     return (layer.spline_selector[out_node, inp_node] * (base_output + spline_output)).tolist()
+
+def generate_sparse_cache(model, remaining_fraction, config):
+    """
+    Generate a sparse cache of the model based on the remaining fraction
+    """
+
+    cache = {}
+    for i, layer in enumerate(model.layers):
+        for j in range(layer.in_features):
+            for k in range(layer.out_features):
+                cache[f"lut_{i}_{j}_{k}"] = get_activation_values(model, i, j, k, config)
+
+    #Then prune the dense cache based on the remaining fraction
+    norms = {key: np.linalg.norm(np.array(value)) for key, value in cache.items()}
+    sorted_keys = sorted(norms.keys(), key=lambda k: norms[k])
     
-def write_kan_core(model, output_dir, max_per_line=16):
+    # Calculate number of nodes to prune based on fraction
+    num_to_prune = int(len(cache) * (1 - remaining_fraction))
+    
+    # Delete lowest x fraction of nodes
+    for key in sorted_keys[:num_to_prune]:
+        del cache[key]
+
+    return cache
+
+def write_kan_core(model, cache, output_dir, max_per_line=16):
 
     """
     Write the KAN core VHDL file
     max_per_line is the maximum number of signals per line in the VHDL file
     """
-
-    # Try to load a pruned cache so we only instantiate existing LUTs
-    # (falls back to "assume all exist" if no cache is found)
-    cache = None
-    try:
-        candidates = [f for f in os.listdir(output_dir)
-                      if re.match(r"values_cache_\d+\.json$", f)]
-        if candidates:
-            with open(os.path.join(output_dir, candidates[0]), "r") as f:
-                cache = json.load(f)
-    except Exception:
-        cache = None
     
     #Helper function to check if a LUT exists
-    def lut_exists(i,j,k): return True if cache is None else f"lut_{i}_{j}_{k}" in cache
+    def lut_exists(i,j,k): return f"lut_{i}_{j}_{k}" in cache
 
     # ---------- Build SIGNAL_DECLS ----------
 
@@ -206,7 +222,7 @@ def write_kan_core(model, output_dir, max_per_line=16):
 
     pass
 
-def generate_lut_data(model, config, output_dir):
+def generate_lut_data(model, config, cache, output_dir):
     """
     Generate per-LUT memory files for VHDL 'lut_lookup' blocks.
 
@@ -215,7 +231,7 @@ def generate_lut_data(model, config, output_dir):
     Assumptions:
       - config has attributes: tp (or tot_precision), fp (or float_precision),
         lut_res (or resolution), grid_range ([-R, R]).
-      - If a pruned values_cache_*.json is present in output_dir, use it.
+      - If a pruned cache is present, use it.
       - Else compute values with get_activation_values(model, i, j, k, configlike).
     """
 
@@ -226,17 +242,6 @@ def generate_lut_data(model, config, output_dir):
     grid_range = config["grid_range"]
 
     assert grid_range[0] == -grid_range[1] and len(grid_range) == 2 and math.log(grid_range[1], 2).is_integer()
-
-    # ---- initialize cache (if any) ----
-    cache = None
-    try:
-        candidates = [f for f in os.listdir(output_dir)
-                      if re.match(r"values_cache_\d+\.json$", f)]
-        if candidates:
-            with open(os.path.join(output_dir, candidates[0]), "r") as f:
-                cache = json.load(f)
-    except Exception:
-        cache = None
 
     # ---- helpers ----
     def to_fixed_int(x, tot_bits=tot_precision, frac_bits=float_precision):
@@ -267,16 +272,12 @@ def generate_lut_data(model, config, output_dir):
 
         for j in range(in_f):
             for k in range(out_f):
+
+                #Check if the LUT exists in the cache
                 key = f"lut_{i}_{j}_{k}"
+                if key not in cache: continue
 
-                # if we have a cache AND this LUT is not present (pruned), skip
-                if cache is not None and key not in cache:
-                    continue
-
-                if cache is not None:
-                    vals = cache[key]
-                else:
-                    vals = get_activation_values(model, i, j, k, config)
+                vals = cache[key]
 
                 # quantize -> hex lines
                 hex_lines = [int_to_hex_word(to_fixed_int(v)) for v in vals]

@@ -186,6 +186,7 @@ for epoch in range(num_epochs):
             'model_state_dict': model.state_dict(),
             'optimizer_state_dict': optimizer.state_dict(),
             'val_accuracy': val_accuracy,
-            'val_loss': val_loss
+            'val_loss': val_loss,
+            'remaining_fraction': remaining_fraction
         }, checkpoint_path)
         logging.info(f"New best model saved with val accuracy: {val_accuracy:.4f}")
