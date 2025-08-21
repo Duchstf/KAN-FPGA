@@ -3,11 +3,17 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
 package PkgLUT is
-    constant LUT_SIZE : positive := 128; --LUT size
-    constant LUT_ADDR_WIDTH : positive := 7; --LUT address width = log2(LUT_SIZE)
-    constant LUT_DATA_WIDTH : positive := 7; --LUT data width (=LUT address width in our case)
-    
-    subtype lut_output_t is signed(LUT_ADDR_WIDTH-1 downto 0);
-    subtype lut_input_t is signed(LUT_ADDR_WIDTH-1 downto 0);
+  -- Layer 0
+  constant LUT_SIZE_0        : integer := 64;
+  constant LUT_ADDR_WIDTH_0  : integer := 6;
+  constant LUT_DATA_WIDTH_0  : integer := 6;
+  subtype  lut_input_t_0  is signed(LUT_ADDR_WIDTH_0-1 downto 0);
+  subtype  lut_output_t_0 is signed(LUT_DATA_WIDTH_0-1 downto 0);
 
+  -- Layer 1
+  constant LUT_SIZE_1        : integer := 64;
+  constant LUT_ADDR_WIDTH_1  : integer := 6;
+  constant LUT_DATA_WIDTH_1  : integer := 4;
+  subtype  lut_input_t_1  is signed(LUT_ADDR_WIDTH_1-1 downto 0);
+  subtype  lut_output_t_1 is signed(LUT_DATA_WIDTH_1-1 downto 0);
 end package;

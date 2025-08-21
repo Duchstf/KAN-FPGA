@@ -44,7 +44,7 @@ num_epochs = 30
 #Save to a config json file
 config = {
     "layers": [16, 5, 5],
-    "layers_precision": [(6,2), (7,3), (4,1)],
+    "layers_precision": [(6,2), (4,1)],
 
     "grid_size": grid_size,
     "grid_eps": 0.05,

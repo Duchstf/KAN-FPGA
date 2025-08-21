@@ -592,6 +592,8 @@ class KAN(torch.nn.Module):
         self.grid_size = grid_size
         self.spline_order = spline_order
 
+        assert len(layers_hidden) == len(layers_precision) + 1, f"Number of layers must be equal to number of layers precision + 1: {len(layers_hidden)} != {len(layers_precision) + 1}"
+
         # Create KAN layers
         self.layers = torch.nn.ModuleList()
         for in_features, out_features, (tp, fp) in zip(layers_hidden, layers_hidden[1:], layers_precision):
