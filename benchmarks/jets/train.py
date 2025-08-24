@@ -33,10 +33,6 @@ logging.getLogger().addHandler(console)
 
 # === Configuration ===
 #Model parameters
-TP = 7
-FP = 3
-grid_range = [-2**(TP - FP - 1), 2**(TP - FP - 1)]
-resolution = int(2 ** TP)
 grid_size = 30
 spline_order = 10
 
@@ -48,13 +44,9 @@ num_epochs = 30
 #Save to a config json file
 config = {
     "layers": [16, 5, 5],
-
-    "TP": TP,
-    "FP": FP,
-    "resolution": resolution,
+    "layers_precision": [(6,2), (4,1)],
 
     "grid_size": grid_size,
-    "grid_range": grid_range,
     "grid_eps": 0.05,
 
     "spline_order": spline_order,
@@ -81,15 +73,12 @@ testloader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
 # === Initialize Model ===
 model = KAN(
     config["layers"],
+    config["layers_precision"],
     grid_size=config["grid_size"],
     spline_order=config["spline_order"],
     grid_eps=config["grid_eps"],
     base_activation=eval(config["base_activation"]),
-    grid_range=config["grid_range"],
     quantize=config["quantize"],
-    tp=config["TP"],
-    fp=config["FP"],
-    lut_res=config["resolution"],
     quantize_clip=config["quantize_clip"]
 ).to(device)
 
@@ -180,7 +169,7 @@ for epoch in range(num_epochs):
     # === Save Checkpoint if Best ===
     if val_accuracy > best_val_accuracy:
         best_val_accuracy = val_accuracy
-        checkpoint_path = f'models/jets_quant_tp{TP}_fp{FP}_grid{grid_size}_spline{spline_order}_acc{val_accuracy:.4f}_epoch{epoch + 1}.pt'
+        checkpoint_path = f'models/jets_grid{grid_size}_spline{spline_order}_acc{val_accuracy:.4f}_epoch{epoch + 1}.pt'
         torch.save({
             'epoch': epoch + 1,
             'model_state_dict': model.state_dict(),

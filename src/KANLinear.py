@@ -577,6 +577,7 @@ class KAN(torch.nn.Module):
     def __init__(
         self,
         layers_hidden: List[int],
+        layers_precision: List[Tuple[int, int]],
         grid_size: int = 5,
         spline_order: int = 3,
         scale_noise: float = 0.1,
@@ -584,22 +585,23 @@ class KAN(torch.nn.Module):
         scale_spline: float = 1.0,
         base_activation=torch.nn.SiLU,
         grid_eps: float = 0.02,
-        grid_range: List[float] = [-1, 1],
-        quantize: bool = False,
-        quantize_clip: bool = False,
-        tp: int = 16,
-        fp: int = 6,
-        lut_res: int = 256,
+        quantize: bool = True,
+        quantize_clip: bool = True,
     ):
         super(KAN, self).__init__()
         self.grid_size = grid_size
         self.spline_order = spline_order
 
-        if quantize: grid_range = [-2**(tp - fp - 1), 2**(tp - fp - 1)]
-        
+        assert len(layers_hidden) == len(layers_precision) + 1, f"Number of layers must be equal to number of layers precision + 1: {len(layers_hidden)} != {len(layers_precision) + 1}"
+
         # Create KAN layers
         self.layers = torch.nn.ModuleList()
-        for in_features, out_features in zip(layers_hidden, layers_hidden[1:]):
+        for in_features, out_features, (tp, fp) in zip(layers_hidden, layers_hidden[1:], layers_precision):
+
+            #Calculate other attributes based on quantization precision
+            grid_range = [-2**(tp - fp - 1), 2**(tp - fp - 1)]
+            lut_res = int(2 ** tp)
+            
             self.layers.append(
                 KANLinear(
                     in_features,

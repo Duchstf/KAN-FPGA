@@ -54,17 +54,17 @@ def converter(state_dict, remaining_fraction, config, output_dir):
     #Write the KAN core VHDL
     write_kan_core(model, cache, output_dir)
 
-    #Generate the LUT data files (mem files
-    generate_lut_data(model, config, cache, output_dir)
-
     #Make the PkgTypes.vhd file
     generate_pkg_types(config, output_dir)
 
+    #Generate the LUT data files (mem files)
+    generate_lut_data(model, config, cache, output_dir)
+    
     #Make the PkgLUT.vhd file
     generate_pkg_lut(config, output_dir)
 
-    #Copy the LUT.vhd file to src
-    shutil.copy(os.path.join(os.path.dirname(__file__), "templates", "src", "LUT.vhd"), os.path.join(output_dir, "src", "LUT.vhd"))
+    #Make the LUT.vhd file
+    generate_lut_vhd(config, output_dir)
 
     #Make the build.tcl file
     generate_build_tcl(config, output_dir)
@@ -81,15 +81,12 @@ def init_model(state_dict, config):
 
     model = KAN(
         config["layers"],
+        config["layers_precision"],
         grid_size=config["grid_size"],
         spline_order=config["spline_order"],
         grid_eps=config["grid_eps"],
         base_activation=eval(config["base_activation"]),
-        grid_range=config["grid_range"],
         quantize=config["quantize"],
-        tp=config["TP"],
-        fp=config["FP"],
-        lut_res=config["resolution"],
         quantize_clip=config["quantize_clip"]
     ).to(device)
 
@@ -105,8 +102,13 @@ def get_activation_values(model, layer_i, inp_node, out_node, config):
 
     layer = model.layers[layer_i]
 
+    #Get the quantization precision for the layer
+    tp, fp = config["layers_precision"][layer_i]
+    grid_range = [-2**(tp - fp - 1), 2**(tp - fp - 1)]
+    resolution = int(2 ** tp)
+
     # Create dummy input
-    array = np.linspace(config["grid_range"][0], config["grid_range"][1], config["resolution"])
+    array = np.linspace(grid_range[0], grid_range[1], resolution)
     stacked_array = np.hstack([[array]*layer.in_features]).T
     x = torch.from_numpy(stacked_array).float().to(device)
 
@@ -171,8 +173,8 @@ def write_kan_core(model, cache, output_dir, max_per_line=16):
         acts=[f"act_{i}_{j}_{k}" for j in range(in_f) for k in range(out_f) if lut_exists(i,j,k)]
         outs=[f"out{i}_{k}" for k in range(out_f)] if i != len(model.layers)-1 else []
         block=[f"-- Layer {i} ({in_f}->{out_f})"]
-        if acts: block.append(emit(acts))
-        if outs: block.append(emit(outs))
+        if acts: block.append(emit(acts, f"lut_output_t_{i}"))
+        if outs: block.append(emit(outs, f"lut_output_t_{i}"))
         sections.append("\n".join(block))
 
     # ---------- Build LAYER_BLOCKS ----------
@@ -195,7 +197,7 @@ def write_kan_core(model, cache, output_dir, max_per_line=16):
                 src = f"input({j})" if i == 0 else f"out{i-1}_{j}"
                 dst = f"act_{i}_{j}_{k}"
                 blk.append(
-                    f"  i{inst_idx:02d} : entity work.LUT "
+                    f"  i{inst_idx:02d} : entity work.LUT_{i} "
                     f'generic map (MEMFILE=>"{mem}") '
                     f"port map (clk, {src}, {dst});"
                 )
@@ -241,15 +243,9 @@ def generate_lut_data(model, config, cache, output_dir):
     """
 
     # ---- pull numeric formats from model (with safe defaults) ----
-    tot_precision = config["TP"]
-    float_precision = config["FP"]
-    resolution = config["resolution"]
-    grid_range = config["grid_range"]
-
-    assert grid_range[0] == -grid_range[1] and len(grid_range) == 2 and math.log(grid_range[1], 2).is_integer()
 
     # ---- helpers ----
-    def to_fixed_int(x, tot_bits=tot_precision, frac_bits=float_precision):
+    def to_fixed_int(x, tot_bits, frac_bits):
         """Quantize float x to Q format integer with clamp, then two's complement."""
         scale = 1 << frac_bits
         v = int(round(float(x) * scale))
@@ -259,7 +255,7 @@ def generate_lut_data(model, config, cache, output_dir):
         if v > max_int: v = max_int
         return v
     
-    def int_to_hex_word(v, tot_bits=tot_precision):
+    def int_to_hex_word(v, tot_bits):
         """Two's complement as fixed-width uppercase hex (no 0x, one word)."""
         if v < 0:
             v = (1 << tot_bits) + v
@@ -267,13 +263,13 @@ def generate_lut_data(model, config, cache, output_dir):
         return f"{v:0{width_nibbles}X}"
 
     # ---- compute-or-read values and write .mem files ----
-    # Fall back config-like dict if we need to compute fresh values
-    cfg_like = {"grid_range": grid_range, "resolution": resolution}
-
     written = 0
     for i, layer in enumerate(model.layers):
         in_f  = layer.in_features
         out_f = layer.out_features
+
+        #Get the quantization precision for the layer
+        tp, fp = config["layers_precision"][i]
 
         for j in range(in_f):
             for k in range(out_f):
@@ -285,7 +281,7 @@ def generate_lut_data(model, config, cache, output_dir):
                 vals = cache[key]
 
                 # quantize -> hex lines
-                hex_lines = [int_to_hex_word(to_fixed_int(v)) for v in vals]
+                hex_lines = [int_to_hex_word(to_fixed_int(v, tp, fp), tp) for v in vals]
 
                 # write file
                 mem_path = os.path.join(output_dir, "mem", f"{key}.mem")
@@ -294,7 +290,7 @@ def generate_lut_data(model, config, cache, output_dir):
                 written += 1
 
     # Small breadcrumb
-    print(f"Wrote {written} LUT .mem file(s) to {output_dir}/mem/ (TP={tot_precision}, FP={float_precision}, RES={resolution}).")
+    print(f"Wrote {written} LUT .mem file(s) to {output_dir}/mem/")
 
 def generate_pkg_types(config, output_dir):
     """
@@ -308,30 +304,80 @@ def generate_pkg_types(config, output_dir):
     vhdl_text = tpl.replace("{{N_INPUT}}", str(config["layers"][0]))
     vhdl_text = vhdl_text.replace("{{N_OUTPUT}}", str(config["layers"][-1]))
 
-    vhdl_text = vhdl_text.replace("{{INPUT_WIDTH}}", str(config["TP"]))
-    vhdl_text = vhdl_text.replace("{{INPUT_FRAC}}", str(config["FP"]))
+    #Get the quantization precision for the input layer
+    vhdl_text = vhdl_text.replace("{{INPUT_WIDTH}}", str(config["layers_precision"][0][0]))
+    vhdl_text = vhdl_text.replace("{{INPUT_FRAC}}", str(config["layers_precision"][0][1]))
 
-    vhdl_text = vhdl_text.replace("{{LUT_WIDTH}}", str(config["TP"]))
-    vhdl_text = vhdl_text.replace("{{LUT_FRAC}}", str(config["FP"]))
-    
-    vhdl_text = vhdl_text.replace("{{LUT_ADDR_WIDTH}}", str(config["resolution"]))
+    #Get the quantization precision for the output layer
+    vhdl_text = vhdl_text.replace("{{OUTPUT_WIDTH}}", str(config["layers_precision"][-1][0]))
+    vhdl_text = vhdl_text.replace("{{OUTPUT_FRAC}}", str(config["layers_precision"][-1][1]))
 
     with open(os.path.join(output_dir, "src", "PkgTypes.vhd"), "w") as f:
         f.write(vhdl_text)
+
+def generate_lut_vhd(config, output_dir):
+    """
+    Generate the LUT.vhd file
+    """
+
+    #Open the template file
+    with open(os.path.join(os.path.dirname(__file__), "templates", "LUT.vhd"), "r") as tf:
+        tpl = tf.read()
+
+    #Loop through the layers and generate the VHDL code
+    for i, layer in enumerate(config["layers"][:-1]):
+        vhdl_text = tpl.replace("{{LUT_LAYER_NAME}}", f"LUT_{i}")
+        vhdl_text = vhdl_text.replace("{{LUT_ADDR_WIDTH}}", f"LUT_ADDR_WIDTH_{i}")
+        vhdl_text = vhdl_text.replace("{{LUT_DATA_WIDTH}}", f"LUT_DATA_WIDTH_{i}")
+        vhdl_text = vhdl_text.replace("{{LUT_SIZE}}", f"LUT_SIZE_{i}")
+        vhdl_text = vhdl_text.replace("{{LUT_INPUT_TYPE}}", f"lut_input_t_{i}")
+        vhdl_text = vhdl_text.replace("{{LUT_OUTPUT_TYPE}}", f"lut_output_t_{i}")
+
+        #Write the VHDL code to the file
+        out_path = os.path.join(output_dir, "src", f"LUT_{i}.vhd")
+        os.makedirs(os.path.dirname(out_path), exist_ok=True)
+        with open(out_path, "w") as f:
+            f.write(vhdl_text)
+
 
 def generate_pkg_lut(config, output_dir):
     """
     Generate the PkgLUT.vhd file
     """
 
+<<<<<<< HEAD
     with open(os.path.join(os.path.dirname(__file__), "templates", "src", "PkgLUT.vhd"), "r") as tf:
+=======
+    tpl_path = os.path.join(os.path.dirname(__file__), "templates", "PkgLUT.vhd")
+    with open(tpl_path, "r") as tf:
+>>>>>>> a8041d391485bd598720986859890237974f023c
         tpl = tf.read()
 
-    vhdl_text = tpl.replace("{{LUT_SIZE}}", str(config["resolution"]))
-    vhdl_text = vhdl_text.replace("{{LUT_ADDR_WIDTH}}", str(config["TP"]))
-    vhdl_text = vhdl_text.replace("{{LUT_DATA_WIDTH}}", str(config["TP"]))
+    n_layers = max(0, len(config["layers"]) - 1)
+    blocks = []
 
-    with open(os.path.join(output_dir, "src", "PkgLUT.vhd"), "w") as f:
+    print(config["layers_precision"])
+
+    for i in range(n_layers):
+        prev_tp = config["layers_precision"][i - 1][0] if i > 0 else config["layers_precision"][0][0]
+        curr_tp = config["layers_precision"][i][0]
+
+        blocks.append(
+            "\n".join([
+                f"  -- Layer {i}",
+                f"  constant LUT_SIZE_{i}        : integer := {1 << prev_tp};",
+                f"  constant LUT_ADDR_WIDTH_{i}  : integer := {prev_tp};",
+                f"  constant LUT_DATA_WIDTH_{i}  : integer := {curr_tp};",
+                f"  subtype  lut_input_t_{i}  is signed(LUT_ADDR_WIDTH_{i}-1 downto 0);",
+                f"  subtype  lut_output_t_{i} is signed(LUT_DATA_WIDTH_{i}-1 downto 0);",
+            ])
+        )
+
+    vhdl_text = tpl.replace("{{LAYER_TYPES_BLOCK}}", "\n\n".join(blocks) or "  -- (no layers)")
+
+    out_path = os.path.join(output_dir, "src", "PkgLUT.vhd")
+    os.makedirs(os.path.dirname(out_path), exist_ok=True)
+    with open(out_path, "w") as f:
         f.write(vhdl_text)
 
 def generate_build_tcl(config, output_dir):
