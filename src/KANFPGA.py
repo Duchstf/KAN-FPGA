@@ -321,7 +321,7 @@ def generate_lut_vhd(config, output_dir):
     """
 
     #Open the template file
-    with open(os.path.join(os.path.dirname(__file__), "templates", "LUT.vhd"), "r") as tf:
+    with open(os.path.join(os.path.dirname(__file__), "templates", "src", "LUT.vhd"), "r") as tf:
         tpl = tf.read()
 
     #Loop through the layers and generate the VHDL code
@@ -345,18 +345,12 @@ def generate_pkg_lut(config, output_dir):
     Generate the PkgLUT.vhd file
     """
 
-<<<<<<< HEAD
-    with open(os.path.join(os.path.dirname(__file__), "templates", "src", "PkgLUT.vhd"), "r") as tf:
-=======
-    tpl_path = os.path.join(os.path.dirname(__file__), "templates", "PkgLUT.vhd")
+    tpl_path = os.path.join(os.path.dirname(__file__), "templates", "src", "PkgLUT.vhd")
     with open(tpl_path, "r") as tf:
->>>>>>> a8041d391485bd598720986859890237974f023c
         tpl = tf.read()
 
     n_layers = max(0, len(config["layers"]) - 1)
     blocks = []
-
-    print(config["layers_precision"])
 
     for i in range(n_layers):
         prev_tp = config["layers_precision"][i - 1][0] if i > 0 else config["layers_precision"][0][0]
