@@ -2,7 +2,8 @@
 import sys, os, logging
 
 sys.path.append('../../src')
-from KANLinear import KAN, Quantizer
+from KANLinear import KAN
+from helpers import quantize_value_unsigned, plot_feature_distributions
 
 import numpy as np
 import torch
@@ -33,18 +34,20 @@ logging.getLogger().addHandler(console)
 
 # === Configuration ===
 #Model parameters
+input_bits = 6
 grid_size = 30
 spline_order = 10
 
 #Training parameters
 REGULARIZE_ACTIVATION = 0.001
 batch_size = 64
-num_epochs = 30
+num_epochs = 50
 
 #Save to a config json file
 config = {
     "layers": [16, 5, 5],
-    "layers_precision": [(6,2), (4,1)],
+    "input_bits": input_bits,
+    "layers_precision": [(input_bits,0), (8,0)],
 
     "grid_size": grid_size,
     "grid_eps": 0.05,
@@ -65,8 +68,15 @@ y_train = torch.from_numpy(np.load('data/y_train_val.npy')).float().to(device).a
 X_test = torch.from_numpy(np.load('data/X_test.npy')).float().to(device)
 y_test = torch.from_numpy(np.load('data/y_test.npy')).float().to(device).argmax(dim=1)
 
-train_dataset = TensorDataset(X_train, y_train)
-test_dataset = TensorDataset(X_test, y_test)
+X_train_quantized, X_train_min, X_train_max = quantize_value_unsigned(X_train)
+X_test_quantized = ((X_test - X_train_min) / (X_train_max - X_train_min + 1e-8) * (2**input_bits - 1)).round().clamp(0, 2**input_bits - 1)
+
+#Plot the distribution of the quantized values just to make sure they are in the correct range
+plot_feature_distributions(X_train_quantized, input_bits, "plots/feature_distributions_train.png")
+
+# === Create Data Loaders ===
+train_dataset = TensorDataset(X_train_quantized, y_train)
+test_dataset = TensorDataset(X_test_quantized, y_test)
 trainloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
 testloader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
 
