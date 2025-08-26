@@ -1,1 +1,1 @@
-{"layers": [16, 5, 5], "layers_precision": [[6, 2], [7, 3], [6, 2]], "grid_size": 40, "grid_eps": 0.03, "spline_order": 4, "base_activation": "nn.GELU", "quantize_clip": false, "quantize": true}
+{"layers": [16, 5, 5], "layers_precision": [[16, 12], [7, 4], [7, 4]], "grid_size": 40, "grid_eps": 0.03, "spline_order": 4, "base_activation": "nn.GELU", "quantize_clip": false, "quantize": true}
