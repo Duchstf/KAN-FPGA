@@ -3,16 +3,23 @@ import sys, os, logging
 
 sys.path.append('../../src')
 from KANLinear import KAN
-from helpers import quantize_value_unsigned, plot_feature_distributions
 
 import numpy as np
 import torch
 import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import TensorDataset, DataLoader
+import matplotlib.pyplot as plt
+import math
+
 from sklearn.metrics import roc_curve, auc
 from tqdm import tqdm
 import json
+
+# Brevitas for quantizing inputs
+import brevitas.nn as qnn
+from brevitas.core.quant import QuantType
+from brevitas.core.scaling import ScalingImplType
 
 # === Setup ===
 torch.cuda.empty_cache()
@@ -35,8 +42,8 @@ logging.getLogger().addHandler(console)
 # === Configuration ===
 #Model parameters
 input_bits = 6
-grid_size = 30
-spline_order = 10
+grid_size = 40
+spline_order = 4
 
 #Training parameters
 REGULARIZE_ACTIVATION = 0.001
@@ -46,11 +53,10 @@ num_epochs = 50
 #Save to a config json file
 config = {
     "layers": [16, 5, 5],
-    "input_bits": input_bits,
-    "layers_precision": [(input_bits,0), (8,0)],
+    "layers_precision": [(input_bits,2), (7,3), (6,2)],
 
     "grid_size": grid_size,
-    "grid_eps": 0.05,
+    "grid_eps": 0.03,
 
     "spline_order": spline_order,
     "base_activation": "nn.GELU",
@@ -68,15 +74,25 @@ y_train = torch.from_numpy(np.load('data/y_train_val.npy')).float().to(device).a
 X_test = torch.from_numpy(np.load('data/X_test.npy')).float().to(device)
 y_test = torch.from_numpy(np.load('data/y_test.npy')).float().to(device).argmax(dim=1)
 
-X_train_quantized, X_train_min, X_train_max = quantize_value_unsigned(X_train)
-X_test_quantized = ((X_test - X_train_min) / (X_train_max - X_train_min + 1e-8) * (2**input_bits - 1)).round().clamp(0, 2**input_bits - 1)
+#Plot the distribution of the training data
+os.makedirs("plots", exist_ok=True)
+n_feat = X_train.shape[1]
+cols = 4
+rows = math.ceil(n_feat / cols)
 
-#Plot the distribution of the quantized values just to make sure they are in the correct range
-plot_feature_distributions(X_train_quantized, input_bits, "plots/feature_distributions_train.png")
+plt.figure(figsize=(4*cols, 3*rows))
+for i in range(n_feat):
+    plt.subplot(rows, cols, i+1)
+    plt.hist(X_train[:, i].cpu().numpy(), bins=50, alpha=0.7)
+    plt.title(f"Feature {i}", fontsize=8)
+    plt.tight_layout()
+
+plt.savefig("plots/features_grid.png")
+plt.close()
 
 # === Create Data Loaders ===
-train_dataset = TensorDataset(X_train_quantized, y_train)
-test_dataset = TensorDataset(X_test_quantized, y_test)
+train_dataset = TensorDataset(X_train, y_train)
+test_dataset = TensorDataset(X_test, y_test)
 trainloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
 testloader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
 
@@ -92,8 +108,20 @@ model = KAN(
     quantize_clip=config["quantize_clip"]
 ).to(device)
 
+# === Brevitas Input Quantizer (6-bit) ===
+# Returns a plain Tensor (not a QuantTensor), appropriate if KAN expects normal tensors.
+input_quant = qnn.QuantIdentity(
+    bit_width=input_bits,
+    quant_type=QuantType.INT,
+    signed=True,
+    return_quant_tensor=False,
+    # Make scaling constant (static); fix the clipping range
+    scaling_impl_type=ScalingImplType.CONST,
+    min_val=-8,
+    max_val=8,
+).to(device).eval()
 param_count = sum(p.numel() for p in model.parameters())
-logging.info(f"Model has {param_count} parameters")
+logging.info(f"Model has {param_count} trainable parameters")
 
 optimizer = optim.AdamW(model.parameters(), lr=1e-4, weight_decay=1e-5)
 scheduler = optim.lr_scheduler.ExponentialLR(optimizer, gamma=0.99)
@@ -114,7 +142,10 @@ for epoch in range(num_epochs):
             inputs, labels = inputs.to(device), labels.to(device)
 
             optimizer.zero_grad()
-            output = model(inputs)
+
+            # Quantize inputs for validation too
+            q_inputs = input_quant(inputs)
+            output = model(q_inputs)
 
             loss = criterion(output, labels) + model.regularization_loss(
                 regularize_activation=REGULARIZE_ACTIVATION,
@@ -150,7 +181,8 @@ for epoch in range(num_epochs):
     with torch.no_grad():
         for inputs, labels in testloader:
             inputs, labels = inputs.to(device), labels.to(device)
-            output = model(inputs)
+            q_inputs = input_quant(inputs)
+            output = model(q_inputs)
 
             loss = criterion(output, labels) + model.regularization_loss(
                 regularize_activation=0,
@@ -166,7 +198,7 @@ for epoch in range(num_epochs):
     testing_loss.append(val_loss)
     scheduler.step()
 
-    remaining_fraction = model.prune_below_threshold(threshold=0.1)
+    remaining_fraction = model.prune_below_threshold(threshold=0.0)
 
     logging.info(
         f"Epoch {epoch + 1:02d} | "
