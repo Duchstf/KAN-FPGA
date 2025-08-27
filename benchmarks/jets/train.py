@@ -157,6 +157,10 @@ for epoch in range(num_epochs):
     average_train_loss = epoch_train_loss / total_batches
     training_loss.append(average_train_loss)  # Record the average training loss
 
+    # Prune the model
+    remaining_fraction = model.prune_below_threshold(threshold=1)
+    print(f"Remaining fraction: {remaining_fraction}")
+
     # Validation
     model.eval()
     val_loss = 0
@@ -180,7 +184,8 @@ for epoch in range(num_epochs):
         f"Epoch {epoch + 1:02d} | "
         f"Train Loss: {average_train_loss:.4f} | "
         f"Val Loss: {val_loss:.4f} | "
-        f"Val Accuracy: {val_accuracy:.4f}"
+        f"Val Accuracy: {val_accuracy:.4f} | "
+        f"Remaining Fraction: {remaining_fraction:.4f}"
     )
 
     # === Save Checkpoint if Best ===
@@ -193,5 +198,6 @@ for epoch in range(num_epochs):
             'optimizer_state_dict': optimizer.state_dict(),
             'val_accuracy': val_accuracy,
             'val_loss': val_loss,
+            'remaining_fraction': remaining_fraction,
         }, checkpoint_path)
         logging.info(f"New best model saved with val accuracy: {val_accuracy:.4f}")
