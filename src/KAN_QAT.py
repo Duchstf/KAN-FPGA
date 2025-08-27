@@ -4,12 +4,6 @@ import math
 from typing import List, Optional, Tuple
 import sys
 
-from brevitas.nn import QuantIdentity
-from brevitas.core.quant import QuantType
-from brevitas.core.scaling import ScalingImplType
-from brevitas.core.restrict_val import RestrictValueType
-from brevitas.core.zero_point import ZeroZeroPoint
-
 class Quantizer(torch.nn.Module):
     """Fixed-point quantizer module (Xilinx convention: integer bits)."""
 

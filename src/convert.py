@@ -6,12 +6,14 @@ import KANFPGA
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
+model_tag = "20250827_123148"
+
 # --- 1. List all model files and find the one with best accuracy ---
-model_dir = "models"
+model_dir = f"models/{model_tag}"
 files = [f for f in os.listdir(model_dir) if f.endswith(".pt")]
 
 if not files:
-    raise FileNotFoundError("No model checkpoint files found in 'models/' folder.")
+    raise FileNotFoundError(f"No model checkpoint files found in '{model_dir}' folder.")
 
 # Sort files by accuracy descending
 files.sort(key=lambda x: float(x.split('_acc')[1].split('_epoch')[0]), reverse=True)
@@ -24,7 +26,7 @@ checkpoint = torch.load(os.path.join(model_dir, files[0]), map_location=torch.de
 state_dict = checkpoint["model_state_dict"]
 
 # --- 2. Handle hardware folder ---
-hardware_dir = "hardware"
+hardware_dir = f"models/{model_tag}/hardware"
 if os.path.exists(hardware_dir):
     choice = input(f"'{hardware_dir}' already exists. Overwrite? (y/n): ").strip().lower()
     if choice == "y":
