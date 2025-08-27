@@ -126,9 +126,7 @@ class Quantizer(torch.nn.Module):
         self.num_total += x.numel()
         
         if not self.quantize_clip:
-
             # Wrap around quantization
-
             above_max = torch.maximum(x - max_val, torch.zeros_like(x) - 0.5 / (2 ** self.fp)) * (2 ** self.fp)
             below_min = torch.maximum(min_val - x, torch.zeros_like(x) - 0.5 / (2 ** self.fp)) * (2 ** self.fp)
 
@@ -180,10 +178,10 @@ class KANLinear(torch.nn.Module):
         grid_eps: float = 0.02,
         grid_range: List[float] = [-1,1],
         quantize: bool = False,
-        tp: int = 16,
-        fp: int = 6,
-        lut_res: int = 256,
+        input_precision: Tuple[int, int] = (16, 6),
+        output_precision: Tuple[int, int] = (16, 6),
         quantize_clip: bool = False,
+        bypass_input_quantizer: bool = False,
     ):
         super(KANLinear, self).__init__()
         self.in_features = in_features
@@ -197,7 +195,8 @@ class KANLinear(torch.nn.Module):
         self.base_activation = base_activation()
         self.grid_eps = grid_eps
         self.quantize = quantize
-        
+        self.bypass_input_quantizer = bypass_input_quantizer
+
         # Initialize spline grid
         h = (grid_range[1] - grid_range[0]) / grid_size
         grid = (
@@ -227,13 +226,8 @@ class KANLinear(torch.nn.Module):
         
         # Setup quantization if enabled
         if quantize:
-            lut_tp = int(math.log2(lut_res))
-            lut_fp = lut_tp - int(math.log2(grid_range[1] - grid_range[0]))
-            
-            assert lut_fp == fp, f"FP mismatch: lut_fp={lut_fp}, fp={fp}"
-            
-            self.lut_inp_quantizer = Quantizer(tp=lut_tp, fp=lut_fp, quantize_clip=quantize_clip)
-            self.lut_out_quantizer = Quantizer(tp=tp, fp=fp, quantize_clip=quantize_clip)
+            self.lut_inp_quantizer = Quantizer(tp=input_precision[0], fp=input_precision[1], quantize_clip=quantize_clip)
+            self.lut_out_quantizer = Quantizer(tp=output_precision[0], fp=output_precision[1], quantize_clip=quantize_clip)
     
     def reset_parameters(self) -> None:
         """Initialize layer parameters using Kaiming uniform initialization."""
@@ -349,7 +343,7 @@ class KANLinear(torch.nn.Module):
         x = x.reshape(-1, self.in_features)
         
         # Apply input quantization if enabled
-        if self.quantize:
+        if self.quantize and not self.bypass_input_quantizer:
             x = self.lut_inp_quantizer(x)
         
         # Compute base activation output
@@ -513,12 +507,17 @@ class KANLinear(torch.nn.Module):
         
         # Clipping loss from quantization
         clipping_loss = 0.0
+
         if self.quantize:
-            clipping_loss = self.lut_out_quantizer.clipping_loss + self.lut_inp_quantizer.clipping_loss
-            # Reset clipping loss after using it
-            self.lut_out_quantizer.clipping_loss = 0.0
+            if not self.bypass_input_quantizer:
+                clipping_loss += self.lut_inp_quantizer.clipping_loss
+    
+            clipping_loss += self.lut_out_quantizer.clipping_loss
+            
+            #reset clipping loss after using it
+            self.lut_out_quantizer.clipping_loss = 0.0 
             self.lut_inp_quantizer.clipping_loss = 0.0
-        
+
         total_loss = (
             regularize_activation * regularization_loss_activation
             + regularize_entropy * regularization_loss_entropy
@@ -535,10 +534,10 @@ class KANLinear(torch.nn.Module):
             Tuple[float, float]: (output_clipped_fraction, input_clipped_fraction)
         """
         if not self.quantize:
-            return 0.0, 0.0
+            return torch.tensor(0.0), torch.tensor(0.0)
         
         out_frac = self.lut_out_quantizer.num_clipped / self.lut_out_quantizer.num_total
-        inp_frac = self.lut_inp_quantizer.num_clipped / self.lut_inp_quantizer.num_total
+        inp_frac = self.lut_inp_quantizer.num_clipped / self.lut_inp_quantizer.num_total if not self.bypass_input_quantizer else torch.tensor(0.0)
         
         # Reset counters
         self.lut_out_quantizer.num_clipped = 0.0
@@ -558,7 +557,8 @@ class KAN(torch.nn.Module):
     transformations with fixed activations.
     
     Args:
-        layers_hidden (List[int]): List of layer sizes including input and output
+        layers_sizes (List[int]): List of layer sizes including input and output
+        layers_precision (List[Tuple[int, int]]): corresponding list of quantization precision for each layer
         grid_size (int): Number of grid points for spline basis. Default: 5
         spline_order (int): Order of B-spline basis functions. Default: 3
         scale_noise (float): Scale factor for initialization noise. Default: 0.1
@@ -566,17 +566,13 @@ class KAN(torch.nn.Module):
         scale_spline (float): Scale factor for spline weights. Default: 1.0
         base_activation: Base activation function class. Default: torch.nn.SiLU
         grid_eps (float): Interpolation factor between adaptive and uniform grids. Default: 0.02
-        grid_range (List[float]): Range for spline grid. Default: [-1, 1]
         quantize (bool): Whether to enable quantization. Default: False
         quantize_clip (bool): Whether to use clipping in quantization. Default: False
-        tp (int): Total precision for quantization. Default: 16
-        fp (int): Fractional precision for quantization. Default: 6
-        lut_res (int): Look-up table resolution. Default: 256
     """
     
     def __init__(
         self,
-        layers_hidden: List[int],
+        layers_sizes: List[int],
         layers_precision: List[Tuple[int, int]],
         grid_size: int = 5,
         spline_order: int = 3,
@@ -587,21 +583,26 @@ class KAN(torch.nn.Module):
         grid_eps: float = 0.02,
         quantize: bool = True,
         quantize_clip: bool = True,
-    ):
+    ):  
+        
         super(KAN, self).__init__()
         self.grid_size = grid_size
         self.spline_order = spline_order
 
-        assert len(layers_hidden) == len(layers_precision) + 1, f"Number of layers must be equal to number of layers precision + 1: {len(layers_hidden)} != {len(layers_precision) + 1}"
+        #Some basic checks
+        assert len(layers_sizes) == len(layers_precision), f"Number of layers must be equal to number of layers precision: {len(layers_sizes)} != {len(layers_precision)}"
 
         # Create KAN layers
         self.layers = torch.nn.ModuleList()
-        for in_features, out_features, (tp, fp) in zip(layers_hidden, layers_hidden[1:], layers_precision):
+        for layer_index, (in_features, out_features, input_precision, output_precision) in enumerate(zip(layers_sizes, layers_sizes[1:], layers_precision, layers_precision[1:])):
+
+            print(f"Creating layer {layer_index} with: {in_features} input features, {out_features} output features, Input Precision: [{input_precision[0]}, {input_precision[1]}], Output Precision: [{output_precision[0]}, {output_precision[1]}]")
 
             #Calculate other attributes based on quantization precision
-            grid_range = [-2**(tp - fp - 1), 2**(tp - fp - 1)]
-            lut_res = int(2 ** tp)
-            
+            input_tp, input_fp = input_precision
+            grid_range = [-2**(input_tp - input_fp - 1), 2**(input_tp - input_fp - 1)]
+
+            #Create the layer
             self.layers.append(
                 KANLinear(
                     in_features,
@@ -615,10 +616,10 @@ class KAN(torch.nn.Module):
                     grid_eps=grid_eps,
                     grid_range=grid_range,
                     quantize=quantize,
-                    tp=tp,
-                    fp=fp,
-                    lut_res=lut_res,
+                    input_precision=input_precision,
+                    output_precision=output_precision,
                     quantize_clip=quantize_clip,
+                    bypass_input_quantizer=(layer_index == 0)
                 )
             )
     
@@ -675,6 +676,7 @@ class KAN(torch.nn.Module):
         total_remaining = 0
         
         for i, layer in enumerate(self.layers):
+
             # Get next layer's sparsity matrix for backward pruning
             next_layer_sparsity = (
                 self.layers[i + 1].spline_selector if i < len(self.layers) - 1 else None
