@@ -30,7 +30,8 @@ def converter(state_dict, remaining_fraction, config, output_dir):
     │  ├─ ...
     │  └─ lut_1_4_4.mem
     └─ vivado/             
-        └─ build.tcl       --Build script
+        └─ build_full.tcl       --Build script
+        └─ build_ooc.tcl       --Build script
     """
 
     print(f"Converting KAN model to hardware ...")
@@ -40,11 +41,12 @@ def converter(state_dict, remaining_fraction, config, output_dir):
     os.makedirs(os.path.join(output_dir, "src"), exist_ok=True)
     os.makedirs(os.path.join(output_dir, "mem"), exist_ok=True)
     os.makedirs(os.path.join(output_dir, "vivado"), exist_ok=True)
+    os.makedirs(os.path.join(output_dir, "testbench"), exist_ok=True)
 
     model = init_model(state_dict, config)
 
     #Copy the top file to src
-    shutil.copy(os.path.join(os.path.dirname(__file__), "templates", "top.vhd"), os.path.join(output_dir, "src", "top.vhd"))
+    shutil.copy(os.path.join(os.path.dirname(__file__), "templates", "src", "top.vhd"), os.path.join(output_dir, "src", "top.vhd"))
 
     #Generate sprase cache
     cache = generate_sparse_cache(model, remaining_fraction, config)
@@ -66,6 +68,9 @@ def converter(state_dict, remaining_fraction, config, output_dir):
 
     #Make the build.tcl file
     generate_build_tcl(config, output_dir)
+
+    #Generate testbench
+    generate_testbench(model, config, output_dir)
 
 
 ########################################################
@@ -210,7 +215,7 @@ def write_kan_core(model, cache, output_dir, max_per_line=16):
     SIGNAL_DECLS = "\n\n".join(sections) if sections else "-- (no signals)"
     LAYER_BLOCKS = "\n\n  ".join(layer_blocks) if layer_blocks else "-- (no layers)"
 
-    with open(os.path.join(os.path.dirname(__file__), "templates", "KAN.vhd"), "r") as tf:
+    with open(os.path.join(os.path.dirname(__file__), "templates", "src", "KAN.vhd"), "r") as tf:
         tpl = tf.read()
     vhdl_text = tpl.replace("{{SIGNAL_DECLS}}", SIGNAL_DECLS)
     vhdl_text = vhdl_text.replace("{{LAYER_BLOCKS}}", LAYER_BLOCKS)
@@ -292,7 +297,7 @@ def generate_pkg_types(config, output_dir):
     Generate the PkgTypes.vhd file
     """
 
-    with open(os.path.join(os.path.dirname(__file__), "templates", "PkgTypes.vhd"), "r") as tf:
+    with open(os.path.join(os.path.dirname(__file__), "templates", "src", "PkgTypes.vhd"), "r") as tf:
         tpl = tf.read()
 
     #Replace the placeholders with the actual values
@@ -340,8 +345,12 @@ def generate_pkg_lut(config, output_dir):
     Generate the PkgLUT.vhd file
     """
 
+<<<<<<< HEAD
+    with open(os.path.join(os.path.dirname(__file__), "templates", "src", "PkgLUT.vhd"), "r") as tf:
+=======
     tpl_path = os.path.join(os.path.dirname(__file__), "templates", "PkgLUT.vhd")
     with open(tpl_path, "r") as tf:
+>>>>>>> a8041d391485bd598720986859890237974f023c
         tpl = tf.read()
 
     n_layers = max(0, len(config["layers"]) - 1)
@@ -377,4 +386,16 @@ def generate_build_tcl(config, output_dir):
     """
 
     #Just copy the template file
-    shutil.copy(os.path.join(os.path.dirname(__file__), "templates", "build.tcl"), os.path.join(output_dir, "vivado", "build.tcl"))
+    shutil.copy(os.path.join(os.path.dirname(__file__), "templates", "vivado", "build_full.tcl"), os.path.join(output_dir, "vivado", "build_full.tcl"))
+    shutil.copy(os.path.join(os.path.dirname(__file__), "templates", "vivado", "build_ooc.tcl"), os.path.join(output_dir, "vivado", "build_ooc.tcl"))
+
+def generate_testbench(model, config, output_dir):
+
+    #Copy over the testbench template
+    shutil.copy(os.path.join(os.path.dirname(__file__), "templates", "testbench", "tb_top.vhd"), os.path.join(output_dir, "testbench", "tb_top.vhd"))
+
+    #Copy over the sim.tcl file
+    shutil.copy(os.path.join(os.path.dirname(__file__), "templates", "vivado", "sim.tcl"), os.path.join(output_dir, "vivado", "sim.tcl"))
+
+
+    
