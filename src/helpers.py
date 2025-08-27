@@ -1,17 +1,18 @@
 import torch
 from typing import Tuple
 
-def quantize_tensor(t: torch.Tensor, W: int, F: int, rounding: str = "nearest"):
+def quantize_tensor(t: torch.Tensor, W: int, I: int, rounding: str = "nearest"):
     """
-    Quantize tensor t to ap_fixed<W, W-F> (signed, two's-complement).
+    Quantize tensor t to ap_fixed<W, I> (signed, two's-complement).
     Returns (q, r_int) where:
       q     : quantized tensor in float (same device/dtype as t)
       r_int : integer tensor of the fixed-point scaled values (int32)
     """
 
-    if not (isinstance(W, int) and isinstance(F, int) and W > 0 and 0 < F <= W):
-        raise ValueError("Require integers W>0, F>0, and F <= W.")
+    if not (isinstance(W, int) and isinstance(I, int) and W > 0 and 0 < I <= W):
+        raise ValueError("Require integers W>0, I>0, and I <= W.")
     
+    F = W - I
     scale = 1 << F
 
     # Integer range in scaled domain

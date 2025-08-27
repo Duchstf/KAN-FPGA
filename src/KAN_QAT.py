@@ -354,7 +354,6 @@ class KAN(torch.nn.Module):
         scale_spline=1.0,
         base_activation=torch.nn.SiLU,
         grid_eps=0.02,
-        grid_range=[-1, 1],
     ):
         super(KAN, self).__init__()
         self.grid_size = grid_size
@@ -366,6 +365,10 @@ class KAN(torch.nn.Module):
         self.layers = torch.nn.ModuleList()
         for layer_index, (in_features, out_features, input_precision, output_precision) in enumerate(zip(layers_size, layers_size[1:], layers_precision, layers_precision[1:])):
             print(f"Creating layer {layer_index} with: {in_features} input features, {out_features} output features, Input Precision: [{input_precision[0]}, {input_precision[1]}], Output Precision: [{output_precision[0]}, {output_precision[1]}]")
+
+            if quantize:
+                input_I = input_precision[1]
+                grid_range = [-2**(input_I - 1), 2**(input_I - 1)]
 
             self.layers.append(
                 KANLinear(
