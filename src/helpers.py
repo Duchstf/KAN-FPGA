@@ -1,17 +1,17 @@
 import torch
+from typing import Tuple
 
-def to_ap_fixed(t: torch.Tensor, W: int, I: int, rounding: str = "nearest"):
+def quantize_tensor(t: torch.Tensor, W: int, F: int, rounding: str = "nearest"):
     """
-    Quantize tensor t to ap_fixed<W,I> (signed, two's-complement).
+    Quantize tensor t to ap_fixed<W, W-F> (signed, two's-complement).
     Returns (q, r_int) where:
       q     : quantized tensor in float (same device/dtype as t)
       r_int : integer tensor of the fixed-point scaled values (int32)
     """
 
-    if not (isinstance(W, int) and isinstance(I, int) and W > 0 and 0 < I <= W):
-        raise ValueError("Require integers W>0, I>0, and I <= W.")
+    if not (isinstance(W, int) and isinstance(F, int) and W > 0 and 0 < F <= W):
+        raise ValueError("Require integers W>0, F>0, and F <= W.")
     
-    F = W - I
     scale = 1 << F
 
     # Integer range in scaled domain
@@ -53,13 +53,13 @@ def to_ap_fixed(t: torch.Tensor, W: int, I: int, rounding: str = "nearest"):
 
     # Provide integer tensor as int32 for inspection/export if needed
     r_int = r.to(torch.int32)
-    
+
     return q, r_int
 
 # -------------------------
 # Convenience for datasets
 # -------------------------
-def quantize_dataset(X_train, X_test, W: int, I: int, rounding: str = "nearest"):
-    X_train_q, _ = to_ap_fixed(X_train, W, I, rounding)
-    X_test_q,  _ = to_ap_fixed(X_test,  W, I, rounding)
+def quantize_dataset(X_train, X_test, precision: Tuple[int, int], rounding: str = "nearest"):
+    X_train_q, _ = quantize_tensor(X_train, precision[0], precision[1], rounding)
+    X_test_q,  _ = quantize_tensor(X_test,  precision[0], precision[1], rounding)
     return X_train_q, X_test_q

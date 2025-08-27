@@ -6,6 +6,7 @@ benchmarks/anomaly/data/
 *.Xil
 *-p
 *clockInfo.txt
+*.test
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

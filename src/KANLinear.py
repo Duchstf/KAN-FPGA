@@ -594,11 +594,10 @@ class KAN(torch.nn.Module):
 
         # Create KAN layers
         self.layers = torch.nn.ModuleList()
-        layer_index = 0
         for layer_index, (in_features, out_features, input_precision, output_precision) in enumerate(zip(layers_sizes, layers_sizes[1:], layers_precision, layers_precision[1:])):
 
             print(f"Creating layer {layer_index} with: {in_features} input features, {out_features} output features, Input Precision: [{input_precision[0]}, {input_precision[1]}], Output Precision: [{output_precision[0]}, {output_precision[1]}]")
-            
+
             #Calculate other attributes based on quantization precision
             input_tp, input_fp = input_precision
             grid_range = [-2**(input_tp - input_fp - 1), 2**(input_tp - input_fp - 1)]
