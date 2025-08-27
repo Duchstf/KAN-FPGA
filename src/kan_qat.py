@@ -10,113 +10,81 @@ from brevitas.core.scaling import ScalingImplType
 from brevitas.core.restrict_val import RestrictValueType
 from brevitas.core.zero_point import ZeroZeroPoint
 
-def make_quantize(tp: int, fp: int, quantize_clip: bool):
-    """
-    Factory function to create a quantization function with specific parameters.
-    
-    Args:
-        tp (int): Total precision (total number of bits)
-        fp (int): Fractional precision (number of fractional bits)
-        quantize_clip (bool): Whether to clip values or use wrap-around
-        
-    Returns:
-        Quantize class: A custom autograd function for quantization
-    """
-    
-    class Quantize(torch.autograd.Function):
-        """Custom autograd function for fixed-point quantization."""
-        
-        @staticmethod
-        def forward(ctx, input: torch.Tensor) -> torch.Tensor:
-            """
-            Forward pass: quantize input to fixed-point representation.
-            
-            Args:
-                ctx: Autograd context (unused)
-                input: Input tensor to quantize
-                
-            Returns:
-                torch.Tensor: Quantized tensor
-            """
-            # Scale to fixed-point representation
-            input = torch.floor(input * (2 ** fp))
-            
-            if quantize_clip:
-                # Clipping quantization
-                res = torch.clamp(input, -1 * (2 ** (tp - 1)), (2 ** (tp - 1)) - 1)
-            else:
-                # Wrap-around quantization
-                range_size = 2 ** tp
-                wrapped_unsigned_val = torch.fmod(
-                    torch.fmod(input + range_size / 2, range_size) + range_size, 
-                    range_size
-                )
-                res = wrapped_unsigned_val - range_size / 2
-            
-            # Scale back to floating-point
-            return res / (2 ** fp)
-        
-        @staticmethod
-        def backward(ctx, grad_output: torch.Tensor) -> torch.Tensor:
-            return grad_output
-    
-    return Quantize
-
-
 class Quantizer(torch.nn.Module):
-    """
-    Fixed-point quantizer module for FPGA deployment.
-    
-    This module quantizes floating-point values to fixed-point representation
-    and tracks clipping statistics for monitoring quantization quality.
-    
-    Args:
-        tp (int): Total precision (total number of bits). Default: 8
-        fp (int): Fractional precision (number of fractional bits). Default: 4
-        quantize_clip (bool): Whether to clip values or use wrap-around. Default: False
-    """
-    
-    def __init__(self, tp: int = 8, fp: int = 4, quantize_clip: bool = False):
+    """Fixed-point quantizer module (Xilinx convention: integer bits)."""
+
+    def __init__(self, W: int = 8, I: int = 4, clip: bool = False):
         super().__init__()
-        self.tp = tp
-        self.fp = fp
-        self.quantize_clip = quantize_clip
-        self.quantize = make_quantize(tp, fp, quantize_clip)
-        
-        # Statistics for monitoring quantization quality
-        self.clipping_loss = 0.0
-        self.num_clipped = 0.0
-        self.num_total = 0.0
-    
+        self.W, self.I = W, I
+        self.F = W-I
+        self.clip = clip
+
+        # Precompute integer-domain constants
+        scale      =   1 << self.F
+        qmin       = -(1 << (self.W - 1))
+        qmax       =  (1 << (self.W - 1)) - 1
+        range_size =  1 << W
+        offset     =  range_size // 2
+
+        class _Quant(torch.autograd.Function):
+            @staticmethod
+            def forward(ctx, input: torch.Tensor) -> torch.Tensor:
+
+                # Scale to fixed-point representation
+                input = torch.floor(input * scale)
+
+                if self.clip:
+                    # Clipping quantization
+                    res = torch.clamp(input, qmin, qmax)
+                else:
+                    # Wrap-around quantization
+                    wrapped_unsigned_val = torch.fmod(
+                    torch.fmod(input + offset, range_size) + range_size, 
+                    range_size)
+
+                    res = wrapped_unsigned_val - offset
+
+                # Scale back to floating-point
+                return res / scale
+
+            @staticmethod
+            def backward(ctx, grad_output: torch.Tensor) -> torch.Tensor: return grad_output #Straight-through estimator
+
+        # Stats as buffers (move with .to() and persist in state_dict)
+        self.register_buffer("clipping_loss", torch.tensor(0.0))
+        self.register_buffer("num_clipped",   torch.tensor(0.0))
+        self.register_buffer("num_total",     torch.tensor(0.0))
+
+        self.quantize = _Quant.apply
+
     def forward(self, x: torch.Tensor) -> torch.Tensor:
-        """
-        Forward pass: quantize input tensor and update statistics.
-        
-        Args:
-            x: Input tensor to quantize
-            
-        Returns:
-            torch.Tensor: Quantized tensor
-        """
         # Calculate dynamic range for clipping statistics
-        int_bits = self.tp - self.fp
-        max_val = 2 ** (int_bits - 1) - 1
-        min_val = -2 ** (int_bits - 1)
-        
+        # Xilinx convention: I includes sign bit
+        min_val = -2 ** (self.I - 1)
+        max_val = 2 ** (self.I - 1) - 2**(self.F)
+
         # Update clipping statistics
-        self.num_clipped += torch.sum(x > max_val) + torch.sum(x < min_val)
-        self.num_total += x.numel()
-        
-        if not self.quantize_clip:
-            # Wrap around quantization
-            above_max = torch.maximum(x - max_val, torch.zeros_like(x) - 0.5 / (2 ** self.fp)) * (2 ** self.fp)
-            below_min = torch.maximum(min_val - x, torch.zeros_like(x) - 0.5 / (2 ** self.fp)) * (2 ** self.fp)
+        with torch.no_grad():
+            self.num_clipped += torch.sum(x > max_val) + torch.sum(x < min_val)
+            self.num_total += x.numel()
 
-            outside_range = torch.maximum(above_max, below_min)
+            # Penalize range violations only when wrapping is used
+            if not self.clip:
+                # Wrap around quantization
+                above_max = torch.maximum(x - max_val, torch.zeros_like(x) - 0.5 / (2 ** self.F)) * (2 ** self.F)
+                below_min = torch.maximum(min_val - x, torch.zeros_like(x) - 0.5 / (2 ** self.F)) * (2 ** self.F)
 
-            self.clipping_loss += torch.nn.functional.relu(outside_range + 0.5).mean(-1).sum()
+                outside_range = torch.maximum(above_max, below_min)
+
+                self.clipping_loss += torch.nn.functional.relu(outside_range + 0.5).mean(-1).sum()
         
-        return self.quantize.apply(x)
+        return self.quantize(x)
+
+    @torch.no_grad()
+    def reset_stats(self):
+        self.clipping_loss.zero_()
+        self.num_clipped.zero_()
+        self.num_total.zero_()
 
 
 class KANLinear(torch.nn.Module):
@@ -127,6 +95,7 @@ class KANLinear(torch.nn.Module):
         input_precision: Tuple[int, int],
         output_precision: Tuple[int, int],
         quantize: bool = True,
+        quantize_clip: bool = False,
         quantize_mode: str = "wrap",
         grid_size=5,
         spline_order=3,
@@ -147,6 +116,7 @@ class KANLinear(torch.nn.Module):
         self.spline_order = spline_order
         self.quantize = quantize
         self.quantize_mode = quantize_mode
+        self.quantize_clip = quantize_clip
 
         h = (grid_range[1] - grid_range[0]) / grid_size
         grid = (
@@ -177,8 +147,8 @@ class KANLinear(torch.nn.Module):
 
         self.reset_parameters()
 
-        if self.quantize:
-            self.output_quantizer = Quantizer(tp=self.output_precision[0], fp=self.output_precision[0]-self.output_precision[1], quantize_clip=False)
+        if self.quantize:       
+            self.output_quantizer = Quantizer(W=self.output_precision[0], I=self.output_precision[1], clip=self.quantize_clip)
 
     def reset_parameters(self):
         torch.nn.init.kaiming_uniform_(self.base_weight, a=math.sqrt(5) * self.scale_base)
@@ -366,12 +336,16 @@ class KANLinear(torch.nn.Module):
             + regularize_entropy * regularization_loss_entropy
         )
 
+    def quantization_loss(self, regularize_clipping=0.1):
+        return regularize_clipping * self.output_quantizer.clipping_loss
+
 class KAN(torch.nn.Module):
     def __init__(
         self,
         layers_size: List[int],
         layers_precision: List[Tuple[int, int]], #Format (total_width, integer_width)
         quantize: bool = True,
+        quantize_clip: bool = False,
         quantize_mode: str = "wrap",
         grid_size=5,
         spline_order=3,
@@ -400,6 +374,7 @@ class KAN(torch.nn.Module):
                     input_precision=input_precision,
                     output_precision=output_precision,
                     quantize=quantize,
+                    quantize_clip=quantize_clip,
                     quantize_mode=quantize_mode,
                     grid_size=grid_size,
                     spline_order=spline_order,
@@ -424,3 +399,15 @@ class KAN(torch.nn.Module):
             layer.regularization_loss(regularize_activation, regularize_entropy)
             for layer in self.layers
         )
+
+    def quantization_loss(self, regularize_clipping=0.1):
+        return sum(
+            layer.quantization_loss(regularize_clipping)
+            for layer in self.layers
+        )
+    
+    @torch.no_grad()
+    def reset_quant_stats(self):
+        for layer in self.layers:
+            if getattr(layer, "quantize", False):
+                layer.output_quantizer.reset_stats()

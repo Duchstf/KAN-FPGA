@@ -43,7 +43,7 @@ logging.getLogger().addHandler(console)
 # === Configuration ===
 #Model parameters
 input_precision = (8, 5)
-layers_precision = [(8, 5), (8, 4), (8, 4)]
+layers_precision = [(6, 3), (8, 4), (8, 4)]
 grid_size = 40
 spline_order = 4
 
@@ -87,21 +87,6 @@ model = KAN([16,4,5], layers_precision=layers_precision, quantize=True, quantize
             grid_size=40, spline_order=4, grid_eps=0.03, base_activation=nn.GELU, grid_range=[-8,8]).to(device)
 print(sum(p.numel() for p in model.parameters()))
 
-# === Brevitas Input Quantizer (6-bit) ===
-# Returns a plain Tensor (not a QuantTensor), appropriate if KAN expects normal tensors.
-# input_quant = qnn.QuantIdentity(
-#     bit_width=input_bits,
-#     quant_type=QuantType.INT,
-#     signed=True,
-#     return_quant_tensor=False,
-#     # Make scaling constant (static); fix the clipping range
-#     scaling_impl_type=ScalingImplType.CONST,
-#     min_val=-8,
-#     max_val=8,
-# ).to(device).eval()
-# param_count = sum(p.numel() for p in model.parameters())
-# logging.info(f"Model has {param_count} trainable parameters")
-
 optimizer = optim.AdamW(model.parameters(), lr=1e-4, weight_decay=1e-5)
 scheduler = optim.lr_scheduler.ExponentialLR(optimizer, gamma=0.9)
 criterion = nn.CrossEntropyLoss()
@@ -122,7 +107,7 @@ for epoch in range(30):
             inputs = inputs.to(device)
             optimizer.zero_grad()
             output = model(inputs)
-            loss = criterion(output, labels.to(device))
+            loss = criterion(output, labels.to(device)) + model.quantization_loss(regularize_clipping=1e-5)
             loss.backward()
             optimizer.step()
 
@@ -131,6 +116,9 @@ for epoch in range(30):
 
             accuracy = (output.argmax(dim=1) == labels.to(device)).float().mean()
             pbar.set_postfix(loss=loss.item(), accuracy=accuracy.item(), lr=optimizer.param_groups[0]['lr'])
+
+            #Reset quantization statistics
+            model.reset_quant_stats()
     
     average_train_loss = epoch_train_loss / total_batches
     training_loss.append(average_train_loss)  # Record the average training loss
@@ -143,7 +131,7 @@ for epoch in range(30):
         for inputs, labels in testloader:
             inputs = inputs.to(device)
             output = model(inputs)
-            val_loss += criterion(output, labels.to(device)).item()
+            val_loss += criterion(output, labels.to(device)).item() + model.quantization_loss(regularize_clipping=0.1)
             val_accuracy += (
                 (output.argmax(dim=1) == labels.to(device)).float().mean().item()
             )
