@@ -48,14 +48,14 @@ logging.getLogger().addHandler(console)
 
 # === Configuration ===
 #Model parameters
-layers_precision = [(6, 3), (8, 4), (8, 4)]
+layers_precision = [(6, 3), (6, 4), (6, 4)]
 grid_size = 40
 spline_order = 4
 
 #Training parameters
 batch_size = 64
 num_epochs = 50
-regularize_clipping = 1e-6
+regularize_clipping = 1e-8
 
 #Save to a config json file
 config = {
@@ -70,6 +70,7 @@ config = {
 
     "quantize_clip": False,
     "quantize": True,
+    "regularize_clipping": regularize_clipping,
 }
 
 #Create a new directory to save the config and checkpoints
