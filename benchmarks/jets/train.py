@@ -24,7 +24,7 @@ from brevitas.core.quant import QuantType
 from brevitas.core.scaling import ScalingImplType
 
 #Set the seed
-seed = 8199
+seed = 0
 torch.manual_seed(seed)
 np.random.seed(seed)
 
@@ -48,14 +48,14 @@ logging.getLogger().addHandler(console)
 
 # === Configuration ===
 #Model parameters
-layers_precision = [(8, 3), (8, 4), (8, 4)]
+layers_precision = [(6, 3), (8, 4), (8, 4)]
 grid_size = 40
 spline_order = 4
 
 #Training parameters
 batch_size = 64
 num_epochs = 50
-regularize_clipping = 1e-5
+regularize_clipping = 1e-6
 
 #Save to a config json file
 config = {
@@ -165,7 +165,7 @@ for epoch in range(num_epochs):
         for inputs, labels in testloader:
             inputs = inputs.to(device)
             output = model(inputs)
-            val_loss += criterion(output, labels.to(device)).item() + model.quantization_loss(regularize_clipping=0.1)
+            val_loss += criterion(output, labels.to(device)).item() + model.quantization_loss(regularize_clipping=regularize_clipping)
             val_accuracy += (
                 (output.argmax(dim=1) == labels.to(device)).float().mean().item()
             )
