@@ -6,7 +6,7 @@ import KANFPGA
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
-model_tag = "20250827_123148"
+model_tag = "20250827_173352"
 
 # --- 1. List all model files and find the one with best accuracy ---
 model_dir = f"models/{model_tag}"
