@@ -5,7 +5,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from KANLinear import KAN
+from KAN_QAT import KAN
 
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
@@ -321,7 +321,7 @@ def generate_lut_vhd(config, output_dir):
     """
 
     #Open the template file
-    with open(os.path.join(os.path.dirname(__file__), "templates", "LUT.vhd"), "r") as tf:
+    with open(os.path.join(os.path.dirname(__file__), "templates", "src", "LUT.vhd"), "r") as tf:
         tpl = tf.read()
 
     #Loop through the layers and generate the VHDL code
@@ -345,31 +345,29 @@ def generate_pkg_lut(config, output_dir):
     Generate the PkgLUT.vhd file
     """
 
-<<<<<<< HEAD
-    with open(os.path.join(os.path.dirname(__file__), "templates", "src", "PkgLUT.vhd"), "r") as tf:
-=======
-    tpl_path = os.path.join(os.path.dirname(__file__), "templates", "PkgLUT.vhd")
+    tpl_path = os.path.join(os.path.dirname(__file__), "templates", "src", "PkgLUT.vhd")
     with open(tpl_path, "r") as tf:
->>>>>>> a8041d391485bd598720986859890237974f023c
         tpl = tf.read()
 
     n_layers = max(0, len(config["layers"]) - 1)
     blocks = []
 
-    print(config["layers_precision"])
+    assert len(config["layers_precision"]) - 1 == n_layers , "There is one less LUT implementable layer than the number of layers in the model"
 
-    for i in range(n_layers):
-        prev_tp = config["layers_precision"][i - 1][0] if i > 0 else config["layers_precision"][0][0]
+    for i in range(1, len(config["layers_precision"])):
+
+        layer_idx = i - 1
+        prev_tp = config["layers_precision"][i - 1][0]
         curr_tp = config["layers_precision"][i][0]
 
         blocks.append(
             "\n".join([
-                f"  -- Layer {i}",
-                f"  constant LUT_SIZE_{i}        : integer := {1 << prev_tp};",
-                f"  constant LUT_ADDR_WIDTH_{i}  : integer := {prev_tp};",
-                f"  constant LUT_DATA_WIDTH_{i}  : integer := {curr_tp};",
-                f"  subtype  lut_input_t_{i}  is signed(LUT_ADDR_WIDTH_{i}-1 downto 0);",
-                f"  subtype  lut_output_t_{i} is signed(LUT_DATA_WIDTH_{i}-1 downto 0);",
+                f"  -- Layer {layer_idx}",
+                f"  constant LUT_SIZE_{layer_idx}        : integer := {1 << prev_tp};",
+                f"  constant LUT_ADDR_WIDTH_{layer_idx}  : integer := {prev_tp};",
+                f"  constant LUT_DATA_WIDTH_{layer_idx}  : integer := {curr_tp};",
+                f"  subtype  lut_input_t_{layer_idx}  is signed(LUT_ADDR_WIDTH_{layer_idx}-1 downto 0);",
+                f"  subtype  lut_output_t_{layer_idx} is signed(LUT_DATA_WIDTH_{layer_idx}-1 downto 0);",
             ])
         )
 
