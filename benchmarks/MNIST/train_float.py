@@ -1,10 +1,11 @@
 import sys, os, logging
 from datetime import datetime
 import matplotlib.pyplot as plt
-import numpy as np
 
 sys.path.append('../../src')
-from KAN_QAT import KAN
+from KAN_OG import KAN
+from helpers import quantize_dataset
+
 
 # Train on MNIST
 import torch
@@ -14,13 +15,6 @@ import torchvision
 import torchvision.transforms as transforms
 from torch.utils.data import DataLoader
 from tqdm import tqdm
-
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
-#Set the seed
-seed = 420
-torch.manual_seed(seed)
-np.random.seed(seed)
 
 # Load MNIST
 # Transform: convert to tensor and binarize
@@ -33,18 +27,18 @@ valloader = DataLoader(valset, batch_size=64, shuffle=False)
 
 # === Configuration ===
 #Model parameters
-layers_precision = [(16, 6), (16, 6), (16, 6)]
+layers_precision = [(6, 3), (6, 4), (6, 4)]
 grid_size = 40
 spline_order = 4
 
 #Training parameters
 batch_size = 64
 num_epochs = 50
-regularize_clipping = 1e-5
+regularize_clipping = 1e-8
 
 #Save to a config json file
 config = {
-    "layers": [28*28, 64, 10],
+    "layers": [16, 4, 5],
     "layers_precision": layers_precision, #!!!Attention: the precision is of the form (bit_width, integer_width)
 
     "grid_size": grid_size,
@@ -59,20 +53,15 @@ config = {
 }
 
 # Define model
-model = KAN(config["layers"],
-            layers_precision=config["layers_precision"], 
-            quantize=config["quantize"], 
-            quantize_clip=config["quantize_clip"],
-            grid_size=config["grid_size"], 
-            spline_order=config["spline_order"], 
-            grid_eps=config["grid_eps"], 
-            base_activation=eval(config["base_activation"])).to(device)
+model = KAN([28 * 28, 64, 10], grid_range=[0,1], grid_size=grid_size, spline_order=spline_order, base_activation=nn.GELU)
 
+
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+model.to(device)
 # Define optimizer
-optimizer = optim.AdamW(model.parameters(), lr=1e-4, weight_decay=1e-5)
-
+optimizer = optim.AdamW(model.parameters(), lr=1e-3, weight_decay=1e-4)
 # Define learning rate scheduler
-scheduler = optim.lr_scheduler.ExponentialLR(optimizer, gamma=0.9)
+scheduler = optim.lr_scheduler.ExponentialLR(optimizer, gamma=0.8)
 
 # Define loss
 criterion = nn.CrossEntropyLoss()
@@ -84,9 +73,7 @@ for epoch in range(num_epochs):
             images = images.view(-1, 28 * 28).to(device)
             optimizer.zero_grad()
             output = model(images)
-
-            loss = criterion(output, labels.to(device)) #+ model.quantization_loss(regularize_clipping=regularize_clipping)
-
+            loss = criterion(output, labels.to(device))
             loss.backward()
             optimizer.step()
             accuracy = (output.argmax(dim=1) == labels.to(device)).float().mean()
@@ -100,7 +87,7 @@ for epoch in range(num_epochs):
         for images, labels in valloader:
             images = images.view(-1, 28 * 28).to(device)
             output = model(images)
-            val_loss += criterion(output, labels.to(device)).item() #+ model.quantization_loss(regularize_clipping=regularize_clipping)
+            val_loss += criterion(output, labels.to(device)).item()
             val_accuracy += (
                 (output.argmax(dim=1) == labels.to(device)).float().mean().item()
             )

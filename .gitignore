@@ -11,6 +11,7 @@ benchmarks/anomaly/data/
 __pycache__/
 *.py[cod]
 *$py.class
+*/MNIST/data/
 
 # C extensions
 *.so

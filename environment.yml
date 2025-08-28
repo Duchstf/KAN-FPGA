@@ -1,6 +1,7 @@
 name: kan
 channels:
   - conda-forge
+  - pytorch
 dependencies:
   - python=3.9.7
   - pip
