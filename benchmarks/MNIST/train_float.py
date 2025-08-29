@@ -28,8 +28,8 @@ valloader = DataLoader(valset, batch_size=64, shuffle=False)
 # === Configuration ===
 #Model parameters
 layers_precision = [(6, 3), (6, 4), (6, 4)]
-grid_size = 40
-spline_order = 4
+grid_size = 3
+spline_order = 3
 
 #Training parameters
 batch_size = 64
@@ -53,7 +53,7 @@ config = {
 }
 
 # Define model
-model = KAN([28 * 28, 64, 10], grid_range=[0,1], grid_size=grid_size, spline_order=spline_order, base_activation=nn.GELU)
+model = KAN([28 * 28, 64, 10], grid_range=[-1,1], grid_size=grid_size, spline_order=spline_order, base_activation=nn.GELU)
 
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")

@@ -391,6 +391,7 @@ class KAN(torch.nn.Module):
         self,
         layers_size: List[int],
         layers_precision: List[Tuple[int, int]], #Format (total_width, integer_width)
+        input_grid_range: List[float] = [-1, 1],
         quantize: bool = True,
         quantize_clip: bool = False,
         quantize_mode: str = "wrap",
@@ -415,7 +416,12 @@ class KAN(torch.nn.Module):
 
             if quantize:
                 input_I = input_precision[1]
-                grid_range = [-2**(input_I - 1), 2**(input_I - 1)]
+                if layer_index == 0 and input_grid_range is not None:
+                    grid_range = input_grid_range
+                else:
+                    grid_range = [-2**(input_I - 1), 2**(input_I - 1)]
+            else:
+                grid_range = input_grid_range
 
             self.layers.append(
                 KANLinear(
