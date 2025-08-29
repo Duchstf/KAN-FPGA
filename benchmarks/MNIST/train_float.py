@@ -53,8 +53,7 @@ config = {
 }
 
 # Define model
-model = KAN([28 * 28, 64, 10], grid_range=[-1,1], grid_size=grid_size, spline_order=spline_order, base_activation=nn.GELU)
-
+model = KAN([28 * 28, 62, 10], grid_range=[-1,1], grid_size=grid_size, spline_order=spline_order, base_activation=nn.GELU)
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model.to(device)

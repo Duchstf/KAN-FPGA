@@ -49,7 +49,7 @@ valloader = DataLoader(valset, batch_size=64, shuffle=False)
 
 # === Configuration ===
 #Model parameters
-layers_precision = [(None, None), (5, 3), (16, 6)]
+layers_precision = [(None, None), (5, 3), (9, 6)]
 grid_size = 3
 spline_order = 3
 
@@ -60,7 +60,7 @@ regularize_clipping = 1e-5
 
 #Save to a config json file
 config = {
-    "layers": [28*28, 64, 10],
+    "layers": [28*28, 62, 10],
     "input_grid_range": [0, 1],
     "layers_precision": layers_precision, #!!!Attention: the precision is of the form (bit_width, integer_width)
 
@@ -73,6 +73,8 @@ config = {
     "quantize_clip": True,
     "quantize": True,
     "regularize_clipping": regularize_clipping,
+    
+    "prune_threshold": 0.1,
 }
 
 #Create a new directory to save the config and checkpoints
@@ -119,7 +121,7 @@ for epoch in range(num_epochs):
 
     
     # Prune the model
-    remaining_fraction = model.prune_below_threshold(threshold=0.0)
+    remaining_fraction = model.prune_below_threshold(threshold=config["prune_threshold"])
 
     # Validation
     model.eval()

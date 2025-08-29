@@ -163,7 +163,6 @@ class KANLinear(torch.nn.Module):
         output = base_output + spline_output
         
         output = output.reshape(*original_shape[:-1], self.out_features)
-        print(output)
         return output
 
     @torch.no_grad()
