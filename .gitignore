@@ -12,6 +12,7 @@ __pycache__/
 *.py[cod]
 *$py.class
 */MNIST/data/
+*/MNIST/models/*/hardware/
 */JSC_CERNBox/data/
 
 # C extensions
