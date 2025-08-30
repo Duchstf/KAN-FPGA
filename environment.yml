@@ -22,3 +22,5 @@ dependencies:
     - librosa==0.6.0
     - pyyaml
     - brevitas
+    - imbalanced-learn
+    - openpyxl
