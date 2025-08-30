@@ -13,7 +13,7 @@ __pycache__/
 *$py.class
 */MNIST/data/
 */MNIST/models/*/hardware/
-*/JSC_CERNBox/data/
+*/JSC_CERNBox/data/*.z
 
 # C extensions
 *.so
