@@ -51,7 +51,7 @@ dataset = {
 # Model: single-output regression head
 # -------------------------------
 model_check = KAN(
-    [2, 8, 1],              # last dim = 1
+    [2, 2, 1],              # last dim = 1
     grid_size=5,
     spline_order=3,
     grid_eps=0.01,

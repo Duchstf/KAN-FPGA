@@ -55,7 +55,7 @@ class MLP(nn.Module):
     def forward(self, x):
         return self.net(x)
 
-model_check = MLP((2, 8, 1), base_activation=nn.GELU).to(device)
+model_check = MLP((2, 2, 1), base_activation=nn.GELU).to(device)
 
 # -------------------------------
 # Metrics (sigmoid -> probability)
