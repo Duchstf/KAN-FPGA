@@ -1,5 +1,8 @@
 import torch
 from typing import Tuple
+import os
+import math
+import matplotlib.pyplot as plt
 
 def quantize_tensor(t: torch.Tensor, W: int, I: int, rounding: str = "nearest"):
     """
@@ -64,3 +67,21 @@ def quantize_dataset(X_train, X_test, precision: Tuple[int, int], rounding: str 
     X_train_q, _ = quantize_tensor(X_train, precision[0], precision[1], rounding)
     X_test_q,  _ = quantize_tensor(X_test,  precision[0], precision[1], rounding)
     return X_train_q, X_test_q
+
+def plot_input_features(X_train, out_dir="plots", plot_name="features_grid.png"):
+    #Plot the distribution of the input features
+    os.makedirs(out_dir, exist_ok=True)
+    n_feat = X_train.shape[1]
+    cols = 4
+    rows = math.ceil(n_feat / cols)
+
+    plt.figure(figsize=(4*cols, 3*rows))
+    for i in range(n_feat):
+        plt.subplot(rows, cols, i+1)
+        plt.hist(X_train[:, i].cpu().numpy(), bins=50, alpha=0.7)
+        plt.title(f"Feature {i}", fontsize=8)
+        plt.tight_layout()
+
+    plt.savefig(os.path.join(out_dir, plot_name))
+    plt.close()
+

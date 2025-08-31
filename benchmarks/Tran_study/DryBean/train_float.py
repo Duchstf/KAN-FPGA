@@ -68,11 +68,10 @@ num_classes = len(le.classes_)         # should be 7
 print(f"in_features={in_features}, num_classes={num_classes}, trainN={len(y_tr)}, testN={len(y_te)}")
 
 # -------------------------------
-# Model (YOUR KAN class & params)
+# Model
 # -------------------------------
-# Slightly wider than the wine example—feel free to tweak hidden width/grid_size
 model_check = KAN(
-    [16, 2, 7],   # e.g., [16, 8, 7]
+    [16, 2, 7],  
     grid_size=6,                     # a bit denser grid
     spline_order=3,
     grid_eps=0.01,
@@ -100,7 +99,7 @@ def test_acc():
         return (preds == labels).float().mean()
 
 # -------------------------------
-# LBFGS training wrapper (as before)
+# LBFGS training wrapper 
 # -------------------------------
 def kan_train_lbfgs(model, dataset, steps, loss_fn, lr, metrics):
     """
