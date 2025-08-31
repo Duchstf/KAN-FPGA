@@ -58,17 +58,20 @@ X_test = torch.from_numpy(np.load('data/X_test.npy')).float().to(device)
 y_test = torch.from_numpy(np.load('data/y_test.npy')).float().to(device).argmax(dim=1)
 
 #Quantize the data
-X_train_q, X_test_q = quantize_dataset(X_train, X_test, layers_precision[0], rounding="nearest")
+# X_train_q, X_test_q = quantize_dataset(X_train, X_test, layers_precision[0], rounding="nearest")
 
 # === Create Data Loaders ===
-train_dataset = TensorDataset(X_train_q, y_train)
-test_dataset = TensorDataset(X_test_q, y_test)
+train_dataset = TensorDataset(X_train, y_train)
+test_dataset = TensorDataset(X_test, y_test)
 trainloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
 testloader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
 
 # === Initialize Model ===
-model = KAN([16,4,5], grid_size=30, spline_order=3, grid_eps=0.05, base_activation=nn.GELU, grid_range=[-8,8]).to(device)
-
+# MLP (same size as KAN)
+model = nn.Sequential(
+    nn.Linear(16, 8), nn.ReLU(),
+    nn.Linear(8, 5)
+)
 optimizer = optim.AdamW(model.parameters(), lr=1e-3, weight_decay=1e-4)
 scheduler = optim.lr_scheduler.ExponentialLR(optimizer, gamma=0.9)
 criterion = nn.CrossEntropyLoss()

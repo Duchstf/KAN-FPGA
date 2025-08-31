@@ -5,7 +5,6 @@ from datetime import datetime
 sys.path.append('../../src')
 from KAN_OG import KAN
 from helpers import quantize_dataset
-from dataset import JetSubstructureDataset
 
 import numpy as np
 import torch
@@ -19,49 +18,44 @@ from sklearn.metrics import roc_curve, auc
 from tqdm import tqdm
 import json
 
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+#Set the seed
+seed = 0
+torch.manual_seed(seed)
+np.random.seed(seed)
+
+# === Setup ===
+torch.cuda.empty_cache()
+device = 'cuda' if torch.cuda.is_available() else 'cpu'
+
+# === Logging Setup ===
+os.makedirs('checkpoints', exist_ok=True)
+logging.basicConfig(
+    filename='training.log',
+    filemode='w',
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s'
+)
+console = logging.StreamHandler()
+console.setLevel(logging.INFO)
+formatter = logging.Formatter('%(message)s')
+console.setFormatter(formatter)
+logging.getLogger().addHandler(console)
 
 # === Configuration ===
+#Model parameters
 layers_precision = [(6, 3), (6, 4), (6, 4)]
+grid_size = 40
+spline_order = 4
 
 #Training parameters
 batch_size = 64
 num_epochs = 50
 
-# Fetch the test set
-dataset = {}
-dataset["test"] = JetSubstructureDataset(
-    "data/processed-pythia82-lhc13-all-pt1-50k-r1_h022_e0175_t220_nonu_truth.z",
-    "config.yml",
-    split="test"
-)
-dataset["train"] = JetSubstructureDataset(
-    "data/processed-pythia82-lhc13-all-pt1-50k-r1_h022_e0175_t220_nonu_truth.z",
-    "config.yml",
-    split="train"
-)
-
-#Plot the distribution of the training data
-os.makedirs("plots", exist_ok=True)
-n_feat = dataset["train"].X.shape[1]
-cols = 4
-rows = math.ceil(n_feat / cols)
-
-plt.figure(figsize=(4*cols, 3*rows))
-for i in range(n_feat):
-    plt.subplot(rows, cols, i+1)
-    plt.hist(dataset["train"].X[:, i].cpu().numpy(), bins=50, alpha=0.7)
-    plt.title(f"Feature {i}", fontsize=8)
-    plt.tight_layout()
-
-plt.savefig("plots/features_grid.png")
-plt.close()
-
 # === Load Data ===
-X_train = dataset["train"].X.to(device)
-y_train = dataset["train"].y.float().argmax(dim=1).to(device)
-X_test = dataset["test"].X.to(device)
-y_test = dataset["test"].y.float().argmax(dim=1).to(device)
+X_train = torch.from_numpy(np.load('data/X_train_val.npy')).float().to(device)
+y_train = torch.from_numpy(np.load('data/y_train_val.npy')).float().to(device).argmax(dim=1)
+X_test = torch.from_numpy(np.load('data/X_test.npy')).float().to(device)
+y_test = torch.from_numpy(np.load('data/y_test.npy')).float().to(device).argmax(dim=1)
 
 #Quantize the data
 # X_train_q, X_test_q = quantize_dataset(X_train, X_test, layers_precision[0], rounding="nearest")

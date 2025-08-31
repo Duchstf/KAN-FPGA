@@ -18,42 +18,21 @@ from tqdm import tqdm
 
 # Load MNIST
 # Transform: convert to tensor and binarize
-transform = transforms.Compose([transforms.ToTensor(), transforms.Lambda(lambda x: (x > 0).float())])
-
+transform = transforms.Compose(
+    [transforms.ToTensor(), transforms.Normalize((0.5,), (0.5,))]
+)
 trainset = torchvision.datasets.MNIST(root="./data", train=True, download=False, transform=transform)
 valset = torchvision.datasets.MNIST(root="./data", train=False, download=False, transform=transform)
 trainloader = DataLoader(trainset, batch_size=64, shuffle=True)
 valloader = DataLoader(valset, batch_size=64, shuffle=False)
 
 # === Configuration ===
-#Model parameters
-layers_precision = [(6, 3), (6, 4), (6, 4)]
-grid_size = 3
-spline_order = 3
-
 #Training parameters
 batch_size = 64
 num_epochs = 50
-regularize_clipping = 1e-8
-
-#Save to a config json file
-config = {
-    "layers": [16, 4, 5],
-    "layers_precision": layers_precision, #!!!Attention: the precision is of the form (bit_width, integer_width)
-
-    "grid_size": grid_size,
-    "grid_eps": 0.03,
-
-    "spline_order": spline_order,
-    "base_activation": "nn.GELU",
-
-    "quantize_clip": False,
-    "quantize": True,
-    "regularize_clipping": regularize_clipping,
-}
 
 # Define model
-model = KAN([28 * 28, 62, 10], grid_range=[-1,1], grid_size=grid_size, spline_order=spline_order, base_activation=nn.GELU)
+model = KAN([28 * 28, 62, 10], grid_range=[-1,1], grid_size=5, spline_order=3, base_activation=nn.GELU)
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model.to(device)

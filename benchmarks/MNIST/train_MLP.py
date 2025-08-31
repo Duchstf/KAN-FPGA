@@ -3,7 +3,9 @@ from torch.utils.data import DataLoader
 from tqdm import tqdm
 
 # Data
-transform = transforms.Compose([transforms.ToTensor(), transforms.Lambda(lambda x: (x > 0).float())])
+transform = transforms.Compose(
+    [transforms.ToTensor(), transforms.Normalize((0.5,), (0.5,))]
+)
 trainset = torchvision.datasets.MNIST(root="./data", train=True, download=False, transform=transform)
 valset   = torchvision.datasets.MNIST(root="./data", train=False, download=False, transform=transform)
 trainloader, valloader = DataLoader(trainset, 64, True), DataLoader(valset, 64, False)
