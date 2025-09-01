@@ -25,7 +25,7 @@ from brevitas.core.quant import QuantType
 from brevitas.core.scaling import ScalingImplType
 
 #Set the seed
-seed = 0
+seed = 100
 torch.manual_seed(seed)
 np.random.seed(seed)
 
@@ -49,7 +49,7 @@ logging.getLogger().addHandler(console)
 
 # === Configuration ===
 #Model parameters
-layers_precision = [(6, 3), (6, 4), (7, 6)]
+layers_precision = [(6, 3), (10, 8), (10, 8)]
 grid_size = 30
 spline_order = 3
 
@@ -136,7 +136,7 @@ model = KAN(config["layers"],
             base_activation=eval(config["base_activation"])).to(device)
 print(sum(p.numel() for p in model.parameters()))
 
-optimizer = optim.AdamW(model.parameters(), lr=1e-3, weight_decay=1e-4)
+optimizer = optim.AdamW(model.parameters(), lr=3e-3, weight_decay=1e-4)
 scheduler = optim.lr_scheduler.ExponentialLR(optimizer, gamma=0.9)
 criterion = nn.CrossEntropyLoss()
 
