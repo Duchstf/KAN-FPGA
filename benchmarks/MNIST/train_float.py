@@ -19,7 +19,7 @@ from tqdm import tqdm
 # Load MNIST
 # Transform: convert to tensor and binarize
 transform = transforms.Compose(
-    [transforms.ToTensor(), transforms.Normalize((0.5,), (0.5,))]
+    [transforms.ToTensor(), transforms.Normalize((0.1307,), (0.3081,))]
 )
 trainset = torchvision.datasets.MNIST(root="./data", train=True, download=False, transform=transform)
 valset = torchvision.datasets.MNIST(root="./data", train=False, download=False, transform=transform)
@@ -32,12 +32,12 @@ batch_size = 64
 num_epochs = 50
 
 # Define model
-model = KAN([28 * 28, 62, 10], grid_range=[-1,1], grid_size=5, spline_order=3, base_activation=nn.GELU)
+model = KAN([28 * 28, 62, 10], grid_range=[-2,2], grid_size=5, spline_order=3, base_activation=nn.GELU)
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model.to(device)
 # Define optimizer
-optimizer = optim.AdamW(model.parameters(), lr=1e-3, weight_decay=1e-4)
+optimizer = optim.AdamW(model.parameters(), lr=2e-3, weight_decay=1e-4)
 # Define learning rate scheduler
 scheduler = optim.lr_scheduler.ExponentialLR(optimizer, gamma=0.8)
 
