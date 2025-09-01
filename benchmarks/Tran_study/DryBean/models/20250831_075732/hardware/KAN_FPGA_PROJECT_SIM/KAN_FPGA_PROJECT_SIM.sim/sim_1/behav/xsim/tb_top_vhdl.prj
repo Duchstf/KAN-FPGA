@@ -1,0 +1,12 @@
+# compile vhdl design source files
+vhdl work  \
+"../../../../../src/PkgTypes.vhd" \
+"../../../../../src/PkgLUT.vhd" \
+"../../../../../src/LUT_0.vhd" \
+"../../../../../src/LUT_1.vhd" \
+"../../../../../src/KAN.vhd" \
+"../../../../../src/top.vhd" \
+"../../../../../testbench/tb_top.vhd" \
+
+# Do not sort compile order
+nosort
