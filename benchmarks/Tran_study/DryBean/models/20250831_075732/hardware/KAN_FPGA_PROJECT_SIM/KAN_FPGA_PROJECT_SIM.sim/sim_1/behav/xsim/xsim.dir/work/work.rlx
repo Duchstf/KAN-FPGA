@@ -1,0 +1,11 @@
+0.7
+2020.2
+May 22 2024
+18:54:44
+/data/dhoang/test/KAN-FPGA/benchmarks/Tran_study/DryBean/models/20250831_075732/hardware/src/KAN.vhd,1756712362,vhdl,/data/dhoang/test/KAN-FPGA/benchmarks/Tran_study/DryBean/models/20250831_075732/hardware/src/top.vhd,,,kan,,,,,,,,
+/data/dhoang/test/KAN-FPGA/benchmarks/Tran_study/DryBean/models/20250831_075732/hardware/src/LUT_0.vhd,1756712362,vhdl,/data/dhoang/test/KAN-FPGA/benchmarks/Tran_study/DryBean/models/20250831_075732/hardware/src/KAN.vhd,,,lut_0,,,,,,,,
+/data/dhoang/test/KAN-FPGA/benchmarks/Tran_study/DryBean/models/20250831_075732/hardware/src/LUT_1.vhd,1756712362,vhdl,/data/dhoang/test/KAN-FPGA/benchmarks/Tran_study/DryBean/models/20250831_075732/hardware/src/KAN.vhd,,,lut_1,,,,,,,,
+/data/dhoang/test/KAN-FPGA/benchmarks/Tran_study/DryBean/models/20250831_075732/hardware/src/PkgLUT.vhd,1756712362,vhdl,/data/dhoang/test/KAN-FPGA/benchmarks/Tran_study/DryBean/models/20250831_075732/hardware/src/KAN.vhd;/data/dhoang/test/KAN-FPGA/benchmarks/Tran_study/DryBean/models/20250831_075732/hardware/src/LUT_0.vhd;/data/dhoang/test/KAN-FPGA/benchmarks/Tran_study/DryBean/models/20250831_075732/hardware/src/LUT_1.vhd,,,pkglut,,,,,,,,
+/data/dhoang/test/KAN-FPGA/benchmarks/Tran_study/DryBean/models/20250831_075732/hardware/src/PkgTypes.vhd,1756712362,vhdl,/data/dhoang/test/KAN-FPGA/benchmarks/Tran_study/DryBean/models/20250831_075732/hardware/src/KAN.vhd;/data/dhoang/test/KAN-FPGA/benchmarks/Tran_study/DryBean/models/20250831_075732/hardware/src/top.vhd;/data/dhoang/test/KAN-FPGA/benchmarks/Tran_study/DryBean/models/20250831_075732/hardware/testbench/tb_top.vhd,,,pkgtypes,,,,,,,,
+/data/dhoang/test/KAN-FPGA/benchmarks/Tran_study/DryBean/models/20250831_075732/hardware/src/top.vhd,1756712362,vhdl,/data/dhoang/test/KAN-FPGA/benchmarks/Tran_study/DryBean/models/20250831_075732/hardware/testbench/tb_top.vhd,,,top,,,,,,,,
+/data/dhoang/test/KAN-FPGA/benchmarks/Tran_study/DryBean/models/20250831_075732/hardware/testbench/tb_top.vhd,1756712362,vhdl,,,,tb_top,,,,,,,,

@@ -104,8 +104,13 @@ def get_activation_values(model, layer_i, inp_node, out_node, config):
 
     #Get the quantization precision for the layer
     tp, fp = config["layers_precision"][layer_i]
-    grid_range = [-2**(tp - fp - 1), 2**(tp - fp - 1)]
-    resolution = int(2 ** tp)
+
+    if not tp:
+        grid_range = [0,1]
+        resolution = 2
+    else:
+        grid_range = [-2**(tp - fp - 1), 2**(tp - fp - 1)]
+        resolution = int(2 ** tp)
 
     # Create dummy input
     array = np.linspace(grid_range[0], grid_range[1], resolution)
@@ -269,7 +274,14 @@ def generate_lut_data(model, config, cache, output_dir):
         out_f = layer.out_features
 
         #Get the quantization precision for the layer
-        tp, fp = config["layers_precision"][i]
+        W, I = config["layers_precision"][i]
+
+        if not W:
+            tp = 1
+            fp = 0
+
+        else:
+            tp, fp = W, W - I
 
         for j in range(in_f):
             for k in range(out_f):
@@ -359,6 +371,9 @@ def generate_pkg_lut(config, output_dir):
         layer_idx = i - 1
         prev_tp = config["layers_precision"][i - 1][0]
         curr_tp = config["layers_precision"][i][0]
+
+        if not prev_tp:
+            prev_tp = 0
 
         blocks.append(
             "\n".join([
