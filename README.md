@@ -1,5 +1,5 @@
 # KAN-FPGA
-Implementations of KAN on FPGA Paper at FPGA'2025
+Implementations of KAN on FPGA Paper
 
 Authors: Aarush Gupta (MIT), Duc Hoang (MIT)
 
