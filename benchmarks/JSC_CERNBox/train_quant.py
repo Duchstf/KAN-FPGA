@@ -49,7 +49,7 @@ logging.getLogger().addHandler(console)
 
 # === Configuration ===
 #Model parameters
-layers_precision = [(6, 3), (10, 8), (10, 8)]
+layers_precision = [(6, 3), (32, 4), (32, 4)]
 grid_size = 30
 spline_order = 3
 
@@ -64,7 +64,7 @@ config = {
     "layers_precision": layers_precision, #!!!Attention: the precision is of the form (bit_width, integer_width)
 
     "grid_size": grid_size,
-    "grid_eps": 0.03,
+    "grid_eps": 0.05,
 
     "spline_order": spline_order,
     "base_activation": "nn.GELU",
@@ -72,7 +72,7 @@ config = {
     "quantize_clip": False,
     "quantize": True,
     "regularize_clipping": regularize_clipping,
-    "prune_threshold": 0.5,
+    "prune_threshold": 0.0,
 }
 
 #Create a new directory to save the config and checkpoints
@@ -136,7 +136,7 @@ model = KAN(config["layers"],
             base_activation=eval(config["base_activation"])).to(device)
 print(sum(p.numel() for p in model.parameters()))
 
-optimizer = optim.AdamW(model.parameters(), lr=3e-3, weight_decay=1e-4)
+optimizer = optim.Adam(model.parameters(), lr=8e-5, weight_decay=0)
 scheduler = optim.lr_scheduler.ExponentialLR(optimizer, gamma=0.9)
 criterion = nn.CrossEntropyLoss()
 

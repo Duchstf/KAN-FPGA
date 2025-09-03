@@ -5,7 +5,8 @@ import numpy as np
 import json
 
 sys.path.append('../../src')
-from KAN_QAT import KAN
+from KANQuant import KANQuant
+from quant import QuantBrevitas, ScalarBiasScale
 
 # Train on MNIST
 import torch
@@ -16,8 +17,62 @@ import torchvision.transforms as transforms
 from torch.utils.data import DataLoader
 from tqdm import tqdm
 
+#For quantization
+from brevitas.nn import QuantHardTanh
+from brevitas.core.scaling import ParameterScaling
+from brevitas.core.quant import QuantType
+
+#Set the seed
+seed = 420
+torch.manual_seed(seed)
+np.random.seed(seed)
+
+#Set the device
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
+# === Configuration ===
+config = {
+    "layers": [28*28, 62, 10],
+    "grid_range": [-8, 8],
+    "layers_bitwidth": [1, 5, 6],
+
+    "grid_size": 3,
+    "spline_order": 3,
+    "grid_eps": 0.03,
+
+    "base_activation": "nn.SiLU",
+    
+    "batch_size": 64,
+    "num_epochs": 200,
+
+    "learning_rate": 0.01,
+    "weight_decay": 1e-4,
+
+    "prune_threshold": 1e-4,
+}
+
+#Create a new directory to save the config and checkpoints
+model_dir = f'models/{datetime.now().strftime("%Y%m%d_%H%M%S")}'
+os.makedirs(model_dir, exist_ok=True)
+with open(f'{model_dir}/config.json', 'w') as f:
+    json.dump(config, f)
+
+#Build the input layer
+bn_in = nn.BatchNorm1d(config["layers"][0])
+nn.init.constant_(bn_in.weight.data, 1)
+nn.init.constant_(bn_in.bias.data, 0)
+input_bias = ScalarBiasScale(scale=False, bias_init=-0.25)
+MNIST_input_layer = QuantBrevitas(
+    QuantHardTanh(bit_width = config["layers_bitwidth"][0],
+    max_val=1.0,
+    min_val=-1.0,
+    act_scaling_impl=ParameterScaling(1.33),
+    quant_type=QuantType.INT,
+    return_quant_tensor = False),
+    pre_transforms=[bn_in, input_bias])
+
+#Define the model
+model = KANQuant(config, MNIST_input_layer).to(device)
 
 # === Logging Setup ===
 os.makedirs('checkpoints', exist_ok=True)
@@ -33,69 +88,15 @@ formatter = logging.Formatter('%(message)s')
 console.setFormatter(formatter)
 logging.getLogger().addHandler(console)
 
-#Set the seed
-seed = 420
-torch.manual_seed(seed)
-np.random.seed(seed)
-
-# Load MNIST
-# Transform: convert to tensor and binarize
-transform = transforms.Compose([transforms.ToTensor(), transforms.Lambda(lambda x: (x > 0).float())])
-
+#Load MNIST
+transform = transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.1307,), (0.3081,))])
 trainset = torchvision.datasets.MNIST(root="./data", train=True, download=False, transform=transform)
 valset = torchvision.datasets.MNIST(root="./data", train=False, download=False, transform=transform)
-trainloader = DataLoader(trainset, batch_size=64, shuffle=True)
-valloader = DataLoader(valset, batch_size=64, shuffle=False)
-
-# === Configuration ===
-#Model parameters
-layers_precision = [(None, None), (5, 3), (9, 6)]
-grid_size = 3
-spline_order = 3
-
-#Training parameters
-batch_size = 64
-num_epochs = 200
-regularize_clipping = 1e-5
-
-#Save to a config json file
-config = {
-    "layers": [28*28, 62, 10],
-    "input_grid_range": [0, 1],
-    "layers_precision": layers_precision, #!!!Attention: the precision is of the form (bit_width, integer_width)
-
-    "grid_size": grid_size,
-    "grid_eps": 0.03,
-
-    "spline_order": spline_order,
-    "base_activation": "nn.GELU",
-
-    "quantize_clip": True,
-    "quantize": True,
-    "regularize_clipping": regularize_clipping,
-    
-    "prune_threshold": 0.1,
-}
-
-#Create a new directory to save the config and checkpoints
-model_dir = f'models/{datetime.now().strftime("%Y%m%d_%H%M%S")}'
-os.makedirs(model_dir, exist_ok=True)
-with open(f'{model_dir}/config.json', 'w') as f:
-    json.dump(config, f)
-
-# Define model
-model = KAN(config["layers"],
-            layers_precision=config["layers_precision"], 
-            input_grid_range=config["input_grid_range"],
-            quantize=config["quantize"], 
-            quantize_clip=config["quantize_clip"],
-            grid_size=config["grid_size"], 
-            spline_order=config["spline_order"], 
-            grid_eps=config["grid_eps"], 
-            base_activation=eval(config["base_activation"])).to(device)
+trainloader = DataLoader(trainset, batch_size=config["batch_size"], shuffle=True)
+valloader = DataLoader(valset, batch_size=config["batch_size"], shuffle=False)
 
 # Define optimizer
-optimizer = optim.AdamW(model.parameters(), lr=1e-3, weight_decay=1e-4)
+optimizer = optim.AdamW(model.parameters(), lr=config["learning_rate"], weight_decay=config["weight_decay"])
 
 # Define learning rate scheduler
 scheduler = optim.lr_scheduler.ExponentialLR(optimizer, gamma=0.9)
@@ -103,7 +104,7 @@ scheduler = optim.lr_scheduler.ExponentialLR(optimizer, gamma=0.9)
 # Define loss
 criterion = nn.CrossEntropyLoss()
 best_val_accuracy = 0.0
-for epoch in range(num_epochs):
+for epoch in range(config["num_epochs"]):
     # Train
     model.train()
     with tqdm(trainloader) as pbar:
