@@ -15,7 +15,7 @@ from brevitas.core.quant import QuantType
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
-model_tag = "20250829_081110"
+model_tag = "20250903_113724"
 
 # --- 1. List all model files and find the one with best accuracy ---
 model_dir = f"models/{model_tag}"
@@ -45,7 +45,23 @@ MNIST_input_layer = QuantBrevitas(
     act_scaling_impl=ParameterScaling(1.33),
     quant_type=QuantType.INT,
     return_quant_tensor = False),
-    pre_transforms=[bn_in, input_bias])
+    pre_transforms=[bn_in, input_bias]).to(device)
 
 # Build the KAN LUT
 kan_lut = KAN_LUT(checkpoint, config, MNIST_input_layer)
+
+x = torch.randn(1, config["layers"][0], device=device)  # test input
+kan_lut.input_layer.return_quant_tensor = True
+qt = kan_lut.input_layer(x)
+
+print("type(qt):", type(qt))
+# print(dir(qt))
+
+# q_int = qt.int()      # integer codes
+# # scale = qt.scale      # quantization scale
+
+# print("x:", x)
+# print("q_int:", q_int)
+# print("qt:", qt)
+# print("qt.scale:", qt.scale)
+# print("scale:", scale)

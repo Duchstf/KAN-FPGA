@@ -11,6 +11,7 @@ class KANLinear(torch.nn.Module):
     def __init__(
         self,
         in_features,
+        in_precision,
         out_features,
         out_precision,
         grid_size=5,
@@ -28,6 +29,7 @@ class KANLinear(torch.nn.Module):
         self.out_features = out_features
         self.grid_size = grid_size
         self.spline_order = spline_order
+        self.in_precision = in_precision
         self.out_precision = out_precision
         self.grid_range = grid_range
 
@@ -319,10 +321,11 @@ class KANQuant(torch.nn.Module):
                 
         #The first layer after the input layer is quite special
         self.layers = torch.nn.ModuleList()
-        for in_features, out_features, out_precision in zip(config["layers"], config["layers"][1:], config["layers_bitwidth"][1:]):
+        for in_features, in_precision, out_features, out_precision in zip(config["layers"], config["layers_bitwidth"], config["layers"][1:], config["layers_bitwidth"][1:]):
             self.layers.append(
                 KANLinear(
                     in_features,
+                    in_precision,
                     out_features,
                     out_precision,
 

@@ -6,7 +6,7 @@ import json
 
 sys.path.append('../../src')
 from KANQuant import KANQuant
-from quant import QuantBrevitas, ScalarBiasScale
+from quant import QuantBrevitasActivation, ScalarBiasScale
 
 # Train on MNIST
 import torch
@@ -62,7 +62,7 @@ bn_in = nn.BatchNorm1d(config["layers"][0])
 nn.init.constant_(bn_in.weight.data, 1)
 nn.init.constant_(bn_in.bias.data, 0)
 input_bias = ScalarBiasScale(scale=False, bias_init=-0.25)
-MNIST_input_layer = QuantBrevitas(
+MNIST_input_layer = QuantBrevitasActivation(
     QuantHardTanh(bit_width = config["layers_bitwidth"][0],
     max_val=1.0,
     min_val=-1.0,
