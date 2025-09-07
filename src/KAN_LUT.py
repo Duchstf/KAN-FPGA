@@ -1,4 +1,7 @@
 import torch
+import sys
+import numpy as np
+import torch.nn.functional as F
 from numpy.core.fromnumeric import take
 from KANQuant import KANQuant as KAN
 from brevitas.core.quant import QuantType
@@ -35,11 +38,13 @@ def get_float_state_space(
 
 #---------KAN_LUT class---------
 class KAN_LUT:
-    def __init__(self, checkpoint, config, input_layer):
+    def __init__(self, checkpoint, config, input_layer, device):
 
         self.config = config
         self.checkpoint = checkpoint
         self.input_layer = input_layer
+        self.device = device
+        self.is_cuda = device == "cuda"
 
         #Initialize the KAN QAT model
         self.KAN = KAN(self.config, self.input_layer)
@@ -47,43 +52,83 @@ class KAN_LUT:
         #Load the state dict
         self.KAN.load_state_dict(self.checkpoint["model_state_dict"])
 
+        #Print some basic info about the model
+        print(f"Creating KAN LUT reprentation. Quantization: {self.config['layers_bitwidth']}, Remaining sparsity: {self.checkpoint['remaining_fraction']}, Accuracy: {self.checkpoint['val_accuracy']}")
+
         #Put in evaluation mode
         self.KAN.eval()
 
         #Initialize the truth tables
-        self.truth_tables = self._generate_truth_tables()
+        with torch.inference_mode():
+            self.truth_tables = self._generate_truth_tables()
 
     def _generate_truth_tables(self):
         truth_tables = {}
 
         #Generate a random input tensor to track the LUT values
-
         for i, layer in enumerate(self.KAN.layers):
             in_features = layer.in_features
             out_features = layer.out_features
             in_bit_width = layer.in_precision
             out_bit_width = layer.out_precision
+            input_state_space = None
 
-            print(f"Generating truth table for LAYER {i}", 
-            f"in_features: {in_features}, out_features: {out_features}, in_bit_width: {in_bit_width}, out_bit_width: {out_bit_width}")
+            #First layer is treated differently
+            if i == 0:
+                input_state_space = self.input_layer.get_state_space(self.is_cuda)
+            #If not first layer, need to get the state space for the previous layer
+            else:
+                previous_layer = self.KAN.layers[i - 1]
+                input_state_space = previous_layer.output_quantizer.get_state_space(self.is_cuda)
 
-            # if i == 0:
-            #     #First layer after the input layer is treated differently
-            #     #First, generate a random input tensor
-            #     input_tensor = torch.randn(in_features)
+            #Generate the truth table for each connection
+            for j in range(in_features):
+                for k in range(out_features):
+                    truth_tables[f"{i}_{j}_{k}"] = self._get_truth_table(input_state_space, i, j, k)
 
-            #     #Then, pass it through the input layer
-            # for j in range(in_features):
-            #     for k in range(out_features):
-
-
+    
         return truth_tables
 
-    def _get_truth_table(self, layer_index, in_feature, out_feature):
-        pass
+    def _get_truth_table(self, input_state_space, layer_index, in_node, out_node):
+        """
+        Compute the truth table (pre-summation) for the single connection
+        (in_node -> out_node) evaluated over input_state_space (1D tensor of values).
+        """
+        layer = self.KAN.layers[layer_index].to(self.device) 
 
-    def predict(self, x):
-        return x
+        truth_table = {}
+        truth_table['acive'] = int(layer.spline_selector[out_node, in_node].item()) #Where this LUT is pruned or not
+        scale, bits = layer.output_quantizer.get_scale_factor_bits(self.is_cuda)
+        
+        #Create a tensor of the input state space for each input node
+        x = input_state_space.unsqueeze(0).repeat(layer.in_features, 1).T.to(self.device)
 
-    def __repr__(self):
-        return f"KAN_LUT(input_t={self.input_t}, input_precision={self.input_precision}, output_t={self.output_t}, output_precision={self.output_precision})"
+        #Calculate the lookup table values
+        base_output = layer.base_activation(x)[: , in_node] * layer.base_weight[out_node, in_node]
+        spline_output = F.linear(layer.b_splines(x)[:, in_node, :], layer.scaled_spline_weight[out_node, in_node, :])
+        
+        #Store the LUT outputs as integers
+        lut_output = ((layer.spline_selector[out_node, in_node] * (base_output + spline_output))/scale).round().to(torch.int).tolist()   
+        truth_table['values_int'] = lut_output
+
+        return truth_table
+
+    @torch.inference_mode()
+    def predict(self, x: torch.Tensor) -> torch.Tensor:
+        """
+        Evaluate the KAN using the precomputed per-connection LUTs.
+
+        Args:
+            x: Tensor of shape (batch, in_features_of_first_layer) with *float* values.
+
+        Returns:
+            Tensor of shape (batch, out_features_of_last_layer), quantized to the
+            last layer's output state space.
+        """
+        assert x.dim() == 2, "predict expects a 2D tensor: (batch, in_features)"
+        device = self.device
+        x = x.to(device)
+
+        
+        return x_cur
+

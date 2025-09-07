@@ -2,6 +2,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import math
+from quant import QuantBrevitasActivation
 from brevitas.nn import QuantIdentity
 from brevitas.core.scaling import ParameterScaling
 from brevitas.core.quant import QuantType
@@ -66,12 +67,15 @@ class KANLinear(torch.nn.Module):
 
         self.reset_parameters()
 
-        self.output_quantizer = QuantIdentity(bit_width=self.out_precision,
+        #Output Quantizer
+        self.output_quantizer = QuantBrevitasActivation(
+                                QuantIdentity(bit_width=self.out_precision,
                                               quant_type=QuantType.INT,
                                               return_quant_tensor=False,
                                               min_val=self.grid_range[0],
                                               max_val=self.grid_range[1],
-                                              act_scaling_impl=ParameterScaling(1.33))
+                                              act_scaling_impl=ParameterScaling(1.33)), 
+                                              pre_transforms=[])
 
     def reset_parameters(self):
         torch.nn.init.kaiming_uniform_(self.base_weight, a=math.sqrt(5) * self.scale_base)
@@ -310,7 +314,6 @@ class KANLinear(torch.nn.Module):
             # Find columns that are all zeros (no connections to next layer)
             zero_cols = (next_layer_sparsity_matrix == 0).all(dim=0)
             self.spline_selector[zero_cols, :] = 0
-
 
 class KANQuant(torch.nn.Module):
     def __init__(self, config, input_layer):

@@ -1,12 +1,15 @@
 import os, json, sys, shutil
 import torch
 import torch.nn as nn
+import torchvision
+import torchvision.transforms as transforms
+from torch.utils.data import DataLoader
 
 # Local imports
 sys.path.append('../../src')
 import KANFPGA
 from KAN_LUT import KAN_LUT
-from quant import QuantBrevitas, ScalarBiasScale
+from quant import ScalarBiasScale, QuantBrevitasActivation
 
 #For quantization
 from brevitas.nn import QuantHardTanh
@@ -14,8 +17,14 @@ from brevitas.core.scaling import ParameterScaling
 from brevitas.core.quant import QuantType
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
+is_cuda = device == "cuda"
 
-model_tag = "20250903_113724"
+model_tag = "20250907_170322"
+
+#Datasets
+transform = transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.1307,), (0.3081,))])
+valset = torchvision.datasets.MNIST(root="./data", train=False, download=False, transform=transform)
+valloader = DataLoader(valset, batch_size=64, shuffle=False)
 
 # --- 1. List all model files and find the one with best accuracy ---
 model_dir = f"models/{model_tag}"
@@ -38,7 +47,7 @@ bn_in = nn.BatchNorm1d(config["layers"][0])
 nn.init.constant_(bn_in.weight.data, 1)
 nn.init.constant_(bn_in.bias.data, 0)
 input_bias = ScalarBiasScale(scale=False, bias_init=-0.25)
-MNIST_input_layer = QuantBrevitas(
+MNIST_input_layer = QuantBrevitasActivation(
     QuantHardTanh(bit_width = config["layers_bitwidth"][0],
     max_val=1.0,
     min_val=-1.0,
@@ -48,14 +57,17 @@ MNIST_input_layer = QuantBrevitas(
     pre_transforms=[bn_in, input_bias]).to(device)
 
 # Build the KAN LUT
-kan_lut = KAN_LUT(checkpoint, config, MNIST_input_layer)
+kan_lut = KAN_LUT(checkpoint, config, MNIST_input_layer, device)
 
-x = torch.randn(1, config["layers"][0], device=device)  # test input
-kan_lut.input_layer.return_quant_tensor = True
-qt = kan_lut.input_layer(x)
+#Check the accuracy of KAN LUT on the test set
+val_accuracy = 0
+with torch.no_grad():
+    for images, labels in valloader:
+        images = images.view(-1, 28 * 28).to(device)
+        output = kan_lut.predict(images)
+        val_accuracy += ((output.argmax(dim=1) == labels.to(device)).float().mean().item())
 
-print("type(qt):", type(qt))
-# print(dir(qt))
+print(f"KAN LUT Accuracy: {val_accuracy/len(valloader)}")
 
 # q_int = qt.int()      # integer codes
 # # scale = qt.scale      # quantization scale
