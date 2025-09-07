@@ -7,7 +7,6 @@ from torch.utils.data import DataLoader
 
 # Local imports
 sys.path.append('../../src')
-import KANFPGA
 from KAN_LUT import KAN_LUT
 from quant import ScalarBiasScale, QuantBrevitasActivation
 
@@ -24,7 +23,7 @@ model_tag = "20250907_170322"
 #Datasets
 transform = transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.1307,), (0.3081,))])
 valset = torchvision.datasets.MNIST(root="./data", train=False, download=False, transform=transform)
-valloader = DataLoader(valset, batch_size=64, shuffle=False)
+valloader = DataLoader(valset, batch_size=1, shuffle=False)
 
 # --- 1. List all model files and find the one with best accuracy ---
 model_dir = f"models/{model_tag}"
@@ -57,7 +56,7 @@ MNIST_input_layer = QuantBrevitasActivation(
     pre_transforms=[bn_in, input_bias]).to(device)
 
 # Build the KAN LUT
-kan_lut = KAN_LUT(checkpoint, config, MNIST_input_layer, device)
+kan_lut = KAN_LUT(model_dir, checkpoint, config, MNIST_input_layer, device)
 
 #Check the accuracy of KAN LUT on the test set
 val_accuracy = 0
