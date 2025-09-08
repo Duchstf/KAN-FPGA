@@ -56,8 +56,8 @@ def get_float_state_space(
         bin_state_space = get_int_state_space(bits, signed, narrow_range, is_cuda)
     elif quant_type == QuantType.BINARY:
         bin_state_space = torch.as_tensor([-1.0, 1.0])
-    if is_cuda:
-        bin_state_space = bin_state_space.cuda()
+
+    bin_state_space = bin_state_space.to(device=scale_factor.device, dtype=scale_factor.dtype)
     state_space = scale_factor * bin_state_space
     return state_space
 
@@ -140,9 +140,8 @@ class QuantBrevitasActivation(nn.Module):
         quant_proxy = self.brevitas_module.act_quant
         current_status = quant_proxy.training
         quant_proxy.eval()
-        zero_point = torch.Tensor([0.0])
-        if is_cuda:
-            zero_point = zero_point.cuda()
+        mod_device = next(self.brevitas_module.parameters()).device
+        zero_point = torch.zeros(1, device=mod_device)
         _, scale_factor, _, bits, _, _ = quant_proxy(zero_point)
         quant_proxy.training = current_status
         return scale_factor, bits

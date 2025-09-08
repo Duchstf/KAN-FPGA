@@ -24,6 +24,7 @@ class KANLinear(torch.nn.Module):
         base_activation=torch.nn.SiLU,
         grid_eps=0.02,
         grid_range=[-1, 1],
+        device=None,
     ):
         super(KANLinear, self).__init__()
         self.in_features = in_features
@@ -33,6 +34,7 @@ class KANLinear(torch.nn.Module):
         self.in_precision = in_precision
         self.out_precision = out_precision
         self.grid_range = grid_range
+        self.device = device
 
         h = (grid_range[1] - grid_range[0]) / grid_size
         grid = (
@@ -285,13 +287,11 @@ class KANLinear(torch.nn.Module):
             + regularize_entropy * regularization_loss_entropy
         )
     
-    def prune_below_threshold(self, threshold: float = 0.01, next_layer_sparsity_matrix: Optional[torch.Tensor] = None) -> None:
+    @torch.no_grad()
+    def prune_below_threshold(self, threshold: float = 0.01, next_layer_sparsity_matrix: Optional[torch.Tensor] = None, input_state_space: Optional[torch.Tensor] = None) -> None:
 
         # Get grid range for evaluation
-        grid_range = [self.grid[0, 0].item(), self.grid[0, -1].item()]
-        array = torch.linspace(grid_range[0], grid_range[1], 1024, device=self.base_weight.device)
-        stacked_array = array.unsqueeze(1).expand(-1, self.in_features)
-        x = stacked_array.float()
+        x = input_state_space.unsqueeze(0).repeat(self.in_features, 1).T.to(self.device)
 
         # Compute B-spline bases over the evaluation grid
         spline_bases = self.b_splines(x)
@@ -316,12 +316,14 @@ class KANLinear(torch.nn.Module):
             self.spline_selector[zero_cols, :] = 0
 
 class KANQuant(torch.nn.Module):
-    def __init__(self, config, input_layer):
+    def __init__(self, config, input_layer, device):
         super(KANQuant, self).__init__()
 
         self.config = config
         self.input_layer = input_layer
-                
+        self.device = device
+        self.is_cuda = device == "cuda"
+
         #The first layer after the input layer is quite special
         self.layers = torch.nn.ModuleList()
         for in_features, in_precision, out_features, out_precision in zip(config["layers"], config["layers_bitwidth"], config["layers"][1:], config["layers_bitwidth"][1:]):
@@ -332,6 +334,8 @@ class KANQuant(torch.nn.Module):
                     out_features,
                     out_precision,
 
+                    device=device,
+                    
                     grid_size=config["grid_size"],
                     grid_range=config["grid_range"],
                     grid_eps=config["grid_eps"],
@@ -352,6 +356,7 @@ class KANQuant(torch.nn.Module):
             x = layer(x)
         return x
 
+    @torch.no_grad()
     def prune_below_threshold(self, threshold: float = 0.01) -> float:
         """
         Pruning happens per (out_feature, in_feature) connection of a KANLinear layer.
@@ -359,15 +364,22 @@ class KANQuant(torch.nn.Module):
         total_nodes = 0
         total_remaining = 0
 
-        for i, layer in enumerate(self.layers):
+        with torch.no_grad():
+            for i, layer in enumerate(self.layers):
 
-            # Get next layer's sparsity matrix for backward pruning
-            next_layer_sparsity = (
-                self.layers[i + 1].spline_selector if i < len(self.layers) - 1 else None
-            )
+                input_state_space = None
 
-            layer.prune_below_threshold(threshold, next_layer_sparsity)
-            total_nodes += layer.spline_selector.numel()
-            total_remaining += layer.spline_selector.sum()
+                if i == 0: input_state_space = self.input_layer.get_state_space(self.is_cuda).to(self.device)
+                else: input_state_space = self.layers[i - 1].output_quantizer.get_state_space(self.is_cuda).to(self.device)
+
+
+                # Get next layer's sparsity matrix for backward pruning
+                next_layer_sparsity = (
+                    self.layers[i + 1].spline_selector if i < len(self.layers) - 1 else None
+                )
+
+                layer.prune_below_threshold(threshold, next_layer_sparsity, input_state_space)
+                total_nodes += layer.spline_selector.numel()
+                total_remaining += layer.spline_selector.sum()
 
         return total_remaining / total_nodes

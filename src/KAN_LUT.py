@@ -112,10 +112,7 @@ class KAN_LUT:
 
                         #Clamp to the right range depending on the layer quantization
                     else:
-                        truth_table = self.truth_tables[f"{i}_{in_index}_{out_index}"]
-                        accumulator += truth_table['values_int'][sample[k]]
-                        
-                    
+                                   
         return None
 
     @torch.inference_mode()
@@ -142,8 +139,12 @@ class KAN_LUT:
         x = (x + (2**(bits - 1))).to(torch.int)
 
         #Loop over each sample in the batch
+        outs_int = []
         for sample_index in range(x.shape[0]):
-            sample_result = self._inferece_sample(x[sample_index])
+            outs_int.append(self._inferece_sample((x[sample_index])))
+        outs_int = torch.stack(outs_int, dim=0)
 
-        return x
+        # Dequantize to floats on last layer's scale
+        last_scale, _ = self.KAN.layers[-1].output_quantizer.get_scale_factor_bits(self.is_cuda)
+        return outs_int.to(torch.float32) * last_scale
 

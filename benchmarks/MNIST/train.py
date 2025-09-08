@@ -48,7 +48,7 @@ config = {
     "learning_rate": 0.01,
     "weight_decay": 1e-4,
 
-    "prune_threshold": 1e-4,
+    "prune_threshold": 1e-6,
 }
 
 #Create a new directory to save the config and checkpoints
@@ -69,10 +69,11 @@ MNIST_input_layer = QuantBrevitasActivation(
     act_scaling_impl=ParameterScaling(1.33),
     quant_type=QuantType.INT,
     return_quant_tensor = False),
-    pre_transforms=[bn_in, input_bias])
+    pre_transforms=[bn_in, input_bias],
+    cuda=device.type == "cuda").to(device)
 
 #Define the model
-model = KANQuant(config, MNIST_input_layer).to(device)
+model = KANQuant(config, MNIST_input_layer, device).to(device)
 
 # === Logging Setup ===
 os.makedirs('checkpoints', exist_ok=True)
@@ -124,7 +125,7 @@ for epoch in range(config["num_epochs"]):
     # Prune the model
     remaining_fraction = model.prune_below_threshold(threshold=config["prune_threshold"])
 
-    # Validation
+    #Validation
     model.eval()
     val_loss = 0
     val_accuracy = 0
