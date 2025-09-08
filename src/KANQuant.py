@@ -209,7 +209,7 @@ class KANLinear(torch.nn.Module):
         output = self.output_quantizer(spline_output) 
 
         # Sum over input features
-        output = torch.sum(spline_output, dim=-1)
+        output = torch.sum(output, dim=-1)
 
         #Quantize/Clamp the sum of the LUT outputs
         output = self.output_quantizer(output) 

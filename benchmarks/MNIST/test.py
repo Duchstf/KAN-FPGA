@@ -18,7 +18,7 @@ from brevitas.core.quant import QuantType
 device = "cuda" if torch.cuda.is_available() else "cpu"
 is_cuda = device == "cuda"
 
-model_tag = "20250907_170322"
+model_tag = "20250908_063338"
 
 #Datasets
 transform = transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.1307,), (0.3081,))])
@@ -57,16 +57,7 @@ MNIST_input_layer = QuantBrevitasActivation(
 
 # Build the KAN LUT
 kan_lut = KAN_LUT(model_dir, checkpoint, config, MNIST_input_layer, device)
-
-#Check the accuracy of KAN LUT on the test set
-val_accuracy = 0
-with torch.no_grad():
-    for images, labels in valloader:
-        images = images.view(-1, 28 * 28).to(device)
-        output = kan_lut.predict(images)
-        val_accuracy += ((output.argmax(dim=1) == labels.to(device)).float().mean().item())
-
-print(f"KAN LUT Accuracy: {val_accuracy/len(valloader)}")
+kan_lut.quick_match_check()
 
 # q_int = qt.int()      # integer codes
 # # scale = qt.scale      # quantization scale

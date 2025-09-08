@@ -17,7 +17,7 @@ class KAN_LUT:
         self.is_cuda = device == "cuda"
 
         #Initialize the KAN QAT model
-        self.KAN = KAN(self.config, self.input_layer)
+        self.KAN = KAN(self.config, self.input_layer, self.device)
 
         #Load the state dict
         self.KAN.load_state_dict(self.checkpoint["model_state_dict"])
@@ -95,25 +95,45 @@ class KAN_LUT:
         """
         Evaluate the KAN for a single sample
         """
+
+        running_accumulator = None
+    
         #Loop over each layer
         for i in range(len(self.KAN.layers)):
+            in_features = self.KAN.layers[i].in_features
+            out_features = self.KAN.layers[i].out_features
+            input_bit_width = self.KAN.layers[i].in_precision
+
+            layer_state_space = self.KAN.layers[i].output_quantizer.get_bin_state_space(self.is_cuda).to(self.device)
+
+            # Accumulate in integer domain (pre-sum quantization already baked in LUT)
+            acc = torch.zeros(out_features, dtype=torch.int64, device=self.device)
+
+            min_state = int(layer_state_space.min())
+            max_state = int(layer_state_space.max())
 
             #Loop over each connection in the layer
-            for out_index in range(self.KAN.layers[i].out_features):
+            for out_index in range(out_features):
 
                 #For each out feature there is an accumulator
-                accumulator = 0
+                acc_out_node = 0
 
-                for in_index in range(self.KAN.layers[i].in_features):
+                for in_index in range(in_features):
+                    truth_table = self.truth_tables[f"{i}_{in_index}_{out_index}"]
+                    if truth_table.get("acive", 1) == 0: continue # pruned connection
+                    lookup_index = sample[in_index] if i == 0 else int(running_accumulator[in_index] + 2**(input_bit_width - 1))
+                    acc_out_node += truth_table['values_int'][lookup_index]
 
-                    if i == 0: #simply look up the LUT value
-                        truth_table = self.truth_tables[f"{i}_{in_index}_{out_index}"]
-                        accumulator += truth_table['values_int'][sample[in_index]]
+                
+                # clamp the post-sum (matches layer.output_quantizer after the sum)
+                if acc_out_node < min_state: acc_out_node = min_state
+                if acc_out_node > max_state: acc_out_node = max_state
 
-                        #Clamp to the right range depending on the layer quantization
-                    else:
-                                   
-        return None
+                acc[out_index] = acc_out_node      
+
+            running_accumulator = acc     
+        
+        return running_accumulator
 
     @torch.inference_mode()
     def predict(self, x: torch.Tensor) -> torch.Tensor:
@@ -148,3 +168,14 @@ class KAN_LUT:
         last_scale, _ = self.KAN.layers[-1].output_quantizer.get_scale_factor_bits(self.is_cuda)
         return outs_int.to(torch.float32) * last_scale
 
+    @torch.inference_mode()
+    def quick_match_check(self, n: int = 1, atol: float = 1e-4) -> float:
+        """Compare self.predict vs self.KAN on a few samples; returns max |error|."""
+        self.KAN.to(self.device).eval()  # ensure model is on the same device as x
+        in_features = self.KAN.layers[0].in_features
+        x = torch.randn(n, in_features, device=self.device, dtype=torch.float32)
+        y_ref = self.KAN(x)
+        y_lut = self.predict(x)
+        max_err = (y_ref - y_lut).abs().max().item()
+        print(f"max|Δ|={max_err:.3e} -> {'OK' if max_err <= atol else 'MISMATCH'} (atol={atol})")
+        return max_err
