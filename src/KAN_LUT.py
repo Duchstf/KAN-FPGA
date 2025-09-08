@@ -193,6 +193,8 @@ class KAN_LUT:
         #Write the KAN core HLS file
         self.write_kan_core()
 
+        self.write_type_defines()
+
         pass
 
     def write_kan_core(self):
@@ -244,3 +246,35 @@ class KAN_LUT:
 
         pass
         
+    def write_type_defines(self):
+        """
+        Write the type defines for the KAN LUT
+        """
+        
+        model_defines = []
+        lut_defines = []
+
+        #Model types
+        model_defines.append(f"#define N_INPUT {self.KAN.config['layers'][0]}")
+        model_defines.append(f"#define N_OUTPUT {self.KAN.config['layers'][-1]}")
+        model_defines.append(f"typedef ap_uint<{self.KAN.config['layers_bitwidth'][0]}> input_t;")
+        model_defines.append(f"typedef ap_fixed<{self.KAN.config['layers_bitwidth'][-1]}, {self.KAN.config['layers_bitwidth'][-1]}, AP_TRN, AP_SAT> output_t;")
+        MODEL_RELATED_DEFINES = "\n".join(model_defines)
+
+        #LUT types
+        for i in range(len(self.KAN.layers)):
+            out_bit_width = self.KAN.layers[i].out_precision
+            lut_defines.append(f"typedef ap_int<{out_bit_width}> lut_{i}_output_t;")
+
+            #Don't need acc types for the last layer
+            if i != len(self.KAN.layers) - 1:
+                lut_defines.append(f"typedef ap_fixed<{out_bit_width}, {out_bit_width}, AP_TRN, AP_SAT> accum_{i}_t;")
+
+        LUT_RELATED_DEFINES = "\n".join(lut_defines)
+
+        with open(os.path.join(os.path.dirname(__file__), "templates", "defines.h"), "r") as tf: hls_text = tf.read()
+        hls_text = hls_text.replace("{{MODEL_RELATED_DEFINES}}", MODEL_RELATED_DEFINES)
+        hls_text = hls_text.replace("{{LUT_RELATED_DEFINES}}", LUT_RELATED_DEFINES)
+
+        with open(os.path.join(self.model_dir, "firmware", "defines.h"), "w") as f:
+            f.write(hls_text)
