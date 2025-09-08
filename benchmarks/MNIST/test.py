@@ -18,7 +18,7 @@ from brevitas.core.quant import QuantType
 device = "cuda" if torch.cuda.is_available() else "cpu"
 is_cuda = device == "cuda"
 
-model_tag = "20250908_063338"
+model_tag = "20250908_063954"
 
 #Datasets
 transform = transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.1307,), (0.3081,))])
@@ -57,13 +57,7 @@ MNIST_input_layer = QuantBrevitasActivation(
 
 # Build the KAN LUT
 kan_lut = KAN_LUT(model_dir, checkpoint, config, MNIST_input_layer, device)
-kan_lut.quick_match_check()
+kan_lut.quick_match_check() #Test matching of LUT implementation with the base model KAN
 
-# q_int = qt.int()      # integer codes
-# # scale = qt.scale      # quantization scale
-
-# print("x:", x)
-# print("q_int:", q_int)
-# print("qt:", qt)
-# print("qt.scale:", qt.scale)
-# print("scale:", scale)
+#Generate the firmware
+kan_lut.generate_firmware()

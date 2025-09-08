@@ -1,0 +1,11 @@
+void KAN(input_t input[N_INPUT], result_t output[N_OUTPUT])
+{
+#pragma HLS ARRAY_PARTITION variable = input complete
+#pragma HLS ARRAY_PARTITION variable = output complete
+
+#pragma HLS interface mode = ap_none port = input, output
+#pragma HLS PIPELINE II = 1
+
+{{LAYER_BLOCKS}}
+
+}

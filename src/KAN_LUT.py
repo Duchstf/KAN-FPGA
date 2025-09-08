@@ -39,7 +39,6 @@ class KAN_LUT:
                 with open(truth_tables_path, "w") as f:
                     json.dump(self.truth_tables, f)
 
-
     def _generate_truth_tables(self):
         truth_tables = {}
 
@@ -179,3 +178,69 @@ class KAN_LUT:
         max_err = (y_ref - y_lut).abs().max().item()
         print(f"max|Δ|={max_err:.3e} -> {'OK' if max_err <= atol else 'MISMATCH'} (atol={atol})")
         return max_err
+
+    #----------FIRMWARE IMPLEMENTATION----------
+    def generate_firmware(self):
+        """
+        Generate the firmware for the KAN LUT
+        """
+
+        print(f"Converting KAN model to hardware ...")
+
+        #Make the directories within model_dir
+        os.makedirs(os.path.join(self.model_dir, "firmware"), exist_ok=True)
+
+        #Write the KAN core HLS file
+        self.write_kan_core()
+
+        pass
+
+    def write_kan_core(self):
+        """
+        Write the KAN core HLS file
+        """
+
+        # ---------- Build LAYER_BLOCKS ----------
+        num_layers = len(self.KAN.layers)
+        layer_blocks = []
+
+        for i, layer in enumerate(self.KAN.layers):
+            in_features = layer.in_features
+            out_features = layer.out_features
+
+            for out_index in range(out_features):
+                blk = [f"// LAYER {i}, ch {out_index}"]
+                for in_index in range(in_features):
+                    
+                    #Get the truth table and check if the connection is active
+                    truth_table = self.truth_tables[f"{i}_{in_index}_{out_index}"]
+                    if truth_table.get("acive", 1) == 0: continue # pruned connection
+
+                    if i == 0:
+                        blk.append(f"lut_{i}_output_t act_{i}_{in_index}_{out_index} = lookup_{i}_{in_index}_{out_index}(input[{in_index}]);")
+                    else:
+                        blk.append(f"lut_{i}_output_t act_{i}_{in_index}_{out_index} = lookup_{i}_{in_index}_{out_index}(out_{i-1}_{in_index});")
+
+                #Perform the summation
+                summation_variable = f"accum_{i}_t out_{i}_{out_index}" if i != len(self.KAN.layers) - 1 else f"output[{out_index}]"
+
+                blk.append(f"{summation_variable} = " +
+                " + ".join([f"act_{i}_{in_index}_{out_index}" for in_index in range(in_features)
+                                    if self.truth_tables[f"{i}_{in_index}_{out_index}"].get("acive", 1) == 1]) + ";")
+                
+                layer_blocks.append("\n  ".join(blk))
+
+        #Generate the HLS code
+        LAYER_BLOCKS = "\n\n  ".join(layer_blocks) if layer_blocks else "// (no layers)"
+
+        with open(os.path.join(os.path.dirname(__file__), "templates", "KAN.h"), "r") as tf: hls_text = tf.read()
+        hls_text = hls_text.replace("{{LAYER_BLOCKS}}", LAYER_BLOCKS)
+
+        #Write the HLS code to the file
+        out_hls = os.path.join(self.model_dir, "firmware", "KAN.h")
+        os.makedirs(os.path.dirname(out_hls), exist_ok=True)
+        with open(out_hls, "w") as f:
+            f.write(hls_text)
+
+        pass
+        
