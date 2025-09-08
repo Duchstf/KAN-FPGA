@@ -1,5 +1,5 @@
 # KAN-FPGA
-Implementations of KAN on FPGA Paper at FPGA'2025
+Implementations of KAN on FPGA Paper
 
 Authors: Aarush Gupta (MIT), Duc Hoang (MIT)
 
@@ -19,7 +19,7 @@ cd benchmarks/<bench-mark-name>
 python train.py
 ```
 
-Where benchmark names could be `jets`, `anomaly` or `mnist`. This will generate the trained model saved in `benchmarks/<bench-mark-name>/models` 
+Where benchmark names could be `jets`, or `mnist`. This will generate the trained model saved in `benchmarks/<bench-mark-name>/models` 
 
 3. Then, to convert the trained model to hardware, in the same benchmark directory:
 
@@ -30,7 +30,7 @@ python convert.py
 
 # Related FPGA benchmarks information
 * Xilinx Virtex UltraScale+ FPGA: `xcvu9p-flgb2104-2-i`
-* Vivado version: 
+* Vivado version: `2024.1`
 
 # Conda 
 
