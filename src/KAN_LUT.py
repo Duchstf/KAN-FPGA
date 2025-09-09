@@ -403,12 +403,13 @@ class KAN_LUT:
         shutil.copy(os.path.join(os.path.dirname(__file__), "templates", "vivado", "build_ooc.tcl"), os.path.join(self.firmware_dir, "vivado", "build_ooc.tcl"))
     
     #------------------SIMULATION------------------
-    def simulate_firmware(self, top_name: str = "KAN", n_vectors: int = 2):
+    def simulate_firmware(self, rtl_dir_rel: str = "./../src", top_name: str = "KAN", n_vectors: int = 2):
         sim_dir = os.path.join(self.model_dir, "firmware", "sim")
         os.makedirs(sim_dir, exist_ok=True)
 
         self._write_test_vectors(n_vectors,  os.path.join(sim_dir, "vectors_in.txt"), os.path.join(sim_dir, "vectors_out.txt"))
         self._write_tb_from_template(sim_dir, top_name)
+        self._write_tcl_from_template(sim_dir, rtl_dir_rel)
 
         print(f"[SIM] Emitted TB + vectors + TCL to: {sim_dir}")
 
@@ -443,10 +444,51 @@ class KAN_LUT:
         pass
     
     def _write_tb_from_template(self, sim_dir: str, top_name: str):
-        """
-        Write the testbench from the template
-        """
 
-        pass
+        n_in  = int(self.KAN.config["layers"][0])
+        n_out = int(self.KAN.config["layers"][-1])
+
+        in_w  = int(self.KAN.layers[0].in_precision)
+        out_w = int(self.KAN.layers[-1].out_precision)
+
+        # build small snippets
+        port_decl_inputs  = "\n".join([f"      input_{i}  : in  std_logic_vector(IN_WIDTH-1 downto 0);"  for i in range(n_in)])
+        port_decl_outputs = "\n".join([f"      output_{i} : out std_logic_vector(OUT_WIDTH-1 downto 0);" for i in range(n_out)])
+
+        input_sig_decls  = "\n".join([f"  signal input_{i}  : std_logic_vector(IN_WIDTH-1 downto 0);"  for i in range(n_in)])
+        output_sig_decls = "\n".join([f"  signal output_{i} : std_logic_vector(OUT_WIDTH-1 downto 0);" for i in range(n_out)])
+
+        input_assign     = "\n".join([f"  input_{i} <= std_logic_vector(in_bus({i}));"  for i in range(n_in)])
+        output_assign    = "\n".join([f"  out_bus({i}) <= signed(output_{i});"          for i in range(n_out)])
+
+        portmap_inputs   = "\n".join([f"    input_{i} => input_{i},"  for i in range(n_in)])
+        portmap_outputs  = "\n".join([f"    output_{i} => output_{i}{',' if i < n_out-1 else ''}" for i in range(n_out)])
+
+        # load template and replace
+        with open(os.path.join(os.path.dirname(__file__), "templates", "sim", "tb_kan.vhd"), "r") as tf: tb = tf.read()
+
+        repl = {
+            "{{N_INPUT}}": str(n_in),
+            "{{N_OUTPUT}}": str(n_out),
+            "{{IN_WIDTH}}": str(in_w),
+            "{{OUT_WIDTH}}": str(out_w),
+            "{{TOP_NAME}}": top_name,
+            "{{PORT_DECL_INPUTS}}": port_decl_inputs,
+            "{{PORT_DECL_OUTPUTS}}": port_decl_outputs,
+            "{{INPUT_SIGNAL_DECLS}}": input_sig_decls,
+            "{{OUTPUT_SIGNAL_DECLS}}": output_sig_decls,
+            "{{INPUT_ASSIGNMENTS}}": input_assign,
+            "{{OUTPUT_ASSIGNMENTS}}": output_assign,
+            "{{PORTMAP_INPUTS}}": portmap_inputs,
+            "{{PORTMAP_OUTPUTS}}": portmap_outputs,
+        }
+
+        for k, v in repl.items(): tb = tb.replace(k, v)
+        with open(os.path.join(sim_dir, "tb_kan.vhd"), "w") as f: f.write(tb)
+
+    def _write_tcl_from_template(self, sim_dir: str, rtl_dir_rel: str):
+        with open(os.path.join(os.path.dirname(__file__), "templates", "sim", "sim.tcl"), "r") as tf: tcl = tf.read()
+        tcl = tcl.replace("{{RTL_DIR}}", rtl_dir_rel)
+        with open(os.path.join(sim_dir, "sim.tcl"), "w") as f:f.write(tcl)
 
 
