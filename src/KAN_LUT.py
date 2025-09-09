@@ -210,6 +210,9 @@ class KAN_LUT:
         self.write_kan_core()
         self.write_pkg_kan()
         self.write_pkg_lut()
+        self.write_lut_vhd()
+        self.write_mem_files()
+        self.write_build_tcl()
         pass
 
     def write_kan_core(self, max_per_line=16):
@@ -266,7 +269,7 @@ class KAN_LUT:
                         f'generic map (MEMFILE=>"{mem}") '
                         f"port map (clk, {src}, {dst});"
                     )
-                    sum_terms.append(dst)
+                    sum_terms.append(f"resize({dst}, SUM_WIDTH_{i})")
                     inst_idx += 1
 
                 target = f"sum_{i}_{k}"
@@ -330,10 +333,10 @@ class KAN_LUT:
             layer = self.KAN.layers[i]
             blocks.append("\n".join([
                 f"  -- Layer {i}",
-                f"  constant LUT_SIZE_{i}        : integer := {1 << layer.in_precision}",
-                f"  constant LUT_ADDR_WIDTH_{i}  : integer := {layer.in_precision}",
-                f"  constant LUT_DATA_WIDTH_{i}  : integer := {layer.out_precision}",
-                f"  subtype  lut_input_t_{i}  is signed(LUT_ADDR_WIDTH_{i}-1 downto 0);",
+                f"  constant LUT_SIZE_{i}        : integer := {1 << layer.in_precision};",
+                f"  constant LUT_ADDR_WIDTH_{i}  : integer := {layer.in_precision};",
+                f"  constant LUT_DATA_WIDTH_{i}  : integer := {layer.out_precision};",
+                f"  subtype  lut_input_t_{i}  is signed(LUT_ADDR_WIDTH_{i}-1 downto 0);" if i !=0 else f"  subtype  lut_input_t_{i}  is unsigned(LUT_ADDR_WIDTH_{i}-1 downto 0);" ,
                 f"  subtype  lut_output_t_{i} is signed(LUT_DATA_WIDTH_{i}-1 downto 0);",
             ]))
 
@@ -343,3 +346,59 @@ class KAN_LUT:
         os.makedirs(os.path.dirname(out_path), exist_ok=True)
         with open(out_path, "w") as f:
             f.write(vhdl_text)
+
+    def write_lut_vhd(self):
+
+        #Open the template file
+        with open(os.path.join(os.path.dirname(__file__), "templates", "src", "LUT.vhd"), "r") as tf:
+            tpl = tf.read()
+        
+        #Loop through the layers and generate the VHDL code
+        for i in range(0, len(self.KAN.layers)):
+
+            #Deal with the index signal
+            vhdl_text = tpl.replace("{{IDX_SIGNAL_DECLS}}", "" if i == 0 else f"signal idx : unsigned(LUT_ADDR_WIDTH_{i}-1 downto 0);")
+            vhdl_text = vhdl_text.replace("{{IDX_ASSIGNMENT}}", "" if i == 0 else f"idx <= unsigned(d + to_signed(2**(LUT_ADDR_WIDTH_{i}-1), LUT_ADDR_WIDTH_{i}));")
+            vhdl_text = vhdl_text.replace("{{IDX_SIGNAL}}", "d" if i == 0 else f"idx")
+
+            #Deal with the other signals
+            vhdl_text = vhdl_text.replace("{{LUT_LAYER_NAME}}", f"LUT_{i}")
+            vhdl_text = vhdl_text.replace("{{LUT_ADDR_WIDTH}}", f"LUT_ADDR_WIDTH_{i}")
+            vhdl_text = vhdl_text.replace("{{LUT_DATA_WIDTH}}", f"LUT_DATA_WIDTH_{i}")
+            vhdl_text = vhdl_text.replace("{{LUT_SIZE}}", f"LUT_SIZE_{i}")
+            vhdl_text = vhdl_text.replace("{{LUT_INPUT_TYPE}}", f"lut_input_t_{i}")
+            vhdl_text = vhdl_text.replace("{{LUT_OUTPUT_TYPE}}", f"lut_output_t_{i}")
+
+            #Write the VHDL code to the file
+            out_path = os.path.join(self.firmware_dir, "src", f"LUT_{i}.vhd")
+            os.makedirs(os.path.dirname(out_path), exist_ok=True)
+            with open(out_path, "w") as f:
+                f.write(vhdl_text)
+
+    def write_mem_files(self):
+
+        def int_to_hex_word(value: int, bits: int = 32) -> str:
+            """Convert signed/unsigned int to hex word of given bit width."""
+            mask = (1 << bits) - 1
+            return f"{value & mask:0{bits // 4}X}"
+
+        written = 0
+        for i in range(0, len(self.KAN.layers)):
+            layer = self.KAN.layers[i]
+            for j in range(layer.in_features):
+                for k in range(layer.out_features):
+                    truth_table = self.truth_tables[f"{i}_{j}_{k}"]
+                    if truth_table.get("acive", 1) == 0: continue
+                    mem_path = os.path.join(self.firmware_dir, "mem", f"lut_{i}_{j}_{k}.mem")
+                    with open(mem_path, "w") as f:
+                        f.write("\n".join([int_to_hex_word(v, layer.out_precision) for v in truth_table['values_int']]))
+                    written += 1
+
+        # Small breadcrumb
+        print(f"Wrote {written} LUT .mem file(s) to {self.firmware_dir}/mem/")
+
+    def write_build_tcl(self):
+
+        #Just copy the template file
+        shutil.copy(os.path.join(os.path.dirname(__file__), "templates", "vivado", "build_full.tcl"), os.path.join(self.firmware_dir, "vivado", "build_full.tcl"))
+        shutil.copy(os.path.join(os.path.dirname(__file__), "templates", "vivado", "build_ooc.tcl"), os.path.join(self.firmware_dir, "vivado", "build_ooc.tcl"))

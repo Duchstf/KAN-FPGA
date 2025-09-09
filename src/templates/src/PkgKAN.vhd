@@ -19,7 +19,12 @@ package PkgTypes is
 
   -- For summation
 {{SUMMATION_BLOCK}}
+  
+  -- Function to saturate a signed value into W-bit signed range
+  function saturate(x : signed; W : positive) return signed;
+end package PkgTypes;
 
+package body PkgTypes is
   -- Function to saturate a signed value into W-bit signed range
   -- Input x can be wider than W
   function saturate(x : signed; W : positive) return signed is
@@ -37,5 +42,4 @@ package PkgTypes is
 
       return result;
   end function;
-
-end package;
+end package body PkgTypes;

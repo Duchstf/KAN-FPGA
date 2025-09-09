@@ -22,7 +22,12 @@ package PkgTypes is
   subtype sum_t_0 is signed(SUM_WIDTH_0-1 downto 0);
   constant SUM_WIDTH_1: positive := 10;
   subtype sum_t_1 is signed(SUM_WIDTH_1-1 downto 0);
+  
+  -- Function to saturate a signed value into W-bit signed range
+  function saturate(x : signed; W : positive) return signed;
+end package PkgTypes;
 
+package body PkgTypes is
   -- Function to saturate a signed value into W-bit signed range
   -- Input x can be wider than W
   function saturate(x : signed; W : positive) return signed is
@@ -40,5 +45,4 @@ package PkgTypes is
 
       return result;
   end function;
-
-end package;
+end package body PkgTypes;
