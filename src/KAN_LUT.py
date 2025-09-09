@@ -192,9 +192,8 @@ class KAN_LUT:
 
         #Write the KAN core HLS file
         self.write_kan_core()
-
         self.write_type_defines()
-
+        self.write_LUTs()
         pass
 
     def write_kan_core(self):
@@ -263,7 +262,12 @@ class KAN_LUT:
 
         #LUT types
         for i in range(len(self.KAN.layers)):
+            in_bit_width = self.KAN.layers[i].in_precision
             out_bit_width = self.KAN.layers[i].out_precision
+
+            lut_defines.append(f"\n//LAYER {i}:")
+            lut_defines.append(f"typedef ap_uint<{in_bit_width}> idx_{i}_t;")
+            lut_defines.append(f"#define LUT_SIZE_{i} {2**in_bit_width}")
             lut_defines.append(f"typedef ap_int<{out_bit_width}> lut_{i}_output_t;")
 
             #Don't need acc types for the last layer
@@ -278,3 +282,63 @@ class KAN_LUT:
 
         with open(os.path.join(self.model_dir, "firmware", "defines.h"), "w") as f:
             f.write(hls_text)
+
+    def write_LUTs(self):
+        """
+        Define the look up tables
+        """
+
+        #Generate LUT files per layer
+        for i in range(len(self.KAN.layers)):
+
+            layer = self.KAN.layers[i]
+            in_features = layer.in_features
+            out_features = layer.out_features
+            in_bit_width = layer.in_precision
+            out_bit_width = layer.out_precision
+
+            cpp_content = [f"#include \"lut_{i}.h\""]
+            header_content = ["#pragma once", "#include \"defines.h\""]
+
+            for in_index in range(in_features):
+                for out_index in range(out_features):
+
+                    #Get the truth table and check if the connection is active
+                    truth_table = self.truth_tables[f"{i}_{in_index}_{out_index}"]
+                    if truth_table.get("acive", 1) == 0: continue # pruned connection
+                    
+                    #Convert the values to strings
+                    values_str = ", ".join(str(value) for value in truth_table["values_int"])
+                    cpp_content.append(f"const lut_{i}_output_t lut_{i}_{in_index}_{out_index}[LUT_SIZE_{i}] = {{ {values_str} }};")
+
+                    pragma_line = f"#pragma HLS BIND_STORAGE variable=lut_{i}_{in_index}_{out_index} type=ROM_1P impl=LUTRAM"
+
+
+                    #Generate the look up table function
+                    if i == 0:
+                        cpp_content.append(f"lut_{i}_output_t lookup_{i}_{in_index}_{out_index}(input_t input) {{")
+                        cpp_content.append(pragma_line)
+                        cpp_content.append(f"    return lut_{i}_{in_index}_{out_index}[input];")
+                        cpp_content.append("}")
+                    else:
+                        cpp_content.append(f"lut_{i}_output_t lookup_{i}_{in_index}_{out_index}(accum_{i}_t input) {{")
+                        cpp_content.append(pragma_line)
+                        cpp_content.append(f"    idx_{i}_t idx = input + {2**(in_bit_width - 1)};")
+                        cpp_content.append(f"    return lut_{i}_{in_index}_{out_index}[idx];")
+                        cpp_content.append("}")
+
+
+                    #Add the header content
+                    header_content.append(f"extern const lut_{i}_output_t lut_{i}_{in_index}_{out_index}[LUT_SIZE_{i}];")
+
+                    input_type = "input_t" if i == 0 else f"idx_{i}_t"
+                    header_content.append(f"lut_{i}_output_t lookup_{i}_{in_index}_{out_index}({input_type} input);")
+
+            #Write the HLS files
+            CPP_CONTENT = "\n".join(cpp_content)
+            HEADER_CONTENT = "\n".join(header_content)
+
+            with open(os.path.join(self.model_dir, "firmware", f"lut_{i}.cpp"), "w") as f: f.write(CPP_CONTENT)
+            with open(os.path.join(self.model_dir, "firmware", f"lut_{i}.h"), "w") as f: f.write(HEADER_CONTENT)
+
+        pass
