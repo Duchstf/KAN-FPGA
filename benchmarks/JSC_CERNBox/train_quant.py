@@ -3,8 +3,8 @@ import sys, os, logging
 from datetime import datetime
 
 sys.path.append('../../src')
-from KAN_QAT import KAN
-from helpers import quantize_dataset
+from KANQuant import KANQuant
+from quant import QuantBrevitasActivation, ScalarBiasScale
 from dataset import JetSubstructureDataset
 
 import numpy as np
@@ -19,19 +19,18 @@ from sklearn.metrics import roc_curve, auc
 from tqdm import tqdm
 import json
 
-# Brevitas for quantizing inputs
-import brevitas.nn as qnn
+#For quantization
+from brevitas.nn import QuantHardTanh
+from brevitas.core.scaling import ParameterScaling
 from brevitas.core.quant import QuantType
-from brevitas.core.scaling import ScalingImplType
 
 #Set the seed
-seed = 100
+seed = 0
 torch.manual_seed(seed)
 np.random.seed(seed)
 
-# === Setup ===
-torch.cuda.empty_cache()
-device = 'cuda' if torch.cuda.is_available() else 'cpu'
+#Set the device
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # === Logging Setup ===
 os.makedirs('checkpoints', exist_ok=True)
@@ -48,30 +47,23 @@ console.setFormatter(formatter)
 logging.getLogger().addHandler(console)
 
 # === Configuration ===
-#Model parameters
-layers_precision = [(6, 3), (32, 4), (32, 4)]
-grid_size = 30
-spline_order = 3
-
-#Training parameters
-batch_size = 64
-num_epochs = 200
-regularize_clipping = 1e-8
-
-#Save to a config json file
 config = {
     "layers": [16, 8, 5],
-    "layers_precision": layers_precision, #!!!Attention: the precision is of the form (bit_width, integer_width)
+    "grid_range": [-8, 8],
+    "layers_bitwidth": [6, 8, 8],
 
-    "grid_size": grid_size,
-    "grid_eps": 0.05,
+    "grid_size": 30,
+    "spline_order": 4,
+    "grid_eps": 0.03,
 
-    "spline_order": spline_order,
-    "base_activation": "nn.GELU",
+    "base_activation": "nn.SiLU",
+    
+    "batch_size": 64,
+    "num_epochs": 200,
 
-    "quantize_clip": False,
-    "quantize": True,
-    "regularize_clipping": regularize_clipping,
+    "learning_rate": 2e-4,
+    "weight_decay": 1e-5,
+
     "prune_threshold": 0.0,
 }
 
@@ -80,6 +72,21 @@ model_dir = f'models/{datetime.now().strftime("%Y%m%d_%H%M%S")}'
 os.makedirs(model_dir, exist_ok=True)
 with open(f'{model_dir}/config.json', 'w') as f:
     json.dump(config, f)
+
+#Build the input layer
+bn_in = nn.BatchNorm1d(config["layers"][0])
+nn.init.constant_(bn_in.weight.data, 1)
+nn.init.constant_(bn_in.bias.data, 0)
+input_bias = ScalarBiasScale(scale=False, bias_init=-0.25)
+JSC_input_layer = QuantBrevitasActivation(
+    QuantHardTanh(bit_width = config["layers_bitwidth"][0],
+    max_val=1.0,
+    min_val=-1.0,
+    act_scaling_impl=ParameterScaling(1.33),
+    quant_type=QuantType.INT,
+    return_quant_tensor = False),
+    pre_transforms=[bn_in, input_bias],
+    cuda=device.type == "cuda").to(device)
 
 # === Load Data ===
 dataset = {}
@@ -100,43 +107,17 @@ y_train = dataset["train"].y.float().argmax(dim=1).to(device)
 X_test = dataset["test"].X.to(device)
 y_test = dataset["test"].y.float().argmax(dim=1).to(device)
 
-#Quantize the data
-X_train_q, X_test_q = quantize_dataset(dataset["train"].X, dataset["test"].X, layers_precision[0], rounding="nearest")
-
-#Plot the distribution of the training data
-os.makedirs("plots", exist_ok=True)
-n_feat = dataset["train"].X.shape[1]
-cols = 4
-rows = math.ceil(n_feat / cols)
-
-plt.figure(figsize=(4*cols, 3*rows))
-for i in range(n_feat):
-    plt.subplot(rows, cols, i+1)
-    plt.hist(X_train_q[:, i].cpu().numpy(), bins=50, alpha=0.7)
-    plt.title(f"Feature {i}", fontsize=8)
-    plt.tight_layout()
-
-plt.savefig("plots/features_grid.png")
-plt.close()
-
 # === Create Data Loaders ===
-train_dataset = TensorDataset(X_train_q, y_train)
-test_dataset = TensorDataset(X_test_q, y_test)
-trainloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
-testloader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
+train_dataset = TensorDataset(X_train, y_train)
+test_dataset = TensorDataset(X_test, y_test)
+trainloader = DataLoader(train_dataset, batch_size=config["batch_size"], shuffle=True)
+testloader = DataLoader(test_dataset, batch_size=config["batch_size"], shuffle=False)
 
 # === Initialize Model ===
-model = KAN(config["layers"],
-            layers_precision=config["layers_precision"], 
-            quantize=config["quantize"], 
-            quantize_clip=config["quantize_clip"],
-            grid_size=config["grid_size"], 
-            spline_order=config["spline_order"], 
-            grid_eps=config["grid_eps"], 
-            base_activation=eval(config["base_activation"])).to(device)
-print(sum(p.numel() for p in model.parameters()))
+#Define the model
+model = KANQuant(config, JSC_input_layer, device).to(device)
 
-optimizer = optim.Adam(model.parameters(), lr=8e-5, weight_decay=0)
+optimizer = optim.Adam(model.parameters(), lr=config["learning_rate"], weight_decay=config["weight_decay"])
 scheduler = optim.lr_scheduler.ExponentialLR(optimizer, gamma=0.9)
 criterion = nn.CrossEntropyLoss()
 
@@ -147,7 +128,7 @@ best_val_accuracy = 0.0
 
 # Define loss
 criterion = nn.CrossEntropyLoss()
-for epoch in range(num_epochs):
+for epoch in range(config["num_epochs"]):
     # Train
     model.train()
     epoch_train_loss = 0  # Initialize loss for the epoch
@@ -205,7 +186,7 @@ for epoch in range(num_epochs):
     # === Save Checkpoint if Best ===
     if val_accuracy > best_val_accuracy:
         best_val_accuracy = val_accuracy
-        checkpoint_path = f'{model_dir}/jets_grid{grid_size}_spline{spline_order}_acc{val_accuracy:.4f}_epoch{epoch + 1}.pt'
+        checkpoint_path = f'{model_dir}/JSC_CERNBox_acc{val_accuracy:.4f}_epoch{epoch + 1}.pt'
         torch.save({
             'epoch': epoch + 1,
             'model_state_dict': model.state_dict(),
