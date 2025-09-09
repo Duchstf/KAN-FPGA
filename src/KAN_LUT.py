@@ -207,6 +207,7 @@ class KAN_LUT:
 
         #Write the KAN core HLS file
         self.write_kan_core()
+        self.write_pkg_kan()
         pass
 
     def write_kan_core(self, max_per_line=16):
@@ -285,4 +286,22 @@ class KAN_LUT:
         os.makedirs(os.path.dirname(out_vhd), exist_ok=True)
         with open(out_vhd, "w") as f:
             f.write(vhdl_text)
-            
+    
+    def write_pkg_kan(self):
+
+        with open(os.path.join(os.path.dirname(__file__), "templates", "src", "PkgKAN.vhd"), "r") as tf:
+            tpl = tf.read()
+
+        #Replace the placeholders with the actual values
+        vhdl_text = tpl.replace("{{N_INPUT}}", str(self.config["layers"][0]))
+        vhdl_text = vhdl_text.replace("{{N_OUTPUT}}", str(self.config["layers"][-1]))
+
+        #Get the quantization precision for the input layer and output layer
+        vhdl_text = vhdl_text.replace("{{INPUT_WIDTH}}", str(self.config["layers_bitwidth"][0]))
+        vhdl_text = vhdl_text.replace("{{OUTPUT_WIDTH}}", str(self.config["layers_bitwidth"][-1]))
+
+        #Write the VHDL code to the file
+        out_vhd = os.path.join(self.firmware_dir, "src", "PkgKAN.vhd")
+        os.makedirs(os.path.dirname(out_vhd), exist_ok=True)
+        with open(out_vhd, "w") as f:
+            f.write(vhdl_text)

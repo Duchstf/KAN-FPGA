@@ -316,13 +316,9 @@ def generate_pkg_types(config, output_dir):
     vhdl_text = tpl.replace("{{N_INPUT}}", str(config["layers"][0]))
     vhdl_text = vhdl_text.replace("{{N_OUTPUT}}", str(config["layers"][-1]))
 
-    #Get the quantization precision for the input layer
-    vhdl_text = vhdl_text.replace("{{INPUT_WIDTH}}", str(config["layers_precision"][0][0]))
-    vhdl_text = vhdl_text.replace("{{INPUT_FRAC}}", str(config["layers_precision"][0][1]))
-
-    #Get the quantization precision for the output layer
+    #Get the quantization precision for the input layer and output layer
+    vhdl_text = vhdl_text.replace("{{INPUT_WIDTH}}", str(config["layers_precision"][0]))
     vhdl_text = vhdl_text.replace("{{OUTPUT_WIDTH}}", str(config["layers_precision"][-1][0]))
-    vhdl_text = vhdl_text.replace("{{OUTPUT_FRAC}}", str(config["layers_precision"][-1][1]))
 
     with open(os.path.join(output_dir, "src", "PkgTypes.vhd"), "w") as f:
         f.write(vhdl_text)
