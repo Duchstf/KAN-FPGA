@@ -350,3 +350,42 @@ class KAN_LUT:
     def write_build_tcl(self):
         #Simply copy the build tcl file over for now
         shutil.copy(os.path.join(os.path.dirname(__file__), "templates", "build.tcl"), os.path.join(self.model_dir, "firmware", "build.tcl"))
+    
+    #------------------SIMULATION------------------
+    def simulate_firmware(self, top_name: str = "KAN", n_vectors: int = 2):
+        sim_dir = os.path.join(self.model_dir, "firmware", "sim")
+        os.makedirs(sim_dir, exist_ok=True)
+
+        self._write_test_vectors(n_vectors,  os.path.join(sim_dir, "vectors_in.txt"), os.path.join(sim_dir, "vectors_out.txt"))
+
+        print(f"[SIM] Emitted TB + vectors + TCL to: {sim_dir}")
+
+    def _write_test_vectors(self, n_vectors: int, in_file: str, out_file: str):
+
+        self.KAN.to(self.device).eval()
+        in_features = self.KAN.layers[0].in_features
+
+        # draw random float inputs, then quantize like predict()
+        x = torch.randn(n_vectors, in_features, device=self.device, dtype=torch.float32)
+        x_q = self.KAN.input_layer(x)
+
+        input_scale, bits = self.KAN.input_layer.get_scale_factor_bits(self.is_cuda)
+        x_q = (x_q / input_scale).round().to(torch.int)
+        x_q = (x_q + (2**(bits - 1))).to(torch.int)  # to unsigned index domain
+
+        # reference integer outputs via the internal integer evaluator
+        outs = []
+        for i in range(n_vectors):
+            outs.append(self._inferece_sample(x_q[i]))
+        outs = torch.stack(outs, dim=0).to(torch.int64)
+
+        # Write as space-separated decimals, one vector per line
+        with open(in_file, "w") as fi:
+            for row in x_q.tolist():
+                fi.write(" ".join(str(int(v)) for v in row) + "\n")
+
+        with open(out_file, "w") as fo:
+            for row in outs.tolist():
+                fo.write(" ".join(str(int(v)) for v in row) + "\n")
+
+        pass
