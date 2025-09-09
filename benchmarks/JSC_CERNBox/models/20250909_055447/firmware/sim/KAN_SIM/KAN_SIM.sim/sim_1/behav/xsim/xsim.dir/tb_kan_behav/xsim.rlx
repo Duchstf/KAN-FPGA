@@ -1,0 +1,12 @@
+
+{ 
+    crc :  2227621570757447048  , 
+    ccp_crc :  0  , 
+    cmdline : " --incr --debug typical --relax --mt 8 -L work -L secureip -L xpm --snapshot tb_kan_behav work.tb_kan" , 
+    buildDate : "May 22 2024" , 
+    buildTime : "18:54:44" , 
+    linkCmd : "/usr/bin/gcc -Wa,-W  -O -fPIC  -m64  -Wl,--no-as-needed  -Wl,--unresolved-symbols=ignore-all  -o \"xsim.dir/tb_kan_behav/xsimk\"   \"xsim.dir/tb_kan_behav/obj/xsim_0.lnx64.o\" \"xsim.dir/tb_kan_behav/obj/xsim_1.lnx64.o\" \"xsim.dir/tb_kan_behav/obj/xsim_2.lnx64.o\" -L\"/data/Xilinx/Vivado/2024.1/lib/lnx64.o\" -lrdi_simulator_kernel    -L/data/Xilinx/Vivado/2024.1/lib/lnx64.o/../../tps/lnx64/gcc-9.3.0/bin/../lib64 -Wl,--disable-new-dtags -Wl,-rpath=/data/Xilinx/Vivado/2024.1/lib/lnx64.o/../../tps/lnx64/gcc-9.3.0/bin/../lib64 -lrdi_simbridge_kernel" , 
+    aggregate_nets : 
+    [ 
+    ] 
+} 

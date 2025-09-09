@@ -17,7 +17,7 @@ architecture sim of tb_kan is
 
   -- Input and output vectors
   signal din  : input_vec_t  := (others => (others => '0'));
-  signal dout : output_vec_t := (others => (others => '0'));
+  signal dout : output_vec_t;
 
   constant LATENCY : natural := 3;
 
@@ -37,7 +37,7 @@ architecture sim of tb_kan is
   ---------------------------------------------------------------------------
   -- Read a line of N integers into an array SIGNAL of signed/unsigned elements
   ---------------------------------------------------------------------------
-  procedure read_line_into(signal v : out input_vec_t; L : inout line) is
+  procedure read_line_into(signal v : inout input_vec_t; L : inout line) is
     variable val : integer;
   begin
     for i in v'range loop
@@ -74,11 +74,11 @@ begin
     file fout : text open read_mode is "vectors_out.txt";
 
     variable l_in, l_out : line;
-    variable expv        : output_vec_t(dout'range);  -- expected output vector (variable)
-    variable gotv        : output_vec_t(dout'range);  -- captured DUT output
+    variable expv : output_vec_t;  -- expected output vector (variable)
+    variable gotv : output_vec_t;  -- captured DUT output
     variable total       : integer := 0;
     variable errs        : integer := 0;
-
+  begin
     --Let clocks settle a bit
     for k in 0 to 3 loop
       wait until rising_edge(clk);
@@ -109,7 +109,7 @@ begin
           report "Mismatch @vec=" & integer'image(total) &
                  " out[" & integer'image(i) & "] got=" &
                  integer'image(to_integer(gotv(i))) &
-                 " exp=" & integer'image(to_integer(expv(i))))
+                 " exp=" & integer'image(to_integer(expv(i)))
                  severity warning;
         end if;
       end loop;

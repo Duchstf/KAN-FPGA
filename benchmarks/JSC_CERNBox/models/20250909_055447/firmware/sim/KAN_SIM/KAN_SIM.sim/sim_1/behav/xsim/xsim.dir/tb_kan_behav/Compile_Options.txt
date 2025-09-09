@@ -1,0 +1,1 @@
+--incr --debug "typical" --relax --mt "8" -L "work" -L "secureip" -L "xpm" --snapshot "tb_kan_behav" "work.tb_kan" -log "elaborate.log" 

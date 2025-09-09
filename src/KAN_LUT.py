@@ -445,9 +445,11 @@ class KAN_LUT:
 
     def _write_tb(self):
         shutil.copy(os.path.join(os.path.dirname(__file__), "templates", "sim", "tb_kan.vhd"), os.path.join(self.firmware_dir, "sim", "tb_kan.vhd"))
+        shutil.copy(os.path.join(os.path.dirname(__file__), "templates", "sim", "tb_kan_latency.vhd"), os.path.join(self.firmware_dir, "sim", "tb_kan_latency.vhd"))
     
 
     def _write_sim_tcl(self):
         shutil.copy(os.path.join(os.path.dirname(__file__), "templates", "sim", "sim.tcl"), os.path.join(self.firmware_dir, "sim", "sim.tcl"))
+        shutil.copy(os.path.join(os.path.dirname(__file__), "templates", "sim", "sim_latency.tcl"), os.path.join(self.firmware_dir, "sim", "sim_latency.tcl"))
 
 
