@@ -53,8 +53,8 @@ config = {
     "layers_bitwidth": [6, 8, 8],
 
     "grid_size": 30,
-    "spline_order": 4,
-    "grid_eps": 0.03,
+    "spline_order": 3,
+    "grid_eps": 0.05,
 
     "base_activation": "nn.SiLU",
     

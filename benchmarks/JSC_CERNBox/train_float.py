@@ -63,8 +63,6 @@ y_train = dataset["train"].y.float().argmax(dim=1).to(device)
 X_test = dataset["test"].X.to(device)
 y_test = dataset["test"].y.float().argmax(dim=1).to(device)
 
-#Quantize the data
-# X_train_q, X_test_q = quantize_dataset(X_train, X_test, layers_precision[0], rounding="nearest")
 
 # === Create Data Loaders ===
 train_dataset = TensorDataset(X_train, y_train)
