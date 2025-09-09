@@ -1,6 +1,7 @@
 import torch
 import sys, os, json, shutil
 import numpy as np
+from math import ceil, log2
 import torch.nn.functional as F
 from numpy.core.fromnumeric import take
 from KANQuant import KANQuant as KAN
@@ -234,9 +235,11 @@ class KAN_LUT:
             in_f, out_f = layer.in_features, layer.out_features
             acts=[f"act_{i}_{j}_{k}" for j in range(in_f) for k in range(out_f) if self.truth_tables[f"{i}_{j}_{k}"]["acive"] == 1]
             outs=[f"out{i}_{k}" for k in range(out_f)] if i != len(self.KAN.layers)-1 else []
+            sums=[f"sum_{i}_{k}" for k in range(out_f)]
             block=[f"-- Layer {i} ({in_f}->{out_f})"]
             if acts: block.append(emit(acts, f"lut_output_t_{i}"))
             if outs: block.append(emit(outs, f"lut_output_t_{i}"))
+            if sums: block.append(emit(sums, f"sum_t_{i}"))
             sections.append("\n".join(block))
 
         # ---------- Build LAYER_BLOCKS ----------
@@ -266,9 +269,10 @@ class KAN_LUT:
                     sum_terms.append(dst)
                     inst_idx += 1
 
-                target = f"output({k})" if i == num_layers - 1 else f"out{i}_{k}"
+                target = f"sum_{i}_{k}"
                 rhs = " + ".join(sum_terms) if sum_terms else "(others => '0')  -- no surviving LUTs"
                 blk.append(f"  {target} <= {rhs};")
+                blk.append(f"  output({k}) <= saturate({target}, {layer.out_precision});") if i == len(self.KAN.layers)-1 else blk.append(f"  out{i}_{k} <= saturate({target}, {layer.out_precision});")
                 blk.append("end block;")
 
                 layer_blocks.append("\n  ".join(blk))
@@ -300,6 +304,14 @@ class KAN_LUT:
         #Get the quantization precision for the input layer and output layer
         vhdl_text = vhdl_text.replace("{{INPUT_WIDTH}}", str(self.config["layers_bitwidth"][0]))
         vhdl_text = vhdl_text.replace("{{OUTPUT_WIDTH}}", str(self.config["layers_bitwidth"][-1]))
+
+        #Generate the summation block
+        summation_block = []
+        for i in range(0, len(self.KAN.layers)):
+            layer = self.KAN.layers[i]
+            summation_block.append(f"  constant SUM_WIDTH_{i}: positive := {layer.out_precision + ceil(log2(layer.in_features))};")
+            summation_block.append(f"  subtype sum_t_{i} is signed(SUM_WIDTH_{i}-1 downto 0);")
+        vhdl_text = vhdl_text.replace("{{SUMMATION_BLOCK}}", "\n".join(summation_block))
 
         #Write the VHDL code to the file
         out_vhd = os.path.join(self.firmware_dir, "src", "PkgKAN.vhd")
