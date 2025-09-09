@@ -357,6 +357,7 @@ class KAN_LUT:
         os.makedirs(sim_dir, exist_ok=True)
 
         self._write_test_vectors(n_vectors,  os.path.join(sim_dir, "vectors_in.txt"), os.path.join(sim_dir, "vectors_out.txt"))
+        self._write_tb_from_template(sim_dir, top_name)
 
         print(f"[SIM] Emitted TB + vectors + TCL to: {sim_dir}")
 
@@ -387,5 +388,12 @@ class KAN_LUT:
         with open(out_file, "w") as fo:
             for row in outs.tolist():
                 fo.write(" ".join(str(int(v)) for v in row) + "\n")
+
+        pass
+    
+    def _write_tb_from_template(self, sim_dir: str, top_name: str):
+        """
+        Write the testbench from the template
+        """
 
         pass
