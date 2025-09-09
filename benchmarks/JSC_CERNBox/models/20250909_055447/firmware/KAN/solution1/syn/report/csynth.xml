@@ -1,0 +1,1107 @@
+<profile>
+    <ReportVersion>
+        <Version>2024.1</Version>
+    </ReportVersion>
+    <UserAssignments>
+        <unit>ns</unit>
+        <ProductFamily>virtexuplus</ProductFamily>
+        <Part>xcvu9p-flgb2104-2-i</Part>
+        <TopModelName>KAN</TopModelName>
+        <TargetClockPeriod>3.00</TargetClockPeriod>
+        <ClockUncertainty>0.81</ClockUncertainty>
+        <TargetInitiationInterval>1</TargetInitiationInterval>
+        <FlowTarget>vivado</FlowTarget>
+    </UserAssignments>
+    <PerformanceEstimates>
+        <PipelineType>yes</PipelineType>
+        <SummaryOfTimingAnalysis>
+            <unit>ns</unit>
+            <EstimatedClockPeriod>2.189</EstimatedClockPeriod>
+        </SummaryOfTimingAnalysis>
+        <SummaryOfOverallLatency>
+            <unit>clock cycles</unit>
+            <Best-caseLatency>8</Best-caseLatency>
+            <Average-caseLatency>8</Average-caseLatency>
+            <Worst-caseLatency>8</Worst-caseLatency>
+            <Best-caseRealTimeLatency>24.000 ns</Best-caseRealTimeLatency>
+            <Average-caseRealTimeLatency>24.000 ns</Average-caseRealTimeLatency>
+            <Worst-caseRealTimeLatency>24.000 ns</Worst-caseRealTimeLatency>
+            <PipelineInitiationInterval>1</PipelineInitiationInterval>
+            <PipelineDepth>9</PipelineDepth>
+            <Interval-min>1</Interval-min>
+            <Interval-max>1</Interval-max>
+        </SummaryOfOverallLatency>
+        <SummaryOfViolations>
+            <IssueType>-</IssueType>
+            <ViolationType>-</ViolationType>
+            <SourceLocation>KAN.cpp:11</SourceLocation>
+        </SummaryOfViolations>
+    </PerformanceEstimates>
+    <AreaEstimates>
+        <Resources>
+            <FF>1449</FF>
+            <LUT>3288</LUT>
+            <BRAM_18K>0</BRAM_18K>
+            <DSP>0</DSP>
+            <URAM>0</URAM>
+        </Resources>
+        <AvailableResources>
+            <BRAM_18K>4320</BRAM_18K>
+            <DSP>6840</DSP>
+            <FF>2364480</FF>
+            <LUT>1182240</LUT>
+            <URAM>960</URAM>
+        </AvailableResources>
+    </AreaEstimates>
+    <InterfaceSummary>
+        <RtlPorts>
+            <name>ap_clk</name>
+            <Object>KAN</Object>
+            <Type>return value</Type>
+            <Scope/>
+            <IOProtocol>ap_ctrl_hs</IOProtocol>
+            <IOConfig/>
+            <Dir>in</Dir>
+            <Bits>1</Bits>
+            <Attribute>control</Attribute>
+        </RtlPorts>
+        <RtlPorts>
+            <name>ap_rst</name>
+            <Object>KAN</Object>
+            <Type>return value</Type>
+            <Scope/>
+            <IOProtocol>ap_ctrl_hs</IOProtocol>
+            <IOConfig/>
+            <Dir>in</Dir>
+            <Bits>1</Bits>
+            <Attribute>control</Attribute>
+        </RtlPorts>
+        <RtlPorts>
+            <name>ap_start</name>
+            <Object>KAN</Object>
+            <Type>return value</Type>
+            <Scope/>
+            <IOProtocol>ap_ctrl_hs</IOProtocol>
+            <IOConfig/>
+            <Dir>in</Dir>
+            <Bits>1</Bits>
+            <Attribute>control</Attribute>
+        </RtlPorts>
+        <RtlPorts>
+            <name>ap_done</name>
+            <Object>KAN</Object>
+            <Type>return value</Type>
+            <Scope/>
+            <IOProtocol>ap_ctrl_hs</IOProtocol>
+            <IOConfig/>
+            <Dir>out</Dir>
+            <Bits>1</Bits>
+            <Attribute>control</Attribute>
+        </RtlPorts>
+        <RtlPorts>
+            <name>ap_idle</name>
+            <Object>KAN</Object>
+            <Type>return value</Type>
+            <Scope/>
+            <IOProtocol>ap_ctrl_hs</IOProtocol>
+            <IOConfig/>
+            <Dir>out</Dir>
+            <Bits>1</Bits>
+            <Attribute>control</Attribute>
+        </RtlPorts>
+        <RtlPorts>
+            <name>ap_ready</name>
+            <Object>KAN</Object>
+            <Type>return value</Type>
+            <Scope/>
+            <IOProtocol>ap_ctrl_hs</IOProtocol>
+            <IOConfig/>
+            <Dir>out</Dir>
+            <Bits>1</Bits>
+            <Attribute>control</Attribute>
+        </RtlPorts>
+        <RtlPorts>
+            <name>input_0</name>
+            <Object>input_0</Object>
+            <Type>pointer</Type>
+            <Scope/>
+            <IOProtocol>ap_none</IOProtocol>
+            <IOConfig/>
+            <Dir>in</Dir>
+            <Bits>6</Bits>
+            <Attribute>data</Attribute>
+            <CType>int</CType>
+        </RtlPorts>
+        <RtlPorts>
+            <name>input_1</name>
+            <Object>input_1</Object>
+            <Type>pointer</Type>
+            <Scope/>
+            <IOProtocol>ap_none</IOProtocol>
+            <IOConfig/>
+            <Dir>in</Dir>
+            <Bits>6</Bits>
+            <Attribute>data</Attribute>
+            <CType>int</CType>
+        </RtlPorts>
+        <RtlPorts>
+            <name>input_2</name>
+            <Object>input_2</Object>
+            <Type>pointer</Type>
+            <Scope/>
+            <IOProtocol>ap_none</IOProtocol>
+            <IOConfig/>
+            <Dir>in</Dir>
+            <Bits>6</Bits>
+            <Attribute>data</Attribute>
+            <CType>int</CType>
+        </RtlPorts>
+        <RtlPorts>
+            <name>input_3</name>
+            <Object>input_3</Object>
+            <Type>pointer</Type>
+            <Scope/>
+            <IOProtocol>ap_none</IOProtocol>
+            <IOConfig/>
+            <Dir>in</Dir>
+            <Bits>6</Bits>
+            <Attribute>data</Attribute>
+            <CType>int</CType>
+        </RtlPorts>
+        <RtlPorts>
+            <name>input_4</name>
+            <Object>input_4</Object>
+            <Type>pointer</Type>
+            <Scope/>
+            <IOProtocol>ap_none</IOProtocol>
+            <IOConfig/>
+            <Dir>in</Dir>
+            <Bits>6</Bits>
+            <Attribute>data</Attribute>
+            <CType>int</CType>
+        </RtlPorts>
+        <RtlPorts>
+            <name>input_5</name>
+            <Object>input_5</Object>
+            <Type>pointer</Type>
+            <Scope/>
+            <IOProtocol>ap_none</IOProtocol>
+            <IOConfig/>
+            <Dir>in</Dir>
+            <Bits>6</Bits>
+            <Attribute>data</Attribute>
+            <CType>int</CType>
+        </RtlPorts>
+        <RtlPorts>
+            <name>input_6</name>
+            <Object>input_6</Object>
+            <Type>pointer</Type>
+            <Scope/>
+            <IOProtocol>ap_none</IOProtocol>
+            <IOConfig/>
+            <Dir>in</Dir>
+            <Bits>6</Bits>
+            <Attribute>data</Attribute>
+            <CType>int</CType>
+        </RtlPorts>
+        <RtlPorts>
+            <name>input_7</name>
+            <Object>input_7</Object>
+            <Type>pointer</Type>
+            <Scope/>
+            <IOProtocol>ap_none</IOProtocol>
+            <IOConfig/>
+            <Dir>in</Dir>
+            <Bits>6</Bits>
+            <Attribute>data</Attribute>
+            <CType>int</CType>
+        </RtlPorts>
+        <RtlPorts>
+            <name>input_8</name>
+            <Object>input_8</Object>
+            <Type>pointer</Type>
+            <Scope/>
+            <IOProtocol>ap_none</IOProtocol>
+            <IOConfig/>
+            <Dir>in</Dir>
+            <Bits>6</Bits>
+            <Attribute>data</Attribute>
+            <CType>int</CType>
+        </RtlPorts>
+        <RtlPorts>
+            <name>input_9</name>
+            <Object>input_9</Object>
+            <Type>pointer</Type>
+            <Scope/>
+            <IOProtocol>ap_none</IOProtocol>
+            <IOConfig/>
+            <Dir>in</Dir>
+            <Bits>6</Bits>
+            <Attribute>data</Attribute>
+            <CType>int</CType>
+        </RtlPorts>
+        <RtlPorts>
+            <name>input_10</name>
+            <Object>input_10</Object>
+            <Type>pointer</Type>
+            <Scope/>
+            <IOProtocol>ap_none</IOProtocol>
+            <IOConfig/>
+            <Dir>in</Dir>
+            <Bits>6</Bits>
+            <Attribute>data</Attribute>
+            <CType>int</CType>
+        </RtlPorts>
+        <RtlPorts>
+            <name>input_11</name>
+            <Object>input_11</Object>
+            <Type>pointer</Type>
+            <Scope/>
+            <IOProtocol>ap_none</IOProtocol>
+            <IOConfig/>
+            <Dir>in</Dir>
+            <Bits>6</Bits>
+            <Attribute>data</Attribute>
+            <CType>int</CType>
+        </RtlPorts>
+        <RtlPorts>
+            <name>input_12</name>
+            <Object>input_12</Object>
+            <Type>pointer</Type>
+            <Scope/>
+            <IOProtocol>ap_none</IOProtocol>
+            <IOConfig/>
+            <Dir>in</Dir>
+            <Bits>6</Bits>
+            <Attribute>data</Attribute>
+            <CType>int</CType>
+        </RtlPorts>
+        <RtlPorts>
+            <name>input_13</name>
+            <Object>input_13</Object>
+            <Type>pointer</Type>
+            <Scope/>
+            <IOProtocol>ap_none</IOProtocol>
+            <IOConfig/>
+            <Dir>in</Dir>
+            <Bits>6</Bits>
+            <Attribute>data</Attribute>
+            <CType>int</CType>
+        </RtlPorts>
+        <RtlPorts>
+            <name>input_14</name>
+            <Object>input_14</Object>
+            <Type>pointer</Type>
+            <Scope/>
+            <IOProtocol>ap_none</IOProtocol>
+            <IOConfig/>
+            <Dir>in</Dir>
+            <Bits>6</Bits>
+            <Attribute>data</Attribute>
+            <CType>int</CType>
+        </RtlPorts>
+        <RtlPorts>
+            <name>input_15</name>
+            <Object>input_15</Object>
+            <Type>pointer</Type>
+            <Scope/>
+            <IOProtocol>ap_none</IOProtocol>
+            <IOConfig/>
+            <Dir>in</Dir>
+            <Bits>6</Bits>
+            <Attribute>data</Attribute>
+            <CType>int</CType>
+        </RtlPorts>
+        <RtlPorts>
+            <name>output_0</name>
+            <Object>output_0</Object>
+            <Type>pointer</Type>
+            <Scope/>
+            <IOProtocol>ap_none</IOProtocol>
+            <IOConfig/>
+            <Dir>out</Dir>
+            <Bits>8</Bits>
+            <Attribute>data</Attribute>
+            <CType>int</CType>
+        </RtlPorts>
+        <RtlPorts>
+            <name>output_1</name>
+            <Object>output_1</Object>
+            <Type>pointer</Type>
+            <Scope/>
+            <IOProtocol>ap_none</IOProtocol>
+            <IOConfig/>
+            <Dir>out</Dir>
+            <Bits>8</Bits>
+            <Attribute>data</Attribute>
+            <CType>int</CType>
+        </RtlPorts>
+        <RtlPorts>
+            <name>output_2</name>
+            <Object>output_2</Object>
+            <Type>pointer</Type>
+            <Scope/>
+            <IOProtocol>ap_none</IOProtocol>
+            <IOConfig/>
+            <Dir>out</Dir>
+            <Bits>8</Bits>
+            <Attribute>data</Attribute>
+            <CType>int</CType>
+        </RtlPorts>
+        <RtlPorts>
+            <name>output_3</name>
+            <Object>output_3</Object>
+            <Type>pointer</Type>
+            <Scope/>
+            <IOProtocol>ap_none</IOProtocol>
+            <IOConfig/>
+            <Dir>out</Dir>
+            <Bits>8</Bits>
+            <Attribute>data</Attribute>
+            <CType>int</CType>
+        </RtlPorts>
+        <RtlPorts>
+            <name>output_4</name>
+            <Object>output_4</Object>
+            <Type>pointer</Type>
+            <Scope/>
+            <IOProtocol>ap_none</IOProtocol>
+            <IOConfig/>
+            <Dir>out</Dir>
+            <Bits>8</Bits>
+            <Attribute>data</Attribute>
+            <CType>int</CType>
+        </RtlPorts>
+    </InterfaceSummary>
+    <RTLDesignHierarchy>
+        <TopModule MAX_DEPTH="2">
+            <ModuleName>KAN</ModuleName>
+            <BindInstances>add_ln30_fu_1581_p2 add_ln30_3_fu_1697_p2 add_ln30_14_fu_2134_p2 out_0_0_fu_2152_p2 icmp_ln30_fu_2379_p2 or_ln30_fu_2384_p2 xor_ln30_fu_2389_p2 and_ln30_fu_2394_p2 xor_ln30_1_fu_2400_p2 icmp_ln30_1_fu_2405_p2 or_ln30_1_fu_2410_p2 and_ln30_1_fu_2416_p2 select_ln30_fu_2421_p3 or_ln30_2_fu_2429_p2 out_0_0_1_fu_2435_p3 add_ln49_fu_1591_p2 add_ln49_1_fu_1605_p2 add_ln49_14_fu_2203_p2 out_0_1_fu_2221_p2 icmp_ln49_fu_2442_p2 or_ln49_fu_2447_p2 xor_ln49_fu_2452_p2 and_ln49_fu_2457_p2 xor_ln49_1_fu_2463_p2 icmp_ln49_1_fu_2468_p2 or_ln49_1_fu_2473_p2 and_ln49_1_fu_2479_p2 select_ln49_fu_2484_p3 or_ln49_2_fu_2492_p2 out_0_1_1_fu_2498_p3 add_ln68_fu_1615_p2 add_ln68_1_fu_1629_p2 add_ln68_2_fu_1750_p2 add_ln68_9_fu_2066_p2 add_ln68_14_fu_2268_p2 out_0_2_fu_2286_p2 icmp_ln68_fu_2505_p2 or_ln68_fu_2510_p2 xor_ln68_fu_2515_p2 and_ln68_fu_2520_p2 xor_ln68_1_fu_2526_p2 icmp_ln68_1_fu_2531_p2 or_ln68_1_fu_2536_p2 and_ln68_1_fu_2542_p2 select_ln68_fu_2547_p3 or_ln68_2_fu_2555_p2 out_0_2_1_fu_2561_p3 add_ln87_14_fu_2337_p2 out_0_3_fu_2355_p2 icmp_ln87_fu_2568_p2 or_ln87_fu_2573_p2 xor_ln87_fu_2578_p2 and_ln87_fu_2583_p2 xor_ln87_1_fu_2589_p2 icmp_ln87_1_fu_2594_p2 or_ln87_1_fu_2599_p2 and_ln87_1_fu_2605_p2 select_ln87_fu_2610_p3 or_ln87_2_fu_2618_p2 out_0_3_1_fu_2624_p3 xor_ln5_fu_2639_p2 idx_1_fu_2657_p3 xor_ln35_fu_2682_p2 idx_3_fu_2700_p3 xor_ln65_fu_2725_p2 idx_5_fu_2743_p3 xor_ln95_fu_2768_p2 idx_7_fu_2786_p3 add_ln94_fu_2803_p2 add_ln94_1_fu_2823_p2 add_ln94_2_fu_3085_p2 icmp_ln94_fu_3117_p2 or_ln94_fu_3123_p2 xor_ln94_fu_3129_p2 and_ln94_fu_3135_p2 xor_ln94_1_fu_3141_p2 icmp_ln94_1_fu_3147_p2 or_ln94_1_fu_3153_p2 and_ln94_1_fu_3159_p2 select_ln94_fu_3165_p3 or_ln94_2_fu_3173_p2 output_0 add_ln101_2_fu_2867_p2 add_ln101_3_fu_2885_p2 xor_ln101_fu_3187_p2 and_ln101_fu_3192_p2 select_ln101_fu_3197_p3 xor_ln101_1_fu_3205_p2 output_1 add_ln108_fu_2907_p2 xor_ln108_fu_3217_p2 and_ln108_fu_3222_p2 select_ln108_fu_3227_p3 xor_ln108_1_fu_3235_p2 output_2 add_ln115_fu_2969_p2 add_ln115_1_fu_2989_p2 add_ln115_2_fu_3253_p2 icmp_ln115_fu_3285_p2 or_ln115_fu_3291_p2 xor_ln115_fu_3297_p2 and_ln115_fu_3303_p2 xor_ln115_1_fu_3309_p2 icmp_ln115_1_fu_3315_p2 or_ln115_1_fu_3321_p2 and_ln115_1_fu_3327_p2 select_ln115_fu_3333_p3 or_ln115_2_fu_3341_p2 output_3 add_ln122_2_fu_3037_p2 add_ln122_3_fu_3055_p2 icmp_ln122_fu_3355_p2 or_ln122_fu_3360_p2 xor_ln122_fu_3365_p2 and_ln122_fu_3370_p2 xor_ln122_1_fu_3376_p2 icmp_ln122_1_fu_3381_p2 or_ln122_1_fu_3386_p2 and_ln122_1_fu_3392_p2 select_ln122_fu_3397_p3 or_ln122_2_fu_3405_p2 output_4 lut_0_0_0_U lut_0_1_0_U lut_0_2_0_U lut_0_3_0_U lut_0_4_0_U lut_0_5_0_U lut_0_6_0_U lut_0_7_0_U lut_0_8_0_U lut_0_9_0_U lut_0_10_0_U lut_0_11_0_U lut_0_12_0_U lut_0_13_0_U lut_0_14_0_U lut_0_15_0_U lut_0_0_1_U lut_0_1_1_U lut_0_2_1_U lut_0_3_1_U lut_0_4_1_U lut_0_5_1_U lut_0_6_1_U lut_0_7_1_U lut_0_8_1_U lut_0_9_1_U lut_0_10_1_U lut_0_11_1_U lut_0_12_1_U lut_0_13_1_U lut_0_14_1_U lut_0_15_1_U lut_0_0_2_U lut_0_1_2_U lut_0_2_2_U lut_0_3_2_U lut_0_4_2_U lut_0_5_2_U lut_0_6_2_U lut_0_7_2_U lut_0_8_2_U lut_0_9_2_U lut_0_10_2_U lut_0_11_2_U lut_0_12_2_U lut_0_13_2_U lut_0_14_2_U lut_0_15_2_U lut_0_0_3_U lut_0_1_3_U lut_0_2_3_U lut_0_3_3_U lut_0_4_3_U lut_0_5_3_U lut_0_6_3_U lut_0_7_3_U lut_0_8_3_U lut_0_9_3_U lut_0_10_3_U lut_0_11_3_U lut_0_12_3_U lut_0_13_3_U lut_0_14_3_U lut_0_15_3_U lut_1_0_0_U lut_1_1_0_U lut_1_2_0_U lut_1_3_0_U lut_1_0_1_U lut_1_1_1_U lut_1_2_1_U lut_1_3_1_U lut_1_0_2_U lut_1_1_2_U lut_1_2_2_U lut_1_3_2_U lut_1_0_3_U lut_1_1_3_U lut_1_2_3_U lut_1_3_3_U lut_1_0_4_U lut_1_1_4_U lut_1_2_4_U lut_1_3_4_U</BindInstances>
+        </TopModule>
+    </RTLDesignHierarchy>
+    <ModuleInformation>
+        <Module>
+            <Name>KAN</Name>
+            <PerformanceEstimates>
+                <SummaryOfTimingAnalysis>
+                    <TargetClockPeriod>3.00</TargetClockPeriod>
+                    <ClockUncertainty>0.81</ClockUncertainty>
+                    <TargetInitiationInterval>1</TargetInitiationInterval>
+                    <EstimatedClockPeriod>2.189</EstimatedClockPeriod>
+                </SummaryOfTimingAnalysis>
+                <SummaryOfOverallLatency>
+                    <Best-caseLatency>8</Best-caseLatency>
+                    <Average-caseLatency>8</Average-caseLatency>
+                    <Worst-caseLatency>8</Worst-caseLatency>
+                    <Best-caseRealTimeLatency>24.000 ns</Best-caseRealTimeLatency>
+                    <Average-caseRealTimeLatency>24.000 ns</Average-caseRealTimeLatency>
+                    <Worst-caseRealTimeLatency>24.000 ns</Worst-caseRealTimeLatency>
+                    <PipelineInitiationInterval>1</PipelineInitiationInterval>
+                    <PipelineDepth>9</PipelineDepth>
+                    <PipelineType>yes</PipelineType>
+                </SummaryOfOverallLatency>
+                <SummaryOfViolations>
+                    <IssueType>-</IssueType>
+                    <ViolationType>-</ViolationType>
+                    <SourceLocation>KAN.cpp:11</SourceLocation>
+                </SummaryOfViolations>
+            </PerformanceEstimates>
+            <AreaEstimates>
+                <Resources>
+                    <FF>1449</FF>
+                    <AVAIL_FF>2364480</AVAIL_FF>
+                    <UTIL_FF>~0</UTIL_FF>
+                    <LUT>3288</LUT>
+                    <AVAIL_LUT>1182240</AVAIL_LUT>
+                    <UTIL_LUT>~0</UTIL_LUT>
+                    <BRAM_18K>0</BRAM_18K>
+                    <AVAIL_BRAM>4320</AVAIL_BRAM>
+                    <UTIL_BRAM>0</UTIL_BRAM>
+                    <DSP>0</DSP>
+                    <AVAIL_DSP>6840</AVAIL_DSP>
+                    <UTIL_DSP>0</UTIL_DSP>
+                    <URAM>0</URAM>
+                    <AVAIL_URAM>960</AVAIL_URAM>
+                    <UTIL_URAM>0</UTIL_URAM>
+                </Resources>
+            </AreaEstimates>
+            <BindNodes>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op add" DSP="0" ID="" IMPL="fabric" LATENCY="0" LOOP="" OPTYPE="add" PRAGMA="" RTLNAME="add_ln30_fu_1581_p2" SOURCE="KAN.cpp:30" STORAGESUBTYPE="" URAM="0" VARIABLE="add_ln30" VISIBLE="true"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op add" DSP="0" ID="" IMPL="fabric" LATENCY="0" LOOP="" OPTYPE="add" PRAGMA="" RTLNAME="add_ln30_3_fu_1697_p2" SOURCE="KAN.cpp:30" STORAGESUBTYPE="" URAM="0" VARIABLE="add_ln30_3" VISIBLE="true"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op add" DSP="0" ID="" IMPL="fabric" LATENCY="0" LOOP="" OPTYPE="add" PRAGMA="" RTLNAME="add_ln30_14_fu_2134_p2" SOURCE="KAN.cpp:30" STORAGESUBTYPE="" URAM="0" VARIABLE="add_ln30_14" VISIBLE="true"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op add" DSP="0" ID="" IMPL="fabric" LATENCY="0" LOOP="" OPTYPE="add" PRAGMA="" RTLNAME="out_0_0_fu_2152_p2" SOURCE="KAN.cpp:30" STORAGESUBTYPE="" URAM="0" VARIABLE="out_0_0" VISIBLE="true"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op setne" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="setne" PRAGMA="" RTLNAME="icmp_ln30_fu_2379_p2" SOURCE="KAN.cpp:30" STORAGESUBTYPE="" URAM="0" VARIABLE="icmp_ln30" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op or" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="or" PRAGMA="" RTLNAME="or_ln30_fu_2384_p2" SOURCE="KAN.cpp:30" STORAGESUBTYPE="" URAM="0" VARIABLE="or_ln30" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op xor" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="xor" PRAGMA="" RTLNAME="xor_ln30_fu_2389_p2" SOURCE="KAN.cpp:30" STORAGESUBTYPE="" URAM="0" VARIABLE="xor_ln30" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op and" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="and" PRAGMA="" RTLNAME="and_ln30_fu_2394_p2" SOURCE="KAN.cpp:30" STORAGESUBTYPE="" URAM="0" VARIABLE="and_ln30" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op xor" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="xor" PRAGMA="" RTLNAME="xor_ln30_1_fu_2400_p2" SOURCE="KAN.cpp:30" STORAGESUBTYPE="" URAM="0" VARIABLE="xor_ln30_1" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op setne" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="setne" PRAGMA="" RTLNAME="icmp_ln30_1_fu_2405_p2" SOURCE="KAN.cpp:30" STORAGESUBTYPE="" URAM="0" VARIABLE="icmp_ln30_1" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op or" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="or" PRAGMA="" RTLNAME="or_ln30_1_fu_2410_p2" SOURCE="KAN.cpp:30" STORAGESUBTYPE="" URAM="0" VARIABLE="or_ln30_1" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op and" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="and" PRAGMA="" RTLNAME="and_ln30_1_fu_2416_p2" SOURCE="KAN.cpp:30" STORAGESUBTYPE="" URAM="0" VARIABLE="and_ln30_1" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op select" DSP="0" ID="" IMPL="auto_sel" LATENCY="0" LOOP="" OPTYPE="select" PRAGMA="" RTLNAME="select_ln30_fu_2421_p3" SOURCE="KAN.cpp:30" STORAGESUBTYPE="" URAM="0" VARIABLE="select_ln30" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op or" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="or" PRAGMA="" RTLNAME="or_ln30_2_fu_2429_p2" SOURCE="KAN.cpp:30" STORAGESUBTYPE="" URAM="0" VARIABLE="or_ln30_2" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op select" DSP="0" ID="" IMPL="auto_sel" LATENCY="0" LOOP="" OPTYPE="select" PRAGMA="" RTLNAME="out_0_0_1_fu_2435_p3" SOURCE="KAN.cpp:30" STORAGESUBTYPE="" URAM="0" VARIABLE="out_0_0_1" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op add" DSP="0" ID="" IMPL="fabric" LATENCY="0" LOOP="" OPTYPE="add" PRAGMA="" RTLNAME="add_ln49_fu_1591_p2" SOURCE="KAN.cpp:49" STORAGESUBTYPE="" URAM="0" VARIABLE="add_ln49" VISIBLE="true"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op add" DSP="0" ID="" IMPL="fabric" LATENCY="0" LOOP="" OPTYPE="add" PRAGMA="" RTLNAME="add_ln49_1_fu_1605_p2" SOURCE="KAN.cpp:49" STORAGESUBTYPE="" URAM="0" VARIABLE="add_ln49_1" VISIBLE="true"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op add" DSP="0" ID="" IMPL="fabric" LATENCY="0" LOOP="" OPTYPE="add" PRAGMA="" RTLNAME="add_ln49_14_fu_2203_p2" SOURCE="KAN.cpp:49" STORAGESUBTYPE="" URAM="0" VARIABLE="add_ln49_14" VISIBLE="true"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op add" DSP="0" ID="" IMPL="fabric" LATENCY="0" LOOP="" OPTYPE="add" PRAGMA="" RTLNAME="out_0_1_fu_2221_p2" SOURCE="KAN.cpp:49" STORAGESUBTYPE="" URAM="0" VARIABLE="out_0_1" VISIBLE="true"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op setne" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="setne" PRAGMA="" RTLNAME="icmp_ln49_fu_2442_p2" SOURCE="KAN.cpp:49" STORAGESUBTYPE="" URAM="0" VARIABLE="icmp_ln49" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op or" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="or" PRAGMA="" RTLNAME="or_ln49_fu_2447_p2" SOURCE="KAN.cpp:49" STORAGESUBTYPE="" URAM="0" VARIABLE="or_ln49" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op xor" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="xor" PRAGMA="" RTLNAME="xor_ln49_fu_2452_p2" SOURCE="KAN.cpp:49" STORAGESUBTYPE="" URAM="0" VARIABLE="xor_ln49" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op and" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="and" PRAGMA="" RTLNAME="and_ln49_fu_2457_p2" SOURCE="KAN.cpp:49" STORAGESUBTYPE="" URAM="0" VARIABLE="and_ln49" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op xor" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="xor" PRAGMA="" RTLNAME="xor_ln49_1_fu_2463_p2" SOURCE="KAN.cpp:49" STORAGESUBTYPE="" URAM="0" VARIABLE="xor_ln49_1" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op setne" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="setne" PRAGMA="" RTLNAME="icmp_ln49_1_fu_2468_p2" SOURCE="KAN.cpp:49" STORAGESUBTYPE="" URAM="0" VARIABLE="icmp_ln49_1" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op or" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="or" PRAGMA="" RTLNAME="or_ln49_1_fu_2473_p2" SOURCE="KAN.cpp:49" STORAGESUBTYPE="" URAM="0" VARIABLE="or_ln49_1" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op and" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="and" PRAGMA="" RTLNAME="and_ln49_1_fu_2479_p2" SOURCE="KAN.cpp:49" STORAGESUBTYPE="" URAM="0" VARIABLE="and_ln49_1" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op select" DSP="0" ID="" IMPL="auto_sel" LATENCY="0" LOOP="" OPTYPE="select" PRAGMA="" RTLNAME="select_ln49_fu_2484_p3" SOURCE="KAN.cpp:49" STORAGESUBTYPE="" URAM="0" VARIABLE="select_ln49" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op or" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="or" PRAGMA="" RTLNAME="or_ln49_2_fu_2492_p2" SOURCE="KAN.cpp:49" STORAGESUBTYPE="" URAM="0" VARIABLE="or_ln49_2" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op select" DSP="0" ID="" IMPL="auto_sel" LATENCY="0" LOOP="" OPTYPE="select" PRAGMA="" RTLNAME="out_0_1_1_fu_2498_p3" SOURCE="KAN.cpp:49" STORAGESUBTYPE="" URAM="0" VARIABLE="out_0_1_1" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op add" DSP="0" ID="" IMPL="fabric" LATENCY="0" LOOP="" OPTYPE="add" PRAGMA="" RTLNAME="add_ln68_fu_1615_p2" SOURCE="KAN.cpp:68" STORAGESUBTYPE="" URAM="0" VARIABLE="add_ln68" VISIBLE="true"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op add" DSP="0" ID="" IMPL="fabric" LATENCY="0" LOOP="" OPTYPE="add" PRAGMA="" RTLNAME="add_ln68_1_fu_1629_p2" SOURCE="KAN.cpp:68" STORAGESUBTYPE="" URAM="0" VARIABLE="add_ln68_1" VISIBLE="true"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op add" DSP="0" ID="" IMPL="fabric" LATENCY="0" LOOP="" OPTYPE="add" PRAGMA="" RTLNAME="add_ln68_2_fu_1750_p2" SOURCE="KAN.cpp:68" STORAGESUBTYPE="" URAM="0" VARIABLE="add_ln68_2" VISIBLE="true"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op add" DSP="0" ID="" IMPL="fabric" LATENCY="0" LOOP="" OPTYPE="add" PRAGMA="" RTLNAME="add_ln68_9_fu_2066_p2" SOURCE="KAN.cpp:68" STORAGESUBTYPE="" URAM="0" VARIABLE="add_ln68_9" VISIBLE="true"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op add" DSP="0" ID="" IMPL="fabric" LATENCY="0" LOOP="" OPTYPE="add" PRAGMA="" RTLNAME="add_ln68_14_fu_2268_p2" SOURCE="KAN.cpp:68" STORAGESUBTYPE="" URAM="0" VARIABLE="add_ln68_14" VISIBLE="true"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op add" DSP="0" ID="" IMPL="fabric" LATENCY="0" LOOP="" OPTYPE="add" PRAGMA="" RTLNAME="out_0_2_fu_2286_p2" SOURCE="KAN.cpp:68" STORAGESUBTYPE="" URAM="0" VARIABLE="out_0_2" VISIBLE="true"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op setne" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="setne" PRAGMA="" RTLNAME="icmp_ln68_fu_2505_p2" SOURCE="KAN.cpp:68" STORAGESUBTYPE="" URAM="0" VARIABLE="icmp_ln68" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op or" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="or" PRAGMA="" RTLNAME="or_ln68_fu_2510_p2" SOURCE="KAN.cpp:68" STORAGESUBTYPE="" URAM="0" VARIABLE="or_ln68" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op xor" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="xor" PRAGMA="" RTLNAME="xor_ln68_fu_2515_p2" SOURCE="KAN.cpp:68" STORAGESUBTYPE="" URAM="0" VARIABLE="xor_ln68" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op and" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="and" PRAGMA="" RTLNAME="and_ln68_fu_2520_p2" SOURCE="KAN.cpp:68" STORAGESUBTYPE="" URAM="0" VARIABLE="and_ln68" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op xor" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="xor" PRAGMA="" RTLNAME="xor_ln68_1_fu_2526_p2" SOURCE="KAN.cpp:68" STORAGESUBTYPE="" URAM="0" VARIABLE="xor_ln68_1" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op setne" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="setne" PRAGMA="" RTLNAME="icmp_ln68_1_fu_2531_p2" SOURCE="KAN.cpp:68" STORAGESUBTYPE="" URAM="0" VARIABLE="icmp_ln68_1" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op or" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="or" PRAGMA="" RTLNAME="or_ln68_1_fu_2536_p2" SOURCE="KAN.cpp:68" STORAGESUBTYPE="" URAM="0" VARIABLE="or_ln68_1" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op and" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="and" PRAGMA="" RTLNAME="and_ln68_1_fu_2542_p2" SOURCE="KAN.cpp:68" STORAGESUBTYPE="" URAM="0" VARIABLE="and_ln68_1" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op select" DSP="0" ID="" IMPL="auto_sel" LATENCY="0" LOOP="" OPTYPE="select" PRAGMA="" RTLNAME="select_ln68_fu_2547_p3" SOURCE="KAN.cpp:68" STORAGESUBTYPE="" URAM="0" VARIABLE="select_ln68" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op or" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="or" PRAGMA="" RTLNAME="or_ln68_2_fu_2555_p2" SOURCE="KAN.cpp:68" STORAGESUBTYPE="" URAM="0" VARIABLE="or_ln68_2" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op select" DSP="0" ID="" IMPL="auto_sel" LATENCY="0" LOOP="" OPTYPE="select" PRAGMA="" RTLNAME="out_0_2_1_fu_2561_p3" SOURCE="KAN.cpp:68" STORAGESUBTYPE="" URAM="0" VARIABLE="out_0_2_1" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op add" DSP="0" ID="" IMPL="fabric" LATENCY="0" LOOP="" OPTYPE="add" PRAGMA="" RTLNAME="add_ln87_14_fu_2337_p2" SOURCE="KAN.cpp:87" STORAGESUBTYPE="" URAM="0" VARIABLE="add_ln87_14" VISIBLE="true"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op add" DSP="0" ID="" IMPL="fabric" LATENCY="0" LOOP="" OPTYPE="add" PRAGMA="" RTLNAME="out_0_3_fu_2355_p2" SOURCE="KAN.cpp:87" STORAGESUBTYPE="" URAM="0" VARIABLE="out_0_3" VISIBLE="true"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op setne" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="setne" PRAGMA="" RTLNAME="icmp_ln87_fu_2568_p2" SOURCE="KAN.cpp:87" STORAGESUBTYPE="" URAM="0" VARIABLE="icmp_ln87" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op or" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="or" PRAGMA="" RTLNAME="or_ln87_fu_2573_p2" SOURCE="KAN.cpp:87" STORAGESUBTYPE="" URAM="0" VARIABLE="or_ln87" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op xor" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="xor" PRAGMA="" RTLNAME="xor_ln87_fu_2578_p2" SOURCE="KAN.cpp:87" STORAGESUBTYPE="" URAM="0" VARIABLE="xor_ln87" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op and" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="and" PRAGMA="" RTLNAME="and_ln87_fu_2583_p2" SOURCE="KAN.cpp:87" STORAGESUBTYPE="" URAM="0" VARIABLE="and_ln87" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op xor" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="xor" PRAGMA="" RTLNAME="xor_ln87_1_fu_2589_p2" SOURCE="KAN.cpp:87" STORAGESUBTYPE="" URAM="0" VARIABLE="xor_ln87_1" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op setne" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="setne" PRAGMA="" RTLNAME="icmp_ln87_1_fu_2594_p2" SOURCE="KAN.cpp:87" STORAGESUBTYPE="" URAM="0" VARIABLE="icmp_ln87_1" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op or" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="or" PRAGMA="" RTLNAME="or_ln87_1_fu_2599_p2" SOURCE="KAN.cpp:87" STORAGESUBTYPE="" URAM="0" VARIABLE="or_ln87_1" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op and" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="and" PRAGMA="" RTLNAME="and_ln87_1_fu_2605_p2" SOURCE="KAN.cpp:87" STORAGESUBTYPE="" URAM="0" VARIABLE="and_ln87_1" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op select" DSP="0" ID="" IMPL="auto_sel" LATENCY="0" LOOP="" OPTYPE="select" PRAGMA="" RTLNAME="select_ln87_fu_2610_p3" SOURCE="KAN.cpp:87" STORAGESUBTYPE="" URAM="0" VARIABLE="select_ln87" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op or" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="or" PRAGMA="" RTLNAME="or_ln87_2_fu_2618_p2" SOURCE="KAN.cpp:87" STORAGESUBTYPE="" URAM="0" VARIABLE="or_ln87_2" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op select" DSP="0" ID="" IMPL="auto_sel" LATENCY="0" LOOP="" OPTYPE="select" PRAGMA="" RTLNAME="out_0_3_1_fu_2624_p3" SOURCE="KAN.cpp:87" STORAGESUBTYPE="" URAM="0" VARIABLE="out_0_3_1" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op xor" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="xor" PRAGMA="" RTLNAME="xor_ln5_fu_2639_p2" SOURCE="lut_1.cpp:5" STORAGESUBTYPE="" URAM="0" VARIABLE="xor_ln5" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op select" DSP="0" ID="" IMPL="auto_sel" LATENCY="0" LOOP="" OPTYPE="select" PRAGMA="" RTLNAME="idx_1_fu_2657_p3" SOURCE="lut_1.cpp:5" STORAGESUBTYPE="" URAM="0" VARIABLE="idx_1" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op xor" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="xor" PRAGMA="" RTLNAME="xor_ln35_fu_2682_p2" SOURCE="lut_1.cpp:35" STORAGESUBTYPE="" URAM="0" VARIABLE="xor_ln35" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op select" DSP="0" ID="" IMPL="auto_sel" LATENCY="0" LOOP="" OPTYPE="select" PRAGMA="" RTLNAME="idx_3_fu_2700_p3" SOURCE="lut_1.cpp:35" STORAGESUBTYPE="" URAM="0" VARIABLE="idx_3" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op xor" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="xor" PRAGMA="" RTLNAME="xor_ln65_fu_2725_p2" SOURCE="lut_1.cpp:65" STORAGESUBTYPE="" URAM="0" VARIABLE="xor_ln65" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op select" DSP="0" ID="" IMPL="auto_sel" LATENCY="0" LOOP="" OPTYPE="select" PRAGMA="" RTLNAME="idx_5_fu_2743_p3" SOURCE="lut_1.cpp:65" STORAGESUBTYPE="" URAM="0" VARIABLE="idx_5" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op xor" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="xor" PRAGMA="" RTLNAME="xor_ln95_fu_2768_p2" SOURCE="lut_1.cpp:95" STORAGESUBTYPE="" URAM="0" VARIABLE="xor_ln95" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op select" DSP="0" ID="" IMPL="auto_sel" LATENCY="0" LOOP="" OPTYPE="select" PRAGMA="" RTLNAME="idx_7_fu_2786_p3" SOURCE="lut_1.cpp:95" STORAGESUBTYPE="" URAM="0" VARIABLE="idx_7" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op add" DSP="0" ID="" IMPL="fabric" LATENCY="0" LOOP="" OPTYPE="add" PRAGMA="" RTLNAME="add_ln94_fu_2803_p2" SOURCE="KAN.cpp:94" STORAGESUBTYPE="" URAM="0" VARIABLE="add_ln94" VISIBLE="true"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op add" DSP="0" ID="" IMPL="fabric" LATENCY="0" LOOP="" OPTYPE="add" PRAGMA="" RTLNAME="add_ln94_1_fu_2823_p2" SOURCE="KAN.cpp:94" STORAGESUBTYPE="" URAM="0" VARIABLE="add_ln94_1" VISIBLE="true"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op add" DSP="0" ID="" IMPL="fabric" LATENCY="0" LOOP="" OPTYPE="add" PRAGMA="" RTLNAME="add_ln94_2_fu_3085_p2" SOURCE="KAN.cpp:94" STORAGESUBTYPE="" URAM="0" VARIABLE="add_ln94_2" VISIBLE="true"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op setne" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="setne" PRAGMA="" RTLNAME="icmp_ln94_fu_3117_p2" SOURCE="KAN.cpp:94" STORAGESUBTYPE="" URAM="0" VARIABLE="icmp_ln94" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op or" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="or" PRAGMA="" RTLNAME="or_ln94_fu_3123_p2" SOURCE="KAN.cpp:94" STORAGESUBTYPE="" URAM="0" VARIABLE="or_ln94" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op xor" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="xor" PRAGMA="" RTLNAME="xor_ln94_fu_3129_p2" SOURCE="KAN.cpp:94" STORAGESUBTYPE="" URAM="0" VARIABLE="xor_ln94" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op and" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="and" PRAGMA="" RTLNAME="and_ln94_fu_3135_p2" SOURCE="KAN.cpp:94" STORAGESUBTYPE="" URAM="0" VARIABLE="and_ln94" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op xor" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="xor" PRAGMA="" RTLNAME="xor_ln94_1_fu_3141_p2" SOURCE="KAN.cpp:94" STORAGESUBTYPE="" URAM="0" VARIABLE="xor_ln94_1" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op setne" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="setne" PRAGMA="" RTLNAME="icmp_ln94_1_fu_3147_p2" SOURCE="KAN.cpp:94" STORAGESUBTYPE="" URAM="0" VARIABLE="icmp_ln94_1" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op or" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="or" PRAGMA="" RTLNAME="or_ln94_1_fu_3153_p2" SOURCE="KAN.cpp:94" STORAGESUBTYPE="" URAM="0" VARIABLE="or_ln94_1" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op and" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="and" PRAGMA="" RTLNAME="and_ln94_1_fu_3159_p2" SOURCE="KAN.cpp:94" STORAGESUBTYPE="" URAM="0" VARIABLE="and_ln94_1" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op select" DSP="0" ID="" IMPL="auto_sel" LATENCY="0" LOOP="" OPTYPE="select" PRAGMA="" RTLNAME="select_ln94_fu_3165_p3" SOURCE="KAN.cpp:94" STORAGESUBTYPE="" URAM="0" VARIABLE="select_ln94" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op or" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="or" PRAGMA="" RTLNAME="or_ln94_2_fu_3173_p2" SOURCE="KAN.cpp:94" STORAGESUBTYPE="" URAM="0" VARIABLE="or_ln94_2" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op select" DSP="0" ID="" IMPL="auto_sel" LATENCY="0" LOOP="" OPTYPE="select" PRAGMA="" RTLNAME="output_0" SOURCE="KAN.cpp:94" STORAGESUBTYPE="" URAM="0" VARIABLE="select_ln94_1" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op add" DSP="0" ID="" IMPL="fabric" LATENCY="0" LOOP="" OPTYPE="add" PRAGMA="" RTLNAME="add_ln101_2_fu_2867_p2" SOURCE="KAN.cpp:101" STORAGESUBTYPE="" URAM="0" VARIABLE="add_ln101_2" VISIBLE="true"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op add" DSP="0" ID="" IMPL="fabric" LATENCY="0" LOOP="" OPTYPE="add" PRAGMA="" RTLNAME="add_ln101_3_fu_2885_p2" SOURCE="KAN.cpp:101" STORAGESUBTYPE="" URAM="0" VARIABLE="add_ln101_3" VISIBLE="true"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op xor" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="xor" PRAGMA="" RTLNAME="xor_ln101_fu_3187_p2" SOURCE="KAN.cpp:101" STORAGESUBTYPE="" URAM="0" VARIABLE="xor_ln101" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op and" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="and" PRAGMA="" RTLNAME="and_ln101_fu_3192_p2" SOURCE="KAN.cpp:101" STORAGESUBTYPE="" URAM="0" VARIABLE="and_ln101" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op select" DSP="0" ID="" IMPL="auto_sel" LATENCY="0" LOOP="" OPTYPE="select" PRAGMA="" RTLNAME="select_ln101_fu_3197_p3" SOURCE="KAN.cpp:101" STORAGESUBTYPE="" URAM="0" VARIABLE="select_ln101" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op xor" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="xor" PRAGMA="" RTLNAME="xor_ln101_1_fu_3205_p2" SOURCE="KAN.cpp:101" STORAGESUBTYPE="" URAM="0" VARIABLE="xor_ln101_1" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op select" DSP="0" ID="" IMPL="auto_sel" LATENCY="0" LOOP="" OPTYPE="select" PRAGMA="" RTLNAME="output_1" SOURCE="KAN.cpp:101" STORAGESUBTYPE="" URAM="0" VARIABLE="select_ln101_1" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op add" DSP="0" ID="" IMPL="fabric" LATENCY="0" LOOP="" OPTYPE="add" PRAGMA="" RTLNAME="add_ln108_fu_2907_p2" SOURCE="KAN.cpp:108" STORAGESUBTYPE="" URAM="0" VARIABLE="add_ln108" VISIBLE="true"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op xor" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="xor" PRAGMA="" RTLNAME="xor_ln108_fu_3217_p2" SOURCE="KAN.cpp:108" STORAGESUBTYPE="" URAM="0" VARIABLE="xor_ln108" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op and" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="and" PRAGMA="" RTLNAME="and_ln108_fu_3222_p2" SOURCE="KAN.cpp:108" STORAGESUBTYPE="" URAM="0" VARIABLE="and_ln108" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op select" DSP="0" ID="" IMPL="auto_sel" LATENCY="0" LOOP="" OPTYPE="select" PRAGMA="" RTLNAME="select_ln108_fu_3227_p3" SOURCE="KAN.cpp:108" STORAGESUBTYPE="" URAM="0" VARIABLE="select_ln108" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op xor" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="xor" PRAGMA="" RTLNAME="xor_ln108_1_fu_3235_p2" SOURCE="KAN.cpp:108" STORAGESUBTYPE="" URAM="0" VARIABLE="xor_ln108_1" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op select" DSP="0" ID="" IMPL="auto_sel" LATENCY="0" LOOP="" OPTYPE="select" PRAGMA="" RTLNAME="output_2" SOURCE="KAN.cpp:108" STORAGESUBTYPE="" URAM="0" VARIABLE="select_ln108_1" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op add" DSP="0" ID="" IMPL="fabric" LATENCY="0" LOOP="" OPTYPE="add" PRAGMA="" RTLNAME="add_ln115_fu_2969_p2" SOURCE="KAN.cpp:115" STORAGESUBTYPE="" URAM="0" VARIABLE="add_ln115" VISIBLE="true"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op add" DSP="0" ID="" IMPL="fabric" LATENCY="0" LOOP="" OPTYPE="add" PRAGMA="" RTLNAME="add_ln115_1_fu_2989_p2" SOURCE="KAN.cpp:115" STORAGESUBTYPE="" URAM="0" VARIABLE="add_ln115_1" VISIBLE="true"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op add" DSP="0" ID="" IMPL="fabric" LATENCY="0" LOOP="" OPTYPE="add" PRAGMA="" RTLNAME="add_ln115_2_fu_3253_p2" SOURCE="KAN.cpp:115" STORAGESUBTYPE="" URAM="0" VARIABLE="add_ln115_2" VISIBLE="true"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op setne" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="setne" PRAGMA="" RTLNAME="icmp_ln115_fu_3285_p2" SOURCE="KAN.cpp:115" STORAGESUBTYPE="" URAM="0" VARIABLE="icmp_ln115" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op or" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="or" PRAGMA="" RTLNAME="or_ln115_fu_3291_p2" SOURCE="KAN.cpp:115" STORAGESUBTYPE="" URAM="0" VARIABLE="or_ln115" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op xor" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="xor" PRAGMA="" RTLNAME="xor_ln115_fu_3297_p2" SOURCE="KAN.cpp:115" STORAGESUBTYPE="" URAM="0" VARIABLE="xor_ln115" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op and" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="and" PRAGMA="" RTLNAME="and_ln115_fu_3303_p2" SOURCE="KAN.cpp:115" STORAGESUBTYPE="" URAM="0" VARIABLE="and_ln115" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op xor" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="xor" PRAGMA="" RTLNAME="xor_ln115_1_fu_3309_p2" SOURCE="KAN.cpp:115" STORAGESUBTYPE="" URAM="0" VARIABLE="xor_ln115_1" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op setne" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="setne" PRAGMA="" RTLNAME="icmp_ln115_1_fu_3315_p2" SOURCE="KAN.cpp:115" STORAGESUBTYPE="" URAM="0" VARIABLE="icmp_ln115_1" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op or" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="or" PRAGMA="" RTLNAME="or_ln115_1_fu_3321_p2" SOURCE="KAN.cpp:115" STORAGESUBTYPE="" URAM="0" VARIABLE="or_ln115_1" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op and" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="and" PRAGMA="" RTLNAME="and_ln115_1_fu_3327_p2" SOURCE="KAN.cpp:115" STORAGESUBTYPE="" URAM="0" VARIABLE="and_ln115_1" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op select" DSP="0" ID="" IMPL="auto_sel" LATENCY="0" LOOP="" OPTYPE="select" PRAGMA="" RTLNAME="select_ln115_fu_3333_p3" SOURCE="KAN.cpp:115" STORAGESUBTYPE="" URAM="0" VARIABLE="select_ln115" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op or" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="or" PRAGMA="" RTLNAME="or_ln115_2_fu_3341_p2" SOURCE="KAN.cpp:115" STORAGESUBTYPE="" URAM="0" VARIABLE="or_ln115_2" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op select" DSP="0" ID="" IMPL="auto_sel" LATENCY="0" LOOP="" OPTYPE="select" PRAGMA="" RTLNAME="output_3" SOURCE="KAN.cpp:115" STORAGESUBTYPE="" URAM="0" VARIABLE="select_ln115_1" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op add" DSP="0" ID="" IMPL="fabric" LATENCY="0" LOOP="" OPTYPE="add" PRAGMA="" RTLNAME="add_ln122_2_fu_3037_p2" SOURCE="KAN.cpp:122" STORAGESUBTYPE="" URAM="0" VARIABLE="add_ln122_2" VISIBLE="true"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op add" DSP="0" ID="" IMPL="fabric" LATENCY="0" LOOP="" OPTYPE="add" PRAGMA="" RTLNAME="add_ln122_3_fu_3055_p2" SOURCE="KAN.cpp:122" STORAGESUBTYPE="" URAM="0" VARIABLE="add_ln122_3" VISIBLE="true"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op setne" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="setne" PRAGMA="" RTLNAME="icmp_ln122_fu_3355_p2" SOURCE="KAN.cpp:122" STORAGESUBTYPE="" URAM="0" VARIABLE="icmp_ln122" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op or" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="or" PRAGMA="" RTLNAME="or_ln122_fu_3360_p2" SOURCE="KAN.cpp:122" STORAGESUBTYPE="" URAM="0" VARIABLE="or_ln122" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op xor" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="xor" PRAGMA="" RTLNAME="xor_ln122_fu_3365_p2" SOURCE="KAN.cpp:122" STORAGESUBTYPE="" URAM="0" VARIABLE="xor_ln122" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op and" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="and" PRAGMA="" RTLNAME="and_ln122_fu_3370_p2" SOURCE="KAN.cpp:122" STORAGESUBTYPE="" URAM="0" VARIABLE="and_ln122" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op xor" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="xor" PRAGMA="" RTLNAME="xor_ln122_1_fu_3376_p2" SOURCE="KAN.cpp:122" STORAGESUBTYPE="" URAM="0" VARIABLE="xor_ln122_1" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op setne" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="setne" PRAGMA="" RTLNAME="icmp_ln122_1_fu_3381_p2" SOURCE="KAN.cpp:122" STORAGESUBTYPE="" URAM="0" VARIABLE="icmp_ln122_1" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op or" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="or" PRAGMA="" RTLNAME="or_ln122_1_fu_3386_p2" SOURCE="KAN.cpp:122" STORAGESUBTYPE="" URAM="0" VARIABLE="or_ln122_1" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op and" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="and" PRAGMA="" RTLNAME="and_ln122_1_fu_3392_p2" SOURCE="KAN.cpp:122" STORAGESUBTYPE="" URAM="0" VARIABLE="and_ln122_1" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op select" DSP="0" ID="" IMPL="auto_sel" LATENCY="0" LOOP="" OPTYPE="select" PRAGMA="" RTLNAME="select_ln122_fu_3397_p3" SOURCE="KAN.cpp:122" STORAGESUBTYPE="" URAM="0" VARIABLE="select_ln122" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op or" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="or" PRAGMA="" RTLNAME="or_ln122_2_fu_3405_p2" SOURCE="KAN.cpp:122" STORAGESUBTYPE="" URAM="0" VARIABLE="or_ln122_2" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op select" DSP="0" ID="" IMPL="auto_sel" LATENCY="0" LOOP="" OPTYPE="select" PRAGMA="" RTLNAME="output_4" SOURCE="KAN.cpp:122" STORAGESUBTYPE="" URAM="0" VARIABLE="select_ln122_1" VISIBLE="false"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_0_0_0_U" SOURCE="" STORAGESIZE="5 64 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_0_0_0" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_0_1_0_U" SOURCE="" STORAGESIZE="6 64 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_0_1_0" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_0_2_0_U" SOURCE="" STORAGESIZE="7 64 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_0_2_0" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_0_3_0_U" SOURCE="" STORAGESIZE="7 64 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_0_3_0" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_0_4_0_U" SOURCE="" STORAGESIZE="7 64 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_0_4_0" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_0_5_0_U" SOURCE="" STORAGESIZE="7 64 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_0_5_0" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_0_6_0_U" SOURCE="" STORAGESIZE="6 64 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_0_6_0" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_0_7_0_U" SOURCE="" STORAGESIZE="3 64 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_0_7_0" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_0_8_0_U" SOURCE="" STORAGESIZE="6 64 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_0_8_0" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_0_9_0_U" SOURCE="" STORAGESIZE="6 64 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_0_9_0" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_0_10_0_U" SOURCE="" STORAGESIZE="6 64 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_0_10_0" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_0_11_0_U" SOURCE="" STORAGESIZE="7 64 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_0_11_0" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_0_12_0_U" SOURCE="" STORAGESIZE="8 64 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_0_12_0" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_0_13_0_U" SOURCE="" STORAGESIZE="5 64 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_0_13_0" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_0_14_0_U" SOURCE="" STORAGESIZE="8 64 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_0_14_0" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_0_15_0_U" SOURCE="" STORAGESIZE="8 64 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_0_15_0" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_0_0_1_U" SOURCE="" STORAGESIZE="7 64 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_0_0_1" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_0_1_1_U" SOURCE="" STORAGESIZE="6 64 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_0_1_1" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_0_2_1_U" SOURCE="" STORAGESIZE="8 64 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_0_2_1" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_0_3_1_U" SOURCE="" STORAGESIZE="8 64 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_0_3_1" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_0_4_1_U" SOURCE="" STORAGESIZE="5 64 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_0_4_1" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_0_5_1_U" SOURCE="" STORAGESIZE="4 64 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_0_5_1" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_0_6_1_U" SOURCE="" STORAGESIZE="4 64 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_0_6_1" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_0_7_1_U" SOURCE="" STORAGESIZE="5 64 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_0_7_1" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_0_8_1_U" SOURCE="" STORAGESIZE="4 64 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_0_8_1" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_0_9_1_U" SOURCE="" STORAGESIZE="3 64 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_0_9_1" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_0_10_1_U" SOURCE="" STORAGESIZE="7 64 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_0_10_1" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_0_11_1_U" SOURCE="" STORAGESIZE="6 64 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_0_11_1" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_0_12_1_U" SOURCE="" STORAGESIZE="5 64 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_0_12_1" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_0_13_1_U" SOURCE="" STORAGESIZE="5 64 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_0_13_1" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_0_14_1_U" SOURCE="" STORAGESIZE="8 64 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_0_14_1" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_0_15_1_U" SOURCE="" STORAGESIZE="6 64 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_0_15_1" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_0_0_2_U" SOURCE="" STORAGESIZE="5 64 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_0_0_2" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_0_1_2_U" SOURCE="" STORAGESIZE="6 64 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_0_1_2" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_0_2_2_U" SOURCE="" STORAGESIZE="6 64 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_0_2_2" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_0_3_2_U" SOURCE="" STORAGESIZE="8 64 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_0_3_2" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_0_4_2_U" SOURCE="" STORAGESIZE="8 64 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_0_4_2" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_0_5_2_U" SOURCE="" STORAGESIZE="5 64 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_0_5_2" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_0_6_2_U" SOURCE="" STORAGESIZE="6 64 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_0_6_2" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_0_7_2_U" SOURCE="" STORAGESIZE="6 64 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_0_7_2" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_0_8_2_U" SOURCE="" STORAGESIZE="1 64 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_0_8_2" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_0_9_2_U" SOURCE="" STORAGESIZE="5 64 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_0_9_2" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_0_10_2_U" SOURCE="" STORAGESIZE="7 64 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_0_10_2" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_0_11_2_U" SOURCE="" STORAGESIZE="6 64 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_0_11_2" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_0_12_2_U" SOURCE="" STORAGESIZE="4 64 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_0_12_2" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_0_13_2_U" SOURCE="" STORAGESIZE="3 64 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_0_13_2" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_0_14_2_U" SOURCE="" STORAGESIZE="6 64 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_0_14_2" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_0_15_2_U" SOURCE="" STORAGESIZE="8 64 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_0_15_2" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_0_0_3_U" SOURCE="" STORAGESIZE="7 64 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_0_0_3" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_0_1_3_U" SOURCE="" STORAGESIZE="7 64 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_0_1_3" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_0_2_3_U" SOURCE="" STORAGESIZE="8 64 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_0_2_3" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_0_3_3_U" SOURCE="" STORAGESIZE="6 64 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_0_3_3" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_0_4_3_U" SOURCE="" STORAGESIZE="7 64 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_0_4_3" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_0_5_3_U" SOURCE="" STORAGESIZE="7 64 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_0_5_3" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_0_6_3_U" SOURCE="" STORAGESIZE="6 64 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_0_6_3" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_0_7_3_U" SOURCE="" STORAGESIZE="6 64 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_0_7_3" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_0_8_3_U" SOURCE="" STORAGESIZE="3 64 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_0_8_3" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_0_9_3_U" SOURCE="" STORAGESIZE="6 64 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_0_9_3" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_0_10_3_U" SOURCE="" STORAGESIZE="7 64 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_0_10_3" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_0_11_3_U" SOURCE="" STORAGESIZE="5 64 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_0_11_3" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_0_12_3_U" SOURCE="" STORAGESIZE="5 64 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_0_12_3" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_0_13_3_U" SOURCE="" STORAGESIZE="6 64 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_0_13_3" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_0_14_3_U" SOURCE="" STORAGESIZE="8 64 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_0_14_3" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_0_15_3_U" SOURCE="" STORAGESIZE="8 64 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_0_15_3" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_1_0_0_U" SOURCE="" STORAGESIZE="8 256 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_1_0_0" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_1_1_0_U" SOURCE="" STORAGESIZE="8 256 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_1_1_0" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_1_2_0_U" SOURCE="" STORAGESIZE="8 256 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_1_2_0" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_1_3_0_U" SOURCE="" STORAGESIZE="8 256 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_1_3_0" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_1_0_1_U" SOURCE="" STORAGESIZE="8 256 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_1_0_1" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_1_1_1_U" SOURCE="" STORAGESIZE="7 256 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_1_1_1" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_1_2_1_U" SOURCE="" STORAGESIZE="7 256 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_1_2_1" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_1_3_1_U" SOURCE="" STORAGESIZE="7 256 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_1_3_1" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_1_0_2_U" SOURCE="" STORAGESIZE="7 256 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_1_0_2" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_1_1_2_U" SOURCE="" STORAGESIZE="8 256 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_1_1_2" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_1_2_2_U" SOURCE="" STORAGESIZE="8 256 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_1_2_2" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_1_3_2_U" SOURCE="" STORAGESIZE="6 256 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_1_3_2" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_1_0_3_U" SOURCE="" STORAGESIZE="4 256 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_1_0_3" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_1_1_3_U" SOURCE="" STORAGESIZE="8 256 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_1_1_3" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_1_2_3_U" SOURCE="" STORAGESIZE="8 256 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_1_2_3" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_1_3_3_U" SOURCE="" STORAGESIZE="8 256 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_1_3_3" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_1_0_4_U" SOURCE="" STORAGESIZE="8 256 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_1_0_4" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_1_1_4_U" SOURCE="" STORAGESIZE="8 256 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_1_1_4" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_1_2_4_U" SOURCE="" STORAGESIZE="8 256 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_1_2_4" VISIBLE="true"/>
+                <BindNode BINDTYPE="storage" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_storage rom_1p" DSP="0" ID="" IMPL="lutram" LATENCY="1" LOOP="" OPTYPE="rom_1p" PRAGMA="pragma" RTLNAME="lut_1_3_4_U" SOURCE="" STORAGESIZE="7 256 1" STORAGESUBTYPE="" STORAGEUSAGE="rom_1p" URAM="0" VARIABLE="lut_1_3_4" VISIBLE="true"/>
+            </BindNodes>
+        </Module>
+    </ModuleInformation>
+    <FIFOInformation/>
+    <UserConfigCommands/>
+    <Args>
+        <Arg ArgName="input" index="0" direction="in" srcType="ap_uint&lt;6&gt;*" srcSize="8">
+            <hwRefs>
+                <hwRef type="port" interface="input_0" name="input_0" usage="data" direction="in"/>
+                <hwRef type="port" interface="input_1" name="input_1" usage="data" direction="in"/>
+                <hwRef type="port" interface="input_2" name="input_2" usage="data" direction="in"/>
+                <hwRef type="port" interface="input_3" name="input_3" usage="data" direction="in"/>
+                <hwRef type="port" interface="input_4" name="input_4" usage="data" direction="in"/>
+                <hwRef type="port" interface="input_5" name="input_5" usage="data" direction="in"/>
+                <hwRef type="port" interface="input_6" name="input_6" usage="data" direction="in"/>
+                <hwRef type="port" interface="input_7" name="input_7" usage="data" direction="in"/>
+                <hwRef type="port" interface="input_8" name="input_8" usage="data" direction="in"/>
+                <hwRef type="port" interface="input_9" name="input_9" usage="data" direction="in"/>
+                <hwRef type="port" interface="input_10" name="input_10" usage="data" direction="in"/>
+                <hwRef type="port" interface="input_11" name="input_11" usage="data" direction="in"/>
+                <hwRef type="port" interface="input_12" name="input_12" usage="data" direction="in"/>
+                <hwRef type="port" interface="input_13" name="input_13" usage="data" direction="in"/>
+                <hwRef type="port" interface="input_14" name="input_14" usage="data" direction="in"/>
+                <hwRef type="port" interface="input_15" name="input_15" usage="data" direction="in"/>
+            </hwRefs>
+        </Arg>
+        <Arg ArgName="output" index="1" direction="out" srcType="ap_fixed&lt;8, 8, AP_TRN, AP_SAT, 0&gt;*" srcSize="8">
+            <hwRefs>
+                <hwRef type="port" interface="output_0" name="output_0" usage="data" direction="out"/>
+                <hwRef type="port" interface="output_1" name="output_1" usage="data" direction="out"/>
+                <hwRef type="port" interface="output_2" name="output_2" usage="data" direction="out"/>
+                <hwRef type="port" interface="output_3" name="output_3" usage="data" direction="out"/>
+                <hwRef type="port" interface="output_4" name="output_4" usage="data" direction="out"/>
+            </hwRefs>
+        </Arg>
+    </Args>
+    <Interfaces>
+        <Interface InterfaceName="ap_clk" type="clock" busTypeName="clock" mode="slave">
+            <busParams>
+                <busParam busParamName="ASSOCIATED_RESET">ap_rst</busParam>
+            </busParams>
+            <portMaps>
+                <portMap portMapName="ap_clk">CLK</portMap>
+            </portMaps>
+            <ports>
+                <port>ap_clk</port>
+            </ports>
+        </Interface>
+        <Interface InterfaceName="ap_rst" type="reset" busTypeName="reset" mode="slave">
+            <busParams>
+                <busParam busParamName="POLARITY">ACTIVE_HIGH</busParam>
+            </busParams>
+            <portMaps>
+                <portMap portMapName="ap_rst">RST</portMap>
+            </portMaps>
+            <ports>
+                <port>ap_rst</port>
+            </ports>
+        </Interface>
+        <Interface InterfaceName="ap_ctrl" type="ap_ctrl" busTypeName="acc_handshake" mode="slave">
+            <portMaps>
+                <portMap portMapName="ap_start">start</portMap>
+                <portMap portMapName="ap_done">done</portMap>
+                <portMap portMapName="ap_idle">idle</portMap>
+                <portMap portMapName="ap_ready">ready</portMap>
+            </portMaps>
+            <ports>
+                <port>ap_done</port>
+                <port>ap_idle</port>
+                <port>ap_ready</port>
+                <port>ap_start</port>
+            </ports>
+        </Interface>
+        <Interface InterfaceName="input_0" type="data" busTypeName="data" protocol="ap_none" mode="slave" dataWidth="6">
+            <portMaps>
+                <portMap portMapName="input_0">DATA</portMap>
+            </portMaps>
+            <ports>
+                <port>input_0</port>
+            </ports>
+            <constraints>
+                <constraint constraint_type="pragma interface" mode="ap_none" register_option="0" argName="input"/>
+            </constraints>
+        </Interface>
+        <Interface InterfaceName="input_1" type="data" busTypeName="data" protocol="ap_none" mode="slave" dataWidth="6">
+            <portMaps>
+                <portMap portMapName="input_1">DATA</portMap>
+            </portMaps>
+            <ports>
+                <port>input_1</port>
+            </ports>
+            <constraints>
+                <constraint constraint_type="pragma interface" mode="ap_none" register_option="0" argName="input"/>
+            </constraints>
+        </Interface>
+        <Interface InterfaceName="input_2" type="data" busTypeName="data" protocol="ap_none" mode="slave" dataWidth="6">
+            <portMaps>
+                <portMap portMapName="input_2">DATA</portMap>
+            </portMaps>
+            <ports>
+                <port>input_2</port>
+            </ports>
+            <constraints>
+                <constraint constraint_type="pragma interface" mode="ap_none" register_option="0" argName="input"/>
+            </constraints>
+        </Interface>
+        <Interface InterfaceName="input_3" type="data" busTypeName="data" protocol="ap_none" mode="slave" dataWidth="6">
+            <portMaps>
+                <portMap portMapName="input_3">DATA</portMap>
+            </portMaps>
+            <ports>
+                <port>input_3</port>
+            </ports>
+            <constraints>
+                <constraint constraint_type="pragma interface" mode="ap_none" register_option="0" argName="input"/>
+            </constraints>
+        </Interface>
+        <Interface InterfaceName="input_4" type="data" busTypeName="data" protocol="ap_none" mode="slave" dataWidth="6">
+            <portMaps>
+                <portMap portMapName="input_4">DATA</portMap>
+            </portMaps>
+            <ports>
+                <port>input_4</port>
+            </ports>
+            <constraints>
+                <constraint constraint_type="pragma interface" mode="ap_none" register_option="0" argName="input"/>
+            </constraints>
+        </Interface>
+        <Interface InterfaceName="input_5" type="data" busTypeName="data" protocol="ap_none" mode="slave" dataWidth="6">
+            <portMaps>
+                <portMap portMapName="input_5">DATA</portMap>
+            </portMaps>
+            <ports>
+                <port>input_5</port>
+            </ports>
+            <constraints>
+                <constraint constraint_type="pragma interface" mode="ap_none" register_option="0" argName="input"/>
+            </constraints>
+        </Interface>
+        <Interface InterfaceName="input_6" type="data" busTypeName="data" protocol="ap_none" mode="slave" dataWidth="6">
+            <portMaps>
+                <portMap portMapName="input_6">DATA</portMap>
+            </portMaps>
+            <ports>
+                <port>input_6</port>
+            </ports>
+            <constraints>
+                <constraint constraint_type="pragma interface" mode="ap_none" register_option="0" argName="input"/>
+            </constraints>
+        </Interface>
+        <Interface InterfaceName="input_7" type="data" busTypeName="data" protocol="ap_none" mode="slave" dataWidth="6">
+            <portMaps>
+                <portMap portMapName="input_7">DATA</portMap>
+            </portMaps>
+            <ports>
+                <port>input_7</port>
+            </ports>
+            <constraints>
+                <constraint constraint_type="pragma interface" mode="ap_none" register_option="0" argName="input"/>
+            </constraints>
+        </Interface>
+        <Interface InterfaceName="input_8" type="data" busTypeName="data" protocol="ap_none" mode="slave" dataWidth="6">
+            <portMaps>
+                <portMap portMapName="input_8">DATA</portMap>
+            </portMaps>
+            <ports>
+                <port>input_8</port>
+            </ports>
+            <constraints>
+                <constraint constraint_type="pragma interface" mode="ap_none" register_option="0" argName="input"/>
+            </constraints>
+        </Interface>
+        <Interface InterfaceName="input_9" type="data" busTypeName="data" protocol="ap_none" mode="slave" dataWidth="6">
+            <portMaps>
+                <portMap portMapName="input_9">DATA</portMap>
+            </portMaps>
+            <ports>
+                <port>input_9</port>
+            </ports>
+            <constraints>
+                <constraint constraint_type="pragma interface" mode="ap_none" register_option="0" argName="input"/>
+            </constraints>
+        </Interface>
+        <Interface InterfaceName="input_10" type="data" busTypeName="data" protocol="ap_none" mode="slave" dataWidth="6">
+            <portMaps>
+                <portMap portMapName="input_10">DATA</portMap>
+            </portMaps>
+            <ports>
+                <port>input_10</port>
+            </ports>
+            <constraints>
+                <constraint constraint_type="pragma interface" mode="ap_none" register_option="0" argName="input"/>
+            </constraints>
+        </Interface>
+        <Interface InterfaceName="input_11" type="data" busTypeName="data" protocol="ap_none" mode="slave" dataWidth="6">
+            <portMaps>
+                <portMap portMapName="input_11">DATA</portMap>
+            </portMaps>
+            <ports>
+                <port>input_11</port>
+            </ports>
+            <constraints>
+                <constraint constraint_type="pragma interface" mode="ap_none" register_option="0" argName="input"/>
+            </constraints>
+        </Interface>
+        <Interface InterfaceName="input_12" type="data" busTypeName="data" protocol="ap_none" mode="slave" dataWidth="6">
+            <portMaps>
+                <portMap portMapName="input_12">DATA</portMap>
+            </portMaps>
+            <ports>
+                <port>input_12</port>
+            </ports>
+            <constraints>
+                <constraint constraint_type="pragma interface" mode="ap_none" register_option="0" argName="input"/>
+            </constraints>
+        </Interface>
+        <Interface InterfaceName="input_13" type="data" busTypeName="data" protocol="ap_none" mode="slave" dataWidth="6">
+            <portMaps>
+                <portMap portMapName="input_13">DATA</portMap>
+            </portMaps>
+            <ports>
+                <port>input_13</port>
+            </ports>
+            <constraints>
+                <constraint constraint_type="pragma interface" mode="ap_none" register_option="0" argName="input"/>
+            </constraints>
+        </Interface>
+        <Interface InterfaceName="input_14" type="data" busTypeName="data" protocol="ap_none" mode="slave" dataWidth="6">
+            <portMaps>
+                <portMap portMapName="input_14">DATA</portMap>
+            </portMaps>
+            <ports>
+                <port>input_14</port>
+            </ports>
+            <constraints>
+                <constraint constraint_type="pragma interface" mode="ap_none" register_option="0" argName="input"/>
+            </constraints>
+        </Interface>
+        <Interface InterfaceName="input_15" type="data" busTypeName="data" protocol="ap_none" mode="slave" dataWidth="6">
+            <portMaps>
+                <portMap portMapName="input_15">DATA</portMap>
+            </portMaps>
+            <ports>
+                <port>input_15</port>
+            </ports>
+            <constraints>
+                <constraint constraint_type="pragma interface" mode="ap_none" register_option="0" argName="input"/>
+            </constraints>
+        </Interface>
+        <Interface InterfaceName="output_0" type="data" busTypeName="data" protocol="ap_none" mode="master" dataWidth="8">
+            <portMaps>
+                <portMap portMapName="output_0">DATA</portMap>
+            </portMaps>
+            <ports>
+                <port>output_0</port>
+            </ports>
+            <constraints>
+                <constraint constraint_type="pragma interface" mode="ap_none" register_option="0" argName="output"/>
+            </constraints>
+        </Interface>
+        <Interface InterfaceName="output_1" type="data" busTypeName="data" protocol="ap_none" mode="master" dataWidth="8">
+            <portMaps>
+                <portMap portMapName="output_1">DATA</portMap>
+            </portMaps>
+            <ports>
+                <port>output_1</port>
+            </ports>
+            <constraints>
+                <constraint constraint_type="pragma interface" mode="ap_none" register_option="0" argName="output"/>
+            </constraints>
+        </Interface>
+        <Interface InterfaceName="output_2" type="data" busTypeName="data" protocol="ap_none" mode="master" dataWidth="8">
+            <portMaps>
+                <portMap portMapName="output_2">DATA</portMap>
+            </portMaps>
+            <ports>
+                <port>output_2</port>
+            </ports>
+            <constraints>
+                <constraint constraint_type="pragma interface" mode="ap_none" register_option="0" argName="output"/>
+            </constraints>
+        </Interface>
+        <Interface InterfaceName="output_3" type="data" busTypeName="data" protocol="ap_none" mode="master" dataWidth="8">
+            <portMaps>
+                <portMap portMapName="output_3">DATA</portMap>
+            </portMaps>
+            <ports>
+                <port>output_3</port>
+            </ports>
+            <constraints>
+                <constraint constraint_type="pragma interface" mode="ap_none" register_option="0" argName="output"/>
+            </constraints>
+        </Interface>
+        <Interface InterfaceName="output_4" type="data" busTypeName="data" protocol="ap_none" mode="master" dataWidth="8">
+            <portMaps>
+                <portMap portMapName="output_4">DATA</portMap>
+            </portMaps>
+            <ports>
+                <port>output_4</port>
+            </ports>
+            <constraints>
+                <constraint constraint_type="pragma interface" mode="ap_none" register_option="0" argName="output"/>
+            </constraints>
+        </Interface>
+    </Interfaces>
+    <ReportHWInterface>
+        <section name="HW Interfaces" level="0">
+            <item name="Other Ports">
+                <table>
+                    <keys size="4">Port, Mode, Direction, Bitwidth</keys>
+                    <column name="input_0">ap_none, in, 6</column>
+                    <column name="input_1">ap_none, in, 6</column>
+                    <column name="input_10">ap_none, in, 6</column>
+                    <column name="input_11">ap_none, in, 6</column>
+                    <column name="input_12">ap_none, in, 6</column>
+                    <column name="input_13">ap_none, in, 6</column>
+                    <column name="input_14">ap_none, in, 6</column>
+                    <column name="input_15">ap_none, in, 6</column>
+                    <column name="input_2">ap_none, in, 6</column>
+                    <column name="input_3">ap_none, in, 6</column>
+                    <column name="input_4">ap_none, in, 6</column>
+                    <column name="input_5">ap_none, in, 6</column>
+                    <column name="input_6">ap_none, in, 6</column>
+                    <column name="input_7">ap_none, in, 6</column>
+                    <column name="input_8">ap_none, in, 6</column>
+                    <column name="input_9">ap_none, in, 6</column>
+                    <column name="output_0">ap_none, out, 8</column>
+                    <column name="output_1">ap_none, out, 8</column>
+                    <column name="output_2">ap_none, out, 8</column>
+                    <column name="output_3">ap_none, out, 8</column>
+                    <column name="output_4">ap_none, out, 8</column>
+                </table>
+            </item>
+            <item name="TOP LEVEL CONTROL">
+                <table>
+                    <keys size="3">Interface, Type, Ports</keys>
+                    <column name="ap_clk">clock, ap_clk</column>
+                    <column name="ap_rst">reset, ap_rst</column>
+                    <column name="ap_ctrl">ap_ctrl_hs, ap_done ap_idle ap_ready ap_start</column>
+                </table>
+            </item>
+        </section>
+    </ReportHWInterface>
+    <ReportSWInterface>
+        <section name="SW I/O Information" level="0">
+            <item name="Top Function Arguments">
+                <table>
+                    <keys size="3">Argument, Direction, Datatype</keys>
+                    <column name="input">in, ap_uint&lt;6&gt;*</column>
+                    <column name="output">out, ap_fixed&lt;8 8 AP_TRN AP_SAT 0&gt;*</column>
+                </table>
+            </item>
+            <item name="SW-to-HW Mapping">
+                <table>
+                    <keys size="3">Argument, HW Interface, HW Type</keys>
+                    <column name="input">input_0, port</column>
+                    <column name="input">input_1, port</column>
+                    <column name="input">input_2, port</column>
+                    <column name="input">input_3, port</column>
+                    <column name="input">input_4, port</column>
+                    <column name="input">input_5, port</column>
+                    <column name="input">input_6, port</column>
+                    <column name="input">input_7, port</column>
+                    <column name="input">input_8, port</column>
+                    <column name="input">input_9, port</column>
+                    <column name="input">input_10, port</column>
+                    <column name="input">input_11, port</column>
+                    <column name="input">input_12, port</column>
+                    <column name="input">input_13, port</column>
+                    <column name="input">input_14, port</column>
+                    <column name="input">input_15, port</column>
+                    <column name="output">output_0, port</column>
+                    <column name="output">output_1, port</column>
+                    <column name="output">output_2, port</column>
+                    <column name="output">output_3, port</column>
+                    <column name="output">output_4, port</column>
+                </table>
+            </item>
+        </section>
+    </ReportSWInterface>
+    <ResolutionUrl key="ZZZ">docs.xilinx.com/access/sources/dita/topic?Doc_Version=2024.1%20English&amp;url=ug1448-hls-guidance&amp;resourceid=ZZZ.html</ResolutionUrl>
+    <PragmaReport>
+        <Pragma type="array_partition" location="KAN.cpp:7" status="valid" parentFunction="kan" variable="" isDirective="0" options="variable = input complete"/>
+        <Pragma type="array_partition" location="KAN.cpp:8" status="valid" parentFunction="kan" variable="" isDirective="0" options="variable = output complete"/>
+        <Pragma type="interface" location="KAN.cpp:10" status="valid" parentFunction="kan" variable="" isDirective="0" options="mode = ap_none port = input, output"/>
+        <Pragma type="pipeline" location="KAN.cpp:11" status="valid" parentFunction="kan" variable="" isDirective="0" options="II = 1"/>
+        <Pragma type="bind_storage" location="lut_0.cpp:4" status="valid" parentFunction="lookup_0_0_0" variable="lut_0_0_0" isDirective="0" options="variable=lut_0_0_0 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_0.cpp:9" status="valid" parentFunction="lookup_0_0_1" variable="lut_0_0_1" isDirective="0" options="variable=lut_0_0_1 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_0.cpp:14" status="valid" parentFunction="lookup_0_0_2" variable="lut_0_0_2" isDirective="0" options="variable=lut_0_0_2 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_0.cpp:19" status="valid" parentFunction="lookup_0_0_3" variable="lut_0_0_3" isDirective="0" options="variable=lut_0_0_3 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_0.cpp:24" status="valid" parentFunction="lookup_0_1_0" variable="lut_0_1_0" isDirective="0" options="variable=lut_0_1_0 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_0.cpp:29" status="valid" parentFunction="lookup_0_1_1" variable="lut_0_1_1" isDirective="0" options="variable=lut_0_1_1 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_0.cpp:34" status="valid" parentFunction="lookup_0_1_2" variable="lut_0_1_2" isDirective="0" options="variable=lut_0_1_2 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_0.cpp:39" status="valid" parentFunction="lookup_0_1_3" variable="lut_0_1_3" isDirective="0" options="variable=lut_0_1_3 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_0.cpp:44" status="valid" parentFunction="lookup_0_2_0" variable="lut_0_2_0" isDirective="0" options="variable=lut_0_2_0 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_0.cpp:49" status="valid" parentFunction="lookup_0_2_1" variable="lut_0_2_1" isDirective="0" options="variable=lut_0_2_1 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_0.cpp:54" status="valid" parentFunction="lookup_0_2_2" variable="lut_0_2_2" isDirective="0" options="variable=lut_0_2_2 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_0.cpp:59" status="valid" parentFunction="lookup_0_2_3" variable="lut_0_2_3" isDirective="0" options="variable=lut_0_2_3 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_0.cpp:64" status="valid" parentFunction="lookup_0_3_0" variable="lut_0_3_0" isDirective="0" options="variable=lut_0_3_0 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_0.cpp:69" status="valid" parentFunction="lookup_0_3_1" variable="lut_0_3_1" isDirective="0" options="variable=lut_0_3_1 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_0.cpp:74" status="valid" parentFunction="lookup_0_3_2" variable="lut_0_3_2" isDirective="0" options="variable=lut_0_3_2 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_0.cpp:79" status="valid" parentFunction="lookup_0_3_3" variable="lut_0_3_3" isDirective="0" options="variable=lut_0_3_3 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_0.cpp:84" status="valid" parentFunction="lookup_0_4_0" variable="lut_0_4_0" isDirective="0" options="variable=lut_0_4_0 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_0.cpp:89" status="valid" parentFunction="lookup_0_4_1" variable="lut_0_4_1" isDirective="0" options="variable=lut_0_4_1 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_0.cpp:94" status="valid" parentFunction="lookup_0_4_2" variable="lut_0_4_2" isDirective="0" options="variable=lut_0_4_2 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_0.cpp:99" status="valid" parentFunction="lookup_0_4_3" variable="lut_0_4_3" isDirective="0" options="variable=lut_0_4_3 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_0.cpp:104" status="valid" parentFunction="lookup_0_5_0" variable="lut_0_5_0" isDirective="0" options="variable=lut_0_5_0 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_0.cpp:109" status="valid" parentFunction="lookup_0_5_1" variable="lut_0_5_1" isDirective="0" options="variable=lut_0_5_1 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_0.cpp:114" status="valid" parentFunction="lookup_0_5_2" variable="lut_0_5_2" isDirective="0" options="variable=lut_0_5_2 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_0.cpp:119" status="valid" parentFunction="lookup_0_5_3" variable="lut_0_5_3" isDirective="0" options="variable=lut_0_5_3 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_0.cpp:124" status="valid" parentFunction="lookup_0_6_0" variable="lut_0_6_0" isDirective="0" options="variable=lut_0_6_0 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_0.cpp:129" status="valid" parentFunction="lookup_0_6_1" variable="lut_0_6_1" isDirective="0" options="variable=lut_0_6_1 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_0.cpp:134" status="valid" parentFunction="lookup_0_6_2" variable="lut_0_6_2" isDirective="0" options="variable=lut_0_6_2 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_0.cpp:139" status="valid" parentFunction="lookup_0_6_3" variable="lut_0_6_3" isDirective="0" options="variable=lut_0_6_3 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_0.cpp:144" status="valid" parentFunction="lookup_0_7_0" variable="lut_0_7_0" isDirective="0" options="variable=lut_0_7_0 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_0.cpp:149" status="valid" parentFunction="lookup_0_7_1" variable="lut_0_7_1" isDirective="0" options="variable=lut_0_7_1 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_0.cpp:154" status="valid" parentFunction="lookup_0_7_2" variable="lut_0_7_2" isDirective="0" options="variable=lut_0_7_2 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_0.cpp:159" status="valid" parentFunction="lookup_0_7_3" variable="lut_0_7_3" isDirective="0" options="variable=lut_0_7_3 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_0.cpp:164" status="valid" parentFunction="lookup_0_8_0" variable="lut_0_8_0" isDirective="0" options="variable=lut_0_8_0 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_0.cpp:169" status="valid" parentFunction="lookup_0_8_1" variable="lut_0_8_1" isDirective="0" options="variable=lut_0_8_1 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_0.cpp:174" status="valid" parentFunction="lookup_0_8_2" variable="lut_0_8_2" isDirective="0" options="variable=lut_0_8_2 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_0.cpp:179" status="valid" parentFunction="lookup_0_8_3" variable="lut_0_8_3" isDirective="0" options="variable=lut_0_8_3 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_0.cpp:184" status="valid" parentFunction="lookup_0_9_0" variable="lut_0_9_0" isDirective="0" options="variable=lut_0_9_0 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_0.cpp:189" status="valid" parentFunction="lookup_0_9_1" variable="lut_0_9_1" isDirective="0" options="variable=lut_0_9_1 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_0.cpp:194" status="valid" parentFunction="lookup_0_9_2" variable="lut_0_9_2" isDirective="0" options="variable=lut_0_9_2 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_0.cpp:199" status="valid" parentFunction="lookup_0_9_3" variable="lut_0_9_3" isDirective="0" options="variable=lut_0_9_3 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_0.cpp:204" status="valid" parentFunction="lookup_0_10_0" variable="lut_0_10_0" isDirective="0" options="variable=lut_0_10_0 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_0.cpp:209" status="valid" parentFunction="lookup_0_10_1" variable="lut_0_10_1" isDirective="0" options="variable=lut_0_10_1 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_0.cpp:214" status="valid" parentFunction="lookup_0_10_2" variable="lut_0_10_2" isDirective="0" options="variable=lut_0_10_2 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_0.cpp:219" status="valid" parentFunction="lookup_0_10_3" variable="lut_0_10_3" isDirective="0" options="variable=lut_0_10_3 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_0.cpp:224" status="valid" parentFunction="lookup_0_11_0" variable="lut_0_11_0" isDirective="0" options="variable=lut_0_11_0 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_0.cpp:229" status="valid" parentFunction="lookup_0_11_1" variable="lut_0_11_1" isDirective="0" options="variable=lut_0_11_1 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_0.cpp:234" status="valid" parentFunction="lookup_0_11_2" variable="lut_0_11_2" isDirective="0" options="variable=lut_0_11_2 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_0.cpp:239" status="valid" parentFunction="lookup_0_11_3" variable="lut_0_11_3" isDirective="0" options="variable=lut_0_11_3 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_0.cpp:244" status="valid" parentFunction="lookup_0_12_0" variable="lut_0_12_0" isDirective="0" options="variable=lut_0_12_0 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_0.cpp:249" status="valid" parentFunction="lookup_0_12_1" variable="lut_0_12_1" isDirective="0" options="variable=lut_0_12_1 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_0.cpp:254" status="valid" parentFunction="lookup_0_12_2" variable="lut_0_12_2" isDirective="0" options="variable=lut_0_12_2 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_0.cpp:259" status="valid" parentFunction="lookup_0_12_3" variable="lut_0_12_3" isDirective="0" options="variable=lut_0_12_3 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_0.cpp:264" status="valid" parentFunction="lookup_0_13_0" variable="lut_0_13_0" isDirective="0" options="variable=lut_0_13_0 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_0.cpp:269" status="valid" parentFunction="lookup_0_13_1" variable="lut_0_13_1" isDirective="0" options="variable=lut_0_13_1 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_0.cpp:274" status="valid" parentFunction="lookup_0_13_2" variable="lut_0_13_2" isDirective="0" options="variable=lut_0_13_2 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_0.cpp:279" status="valid" parentFunction="lookup_0_13_3" variable="lut_0_13_3" isDirective="0" options="variable=lut_0_13_3 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_0.cpp:284" status="valid" parentFunction="lookup_0_14_0" variable="lut_0_14_0" isDirective="0" options="variable=lut_0_14_0 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_0.cpp:289" status="valid" parentFunction="lookup_0_14_1" variable="lut_0_14_1" isDirective="0" options="variable=lut_0_14_1 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_0.cpp:294" status="valid" parentFunction="lookup_0_14_2" variable="lut_0_14_2" isDirective="0" options="variable=lut_0_14_2 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_0.cpp:299" status="valid" parentFunction="lookup_0_14_3" variable="lut_0_14_3" isDirective="0" options="variable=lut_0_14_3 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_0.cpp:304" status="valid" parentFunction="lookup_0_15_0" variable="lut_0_15_0" isDirective="0" options="variable=lut_0_15_0 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_0.cpp:309" status="valid" parentFunction="lookup_0_15_1" variable="lut_0_15_1" isDirective="0" options="variable=lut_0_15_1 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_0.cpp:314" status="valid" parentFunction="lookup_0_15_2" variable="lut_0_15_2" isDirective="0" options="variable=lut_0_15_2 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_0.cpp:319" status="valid" parentFunction="lookup_0_15_3" variable="lut_0_15_3" isDirective="0" options="variable=lut_0_15_3 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_1.cpp:4" status="valid" parentFunction="lookup_1_0_0" variable="lut_1_0_0" isDirective="0" options="variable=lut_1_0_0 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_1.cpp:10" status="valid" parentFunction="lookup_1_0_1" variable="lut_1_0_1" isDirective="0" options="variable=lut_1_0_1 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_1.cpp:16" status="valid" parentFunction="lookup_1_0_2" variable="lut_1_0_2" isDirective="0" options="variable=lut_1_0_2 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_1.cpp:22" status="valid" parentFunction="lookup_1_0_3" variable="lut_1_0_3" isDirective="0" options="variable=lut_1_0_3 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_1.cpp:28" status="valid" parentFunction="lookup_1_0_4" variable="lut_1_0_4" isDirective="0" options="variable=lut_1_0_4 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_1.cpp:34" status="valid" parentFunction="lookup_1_1_0" variable="lut_1_1_0" isDirective="0" options="variable=lut_1_1_0 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_1.cpp:40" status="valid" parentFunction="lookup_1_1_1" variable="lut_1_1_1" isDirective="0" options="variable=lut_1_1_1 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_1.cpp:46" status="valid" parentFunction="lookup_1_1_2" variable="lut_1_1_2" isDirective="0" options="variable=lut_1_1_2 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_1.cpp:52" status="valid" parentFunction="lookup_1_1_3" variable="lut_1_1_3" isDirective="0" options="variable=lut_1_1_3 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_1.cpp:58" status="valid" parentFunction="lookup_1_1_4" variable="lut_1_1_4" isDirective="0" options="variable=lut_1_1_4 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_1.cpp:64" status="valid" parentFunction="lookup_1_2_0" variable="lut_1_2_0" isDirective="0" options="variable=lut_1_2_0 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_1.cpp:70" status="valid" parentFunction="lookup_1_2_1" variable="lut_1_2_1" isDirective="0" options="variable=lut_1_2_1 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_1.cpp:76" status="valid" parentFunction="lookup_1_2_2" variable="lut_1_2_2" isDirective="0" options="variable=lut_1_2_2 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_1.cpp:82" status="valid" parentFunction="lookup_1_2_3" variable="lut_1_2_3" isDirective="0" options="variable=lut_1_2_3 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_1.cpp:88" status="valid" parentFunction="lookup_1_2_4" variable="lut_1_2_4" isDirective="0" options="variable=lut_1_2_4 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_1.cpp:94" status="valid" parentFunction="lookup_1_3_0" variable="lut_1_3_0" isDirective="0" options="variable=lut_1_3_0 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_1.cpp:100" status="valid" parentFunction="lookup_1_3_1" variable="lut_1_3_1" isDirective="0" options="variable=lut_1_3_1 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_1.cpp:106" status="valid" parentFunction="lookup_1_3_2" variable="lut_1_3_2" isDirective="0" options="variable=lut_1_3_2 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_1.cpp:112" status="valid" parentFunction="lookup_1_3_3" variable="lut_1_3_3" isDirective="0" options="variable=lut_1_3_3 type=ROM_1P impl=LUTRAM"/>
+        <Pragma type="bind_storage" location="lut_1.cpp:118" status="valid" parentFunction="lookup_1_3_4" variable="lut_1_3_4" isDirective="0" options="variable=lut_1_3_4 type=ROM_1P impl=LUTRAM"/>
+    </PragmaReport>
+</profile>
+

@@ -1,0 +1,1212 @@
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_0_0_0(ap_uint<6>)'
+    DebugLoc:        { File: lut_0.cpp, Line: 3, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_0_1_0(ap_uint<6>)'
+    DebugLoc:        { File: lut_0.cpp, Line: 23, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_0_2_0(ap_uint<6>)'
+    DebugLoc:        { File: lut_0.cpp, Line: 43, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_0_3_0(ap_uint<6>)'
+    DebugLoc:        { File: lut_0.cpp, Line: 63, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_0_4_0(ap_uint<6>)'
+    DebugLoc:        { File: lut_0.cpp, Line: 83, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_0_5_0(ap_uint<6>)'
+    DebugLoc:        { File: lut_0.cpp, Line: 103, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_0_6_0(ap_uint<6>)'
+    DebugLoc:        { File: lut_0.cpp, Line: 123, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_0_7_0(ap_uint<6>)'
+    DebugLoc:        { File: lut_0.cpp, Line: 143, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_0_8_0(ap_uint<6>)'
+    DebugLoc:        { File: lut_0.cpp, Line: 163, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_0_9_0(ap_uint<6>)'
+    DebugLoc:        { File: lut_0.cpp, Line: 183, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_0_10_0(ap_uint<6>)'
+    DebugLoc:        { File: lut_0.cpp, Line: 203, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_0_11_0(ap_uint<6>)'
+    DebugLoc:        { File: lut_0.cpp, Line: 223, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_0_12_0(ap_uint<6>)'
+    DebugLoc:        { File: lut_0.cpp, Line: 243, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_0_13_0(ap_uint<6>)'
+    DebugLoc:        { File: lut_0.cpp, Line: 263, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_0_14_0(ap_uint<6>)'
+    DebugLoc:        { File: lut_0.cpp, Line: 283, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_0_15_0(ap_uint<6>)'
+    DebugLoc:        { File: lut_0.cpp, Line: 303, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_0_0_1(ap_uint<6>)'
+    DebugLoc:        { File: lut_0.cpp, Line: 8, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_0_1_1(ap_uint<6>)'
+    DebugLoc:        { File: lut_0.cpp, Line: 28, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_0_2_1(ap_uint<6>)'
+    DebugLoc:        { File: lut_0.cpp, Line: 48, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_0_3_1(ap_uint<6>)'
+    DebugLoc:        { File: lut_0.cpp, Line: 68, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_0_4_1(ap_uint<6>)'
+    DebugLoc:        { File: lut_0.cpp, Line: 88, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_0_5_1(ap_uint<6>)'
+    DebugLoc:        { File: lut_0.cpp, Line: 108, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_0_6_1(ap_uint<6>)'
+    DebugLoc:        { File: lut_0.cpp, Line: 128, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_0_7_1(ap_uint<6>)'
+    DebugLoc:        { File: lut_0.cpp, Line: 148, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_0_8_1(ap_uint<6>)'
+    DebugLoc:        { File: lut_0.cpp, Line: 168, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_0_9_1(ap_uint<6>)'
+    DebugLoc:        { File: lut_0.cpp, Line: 188, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_0_10_1(ap_uint<6>)'
+    DebugLoc:        { File: lut_0.cpp, Line: 208, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_0_11_1(ap_uint<6>)'
+    DebugLoc:        { File: lut_0.cpp, Line: 228, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_0_12_1(ap_uint<6>)'
+    DebugLoc:        { File: lut_0.cpp, Line: 248, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_0_13_1(ap_uint<6>)'
+    DebugLoc:        { File: lut_0.cpp, Line: 268, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_0_14_1(ap_uint<6>)'
+    DebugLoc:        { File: lut_0.cpp, Line: 288, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_0_15_1(ap_uint<6>)'
+    DebugLoc:        { File: lut_0.cpp, Line: 308, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_0_0_2(ap_uint<6>)'
+    DebugLoc:        { File: lut_0.cpp, Line: 13, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_0_1_2(ap_uint<6>)'
+    DebugLoc:        { File: lut_0.cpp, Line: 33, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_0_2_2(ap_uint<6>)'
+    DebugLoc:        { File: lut_0.cpp, Line: 53, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_0_3_2(ap_uint<6>)'
+    DebugLoc:        { File: lut_0.cpp, Line: 73, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_0_4_2(ap_uint<6>)'
+    DebugLoc:        { File: lut_0.cpp, Line: 93, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_0_5_2(ap_uint<6>)'
+    DebugLoc:        { File: lut_0.cpp, Line: 113, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_0_6_2(ap_uint<6>)'
+    DebugLoc:        { File: lut_0.cpp, Line: 133, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_0_7_2(ap_uint<6>)'
+    DebugLoc:        { File: lut_0.cpp, Line: 153, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_0_8_2(ap_uint<6>)'
+    DebugLoc:        { File: lut_0.cpp, Line: 173, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_0_9_2(ap_uint<6>)'
+    DebugLoc:        { File: lut_0.cpp, Line: 193, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_0_10_2(ap_uint<6>)'
+    DebugLoc:        { File: lut_0.cpp, Line: 213, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_0_11_2(ap_uint<6>)'
+    DebugLoc:        { File: lut_0.cpp, Line: 233, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_0_12_2(ap_uint<6>)'
+    DebugLoc:        { File: lut_0.cpp, Line: 253, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_0_13_2(ap_uint<6>)'
+    DebugLoc:        { File: lut_0.cpp, Line: 273, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_0_14_2(ap_uint<6>)'
+    DebugLoc:        { File: lut_0.cpp, Line: 293, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_0_15_2(ap_uint<6>)'
+    DebugLoc:        { File: lut_0.cpp, Line: 313, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_0_0_3(ap_uint<6>)'
+    DebugLoc:        { File: lut_0.cpp, Line: 18, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_0_1_3(ap_uint<6>)'
+    DebugLoc:        { File: lut_0.cpp, Line: 38, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_0_2_3(ap_uint<6>)'
+    DebugLoc:        { File: lut_0.cpp, Line: 58, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_0_3_3(ap_uint<6>)'
+    DebugLoc:        { File: lut_0.cpp, Line: 78, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_0_4_3(ap_uint<6>)'
+    DebugLoc:        { File: lut_0.cpp, Line: 98, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_0_5_3(ap_uint<6>)'
+    DebugLoc:        { File: lut_0.cpp, Line: 118, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_0_6_3(ap_uint<6>)'
+    DebugLoc:        { File: lut_0.cpp, Line: 138, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_0_7_3(ap_uint<6>)'
+    DebugLoc:        { File: lut_0.cpp, Line: 158, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_0_8_3(ap_uint<6>)'
+    DebugLoc:        { File: lut_0.cpp, Line: 178, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_0_9_3(ap_uint<6>)'
+    DebugLoc:        { File: lut_0.cpp, Line: 198, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_0_10_3(ap_uint<6>)'
+    DebugLoc:        { File: lut_0.cpp, Line: 218, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_0_11_3(ap_uint<6>)'
+    DebugLoc:        { File: lut_0.cpp, Line: 238, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_0_12_3(ap_uint<6>)'
+    DebugLoc:        { File: lut_0.cpp, Line: 258, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_0_13_3(ap_uint<6>)'
+    DebugLoc:        { File: lut_0.cpp, Line: 278, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_0_14_3(ap_uint<6>)'
+    DebugLoc:        { File: lut_0.cpp, Line: 298, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_0_15_3(ap_uint<6>)'
+    DebugLoc:        { File: lut_0.cpp, Line: 318, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_1_0_0(ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>)'
+    DebugLoc:        { File: lut_1.cpp, Line: 3, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_1_1_0(ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>)'
+    DebugLoc:        { File: lut_1.cpp, Line: 33, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_1_2_0(ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>)'
+    DebugLoc:        { File: lut_1.cpp, Line: 63, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_1_3_0(ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>)'
+    DebugLoc:        { File: lut_1.cpp, Line: 93, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_1_0_1(ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>)'
+    DebugLoc:        { File: lut_1.cpp, Line: 9, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_1_1_1(ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>)'
+    DebugLoc:        { File: lut_1.cpp, Line: 39, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_1_2_1(ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>)'
+    DebugLoc:        { File: lut_1.cpp, Line: 69, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_1_3_1(ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>)'
+    DebugLoc:        { File: lut_1.cpp, Line: 99, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_1_0_2(ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>)'
+    DebugLoc:        { File: lut_1.cpp, Line: 15, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_1_1_2(ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>)'
+    DebugLoc:        { File: lut_1.cpp, Line: 45, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_1_2_2(ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>)'
+    DebugLoc:        { File: lut_1.cpp, Line: 75, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_1_3_2(ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>)'
+    DebugLoc:        { File: lut_1.cpp, Line: 105, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_1_0_3(ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>)'
+    DebugLoc:        { File: lut_1.cpp, Line: 21, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_1_1_3(ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>)'
+    DebugLoc:        { File: lut_1.cpp, Line: 51, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_1_2_3(ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>)'
+    DebugLoc:        { File: lut_1.cpp, Line: 81, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_1_3_3(ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>)'
+    DebugLoc:        { File: lut_1.cpp, Line: 111, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_1_0_4(ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>)'
+    DebugLoc:        { File: lut_1.cpp, Line: 27, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_1_1_4(ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>)'
+    DebugLoc:        { File: lut_1.cpp, Line: 57, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_1_2_4(ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>)'
+    DebugLoc:        { File: lut_1.cpp, Line: 87, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'lookup_1_3_4(ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>)'
+    DebugLoc:        { File: lut_1.cpp, Line: 117, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'KAN(ap_uint<6>*, ap_fixed<8, 8, (ap_q_mode)5, (ap_o_mode)0, 0>*)'
+    DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-array-partition
+Name:            ArrayXform
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Applying '
+  - String:          array_partition
+  - String:          ' to '''
+  - UOName:          input
+  - String:          ''':'
+  - String:          ' '
+  - Mode:            Complete
+  - String:          ' partitioning'
+  - String:          ' on dimension '
+  - Dim:             '1'
+  - String:          .
+...
+--- !Passed
+Pass:            reflow-array-partition
+Name:            ArrayXform
+DebugLoc:        { File: KAN.cpp, Line: 6, Column: 0 }
+Function:        _Z3KANP7ap_uintILi6EEP8ap_fixedILi8ELi8EL9ap_q_mode5EL9ap_o_mode0ELi0EE
+Args:            
+  - String:          'Applying '
+  - String:          array_partition
+  - String:          ' to '''
+  - UOName:          output
+  - String:          ''':'
+  - String:          ' '
+  - Mode:            Complete
+  - String:          ' partitioning'
+  - String:          ' on dimension '
+  - Dim:             '1'
+  - String:          .
+...

@@ -270,7 +270,7 @@ class KAN_LUT:
             out_bit_width = self.KAN.layers[i].out_precision
 
             lut_defines.append(f"\n//LAYER {i}:")
-            lut_defines.append(f"typedef ap_uint<{in_bit_width}> idx_{i}_t;")
+            if i != 0: lut_defines.append(f"typedef ap_fixed<{in_bit_width}, {in_bit_width}, AP_TRN, AP_SAT> idx_{i}_t;")
             lut_defines.append(f"#define LUT_SIZE_{i} {2**in_bit_width}")
             lut_defines.append(f"typedef ap_int<{out_bit_width}> lut_{i}_output_t;")
 
