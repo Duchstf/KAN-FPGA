@@ -1,5 +1,8 @@
 # Usage:
+# Normally you can just run:
 #   vitis_hls -f build.tcl
+# But if you want to specify the part and period, you can run:
+#   vitis_hls -f build.tcl -part <part> -period <period>
 
 # Arguments
 set fpga_part "xcvu9p-flgb2104-2-i"
@@ -16,7 +19,6 @@ for {set i 0} {$i < $argc} {incr i} {
 puts "Using part: $fpga_part ; period: $clk_period ns"
 set_part $fpga_part
 create_clock -period $clk_period -name default
-
 
 # Helper functions
 proc report_time { op_name time_start time_end } {
@@ -39,7 +41,6 @@ foreach f [glob *.cpp] {
 
 #Reset solution
 open_solution -reset "solution1"
-
 
 #Specify FPGA and clock constraints
 catch {config_array_partition -maximum_size 8192}

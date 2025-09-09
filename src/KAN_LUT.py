@@ -1,5 +1,5 @@
 import torch
-import sys, os, json
+import sys, os, json, shutil
 import numpy as np
 import torch.nn.functional as F
 from numpy.core.fromnumeric import take
@@ -194,6 +194,7 @@ class KAN_LUT:
         self.write_kan_core()
         self.write_type_defines()
         self.write_LUTs()
+        self.write_build_tcl()
         pass
 
     def write_kan_core(self):
@@ -342,3 +343,7 @@ class KAN_LUT:
             with open(os.path.join(self.model_dir, "firmware", f"lut_{i}.h"), "w") as f: f.write(HEADER_CONTENT)
 
         pass
+
+    def write_build_tcl(self):
+        #Simply copy the build tcl file over for now
+        shutil.copy(os.path.join(os.path.dirname(__file__), "templates", "build.tcl"), os.path.join(self.model_dir, "firmware", "build.tcl"))

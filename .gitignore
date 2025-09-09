@@ -12,7 +12,6 @@ __pycache__/
 *.py[cod]
 *$py.class
 */MNIST/data/
-*/MNIST/models/
 */JSC_CERNBox/data/*.z
 
 # C extensions
