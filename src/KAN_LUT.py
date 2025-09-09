@@ -10,6 +10,7 @@ class KAN_LUT:
     def __init__(self, model_dir, checkpoint, config, input_layer, device):
 
         self.model_dir = model_dir
+        self.firmware_dir = os.path.join(self.model_dir, "firmware")
         self.config = config
         self.checkpoint = checkpoint
         self.input_layer = input_layer
@@ -187,166 +188,101 @@ class KAN_LUT:
 
         print(f"Converting KAN model to hardware ...")
 
+        #Remove the firmware directory if it exists, but ask for confirmation
+        if os.path.exists(self.firmware_dir):
+            confirm = input(f"The firmware directory {self.firmware_dir} already exists. Do you want to remove it? (y/n): ")
+            if confirm == "y":
+                shutil.rmtree(self.firmware_dir)
+            else:
+                return
+
         #Make the directories within model_dir
-        os.makedirs(os.path.join(self.model_dir, "firmware"), exist_ok=True)
+        os.makedirs(os.path.join(self.firmware_dir, "src"), exist_ok=True)
+        os.makedirs(os.path.join(self.firmware_dir, "mem"), exist_ok=True)
+        os.makedirs(os.path.join(self.firmware_dir, "vivado"), exist_ok=True)
+        os.makedirs(os.path.join(self.firmware_dir, "testbench"), exist_ok=True)
+
+        #Copy the top file to src
+        shutil.copy(os.path.join(os.path.dirname(__file__), "templates", "src", "top.vhd"), os.path.join(self.firmware_dir, "src", "top.vhd"))
 
         #Write the KAN core HLS file
         self.write_kan_core()
-        self.write_type_defines()
-        self.write_LUTs()
-        self.write_build_tcl()
         pass
 
-    def write_kan_core(self):
+    def write_kan_core(self, max_per_line=16):
         """
         Write the KAN core HLS file
         """
 
+        # ---------- Build SIGNAL_DECLS ----------
+        #Helper function to emit a list of signals
+        def emit(names, typ="lut_output_t"):
+            lines=[]; buf=[]
+            for n in names:
+                buf.append(n)
+                if len(buf)==max_per_line:
+                    lines.append(f"  signal {', '.join(buf)} : {typ};"); buf=[]
+            if buf: lines.append(f"  signal {', '.join(buf)} : {typ};")
+            return "\n".join(lines)
+
+        sections=[]
+
+        #Loop through the layers and pick up the signals that exist
+        for i, layer in enumerate(self.KAN.layers):
+            in_f, out_f = layer.in_features, layer.out_features
+            acts=[f"act_{i}_{j}_{k}" for j in range(in_f) for k in range(out_f) if self.truth_tables[f"{i}_{j}_{k}"]["acive"] == 1]
+            outs=[f"out{i}_{k}" for k in range(out_f)] if i != len(self.KAN.layers)-1 else []
+            block=[f"-- Layer {i} ({in_f}->{out_f})"]
+            if acts: block.append(emit(acts, f"lut_output_t_{i}"))
+            if outs: block.append(emit(outs, f"lut_output_t_{i}"))
+            sections.append("\n".join(block))
+
         # ---------- Build LAYER_BLOCKS ----------
         num_layers = len(self.KAN.layers)
         layer_blocks = []
-        header_blocks = ["#include \"defines.h\""]
 
         for i, layer in enumerate(self.KAN.layers):
-            in_features = layer.in_features
-            out_features = layer.out_features
-            header_blocks.append(f"#include \"lut_{i}.h\"")
+            in_f, out_f = layer.in_features, layer.out_features
 
-            for out_index in range(out_features):
-                blk = [f"// LAYER {i}, ch {out_index}"]
-                for in_index in range(in_features):
-                    
-                    #Get the truth table and check if the connection is active
-                    truth_table = self.truth_tables[f"{i}_{in_index}_{out_index}"]
-                    if truth_table.get("acive", 1) == 0: continue # pruned connection
+            for k in range(out_f):
+                blk = [f"-- LAYER {i}, ch {k}",
+                    f"gen_l{i}c{k} : block",
+                    "begin"]
 
-                    if i == 0:
-                        blk.append(f"lut_{i}_output_t act_{i}_{in_index}_{out_index} = lookup_{i}_{in_index}_{out_index}(input[{in_index}]);")
-                    else:
-                        blk.append(f"lut_{i}_output_t act_{i}_{in_index}_{out_index} = lookup_{i}_{in_index}_{out_index}(out_{i-1}_{in_index});")
+                inst_idx, sum_terms = 0, []
+                for j in range(in_f):
+                    if self.truth_tables[f"{i}_{j}_{k}"]["acive"] == 0: 
+                        continue
+                    mem = f"lut_{i}_{j}_{k}.mem"
+                    src = f"input({j})" if i == 0 else f"out{i-1}_{j}"
+                    dst = f"act_{i}_{j}_{k}"
+                    blk.append(
+                        f"  i{inst_idx:02d} : entity work.LUT_{i} "
+                        f'generic map (MEMFILE=>"{mem}") '
+                        f"port map (clk, {src}, {dst});"
+                    )
+                    sum_terms.append(dst)
+                    inst_idx += 1
 
-                #Perform the summation
-                summation_variable = f"accum_{i}_t out_{i}_{out_index}" if i != len(self.KAN.layers) - 1 else f"output[{out_index}]"
+                target = f"output({k})" if i == num_layers - 1 else f"out{i}_{k}"
+                rhs = " + ".join(sum_terms) if sum_terms else "(others => '0')  -- no surviving LUTs"
+                blk.append(f"  {target} <= {rhs};")
+                blk.append("end block;")
 
-                blk.append(f"{summation_variable} = " +
-                " + ".join([f"act_{i}_{in_index}_{out_index}" for in_index in range(in_features)
-                                    if self.truth_tables[f"{i}_{in_index}_{out_index}"].get("acive", 1) == 1]) + ";")
-                
                 layer_blocks.append("\n  ".join(blk))
-
-        #Generate the HLS code
-        LAYER_BLOCKS = "\n\n  ".join(layer_blocks) if layer_blocks else "// (no layers)"
-
-        with open(os.path.join(os.path.dirname(__file__), "templates", "KAN.cpp"), "r") as tf: hls_text = tf.read()
-        hls_text = hls_text.replace("{{LAYER_BLOCKS}}", LAYER_BLOCKS)
-        hls_text = hls_text.replace("{{HEADER_BLOCKS}}", "\n".join(header_blocks))
-
-        #Write the HLS code to the file
-        out_hls = os.path.join(self.model_dir, "firmware", "KAN.cpp")
-        os.makedirs(os.path.dirname(out_hls), exist_ok=True)
-        with open(out_hls, "w") as f:
-            f.write(hls_text)
-
-        pass
         
-    def write_type_defines(self):
-        """
-        Write the type defines for the KAN LUT
-        """
-        
-        model_defines = []
-        lut_defines = []
+        #Generate the VHDL code
+        SIGNAL_DECLS = "\n\n".join(sections) if sections else "-- (no signals)"
+        LAYER_BLOCKS = "\n\n  ".join(layer_blocks) if layer_blocks else "-- (no layers)"
 
-        #Model types
-        model_defines.append(f"#define N_INPUT {self.KAN.config['layers'][0]}")
-        model_defines.append(f"#define N_OUTPUT {self.KAN.config['layers'][-1]}")
-        model_defines.append(f"typedef ap_uint<{self.KAN.config['layers_bitwidth'][0]}> input_t;")
-        model_defines.append(f"typedef ap_fixed<{self.KAN.config['layers_bitwidth'][-1]}, {self.KAN.config['layers_bitwidth'][-1]}, AP_TRN, AP_SAT> output_t;")
-        MODEL_RELATED_DEFINES = "\n".join(model_defines)
+        with open(os.path.join(os.path.dirname(__file__), "templates", "src", "KAN.vhd"), "r") as tf:
+            tpl = tf.read()
+        vhdl_text = tpl.replace("{{SIGNAL_DECLS}}", SIGNAL_DECLS)
+        vhdl_text = vhdl_text.replace("{{LAYER_BLOCKS}}", LAYER_BLOCKS)
 
-        #LUT types
-        for i in range(len(self.KAN.layers)):
-            in_bit_width = self.KAN.layers[i].in_precision
-            out_bit_width = self.KAN.layers[i].out_precision
-
-            lut_defines.append(f"\n//LAYER {i}:")
-            if i != 0: lut_defines.append(f"typedef ap_fixed<{in_bit_width}, {in_bit_width}, AP_TRN, AP_SAT> idx_{i}_t;")
-            lut_defines.append(f"#define LUT_SIZE_{i} {2**in_bit_width}")
-            lut_defines.append(f"typedef ap_int<{out_bit_width}> lut_{i}_output_t;")
-
-            #Don't need acc types for the last layer
-            if i != len(self.KAN.layers) - 1:
-                lut_defines.append(f"typedef ap_fixed<{out_bit_width}, {out_bit_width}, AP_TRN, AP_SAT> accum_{i}_t;")
-
-        LUT_RELATED_DEFINES = "\n".join(lut_defines)
-
-        with open(os.path.join(os.path.dirname(__file__), "templates", "defines.h"), "r") as tf: hls_text = tf.read()
-        hls_text = hls_text.replace("{{MODEL_RELATED_DEFINES}}", MODEL_RELATED_DEFINES)
-        hls_text = hls_text.replace("{{LUT_RELATED_DEFINES}}", LUT_RELATED_DEFINES)
-
-        with open(os.path.join(self.model_dir, "firmware", "defines.h"), "w") as f:
-            f.write(hls_text)
-
-    def write_LUTs(self):
-        """
-        Define the look up tables
-        """
-
-        #Generate LUT files per layer
-        for i in range(len(self.KAN.layers)):
-
-            layer = self.KAN.layers[i]
-            in_features = layer.in_features
-            out_features = layer.out_features
-            in_bit_width = layer.in_precision
-            out_bit_width = layer.out_precision
-
-            cpp_content = [f"#include \"lut_{i}.h\""]
-            header_content = ["#pragma once", "#include \"defines.h\""]
-
-            for in_index in range(in_features):
-                for out_index in range(out_features):
-
-                    #Get the truth table and check if the connection is active
-                    truth_table = self.truth_tables[f"{i}_{in_index}_{out_index}"]
-                    if truth_table.get("acive", 1) == 0: continue # pruned connection
-                    
-                    #Convert the values to strings
-                    values_str = ", ".join(str(value) for value in truth_table["values_int"])
-                    cpp_content.append(f"const lut_{i}_output_t lut_{i}_{in_index}_{out_index}[LUT_SIZE_{i}] = {{ {values_str} }};")
-
-                    pragma_line = f"#pragma HLS BIND_STORAGE variable=lut_{i}_{in_index}_{out_index} type=ROM_1P impl=LUTRAM"
-
-
-                    #Generate the look up table function
-                    if i == 0:
-                        cpp_content.append(f"lut_{i}_output_t lookup_{i}_{in_index}_{out_index}(input_t input) {{")
-                        cpp_content.append(pragma_line)
-                        cpp_content.append(f"    return lut_{i}_{in_index}_{out_index}[input];")
-                        cpp_content.append("}")
-                    else:
-                        cpp_content.append(f"lut_{i}_output_t lookup_{i}_{in_index}_{out_index}(accum_{i-1}_t input) {{")
-                        cpp_content.append(pragma_line)
-                        cpp_content.append(f"    idx_{i}_t idx = input + {2**(in_bit_width - 1)};")
-                        cpp_content.append(f"    return lut_{i}_{in_index}_{out_index}[idx];")
-                        cpp_content.append("}")
-
-
-                    #Add the header content
-                    header_content.append(f"extern const lut_{i}_output_t lut_{i}_{in_index}_{out_index}[LUT_SIZE_{i}];")
-
-                    input_type = "input_t" if i == 0 else f"idx_{i}_t"
-                    header_content.append(f"lut_{i}_output_t lookup_{i}_{in_index}_{out_index}({input_type} input);")
-
-            #Write the HLS files
-            CPP_CONTENT = "\n".join(cpp_content)
-            HEADER_CONTENT = "\n".join(header_content)
-
-            with open(os.path.join(self.model_dir, "firmware", f"lut_{i}.cpp"), "w") as f: f.write(CPP_CONTENT)
-            with open(os.path.join(self.model_dir, "firmware", f"lut_{i}.h"), "w") as f: f.write(HEADER_CONTENT)
-
-        pass
-
-    def write_build_tcl(self):
-        #Simply copy the build tcl file over for now
-        shutil.copy(os.path.join(os.path.dirname(__file__), "templates", "build.tcl"), os.path.join(self.model_dir, "firmware", "build.tcl"))
+        #Write the VHDL code to the file
+        out_vhd = os.path.join(self.firmware_dir, "src", "KAN.vhd")
+        os.makedirs(os.path.dirname(out_vhd), exist_ok=True)
+        with open(out_vhd, "w") as f:
+            f.write(vhdl_text)
+            
