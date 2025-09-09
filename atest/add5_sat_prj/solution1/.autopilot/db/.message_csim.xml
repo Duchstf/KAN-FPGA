@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Messages>
-	<Message severity="INFO" prefix="[SIM 211-2]" key="SIM_2_1569" tag="" content="*************** CSIM start ***************" resolution=""/>
-	<Message severity="INFO" prefix="[SIM 211-4]" key="SIM_4_1574" tag="" content="CSIM will launch CLANG as the compiler." resolution=""/>
-	<Message severity="INFO" prefix="[HLS 200-2036]" key="HLS 200-2036" tag="" content="Building debug C Simulation binaries" resolution=""/>
-	<Message severity="INFO" prefix="[SIM 211-1]" key="SIM_1_1586" tag="" content="CSim done with 0 errors." resolution=""/>
-	<Message severity="INFO" prefix="[SIM 211-3]" key="SIM_3_1588" tag="" content="*************** CSIM finish ***************" resolution=""/>
-	<Message severity="INFO" prefix="[HLS 200-2161]" key="HLS 200-2161" tag="" content="Finished Command csim_design Elapsed time: 00:00:02; Allocated memory: 0.000 MB." resolution=""/>
-</Messages>

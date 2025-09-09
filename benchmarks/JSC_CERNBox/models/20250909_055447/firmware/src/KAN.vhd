@@ -1,7 +1,7 @@
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
-use work.PkgTypes.all;
+use work.PkgKAN.all;
 use work.PkgLUT.all;
 
 entity KAN is

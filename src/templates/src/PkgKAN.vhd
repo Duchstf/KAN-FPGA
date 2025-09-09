@@ -2,7 +2,7 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
-package PkgTypes is
+package PkgKAN is
   -- Model parameters
   constant N_INPUT  : positive := {{N_INPUT}};
   constant N_OUTPUT : positive := {{N_OUTPUT}};
@@ -22,9 +22,9 @@ package PkgTypes is
   
   -- Function to saturate a signed value into W-bit signed range
   function saturate(x : signed; W : positive) return signed;
-end package PkgTypes;
+end package PkgKAN;
 
-package body PkgTypes is
+package body PkgKAN is
   -- Function to saturate a signed value into W-bit signed range
   -- Input x can be wider than W
   function saturate(x : signed; W : positive) return signed is
@@ -42,4 +42,4 @@ package body PkgTypes is
 
       return result;
   end function;
-end package body PkgTypes;
+end package body PkgKAN;

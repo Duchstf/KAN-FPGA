@@ -4,96 +4,128 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 use std.textio.all;
 
-entity tb_kan is end;
+library work;
+use work.PkgKAN.all;
+
+entity tb_kan is
+end entity;
+
 architecture sim of tb_kan is
-  constant N_INPUT   : integer := {{N_INPUT}};
-  constant N_OUTPUT  : integer := {{N_OUTPUT}};
-  constant IN_WIDTH  : integer := {{IN_WIDTH}};
-  constant OUT_WIDTH : integer := {{OUT_WIDTH}};
+  signal clk : std_logic := '0';
+  constant TCLK : time := 10 ns; -- 100 MHz
+  signal en  : std_logic := '1';
 
-  component {{TOP_NAME}} is
-    port(
-      ap_clk   : in  std_logic;
-      ap_rst   : in  std_logic;
-      ap_start : in  std_logic;
-      ap_done  : out std_logic;
-{{PORT_DECL_INPUTS}}
-{{PORT_DECL_OUTPUTS}}
-    );
-  end component;
+  -- Input and output vectors
+  signal din  : input_vec_t  := (others => (others => '0'));
+  signal dout : output_vec_t := (others => (others => '0'));
 
-  signal clk   : std_logic := '0';
-  signal rst   : std_logic := '1';
-  signal start : std_logic := '0';
-  signal done  : std_logic;
+  constant LATENCY : natural := 3;
 
-{{INPUT_SIGNAL_DECLS}}
-{{OUTPUT_SIGNAL_DECLS}}
+  ---------------------------------------------------------------------------
+  -- Helper: integer -> same kind (signed/unsigned) as template
+  ---------------------------------------------------------------------------
+  function to_same_kind(val : integer; template : signed) return signed is
+  begin
+    return to_signed(val, template'length);
+  end function;
 
-  type in_vec_t  is array (natural range <>) of unsigned(IN_WIDTH-1 downto 0);
-  type out_vec_t is array (natural range <>) of signed(OUT_WIDTH-1 downto 0);
-  signal in_bus  : in_vec_t (0 to N_INPUT-1);
-  signal out_bus : out_vec_t(0 to N_OUTPUT-1);
+  function to_same_kind(val : integer; template : unsigned) return unsigned is
+  begin
+    return to_unsigned(val, template'length);
+  end function;
+
+  ---------------------------------------------------------------------------
+  -- Read a line of N integers into an array SIGNAL of signed/unsigned elements
+  ---------------------------------------------------------------------------
+  procedure read_line_into(signal v : out input_vec_t; L : inout line) is
+    variable val : integer;
+  begin
+    for i in v'range loop
+      read(L, val);
+      v(i) <= to_same_kind(val, v(i));
+    end loop;
+  end procedure;
+
+  ---------------------------------------------------------------------------
+  -- Read a line of N integers into an array VARIABLE of signed/unsigned elements
+  ---------------------------------------------------------------------------
+  procedure read_line_into(variable v : inout output_vec_t; L : inout line) is
+    variable val : integer;
+  begin
+    for i in v'range loop
+      read(L, val);
+      v(i) := to_same_kind(val, v(i));
+    end loop;
+  end procedure;
 
 begin
-  clk <= not clk after 5 ns;
-  process begin rst <= '1'; wait for 50 ns; rst <= '0'; wait; end process;
+  clk <= not clk after TCLK/2;
 
-{{INPUT_ASSIGNMENTS}}
-{{OUTPUT_ASSIGNMENTS}}
+  UUT : entity work.KAN
+    port map (
+      clk    => clk,
+      en     => en,
+      input  => din,
+      output => dout
+    );
+  
+  stim : process
+    file fin  : text open read_mode is "vectors_in.txt";
+    file fout : text open read_mode is "vectors_out.txt";
 
-  UUT: {{TOP_NAME}} port map(
-    ap_clk=>clk, ap_rst=>rst, ap_start=>start, ap_done=>done,
-{{PORTMAP_INPUTS}}
-{{PORTMAP_OUTPUTS}}
-  );
+    variable l_in, l_out : line;
+    variable expv        : output_vec_t(dout'range);  -- expected output vector (variable)
+    variable gotv        : output_vec_t(dout'range);  -- captured DUT output
+    variable total       : integer := 0;
+    variable errs        : integer := 0;
 
-  file fin  : text open read_mode  is "vectors_in.txt";
-  file fout : text open read_mode  is "vectors_out.txt";
+    --Let clocks settle a bit
+    for k in 0 to 3 loop
+      wait until rising_edge(clk);
+    end loop;
 
-  procedure read_in_line(signal v: out in_vec_t; L: inout line) is
-    variable val: integer;
-  begin
-    for i in v'range loop read(L,val); v(i) <= to_unsigned(val, IN_WIDTH); end loop;
-  end;
+    -- Drive enable high
+    en <= '1';
 
-  procedure read_out_line(signal v: out out_vec_t; L: inout line) is
-    variable val: integer;
-  begin
-    for i in v'range loop read(L,val); v(i) <= to_signed(val, OUT_WIDTH); end loop;
-  end;
-
-  stim: process
-    variable l_in  : line;
-    variable l_out : line;
-    variable expv  : out_vec_t(0 to N_OUTPUT-1);
-    variable total, errs : integer := 0;
-  begin
-    wait until rst='0'; wait until rising_edge(clk);
     while not endfile(fin) loop
-      readline(fin,  l_in);  read_in_line(in_bus, l_in);
-      readline(fout, l_out); read_out_line(expv,   l_out);
+      readline(fin,  l_in);
+      read_line_into(din,  l_in); -- drive inputs immediately
+      readline(fout, l_out);
+      read_line_into(expv, l_out); -- load expected outputs
 
-      start <= '1'; wait until rising_edge(clk); start <= '0';
-      wait until rising_edge(clk) and done='1';
+      wait until rising_edge(clk);
+      for k in 1 to LATENCY-1 loop
+        wait until rising_edge(clk);
+      end loop;
 
-      for i in 0 to N_OUTPUT-1 loop
-        if out_bus(i) /= expv(i) then
+      -- Sample outputs one tiny delta after the last edge
+      wait for 1 ns;
+      gotv := dout;
+
+      -- Compare
+      for i in gotv'range loop
+        if gotv(i) /= expv(i) then
           errs := errs + 1;
-          report "Mismatch vec=" & integer'image(total) &
+          report "Mismatch @vec=" & integer'image(total) &
                  " out[" & integer'image(i) & "] got=" &
-                 integer'image(to_integer(out_bus(i))) &
-                 " exp=" & integer'image(to_integer(expv(i))) severity warning;
+                 integer'image(to_integer(gotv(i))) &
+                 " exp=" & integer'image(to_integer(expv(i))))
+                 severity warning;
         end if;
       end loop;
+
       total := total + 1;
     end loop;
 
     if errs = 0 then
       report "ALL TESTS PASSED (" & integer'image(total) & " vectors)" severity note;
     else
-      assert false report "TEST FAILED: " & integer'image(errs) severity failure;
+      assert false
+        report "TEST FAILED: " & integer'image(errs) & " mismatches out of "
+               & integer'image(total) & " vectors"
+        severity failure;
     end if;
+
     wait;
   end process;
-end;
+end architecture;
