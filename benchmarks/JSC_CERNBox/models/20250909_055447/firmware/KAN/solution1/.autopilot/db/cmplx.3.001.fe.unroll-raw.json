@@ -1,0 +1,1278 @@
+{
+  "0": {
+    "basicblocks": 208,
+    "calls": "18 77 47 38 64 69 5 29 4 21 32 61 63 82 52 34 74 67 40 12 13 56 46 43 11 44 65 30 39 20 31 2 23 51 53 62 83 3 24 26 78 17 41 80 58 22 7 25 8 16 6 45 84 57 28 35 15 49 9 71 42 73 70 72 60 75 36 50 27 14 66 55 19 68 10 33 79 48 1 81 76 59 54 37",
+    "file": "KAN.cpp",
+    "fileloc": 5,
+    "instructions": 1168,
+    "loads": {
+      "L": 84,
+      "T": 64
+    },
+    "name": "KAN",
+    "stores": {
+      "T": 5
+    },
+    "total_instructions": 2652
+  },
+  "1": {
+    "basicblocks": 30,
+    "calls": "",
+    "file": "lut_1.cpp",
+    "fileloc": 81,
+    "instructions": 55,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_1_2_3",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 55
+  },
+  "10": {
+    "basicblocks": 30,
+    "calls": "",
+    "file": "lut_1.cpp",
+    "fileloc": 75,
+    "instructions": 55,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_1_2_2",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 55
+  },
+  "11": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "lut_0.cpp",
+    "fileloc": 168,
+    "instructions": 6,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_0_8_1",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 6
+  },
+  "12": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "lut_0.cpp",
+    "fileloc": 68,
+    "instructions": 6,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_0_3_1",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 6
+  },
+  "13": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "lut_0.cpp",
+    "fileloc": 88,
+    "instructions": 6,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_0_4_1",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 6
+  },
+  "14": {
+    "basicblocks": 30,
+    "calls": "",
+    "file": "lut_1.cpp",
+    "fileloc": 39,
+    "instructions": 55,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_1_1_1",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 55
+  },
+  "15": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "lut_0.cpp",
+    "fileloc": 178,
+    "instructions": 6,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_0_8_3",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 6
+  },
+  "16": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "lut_0.cpp",
+    "fileloc": 38,
+    "instructions": 6,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_0_1_3",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 6
+  },
+  "17": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "lut_0.cpp",
+    "fileloc": 193,
+    "instructions": 6,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_0_9_2",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 6
+  },
+  "18": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "lut_0.cpp",
+    "fileloc": 3,
+    "instructions": 6,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_0_0_0",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 6
+  },
+  "19": {
+    "basicblocks": 30,
+    "calls": "",
+    "file": "lut_1.cpp",
+    "fileloc": 15,
+    "instructions": 55,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_1_0_2",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 55
+  },
+  "2": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "lut_0.cpp",
+    "fileloc": 308,
+    "instructions": 6,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_0_15_1",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 6
+  },
+  "20": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "lut_0.cpp",
+    "fileloc": 268,
+    "instructions": 6,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_0_13_1",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 6
+  },
+  "21": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "lut_0.cpp",
+    "fileloc": 183,
+    "instructions": 6,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_0_9_0",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 6
+  },
+  "22": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "lut_0.cpp",
+    "fileloc": 273,
+    "instructions": 6,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_0_13_2",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 6
+  },
+  "23": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "lut_0.cpp",
+    "fileloc": 13,
+    "instructions": 6,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_0_0_2",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 6
+  },
+  "24": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "lut_0.cpp",
+    "fileloc": 133,
+    "instructions": 6,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_0_6_2",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 6
+  },
+  "25": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "lut_0.cpp",
+    "fileloc": 313,
+    "instructions": 6,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_0_15_2",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 6
+  },
+  "26": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "lut_0.cpp",
+    "fileloc": 153,
+    "instructions": 6,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_0_7_2",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 6
+  },
+  "27": {
+    "basicblocks": 30,
+    "calls": "",
+    "file": "lut_1.cpp",
+    "fileloc": 9,
+    "instructions": 55,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_1_0_1",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 55
+  },
+  "28": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "lut_0.cpp",
+    "fileloc": 138,
+    "instructions": 6,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_0_6_3",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 6
+  },
+  "29": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "lut_0.cpp",
+    "fileloc": 143,
+    "instructions": 6,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_0_7_0",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 6
+  },
+  "3": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "lut_0.cpp",
+    "fileloc": 113,
+    "instructions": 6,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_0_5_2",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 6
+  },
+  "30": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "lut_0.cpp",
+    "fileloc": 228,
+    "instructions": 6,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_0_11_1",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 6
+  },
+  "31": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "lut_0.cpp",
+    "fileloc": 288,
+    "instructions": 6,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_0_14_1",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 6
+  },
+  "32": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "lut_0.cpp",
+    "fileloc": 203,
+    "instructions": 6,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_0_10_0",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 6
+  },
+  "33": {
+    "basicblocks": 30,
+    "calls": "",
+    "file": "lut_1.cpp",
+    "fileloc": 105,
+    "instructions": 55,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_1_3_2",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 55
+  },
+  "34": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "lut_0.cpp",
+    "fileloc": 303,
+    "instructions": 6,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_0_15_0",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 6
+  },
+  "35": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "lut_0.cpp",
+    "fileloc": 158,
+    "instructions": 6,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_0_7_3",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 6
+  },
+  "36": {
+    "basicblocks": 30,
+    "calls": "",
+    "file": "lut_1.cpp",
+    "fileloc": 63,
+    "instructions": 55,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_1_2_0",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 55
+  },
+  "37": {
+    "basicblocks": 30,
+    "calls": "",
+    "file": "lut_1.cpp",
+    "fileloc": 117,
+    "instructions": 55,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_1_3_4",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 55
+  },
+  "38": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "lut_0.cpp",
+    "fileloc": 63,
+    "instructions": 6,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_0_3_0",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 6
+  },
+  "39": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "lut_0.cpp",
+    "fileloc": 248,
+    "instructions": 6,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_0_12_1",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 6
+  },
+  "4": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "lut_0.cpp",
+    "fileloc": 163,
+    "instructions": 6,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_0_8_0",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 6
+  },
+  "40": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "lut_0.cpp",
+    "fileloc": 48,
+    "instructions": 6,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_0_2_1",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 6
+  },
+  "41": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "lut_0.cpp",
+    "fileloc": 213,
+    "instructions": 6,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_0_10_2",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 6
+  },
+  "42": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "lut_0.cpp",
+    "fileloc": 258,
+    "instructions": 6,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_0_12_3",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 6
+  },
+  "43": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "lut_0.cpp",
+    "fileloc": 148,
+    "instructions": 6,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_0_7_1",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 6
+  },
+  "44": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "lut_0.cpp",
+    "fileloc": 188,
+    "instructions": 6,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_0_9_1",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 6
+  },
+  "45": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "lut_0.cpp",
+    "fileloc": 78,
+    "instructions": 6,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_0_3_3",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 6
+  },
+  "46": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "lut_0.cpp",
+    "fileloc": 128,
+    "instructions": 6,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_0_6_1",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 6
+  },
+  "47": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "lut_0.cpp",
+    "fileloc": 43,
+    "instructions": 6,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_0_2_0",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 6
+  },
+  "48": {
+    "basicblocks": 30,
+    "calls": "",
+    "file": "lut_1.cpp",
+    "fileloc": 51,
+    "instructions": 55,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_1_1_3",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 55
+  },
+  "49": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "lut_0.cpp",
+    "fileloc": 198,
+    "instructions": 6,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_0_9_3",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 6
+  },
+  "5": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "lut_0.cpp",
+    "fileloc": 123,
+    "instructions": 6,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_0_6_0",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 6
+  },
+  "50": {
+    "basicblocks": 30,
+    "calls": "",
+    "file": "lut_1.cpp",
+    "fileloc": 93,
+    "instructions": 55,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_1_3_0",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 55
+  },
+  "51": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "lut_0.cpp",
+    "fileloc": 33,
+    "instructions": 6,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_0_1_2",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 6
+  },
+  "52": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "lut_0.cpp",
+    "fileloc": 283,
+    "instructions": 6,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_0_14_0",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 6
+  },
+  "53": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "lut_0.cpp",
+    "fileloc": 53,
+    "instructions": 6,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_0_2_2",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 6
+  },
+  "54": {
+    "basicblocks": 30,
+    "calls": "",
+    "file": "lut_1.cpp",
+    "fileloc": 87,
+    "instructions": 55,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_1_2_4",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 55
+  },
+  "55": {
+    "basicblocks": 30,
+    "calls": "",
+    "file": "lut_1.cpp",
+    "fileloc": 99,
+    "instructions": 55,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_1_3_1",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 55
+  },
+  "56": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "lut_0.cpp",
+    "fileloc": 108,
+    "instructions": 6,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_0_5_1",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 6
+  },
+  "57": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "lut_0.cpp",
+    "fileloc": 118,
+    "instructions": 6,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_0_5_3",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 6
+  },
+  "58": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "lut_0.cpp",
+    "fileloc": 253,
+    "instructions": 6,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_0_12_2",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 6
+  },
+  "59": {
+    "basicblocks": 30,
+    "calls": "",
+    "file": "lut_1.cpp",
+    "fileloc": 57,
+    "instructions": 55,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_1_1_4",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 55
+  },
+  "6": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "lut_0.cpp",
+    "fileloc": 58,
+    "instructions": 6,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_0_2_3",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 6
+  },
+  "60": {
+    "basicblocks": 30,
+    "calls": "",
+    "file": "lut_1.cpp",
+    "fileloc": 3,
+    "instructions": 55,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_1_0_0",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 55
+  },
+  "61": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "lut_0.cpp",
+    "fileloc": 223,
+    "instructions": 6,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_0_11_0",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 6
+  },
+  "62": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "lut_0.cpp",
+    "fileloc": 73,
+    "instructions": 6,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_0_3_2",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 6
+  },
+  "63": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "lut_0.cpp",
+    "fileloc": 243,
+    "instructions": 6,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_0_12_0",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 6
+  },
+  "64": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "lut_0.cpp",
+    "fileloc": 83,
+    "instructions": 6,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_0_4_0",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 6
+  },
+  "65": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "lut_0.cpp",
+    "fileloc": 208,
+    "instructions": 6,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_0_10_1",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 6
+  },
+  "66": {
+    "basicblocks": 30,
+    "calls": "",
+    "file": "lut_1.cpp",
+    "fileloc": 69,
+    "instructions": 55,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_1_2_1",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 55
+  },
+  "67": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "lut_0.cpp",
+    "fileloc": 28,
+    "instructions": 6,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_0_1_1",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 6
+  },
+  "68": {
+    "basicblocks": 30,
+    "calls": "",
+    "file": "lut_1.cpp",
+    "fileloc": 45,
+    "instructions": 55,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_1_1_2",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 55
+  },
+  "69": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "lut_0.cpp",
+    "fileloc": 103,
+    "instructions": 6,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_0_5_0",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 6
+  },
+  "7": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "lut_0.cpp",
+    "fileloc": 293,
+    "instructions": 6,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_0_14_2",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 6
+  },
+  "70": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "lut_0.cpp",
+    "fileloc": 298,
+    "instructions": 6,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_0_14_3",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 6
+  },
+  "71": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "lut_0.cpp",
+    "fileloc": 238,
+    "instructions": 6,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_0_11_3",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 6
+  },
+  "72": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "lut_0.cpp",
+    "fileloc": 318,
+    "instructions": 6,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_0_15_3",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 6
+  },
+  "73": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "lut_0.cpp",
+    "fileloc": 278,
+    "instructions": 6,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_0_13_3",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 6
+  },
+  "74": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "lut_0.cpp",
+    "fileloc": 8,
+    "instructions": 6,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_0_0_1",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 6
+  },
+  "75": {
+    "basicblocks": 30,
+    "calls": "",
+    "file": "lut_1.cpp",
+    "fileloc": 33,
+    "instructions": 55,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_1_1_0",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 55
+  },
+  "76": {
+    "basicblocks": 30,
+    "calls": "",
+    "file": "lut_1.cpp",
+    "fileloc": 27,
+    "instructions": 55,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_1_0_4",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 55
+  },
+  "77": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "lut_0.cpp",
+    "fileloc": 23,
+    "instructions": 6,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_0_1_0",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 6
+  },
+  "78": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "lut_0.cpp",
+    "fileloc": 173,
+    "instructions": 6,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_0_8_2",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 6
+  },
+  "79": {
+    "basicblocks": 30,
+    "calls": "",
+    "file": "lut_1.cpp",
+    "fileloc": 21,
+    "instructions": 55,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_1_0_3",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 55
+  },
+  "8": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "lut_0.cpp",
+    "fileloc": 18,
+    "instructions": 6,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_0_0_3",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 6
+  },
+  "80": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "lut_0.cpp",
+    "fileloc": 233,
+    "instructions": 6,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_0_11_2",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 6
+  },
+  "81": {
+    "basicblocks": 30,
+    "calls": "",
+    "file": "lut_1.cpp",
+    "fileloc": 111,
+    "instructions": 55,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_1_3_3",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 55
+  },
+  "82": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "lut_0.cpp",
+    "fileloc": 263,
+    "instructions": 6,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_0_13_0",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 6
+  },
+  "83": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "lut_0.cpp",
+    "fileloc": 93,
+    "instructions": 6,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_0_4_2",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 6
+  },
+  "84": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "lut_0.cpp",
+    "fileloc": 98,
+    "instructions": 6,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_0_4_3",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 6
+  },
+  "9": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "lut_0.cpp",
+    "fileloc": 218,
+    "instructions": 6,
+    "loads": {
+      "G": 1
+    },
+    "name": "lookup_0_10_3",
+    "stores": {
+      "L": 1
+    },
+    "total_instructions": 6
+  }
+}

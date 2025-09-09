@@ -1,0 +1,22 @@
+<AutoPilot:solution xmlns:AutoPilot="com.autoesl.autopilot.solution">
+    <name>
+        <value string="solution1"/>
+    </name>
+    <project>
+        <value string="KAN"/>
+    </project>
+    <flowTarget value="vivado"/>
+    <config>
+        <config_compile name_max_length="80"/>
+    </config>
+    <targetInfo>
+        <TargetInfo value="xcvu9p:-flgb2104:-2-i"/>
+    </targetInfo>
+    <libraryList>
+        <library value="xilinx/virtexuplus/virtexuplus" name="DefaultPlatform"/>
+    </libraryList>
+    <clockList>
+        <clock name="default" period="3.0" default="false"/>
+    </clockList>
+</AutoPilot:solution>
+
