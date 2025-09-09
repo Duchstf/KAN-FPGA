@@ -1,0 +1,49 @@
+---
+MainSourceFile:  /data/dhoang/test/KAN-FPGA/atest/add5_sat_prj/solution1/.autopilot/db/dut.pp.0.cpp
+Diagnostics:     
+  - DiagnosticName:  xilinx-label-all-loops
+    Message:         'Added loop label VITIS_LOOP_1223_1:  '
+    FileOffset:      1223
+    FilePath:        /data/Xilinx/Vitis_HLS/2024.1/common/technology/autopilot/etc/ap_int_base.h
+    Replacements:    
+      - FilePath:        /data/dhoang/test/KAN-FPGA/atest/add5_sat_prj/solution1/.autopilot/db/dut.pp.0.cpp
+        Offset:          55185
+        Length:          0
+        ReplacementText: 'VITIS_LOOP_1223_1: '
+  - DiagnosticName:  xilinx-label-all-loops
+    Message:         'Added loop label VITIS_LOOP_676_1:  '
+    FileOffset:      676
+    FilePath:        /data/Xilinx/Vitis_HLS/2024.1/common/technology/autopilot/etc/ap_int_ref.h
+    Replacements:    
+      - FilePath:        /data/dhoang/test/KAN-FPGA/atest/add5_sat_prj/solution1/.autopilot/db/dut.pp.0.cpp
+        Offset:          282607
+        Length:          0
+        ReplacementText: 'VITIS_LOOP_676_1: '
+  - DiagnosticName:  xilinx-label-all-loops
+    Message:         'Added loop label VITIS_LOOP_690_1:  '
+    FileOffset:      690
+    FilePath:        /data/Xilinx/Vitis_HLS/2024.1/common/technology/autopilot/etc/ap_int_ref.h
+    Replacements:    
+      - FilePath:        /data/dhoang/test/KAN-FPGA/atest/add5_sat_prj/solution1/.autopilot/db/dut.pp.0.cpp
+        Offset:          283071
+        Length:          0
+        ReplacementText: 'VITIS_LOOP_690_1: '
+  - DiagnosticName:  xilinx-label-all-loops
+    Message:         'Added loop label VITIS_LOOP_704_1:  '
+    FileOffset:      704
+    FilePath:        /data/Xilinx/Vitis_HLS/2024.1/common/technology/autopilot/etc/ap_int_ref.h
+    Replacements:    
+      - FilePath:        /data/dhoang/test/KAN-FPGA/atest/add5_sat_prj/solution1/.autopilot/db/dut.pp.0.cpp
+        Offset:          283536
+        Length:          0
+        ReplacementText: 'VITIS_LOOP_704_1: '
+  - DiagnosticName:  xilinx-label-all-loops
+    Message:         'Added loop label VITIS_LOOP_1247_1:  '
+    FileOffset:      1247
+    FilePath:        /data/Xilinx/Vitis_HLS/2024.1/common/technology/autopilot/etc/ap_fixed_base.h
+    Replacements:    
+      - FilePath:        /data/dhoang/test/KAN-FPGA/atest/add5_sat_prj/solution1/.autopilot/db/dut.pp.0.cpp
+        Offset:          566926
+        Length:          0
+        ReplacementText: 'VITIS_LOOP_1247_1: '
+...

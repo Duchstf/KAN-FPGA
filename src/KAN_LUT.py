@@ -205,10 +205,12 @@ class KAN_LUT:
         # ---------- Build LAYER_BLOCKS ----------
         num_layers = len(self.KAN.layers)
         layer_blocks = []
+        header_blocks = ["#include \"defines.h\""]
 
         for i, layer in enumerate(self.KAN.layers):
             in_features = layer.in_features
             out_features = layer.out_features
+            header_blocks.append(f"#include \"lut_{i}.h\"")
 
             for out_index in range(out_features):
                 blk = [f"// LAYER {i}, ch {out_index}"]
@@ -235,11 +237,12 @@ class KAN_LUT:
         #Generate the HLS code
         LAYER_BLOCKS = "\n\n  ".join(layer_blocks) if layer_blocks else "// (no layers)"
 
-        with open(os.path.join(os.path.dirname(__file__), "templates", "KAN.h"), "r") as tf: hls_text = tf.read()
+        with open(os.path.join(os.path.dirname(__file__), "templates", "KAN.cpp"), "r") as tf: hls_text = tf.read()
         hls_text = hls_text.replace("{{LAYER_BLOCKS}}", LAYER_BLOCKS)
+        hls_text = hls_text.replace("{{HEADER_BLOCKS}}", "\n".join(header_blocks))
 
         #Write the HLS code to the file
-        out_hls = os.path.join(self.model_dir, "firmware", "KAN.h")
+        out_hls = os.path.join(self.model_dir, "firmware", "KAN.cpp")
         os.makedirs(os.path.dirname(out_hls), exist_ok=True)
         with open(out_hls, "w") as f:
             f.write(hls_text)
@@ -322,7 +325,7 @@ class KAN_LUT:
                         cpp_content.append(f"    return lut_{i}_{in_index}_{out_index}[input];")
                         cpp_content.append("}")
                     else:
-                        cpp_content.append(f"lut_{i}_output_t lookup_{i}_{in_index}_{out_index}(accum_{i}_t input) {{")
+                        cpp_content.append(f"lut_{i}_output_t lookup_{i}_{in_index}_{out_index}(accum_{i-1}_t input) {{")
                         cpp_content.append(pragma_line)
                         cpp_content.append(f"    idx_{i}_t idx = input + {2**(in_bit_width - 1)};")
                         cpp_content.append(f"    return lut_{i}_{in_index}_{out_index}[idx];")

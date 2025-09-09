@@ -1,0 +1,17 @@
+{
+  "0": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "dut.cpp",
+    "fileloc": 15,
+    "instructions": 53,
+    "loads": {
+      "L": 1
+    },
+    "name": "add5_sat_ufixed",
+    "stores": {
+      "L": 5
+    },
+    "total_instructions": 803
+  }
+}

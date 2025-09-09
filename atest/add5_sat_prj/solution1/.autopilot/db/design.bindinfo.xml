@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<BindInfo>
+	<BindNode BINDTYPE="op" DISPLAY="bind_op add" ID="" IMPL="fabric" LATENCY="0" OPTYPE="add" PRAGMA="" RTLNAME="add_ln19_fu_76_p2" SOURCE="dut.cpp:19" VARIABLE="add_ln19" MODULE="add5_sat_ufixed" LOOP="" BUNDLEDNAME="" DSP="0" BRAM="0" URAM="0" USAGE="" STORAGESUBTYPE="" STORAGESIZE=""/>
+	<BindNode BINDTYPE="op" DISPLAY="bind_op add" ID="" IMPL="fabric" LATENCY="0" OPTYPE="add" PRAGMA="" RTLNAME="add_ln19_1_fu_90_p2" SOURCE="dut.cpp:19" VARIABLE="add_ln19_1" MODULE="add5_sat_ufixed" LOOP="" BUNDLEDNAME="" DSP="0" BRAM="0" URAM="0" USAGE="" STORAGESUBTYPE="" STORAGESIZE=""/>
+	<BindNode BINDTYPE="op" DISPLAY="bind_op setne" ID="" IMPL="auto" LATENCY="0" OPTYPE="setne" PRAGMA="" RTLNAME="icmp_ln19_fu_129_p2" SOURCE="dut.cpp:19" VARIABLE="icmp_ln19" MODULE="add5_sat_ufixed" LOOP="" BUNDLEDNAME="" DSP="0" BRAM="0" URAM="0" USAGE="" STORAGESUBTYPE="" STORAGESIZE=""/>
+	<BindNode BINDTYPE="op" DISPLAY="bind_op select" ID="" IMPL="auto_sel" LATENCY="0" OPTYPE="select" PRAGMA="" RTLNAME="ap_return" SOURCE="dut.cpp:19" VARIABLE="sat_1" MODULE="add5_sat_ufixed" LOOP="" BUNDLEDNAME="" DSP="0" BRAM="0" URAM="0" USAGE="" STORAGESUBTYPE="" STORAGESIZE=""/>
+</BindInfo>

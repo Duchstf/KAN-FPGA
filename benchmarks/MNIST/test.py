@@ -20,11 +20,6 @@ is_cuda = device == "cuda"
 
 model_tag = "20250908_063954"
 
-#Datasets
-transform = transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.1307,), (0.3081,))])
-valset = torchvision.datasets.MNIST(root="./data", train=False, download=False, transform=transform)
-valloader = DataLoader(valset, batch_size=1, shuffle=False)
-
 # --- 1. List all model files and find the one with best accuracy ---
 model_dir = f"models/{model_tag}"
 files = [f for f in os.listdir(model_dir) if f.endswith(".pt")]
