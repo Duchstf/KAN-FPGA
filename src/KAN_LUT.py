@@ -208,6 +208,7 @@ class KAN_LUT:
         #Write the KAN core HLS file
         self.write_kan_core()
         self.write_pkg_kan()
+        self.write_pkg_lut()
         pass
 
     def write_kan_core(self, max_per_line=16):
@@ -304,4 +305,29 @@ class KAN_LUT:
         out_vhd = os.path.join(self.firmware_dir, "src", "PkgKAN.vhd")
         os.makedirs(os.path.dirname(out_vhd), exist_ok=True)
         with open(out_vhd, "w") as f:
+            f.write(vhdl_text)
+
+    def write_pkg_lut(self):
+
+        tpl_path = os.path.join(os.path.dirname(__file__), "templates", "src", "PkgLUT.vhd")
+        with open(tpl_path, "r") as tf:
+            tpl = tf.read()
+
+        blocks = []
+        for i in range(0, len(self.KAN.layers)):
+            layer = self.KAN.layers[i]
+            blocks.append("\n".join([
+                f"  -- Layer {i}",
+                f"  constant LUT_SIZE_{i}        : integer := {1 << layer.in_precision}",
+                f"  constant LUT_ADDR_WIDTH_{i}  : integer := {layer.in_precision}",
+                f"  constant LUT_DATA_WIDTH_{i}  : integer := {layer.out_precision}",
+                f"  subtype  lut_input_t_{i}  is signed(LUT_ADDR_WIDTH_{i}-1 downto 0);",
+                f"  subtype  lut_output_t_{i} is signed(LUT_DATA_WIDTH_{i}-1 downto 0);",
+            ]))
+
+        vhdl_text = tpl.replace("{{LAYER_TYPES_BLOCK}}", "\n\n".join(blocks) or "  -- (no layers)")
+
+        out_path = os.path.join(self.firmware_dir, "src", "PkgLUT.vhd")
+        os.makedirs(os.path.dirname(out_path), exist_ok=True)
+        with open(out_path, "w") as f:
             f.write(vhdl_text)
