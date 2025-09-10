@@ -48,7 +48,7 @@ config = {
     "learning_rate": 0.01,
     "weight_decay": 1e-4,
 
-    "prune_threshold": 1e-6,
+    "prune_threshold": 0.05,
 }
 
 #Create a new directory to save the config and checkpoints
