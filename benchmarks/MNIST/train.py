@@ -34,9 +34,9 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 config = {
     "layers": [28*28, 62, 10],
     "grid_range": [-8, 8],
-    "layers_bitwidth": [1, 8, 8],
+    "layers_bitwidth": [1, 6, 6],
 
-    "grid_size": 3,
+    "grid_size": 30,
     "spline_order": 3,
     "grid_eps": 0.03,
 
