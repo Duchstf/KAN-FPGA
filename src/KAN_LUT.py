@@ -238,11 +238,10 @@ class KAN_LUT:
             in_f, out_f = layer.in_features, layer.out_features
             acts=[f"act_{i}_{j}_{k}" for j in range(in_f) for k in range(out_f) if self.truth_tables[f"{i}_{j}_{k}"]["acive"] == 1]
             outs=[f"out{i}_{k}" for k in range(out_f)] if i != len(self.KAN.layers)-1 else []
-            sums=[f"sum_{i}_{k}" for k in range(out_f)]
             block=[f"-- Layer {i} ({in_f}->{out_f})"]
             if acts: block.append(emit(acts, f"lut_output_t_{i}"))
             if outs: block.append(emit(outs, f"lut_output_t_{i}"))
-            if sums: block.append(emit(sums, f"sum_t_{i}"))
+            block += [emit([f"sum_{i}_{k}"], f"sum_t_{i}_{k}") for k in range(out_f)]
             sections.append("\n".join(block))
 
         # ---------- Build LAYER_BLOCKS ----------
@@ -269,13 +268,16 @@ class KAN_LUT:
                         f'generic map (MEMFILE=>"{mem}") '
                         f"port map (clk, {src}, {dst});"
                     )
-                    sum_terms.append(f"resize({dst}, SUM_WIDTH_{i})")
+                    sum_terms.append(f"resize({dst}, SUM_WIDTH_{i}_{k})")
                     inst_idx += 1
 
-                target = f"sum_{i}_{k}"
-                rhs = " + ".join(sum_terms) if sum_terms else "(others => '0')  -- no surviving LUTs"
-                blk.append(f"  {target} <= {rhs};")
-                blk.append(f"  output({k}) <= saturate({target}, {layer.out_precision});") if i == len(self.KAN.layers)-1 else blk.append(f"  out{i}_{k} <= saturate({target}, {layer.out_precision});")
+                if sum_terms:
+                    target = f"sum_{i}_{k}"
+                    rhs = " + ".join(sum_terms)
+                    blk.append(f"  {target} <= {rhs};")
+                    blk.append(f"  output({k}) <= saturate({target}, {layer.out_precision});") if i == len(self.KAN.layers)-1 else blk.append(f"  out{i}_{k} <= saturate({target}, {layer.out_precision});")
+                else:
+                    blk.append(f"  output({k}) <= (others => '0');") if i == len(self.KAN.layers)-1 else blk.append(f"  out{i}_{k} <= (others => '0');")
                 blk.append("end block;")
 
                 layer_blocks.append("\n  ".join(blk))
@@ -310,12 +312,19 @@ class KAN_LUT:
 
         #Generate the summation block
         summation_block = []
-        for i in range(0, len(self.KAN.layers)):
-            layer = self.KAN.layers[i]
-            summation_block.append(f"  constant SUM_WIDTH_{i}: positive := {layer.out_precision + ceil(log2(layer.in_features))};")
-            summation_block.append(f"  subtype sum_t_{i} is signed(SUM_WIDTH_{i}-1 downto 0);")
-        vhdl_text = vhdl_text.replace("{{SUMMATION_BLOCK}}", "\n".join(summation_block))
+        for i, layer in enumerate(self.KAN.layers):
+            for k in range(layer.out_features):
+                active_lut = sum(
+                    self.truth_tables[f"{i}_{j}_{k}"]["acive"] == 1
+                    for j in range(layer.in_features)
+                )
+                width = layer.out_precision + ceil(log2(active_lut)) if active_lut > 0 else layer.out_precision
+                summation_block += [
+                    f"  constant SUM_WIDTH_{i}_{k}: positive := {width};",
+                    f"  subtype sum_t_{i}_{k} is signed(SUM_WIDTH_{i}_{k}-1 downto 0);",
+                ]
 
+        vhdl_text = vhdl_text.replace("{{SUMMATION_BLOCK}}", "\n".join(summation_block))
         #Write the VHDL code to the file
         out_vhd = os.path.join(self.firmware_dir, "src", "PkgKAN.vhd")
         os.makedirs(os.path.dirname(out_vhd), exist_ok=True)
