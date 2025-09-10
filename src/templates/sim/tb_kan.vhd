@@ -1,4 +1,4 @@
--- tb_kan.vhd (template)
+-- tb_kan.vhd (always print expected & got vectors)
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
@@ -58,6 +58,24 @@ architecture sim of tb_kan is
     end loop;
   end procedure;
 
+  ---------------------------------------------------------------------------
+  -- Pretty-print an output vector as integers
+  ---------------------------------------------------------------------------
+  procedure report_vec(prefix : string; vec_idx : integer; v : in output_vec_t) is
+    variable L : line;
+  begin
+    write(L, prefix & " vec=" & integer'image(vec_idx) & " [");
+    for i in v'range loop
+      write(L, integer'image(to_integer(v(i))));
+      if i /= v'high then
+        write(L, string'(", "));
+      end if;
+    end loop;
+    write(L, string'("]"));
+    report L.all severity note;
+    deallocate(L);
+  end procedure;
+
 begin
   clk <= not clk after TCLK/2;
 
@@ -68,7 +86,7 @@ begin
       input  => din,
       output => dout
     );
-  
+
   stim : process
     file fin  : text open read_mode is "vectors_in.txt";
     file fout : text open read_mode is "vectors_out.txt";
@@ -79,7 +97,7 @@ begin
     variable total       : integer := 0;
     variable errs        : integer := 0;
   begin
-    --Let clocks settle a bit
+    -- Let clocks settle a bit
     for k in 0 to 3 loop
       wait until rising_edge(clk);
     end loop;
@@ -89,10 +107,11 @@ begin
 
     while not endfile(fin) loop
       readline(fin,  l_in);
-      read_line_into(din,  l_in); -- drive inputs immediately
+      read_line_into(din,  l_in);   -- drive inputs immediately
       readline(fout, l_out);
-      read_line_into(expv, l_out); -- load expected outputs
+      read_line_into(expv, l_out);  -- load expected outputs
 
+      -- Wait pipeline latency
       wait until rising_edge(clk);
       for k in 1 to LATENCY-1 loop
         wait until rising_edge(clk);
@@ -101,6 +120,10 @@ begin
       -- Sample outputs one tiny delta after the last edge
       wait for 1 ns;
       gotv := dout;
+
+      -- Always print expected and got vectors
+      report_vec("EXP", total, expv);
+      report_vec("GOT", total, gotv);
 
       -- Compare
       for i in gotv'range loop

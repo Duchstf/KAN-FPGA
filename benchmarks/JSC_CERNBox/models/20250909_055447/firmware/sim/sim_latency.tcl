@@ -1,4 +1,4 @@
-# sim_latency.tcl
+# sim.tcl
 # Usage:
 #   vivado -mode batch -source sim_latency.tcl
 
