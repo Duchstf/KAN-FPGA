@@ -11,7 +11,7 @@ package PkgKAN is
   constant INPUT_WIDTH : positive := {{INPUT_WIDTH}};
   constant OUTPUT_WIDTH : positive := {{OUTPUT_WIDTH}};
 
-  subtype input_t  is unsigned(INPUT_WIDTH-1 downto 0);
+  subtype input_t  is signed(INPUT_WIDTH-1 downto 0);
   subtype output_t is signed(OUTPUT_WIDTH-1 downto 0);
 
   type input_vec_t  is array (0 to N_INPUT-1)  of input_t;

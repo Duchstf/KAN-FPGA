@@ -208,11 +208,11 @@ class KAN_LUT:
 
         #Write the KAN core HLS file
         self.write_kan_core()
-        self.write_pkg_kan()
-        self.write_pkg_lut()
-        self.write_lut_vhd()
-        self.write_mem_files()
-        self.write_build_tcl()
+        # self.write_pkg_kan()
+        # self.write_pkg_lut()
+        # self.write_lut_vhd()
+        # self.write_mem_files()
+        # self.write_build_tcl()
         pass
 
     def write_kan_core(self, max_per_line=16):
@@ -260,12 +260,12 @@ class KAN_LUT:
                 for j in range(in_f):
                     if self.truth_tables[f"{i}_{j}_{k}"]["acive"] == 0: 
                         continue
-                    mem = f"lut_{i}_{j}_{k}.mem"
+                    lut_id = f"LUT_{i}_{j}_{k}_DATA"
                     src = f"input({j})" if i == 0 else f"out{i-1}_{j}"
                     dst = f"act_{i}_{j}_{k}"
                     blk.append(
-                        f"  i{inst_idx:02d} : entity work.LUT_{i} "
-                        f'generic map (MEMFILE=>"{mem}") '
+                        f"  i{inst_idx:02d} : entity work.LUT "
+                        f'generic map (INPUT_WIDTH=>{layer.in_precision}, OUTPUT_WIDTH=>{layer.out_precision}, LUT_TABLE=>{lut_id}) '
                         f"port map (clk, {src}, {dst});"
                     )
                     sum_terms.append(f"resize({dst}, SUM_WIDTH_{i}_{k})")
