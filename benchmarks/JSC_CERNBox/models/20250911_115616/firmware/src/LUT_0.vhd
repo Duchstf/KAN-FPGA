@@ -3,11 +3,11 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 use work.PkgLUT.all;
 
-entity {{LUT_NAME}} is
+entity LUT_0 is
     generic (
         INPUT_WIDTH  : positive;
         OUTPUT_WIDTH : positive;
-        LUT_TABLE    : {{LUT_ARRAY_TYPE}} 
+        LUT_TABLE    : lut_array_t_0 
     );
     port (
         clk : in std_logic;
@@ -16,7 +16,7 @@ entity {{LUT_NAME}} is
     );
 end entity;
 
-architecture rtl of {{LUT_NAME}} is
+architecture rtl of LUT_0 is
     begin
         process(clk)
         variable index : unsigned(INPUT_WIDTH-1 downto 0);

@@ -209,10 +209,9 @@ class KAN_LUT:
         #Write the KAN core HLS file
         self.write_kan_core()
         self.write_pkg_lut()
-        # self.write_pkg_kan()
-        # self.write_lut_vhd()
-        # self.write_mem_files()
-        # self.write_build_tcl()
+        self.write_pkg_kan()
+        self.write_lut_vhd()
+        self.write_build_tcl()
         pass
 
     def write_kan_core(self, max_per_line=16):
@@ -266,7 +265,7 @@ class KAN_LUT:
                     src = f"input({j})" if i == 0 else f"out{i-1}_{j}_q"
                     dst = f"act_{i}_{j}_{k}"
                     blk.append(
-                        f"  i{inst_idx:02d} : entity work.LUT "
+                        f"  i{inst_idx:02d} : entity work.LUT_{i} "
                         f'generic map (INPUT_WIDTH=>{layer.in_precision}, OUTPUT_WIDTH=>{layer.out_precision}, LUT_TABLE=>{lut_id}) '
                         f"port map (clk, {src}, {dst});"
                     )
@@ -344,67 +343,60 @@ class KAN_LUT:
             f.write(vhdl_text)
 
     def write_pkg_lut(self):
+        """
+        Generates a VHDL package file (PkgLUT.vhd) containing LUT constants.
 
-        def to_twos_complement(value, width):
-            """Converts an integer to its two's complement binary string."""
-            # Check if the value is within the representable range
-            min_val = -(1 << (width - 1))
-            max_val = (1 << (width - 1)) - 1
-            if not min_val <= value <= max_val:
-                raise ValueError(f"{value} is out of range for a {width}-bit signed integer.")
-
-            if value >= 0:
-                # For positive numbers, format as binary and pad with leading zeros
-                return bin(value)[2:].zfill(width)
-            else:
-                # For negative numbers, calculate (2**width) + value
-                return bin((1 << width) + value)[2:]
-
-
+        This version uses the VHDL `to_signed()` function for best practice,
+        resulting in cleaner, more readable, and more robust VHDL code.
+        """
         tpl_path = os.path.join(os.path.dirname(__file__), "templates", "src", "PkgLUT.vhd")
         with open(tpl_path, "r") as tf:
             tpl = tf.read()
 
         blocks = []
-        for i in range(0, len(self.KAN.layers)):
-            
-            layer = self.KAN.layers[i]
+        for i, layer in enumerate(self.KAN.layers):
             input_width = layer.in_precision
             output_width = layer.out_precision
 
-            #Define the lut type per layer
-            blocks.append(f"  -- Layer {i} \n"
-            f"  subtype  lut_array_t_{i} is array (0 to {(1 << input_width) - 1}) of signed({output_width - 1} downto 0);")
-            
-            #Now write the LUT values
+            # Define the LUT type for the layer
+            blocks.append(
+                f"  -- Layer {i}\n"
+                f"  subtype lut_output_t_{i} is signed({output_width - 1} downto 0);\n"
+                f"  type lut_array_t_{i} is array (0 to {(1 << input_width) - 1}) "
+                f"of lut_output_t_{i};\n"
+                
+            )
+
+            # Generate the constant for each LUT in the layer
             for j in range(layer.in_features):
                 for k in range(layer.out_features):
                     truth_table = self.truth_tables[f"{i}_{j}_{k}"]
-                    if truth_table.get("acive", 1) == 0: continue
+                    if truth_table.get("active", 1) == 0:
+                        continue
 
                     constant_name = f"LUT_{i}_{j}_{k}_DATA"
-                    type_name = f"lut_array_t_{i}"
+                    constant_type = f"lut_array_t_{i}"
 
-                    # Create a list of the new mapping strings
-                    mappings = []
-                    for idx, val in enumerate(truth_table['values_int']):
-                        binary_str = to_twos_complement(val, output_width)
-                        # The new format with a right-aligned comment for neatness
-                        mappings.append(f'    {idx} => "{binary_str}", -- {val: >4}')
+                    # Generate a list of VHDL array assignments using to_signed()
+                    mappings = [
+                        f"    {idx} => to_signed({val}, {output_width})"
+                        for idx, val in enumerate(truth_table['values_int'])
+                    ]
 
-                    joined_mappings = "\n".join(mappings)
+                    joined_mappings = ",\n".join(mappings)
 
                     # Assemble the complete VHDL constant block
                     constant_block = (
-                        f"  constant {constant_name} : {type_name} := (\n"
+                        f"  constant {constant_name} : {constant_type} := (\n"
                         f"{joined_mappings}\n"
                         f"  );"
                     )
                     blocks.append(constant_block)
 
-
+        # Substitute the generated blocks into the VHDL template
         vhdl_text = tpl.replace("{{LUT_DEFINITION_BLOCK}}", "\n\n".join(blocks) or "  -- (no layers)")
 
+        # Write the final VHDL package file
         out_path = os.path.join(self.firmware_dir, "src", "PkgLUT.vhd")
         os.makedirs(os.path.dirname(out_path), exist_ok=True)
         with open(out_path, "w") as f:
@@ -420,45 +412,15 @@ class KAN_LUT:
         for i in range(0, len(self.KAN.layers)):
 
             #Deal with the index signal
-            vhdl_text = tpl.replace("{{IDX_SIGNAL_DECLS}}", "" if i == 0 else f"signal idx : unsigned(LUT_ADDR_WIDTH_{i}-1 downto 0);")
-            vhdl_text = vhdl_text.replace("{{IDX_ASSIGNMENT}}", "" if i == 0 else f"idx <= unsigned(d + to_signed(2**(LUT_ADDR_WIDTH_{i}-1), LUT_ADDR_WIDTH_{i}));")
-            vhdl_text = vhdl_text.replace("{{IDX_SIGNAL}}", "d" if i == 0 else f"idx")
+            vhdl_text = tpl.replace("{{LUT_ARRAY_TYPE}}", f"lut_array_t_{i}")
+            vhdl_text = vhdl_text.replace("{{LUT_NAME}}", f"LUT_{i}")
 
-            #Deal with the other signals
-            vhdl_text = vhdl_text.replace("{{LUT_LAYER_NAME}}", f"LUT_{i}")
-            vhdl_text = vhdl_text.replace("{{LUT_ADDR_WIDTH}}", f"LUT_ADDR_WIDTH_{i}")
-            vhdl_text = vhdl_text.replace("{{LUT_DATA_WIDTH}}", f"LUT_DATA_WIDTH_{i}")
-            vhdl_text = vhdl_text.replace("{{LUT_SIZE}}", f"LUT_SIZE_{i}")
-            vhdl_text = vhdl_text.replace("{{LUT_INPUT_TYPE}}", f"lut_input_t_{i}")
-            vhdl_text = vhdl_text.replace("{{LUT_OUTPUT_TYPE}}", f"lut_output_t_{i}")
 
             #Write the VHDL code to the file
             out_path = os.path.join(self.firmware_dir, "src", f"LUT_{i}.vhd")
             os.makedirs(os.path.dirname(out_path), exist_ok=True)
             with open(out_path, "w") as f:
                 f.write(vhdl_text)
-
-    def write_mem_files(self):
-
-        def int_to_hex_word(value: int, bits: int = 32) -> str:
-            """Convert signed/unsigned int to hex word of given bit width."""
-            mask = (1 << bits) - 1
-            return f"{value & mask:0{bits // 4}X}"
-
-        written = 0
-        for i in range(0, len(self.KAN.layers)):
-            layer = self.KAN.layers[i]
-            for j in range(layer.in_features):
-                for k in range(layer.out_features):
-                    truth_table = self.truth_tables[f"{i}_{j}_{k}"]
-                    if truth_table.get("acive", 1) == 0: continue
-                    mem_path = os.path.join(self.firmware_dir, "mem", f"lut_{i}_{j}_{k}.mem")
-                    with open(mem_path, "w") as f:
-                        f.write("\n".join([int_to_hex_word(v, layer.out_precision) for v in truth_table['values_int']]))
-                    written += 1
-
-        # Small breadcrumb
-        print(f"Wrote {written} LUT .mem file(s) to {self.firmware_dir}/mem/")
 
     def write_build_tcl(self):
         #Just copy the template file
@@ -488,7 +450,6 @@ class KAN_LUT:
 
         input_scale, bits = self.KAN.input_layer.get_scale_factor_bits(self.is_cuda)
         x_q = (x_q / input_scale).round().to(torch.int)
-        x_q = (x_q + (2**(bits - 1))).to(torch.int)  # to unsigned index domain
 
         # reference integer outputs via the internal integer evaluator
         outs = []
