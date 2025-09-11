@@ -50,7 +50,7 @@ logging.getLogger().addHandler(console)
 config = {
     "layers": [16, 8, 5],
     "grid_range": [-8, 8],
-    "layers_bitwidth": [6, 8, 8],
+    "layers_bitwidth": [6, 5, 8],
 
     "grid_size": 30,
     "spline_order": 3,
