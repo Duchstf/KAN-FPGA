@@ -87,7 +87,7 @@ class KAN_LUT:
         spline_output = F.linear(layer.b_splines(x)[:, in_node, :], layer.scaled_spline_weight[out_node, in_node, :])
         
         #Store the LUT outputs as integers
-        lut_output = ((layer.spline_selector[out_node, in_node] * (base_output + spline_output))/scale).round().to(torch.int).tolist()   
+        lut_output = ((layer.output_quantizer(layer.spline_selector[out_node, in_node] * (base_output + spline_output)))/scale).round().to(torch.int).tolist()   
         truth_table['values_int'] = lut_output
 
         return truth_table
@@ -208,8 +208,8 @@ class KAN_LUT:
 
         #Write the KAN core HLS file
         self.write_kan_core()
+        self.write_pkg_lut()
         # self.write_pkg_kan()
-        # self.write_pkg_lut()
         # self.write_lut_vhd()
         # self.write_mem_files()
         # self.write_build_tcl()
@@ -238,9 +238,11 @@ class KAN_LUT:
             in_f, out_f = layer.in_features, layer.out_features
             acts=[f"act_{i}_{j}_{k}" for j in range(in_f) for k in range(out_f) if self.truth_tables[f"{i}_{j}_{k}"]["acive"] == 1]
             outs=[f"out{i}_{k}" for k in range(out_f)] if i != len(self.KAN.layers)-1 else []
+            outs_q=[f"out{i}_{k}_q" for k in range(out_f)] if i != len(self.KAN.layers)-1 else [] #Registers for output between layers
             block=[f"-- Layer {i} ({in_f}->{out_f})"]
             if acts: block.append(emit(acts, f"lut_output_t_{i}"))
             if outs: block.append(emit(outs, f"lut_output_t_{i}"))
+            if outs_q: block.append(emit(outs_q, f"lut_output_t_{i}"))
             block += [emit([f"sum_{i}_{k}"], f"sum_t_{i}_{k}") for k in range(out_f)]
             sections.append("\n".join(block))
 
@@ -261,7 +263,7 @@ class KAN_LUT:
                     if self.truth_tables[f"{i}_{j}_{k}"]["acive"] == 0: 
                         continue
                     lut_id = f"LUT_{i}_{j}_{k}_DATA"
-                    src = f"input({j})" if i == 0 else f"out{i-1}_{j}"
+                    src = f"input({j})" if i == 0 else f"out{i-1}_{j}_q"
                     dst = f"act_{i}_{j}_{k}"
                     blk.append(
                         f"  i{inst_idx:02d} : entity work.LUT "
@@ -281,6 +283,16 @@ class KAN_LUT:
                 blk.append("end block;")
 
                 layer_blocks.append("\n  ".join(blk))
+
+            register_block = []
+            #Add the register for the output between layers
+            if i != len(self.KAN.layers)-1:
+                register_block.append(f"-- Register for output between layers")
+                register_block.append(f"out{i}_q_reg : process(clk) begin if rising_edge(clk) then")
+                for k in range(out_f): register_block.append(f"    out{i}_{k}_q <= out{i}_{k};")
+                register_block.append(f"end if; end process;")
+                layer_blocks.append("\n  ".join(register_block))
+
         
         #Generate the VHDL code
         SIGNAL_DECLS = "\n\n".join(sections) if sections else "-- (no signals)"
@@ -333,23 +345,65 @@ class KAN_LUT:
 
     def write_pkg_lut(self):
 
+        def to_twos_complement(value, width):
+            """Converts an integer to its two's complement binary string."""
+            # Check if the value is within the representable range
+            min_val = -(1 << (width - 1))
+            max_val = (1 << (width - 1)) - 1
+            if not min_val <= value <= max_val:
+                raise ValueError(f"{value} is out of range for a {width}-bit signed integer.")
+
+            if value >= 0:
+                # For positive numbers, format as binary and pad with leading zeros
+                return bin(value)[2:].zfill(width)
+            else:
+                # For negative numbers, calculate (2**width) + value
+                return bin((1 << width) + value)[2:]
+
+
         tpl_path = os.path.join(os.path.dirname(__file__), "templates", "src", "PkgLUT.vhd")
         with open(tpl_path, "r") as tf:
             tpl = tf.read()
 
         blocks = []
         for i in range(0, len(self.KAN.layers)):
+            
             layer = self.KAN.layers[i]
-            blocks.append("\n".join([
-                f"  -- Layer {i}",
-                f"  constant LUT_SIZE_{i}        : integer := {1 << layer.in_precision};",
-                f"  constant LUT_ADDR_WIDTH_{i}  : integer := {layer.in_precision};",
-                f"  constant LUT_DATA_WIDTH_{i}  : integer := {layer.out_precision};",
-                f"  subtype  lut_input_t_{i}  is signed(LUT_ADDR_WIDTH_{i}-1 downto 0);" if i !=0 else f"  subtype  lut_input_t_{i}  is unsigned(LUT_ADDR_WIDTH_{i}-1 downto 0);" ,
-                f"  subtype  lut_output_t_{i} is signed(LUT_DATA_WIDTH_{i}-1 downto 0);",
-            ]))
+            input_width = layer.in_precision
+            output_width = layer.out_precision
 
-        vhdl_text = tpl.replace("{{LAYER_TYPES_BLOCK}}", "\n\n".join(blocks) or "  -- (no layers)")
+            #Define the lut type per layer
+            blocks.append(f"  -- Layer {i} \n"
+            f"  subtype  lut_array_t_{i} is array (0 to {(1 << input_width) - 1}) of signed({output_width - 1} downto 0);")
+            
+            #Now write the LUT values
+            for j in range(layer.in_features):
+                for k in range(layer.out_features):
+                    truth_table = self.truth_tables[f"{i}_{j}_{k}"]
+                    if truth_table.get("acive", 1) == 0: continue
+
+                    constant_name = f"LUT_{i}_{j}_{k}_DATA"
+                    type_name = f"lut_array_t_{i}"
+
+                    # Create a list of the new mapping strings
+                    mappings = []
+                    for idx, val in enumerate(truth_table['values_int']):
+                        binary_str = to_twos_complement(val, output_width)
+                        # The new format with a right-aligned comment for neatness
+                        mappings.append(f'    {idx} => "{binary_str}", -- {val: >4}')
+
+                    joined_mappings = "\n".join(mappings)
+
+                    # Assemble the complete VHDL constant block
+                    constant_block = (
+                        f"  constant {constant_name} : {type_name} := (\n"
+                        f"{joined_mappings}\n"
+                        f"  );"
+                    )
+                    blocks.append(constant_block)
+
+
+        vhdl_text = tpl.replace("{{LUT_DEFINITION_BLOCK}}", "\n\n".join(blocks) or "  -- (no layers)")
 
         out_path = os.path.join(self.firmware_dir, "src", "PkgLUT.vhd")
         os.makedirs(os.path.dirname(out_path), exist_ok=True)
