@@ -35,7 +35,7 @@ if {[llength $mems] > 0} {
 set_property top top [current_fileset]
 
 # Run out-of-context synthesis with aggressive optimization
-synth_design -top top -mode out_of_context -directive PerformanceOptimized
+synth_design -top top -mode out_of_context -directive PerformanceOptimized -retiming
 create_clock -name clk -period 8.0 [get_ports clk]
 
 # Write synthesized checkpoint

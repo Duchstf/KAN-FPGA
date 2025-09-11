@@ -18,10 +18,24 @@ package PkgKAN is
   type output_vec_t is array (0 to N_OUTPUT-1) of output_t;
 
   -- For summation
-  constant SUM_WIDTH_0: positive := 12;
-  subtype sum_t_0 is signed(SUM_WIDTH_0-1 downto 0);
-  constant SUM_WIDTH_1: positive := 10;
-  subtype sum_t_1 is signed(SUM_WIDTH_1-1 downto 0);
+  constant SUM_WIDTH_0_0: positive := 12;
+  subtype sum_t_0_0 is signed(SUM_WIDTH_0_0-1 downto 0);
+  constant SUM_WIDTH_0_1: positive := 12;
+  subtype sum_t_0_1 is signed(SUM_WIDTH_0_1-1 downto 0);
+  constant SUM_WIDTH_0_2: positive := 12;
+  subtype sum_t_0_2 is signed(SUM_WIDTH_0_2-1 downto 0);
+  constant SUM_WIDTH_0_3: positive := 12;
+  subtype sum_t_0_3 is signed(SUM_WIDTH_0_3-1 downto 0);
+  constant SUM_WIDTH_1_0: positive := 10;
+  subtype sum_t_1_0 is signed(SUM_WIDTH_1_0-1 downto 0);
+  constant SUM_WIDTH_1_1: positive := 10;
+  subtype sum_t_1_1 is signed(SUM_WIDTH_1_1-1 downto 0);
+  constant SUM_WIDTH_1_2: positive := 10;
+  subtype sum_t_1_2 is signed(SUM_WIDTH_1_2-1 downto 0);
+  constant SUM_WIDTH_1_3: positive := 10;
+  subtype sum_t_1_3 is signed(SUM_WIDTH_1_3-1 downto 0);
+  constant SUM_WIDTH_1_4: positive := 10;
+  subtype sum_t_1_4 is signed(SUM_WIDTH_1_4-1 downto 0);
   
   -- Function to saturate a signed value into W-bit signed range
   function saturate(x : signed; W : positive) return signed;

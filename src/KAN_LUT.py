@@ -410,6 +410,7 @@ class KAN_LUT:
         #Just copy the template file
         shutil.copy(os.path.join(os.path.dirname(__file__), "templates", "vivado", "build_full.tcl"), os.path.join(self.firmware_dir, "vivado", "build_full.tcl"))
         shutil.copy(os.path.join(os.path.dirname(__file__), "templates", "vivado", "build_ooc.tcl"), os.path.join(self.firmware_dir, "vivado", "build_ooc.tcl"))
+        shutil.copy(os.path.join(os.path.dirname(__file__), "templates", "vivado", "build_combitorial.tcl"), os.path.join(self.firmware_dir, "vivado", "build_combitorial.tcl"))
     
     #------------------SIMULATION------------------
     def simulate_firmware(self, rtl_dir_rel: str = "./../src", top_name: str = "KAN", n_vectors: int = 2):
@@ -456,7 +457,6 @@ class KAN_LUT:
         shutil.copy(os.path.join(os.path.dirname(__file__), "templates", "sim", "tb_kan.vhd"), os.path.join(self.firmware_dir, "sim", "tb_kan.vhd"))
         shutil.copy(os.path.join(os.path.dirname(__file__), "templates", "sim", "tb_kan_latency.vhd"), os.path.join(self.firmware_dir, "sim", "tb_kan_latency.vhd"))
     
-
     def _write_sim_tcl(self):
         shutil.copy(os.path.join(os.path.dirname(__file__), "templates", "sim", "sim.tcl"), os.path.join(self.firmware_dir, "sim", "sim.tcl"))
         shutil.copy(os.path.join(os.path.dirname(__file__), "templates", "sim", "sim_latency.tcl"), os.path.join(self.firmware_dir, "sim", "sim_latency.tcl"))

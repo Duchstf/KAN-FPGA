@@ -9,7 +9,7 @@ use xpm.vcomponents.all;
 entity {{LUT_LAYER_NAME}} is
     generic (
         MEMFILE          : string ;
-        READ_LATENCY     : integer  := 1;
+        READ_LATENCY     : integer  := 0;
         MEMORY_PRIMITIVE : string   := "distributed"
     );
     port (
