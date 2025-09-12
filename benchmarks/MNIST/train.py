@@ -48,7 +48,7 @@ config = {
     "learning_rate": 0.01,
     "weight_decay": 1e-4,
 
-    "prune_threshold": 0.8,
+    "prune_threshold": 1,
 }
 
 #Create a new directory to save the config and checkpoints
@@ -105,6 +105,7 @@ scheduler = optim.lr_scheduler.ExponentialLR(optimizer, gamma=0.9)
 # Define loss
 criterion = nn.CrossEntropyLoss()
 best_val_accuracy = 0.0
+best_remaining_fraction = 1.0
 for epoch in range(config["num_epochs"]):
     # Train
     model.train()
@@ -123,9 +124,10 @@ for epoch in range(config["num_epochs"]):
 
     
     # Prune the model
-    remaining_fraction = model.prune_below_threshold(threshold=config["prune_threshold"])
+    remaining_fraction = model.prune_below_threshold(threshold=config["prune_threshold"], epoch=epoch)
 
     #Validation
+    best_remaining_fraction = min(best_remaining_fraction, remaining_fraction)
     model.eval()
     val_loss = 0
     val_accuracy = 0
@@ -152,9 +154,9 @@ for epoch in range(config["num_epochs"]):
     )
 
     # === Save Checkpoint if Best ===
-    if val_accuracy > best_val_accuracy:
+    if val_accuracy > best_val_accuracy and remaining_fraction < 0.99 and remaining_fraction == best_remaining_fraction:
         best_val_accuracy = val_accuracy
-        checkpoint_path = f'{model_dir}/MNIST_acc{val_accuracy:.4f}_epoch{epoch + 1}.pt'
+        checkpoint_path = f'{model_dir}/MNIST_acc{val_accuracy:.4f}_epoch{epoch + 1}_remaining{best_remaining_fraction:.4f}.pt'
         torch.save({
             'epoch': epoch + 1,
             'model_state_dict': model.state_dict(),

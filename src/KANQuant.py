@@ -357,12 +357,29 @@ class KANQuant(torch.nn.Module):
         return x
 
     @torch.no_grad()
-    def prune_below_threshold(self, threshold: float = 0.01) -> float:
+    def prune_below_threshold(self, threshold: float = 0.01, epoch: int = 0) -> float:
         """
-        Pruning happens per (out_feature, in_feature) connection of a KANLinear layer.
+        The pruning threshold ramps up asymptotically toward `threshold`.
+
+        Schedule:
+        - Warmup: no pruning for the first `warmup_epochs` epochs.
+        - Then: layer_threshold = threshold * (1 - exp(-k * t)),
+                with t = max(epoch - warmup_epochs, 0)
+                and k chosen so that we reach ~95% of threshold by `target_epoch`.
         """
         total_nodes = 0
         total_remaining = 0
+
+        # ---- Asymptotic schedule parameters (adjust if desired) ----
+        warmup_epochs = 3          # keep 0 threshold before this
+        target_epoch = 20           # ~95% of final threshold by this epoch
+        t = max(epoch - warmup_epochs, 0)
+        # Solve 1 - exp(-k * (target_epoch - warmup_epochs)) = 0.95  ->  k = ln(20) / (target - warmup)
+        denom = max(target_epoch - warmup_epochs, 1)
+        k = math.log(20.0) / denom
+        scale = 1.0 - math.exp(-k * t)
+        layer_threshold = min(threshold * scale, threshold)
+        # ------------------------------------------------------------
 
         with torch.no_grad():
             for i, layer in enumerate(self.layers):
@@ -378,7 +395,7 @@ class KANQuant(torch.nn.Module):
                     self.layers[i + 1].spline_selector if i < len(self.layers) - 1 else None
                 )
 
-                layer.prune_below_threshold(threshold, next_layer_sparsity, input_state_space)
+                layer.prune_below_threshold(layer_threshold, next_layer_sparsity, input_state_space)
                 total_nodes += layer.spline_selector.numel()
                 total_remaining += layer.spline_selector.sum()
 
