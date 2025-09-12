@@ -1,6 +1,6 @@
 # sim.tcl
 # Usage:
-#   vivado -mode batch -source sim.tcl
+#   rm -rf ./KAN_SIM && vivado -mode batch -source sim.tcl
 
 # ----------------- Config -----------------
 set PROJ "KAN_SIM"

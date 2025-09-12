@@ -121,7 +121,7 @@ class KAN_LUT:
 
                 for in_index in range(in_features):
                     truth_table = self.truth_tables[f"{i}_{in_index}_{out_index}"]
-                    if truth_table.get("acive", 1) == 0: continue # pruned connection
+                    if truth_table["acive"] == 0: continue # pruned connection
                     lookup_index = sample[in_index] if i == 0 else int(running_accumulator[in_index] + 2**(input_bit_width - 1))
                     acc_out_node += truth_table['values_int'][lookup_index]
 
@@ -199,7 +199,6 @@ class KAN_LUT:
 
         #Make the directories within model_dir
         os.makedirs(os.path.join(self.firmware_dir, "src"), exist_ok=True)
-        os.makedirs(os.path.join(self.firmware_dir, "mem"), exist_ok=True)
         os.makedirs(os.path.join(self.firmware_dir, "vivado"), exist_ok=True)
         os.makedirs(os.path.join(self.firmware_dir, "testbench"), exist_ok=True)
 
@@ -261,12 +260,12 @@ class KAN_LUT:
                 for j in range(in_f):
                     if self.truth_tables[f"{i}_{j}_{k}"]["acive"] == 0: 
                         continue
-                    lut_id = f"LUT_{i}_{j}_{k}_DATA"
+                    lut_id = f"LUT_{i}_{j}_{k}_MAP"
                     src = f"input({j})" if i == 0 else f"out{i-1}_{j}_q"
                     dst = f"act_{i}_{j}_{k}"
                     blk.append(
                         f"  i{inst_idx:02d} : entity work.LUT_{i} "
-                        f'generic map (INPUT_WIDTH=>{layer.in_precision}, OUTPUT_WIDTH=>{layer.out_precision}, LUT_TABLE=>{lut_id}) '
+                        f'generic map (INPUT_WIDTH=>{layer.in_precision}, OUTPUT_WIDTH=>{layer.out_precision}, LUT_MAP=>{lut_id}) '
                         f"port map (clk, {src}, {dst});"
                     )
                     sum_terms.append(f"resize({dst}, SUM_WIDTH_{i}_{k})")
@@ -288,7 +287,9 @@ class KAN_LUT:
             if i != len(self.KAN.layers)-1:
                 register_block.append(f"-- Register for output between layers")
                 register_block.append(f"out{i}_q_reg : process(clk) begin if rising_edge(clk) then")
-                for k in range(out_f): register_block.append(f"    out{i}_{k}_q <= out{i}_{k};")
+                register_block.append(f"    if en = '1' then")
+                for k in range(out_f): register_block.append(f"        out{i}_{k}_q <= out{i}_{k};")
+                register_block.append(f"    end if;")
                 register_block.append(f"end if; end process;")
                 layer_blocks.append("\n  ".join(register_block))
 
@@ -362,31 +363,58 @@ class KAN_LUT:
             blocks.append(
                 f"  -- Layer {i}\n"
                 f"  subtype lut_output_t_{i} is signed({output_width - 1} downto 0);\n"
-                f"  type lut_array_t_{i} is array (0 to {(1 << input_width) - 1}) "
-                f"of lut_output_t_{i};\n"
-                
+                f"  type range_map_t_{i} is record\n"
+                f"    start_index : integer;\n"
+                f"    end_index : integer;\n"
+                f"    value : lut_output_t_{i};\n"
+                f"  end record;\n"
+                f"  type lut_map_array_t_{i} is array (natural range <>) of range_map_t_{i};\n"                
             )
 
             # Generate the constant for each LUT in the layer
             for j in range(layer.in_features):
                 for k in range(layer.out_features):
+
                     truth_table = self.truth_tables[f"{i}_{j}_{k}"]
-                    if truth_table.get("active", 1) == 0:
-                        continue
+                    values = truth_table['values_int']
+                    if truth_table["acive"] == 0: continue
+                    if not values: continue 
 
-                    constant_name = f"LUT_{i}_{j}_{k}_DATA"
-                    constant_type = f"lut_array_t_{i}"
+                    # --- Core Grouping Algorithm ---
+                    ranges = []
+                    start_index = 0
+                    current_val = values[0]
+                    
+                    # Iterate through values to find runs of identical numbers
+                    for idx, val in enumerate(values):
+                        if val != current_val:
+                            # The run has ended. Record the previous range.
+                            end_index = idx - 1
+                            vhdl_val = f"to_signed({current_val}, {output_width})"
+                            ranges.append(
+                                f"(start_index => {start_index}, end_index => {end_index}, value => {vhdl_val})"
+                            )
+                            # Start a new run
+                            start_index = idx
+                            current_val = val
+                    
+                    # After the loop, always record the last run
+                    end_index = len(values) - 1
+                    vhdl_val = f"to_signed({current_val}, {output_width})"
+                    ranges.append(
+                        f"(start_index => {start_index}, end_index => {end_index}, value => {vhdl_val})"
+                    )
+                    # --- End of Algorithm ---
 
-                    # Generate a list of VHDL array assignments using to_signed()
-                    mappings = [
-                        f"    {idx} => to_signed({val}, {output_width})"
-                        for idx, val in enumerate(truth_table['values_int'])
-                    ]
+                    # 3. Assemble the VHDL constant block
+                    constant_name = f"LUT_{i}_{j}_{k}_MAP"
+                    constant_type = f"lut_map_array_t_{i}"
+                    
+                    # Format each range on a new line for readability
+                    joined_mappings = ",\n".join([f"    {r}" for r in ranges])
 
-                    joined_mappings = ",\n".join(mappings)
-
-                    # Assemble the complete VHDL constant block
                     constant_block = (
+                        f"  -- LUT for Layer {i}, Input {j}, Output {k}\n"
                         f"  constant {constant_name} : {constant_type} := (\n"
                         f"{joined_mappings}\n"
                         f"  );"
@@ -412,7 +440,7 @@ class KAN_LUT:
         for i in range(0, len(self.KAN.layers)):
 
             #Deal with the index signal
-            vhdl_text = tpl.replace("{{LUT_ARRAY_TYPE}}", f"lut_array_t_{i}")
+            vhdl_text = tpl.replace("{{LUT_MAP_TYPE}}", f"lut_map_array_t_{i}")
             vhdl_text = vhdl_text.replace("{{LUT_NAME}}", f"LUT_{i}")
 
 
