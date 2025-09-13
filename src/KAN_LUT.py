@@ -182,7 +182,7 @@ class KAN_LUT:
         return max_err
 
     #----------FIRMWARE IMPLEMENTATION----------
-    def generate_firmware(self, adder_tree_depth=2):
+    def generate_firmware(self, adder_tree=True):
         """
         Generate the firmware for the KAN LUT
         """
@@ -207,7 +207,7 @@ class KAN_LUT:
         shutil.copy(os.path.join(os.path.dirname(__file__), "templates", "src", "top.vhd"), os.path.join(self.firmware_dir, "src", "top.vhd"))
 
         #Write the KAN core HLS file
-        self.write_kan_core(adder_tree_depth=adder_tree_depth)
+        self.write_kan_core(adder_tree=adder_tree)
         self.write_pkg_kan()
         self.write_pkg_lut()
         self.write_lut_vhd()
@@ -215,13 +215,13 @@ class KAN_LUT:
         self.write_build_tcl()
         pass
 
-    def write_kan_core(self, max_per_line=16, adder_tree_depth=2):
+    def write_kan_core(self, max_per_line=16, adder_tree=True):
         """
-        Write the KAN core HLS file
+        Write the KAN core VHDL file with balanced, pipelined adder trees.
         """
 
         # ---------- Build SIGNAL_DECLS ----------
-        #Helper function to emit a list of signals
+        # Helper function to emit a list of signals
         def emit(names, typ="lut_output_t"):
             lines=[]; buf=[]
             for n in names:
@@ -241,7 +241,6 @@ class KAN_LUT:
             block=[f"-- Layer {i} ({in_f}->{out_f})"]
             if acts: block.append(emit(acts, f"lut_output_t_{i}"))
             if outs: block.append(emit(outs, f"lut_output_t_{i}"))
-            block += [emit([f"sum_{i}_{k}"], f"sum_t_{i}_{k}") for k in range(out_f)]
             sections.append("\n".join(block))
 
         # ---------- Build LAYER_BLOCKS ----------
@@ -251,47 +250,144 @@ class KAN_LUT:
         for i, layer in enumerate(self.KAN.layers):
             in_f, out_f = layer.in_features, layer.out_features
 
-            for k in range(out_f):
-                blk = [f"-- LAYER {i}, ch {k}",
-                    f"gen_l{i}c{k} : block",
-                    "begin"]
+            # --- PRE-SCAN to find max inputs and determine fixed layer depth ---
+            max_inputs_in_layer = 0
+            all_sum_terms_in_layer = []
+            for k_scan in range(out_f):
+                sum_terms_scan = [
+                    f"resize(act_{i}_{j}_{k_scan}, SUM_WIDTH_{i}_{k_scan})"
+                    for j in range(in_f)
+                    if self.truth_tables[f"{i}_{j}_{k_scan}"]["acive"] == 1
+                ]
+                all_sum_terms_in_layer.append(sum_terms_scan)
+                max_inputs_in_layer = max(max_inputs_in_layer, len(sum_terms_scan))
+            
+            # Calculate the fixed pipeline depth for this layer
+            layer_depth = ceil(log2(max_inputs_in_layer)) if max_inputs_in_layer > 1 else 1
 
-                inst_idx, sum_terms = 0, []
+            # --- Generate blocks for each channel in the layer ---
+            for k in range(out_f):
+                blk = [
+                    f"-- LAYER {i}, ch {k}",
+                    f"gen_l{i}c{k} : block",
+                ]
+                
+                # --- Instantiations and collecting sum terms ---
+                inst_idx = 0
+                sum_terms = all_sum_terms_in_layer[k]
+                instantiations = []
                 for j in range(in_f):
                     if self.truth_tables[f"{i}_{j}_{k}"]["acive"] == 0: 
                         continue
                     mem = f"lut_{i}_{j}_{k}.mem"
                     src = f"input({j})" if i == 0 else f"out{i-1}_{j}"
                     dst = f"act_{i}_{j}_{k}"
-                    blk.append(
+                    instantiations.append(
                         f"  i{inst_idx:02d} : entity work.LUT_{i} "
                         f'generic map (MEMFILE=>"{mem}") '
                         f"port map (clk, {src}, {dst});"
                     )
-                    sum_terms.append(f"resize({dst}, SUM_WIDTH_{i}_{k})")
                     inst_idx += 1
 
-                if sum_terms:
-                    target = f"sum_{i}_{k}"
-                    rhs = " + ".join(sum_terms)
-                    blk.append(f"  {target} <= {rhs};")
-                    blk.append(f"  output({k}) <= saturate({target}, {layer.out_precision});") if i == len(self.KAN.layers)-1 else blk.append(f"  out{i}_{k} <= saturate({target}, {layer.out_precision});")
-                else:
-                    blk.append(f"  output({k}) <= (others => '0');") if i == len(self.KAN.layers)-1 else blk.append(f"  out{i}_{k} <= (others => '0');")
-                blk.append("end block;")
+                # --- Adder Tree Logic ---
+                adder_tree_signals = []
+                adder_tree_logic = []
+                if sum_terms and adder_tree:
+                    # Declare the final sum signal locally
+                    adder_tree_signals.append(f"signal sum_{i}_{k} : sum_t_{i}_{k};")
+                    
+                    # Start the clocked process
+                    adder_tree_logic.extend([
+                        "adder_tree : process(clk)",
+                        "begin",
+                        "  if rising_edge(clk) then"
+                    ])
+                    
+                    current_stage_terms = sum_terms
+                    # Build the pipeline for the fixed layer depth
+                    for stage in range(1, layer_depth + 1):
+                        is_last_stage = (stage == layer_depth)
+                        adder_tree_logic.append(f"    -- Stage {stage}")
+                        
+                        # If we've already summed to a single term, just pipeline it
+                        if len(current_stage_terms) == 1:
+                            source = current_stage_terms[0]
+                            target = f"sum_{i}_{k}" if is_last_stage else f"s{stage}_{k}_pipe"
+                            if not is_last_stage:
+                                adder_tree_signals.append(f"signal {target} : sum_t_{i}_{k};")
+                            adder_tree_logic.append(f"    {target} <= {source};")
+                            current_stage_terms = [target]
+                            continue
 
+                        # Otherwise, perform a reduction stage (summing in pairs)
+                        num_results_this_stage = ceil(len(current_stage_terms) / 2)
+                        next_stage_terms = []
+                        
+                        # Declare intermediate signals for this stage if they are not the final sum
+                        if not (is_last_stage and num_results_this_stage == 1):
+                            stage_sigs = [f"s{stage}_{j}" for j in range(num_results_this_stage)]
+                            adder_tree_signals.append(f"signal {', '.join(stage_sigs)} : sum_t_{i}_{k};")
+                        
+                        for j in range(num_results_this_stage):
+                            term1 = current_stage_terms[2*j]
+                            
+                            # Determine the target signal for this specific addition
+                            if is_last_stage and num_results_this_stage == 1:
+                                target = f"sum_{i}_{k}"
+                            else:
+                                target = f"s{stage}_{j}"
+                            
+                            # Check for the second term in the pair
+                            if (2*j + 1) < len(current_stage_terms):
+                                term2 = current_stage_terms[2*j + 1]
+                                adder_tree_logic.append(f"    {target} <= {term1} + {term2};")
+                            else: # Odd term out, passes through
+                                adder_tree_logic.append(f"    {target} <= {term1};")
+                            next_stage_terms.append(target)
+                            
+                        current_stage_terms = next_stage_terms
+                    
+                    adder_tree_logic.extend(["  end if;", "end process;"])
+
+                # --- Assemble the block ---
+                blk.append("\n  ".join(sorted(list(set(adder_tree_signals))))) # Signals first
+                blk.append("begin")
+                blk.extend(instantiations)
+                
+                if sum_terms:
+                    if adder_tree:
+                        blk.extend([f"  {line}" for line in adder_tree_logic])
+                    else: # Fallback to original combinational logic
+                        blk.append(f"  signal sum_{i}_{k} : sum_t_{i}_{k};")
+                        rhs = " + ".join(sum_terms)
+                        blk.append(f"  sum_{i}_{k} <= {rhs};")
+
+                    target = f"sum_{i}_{k}"
+                    if i == num_layers - 1:
+                        blk.append(f"  output({k}) <= saturate({target}, {layer.out_precision});")
+                    else:
+                        blk.append(f"  out{i}_{k} <= saturate({target}, {layer.out_precision});")
+                else: # No active inputs for this channel
+                    if i == num_layers - 1:
+                        blk.append(f"  output({k}) <= (others => '0');")
+                    else:
+                        blk.append(f"  out{i}_{k} <= (others => '0');")
+                
+                blk.append("end block;")
                 layer_blocks.append("\n  ".join(blk))
-        
-        #Generate the VHDL code
+
+        # ---------- Final VHDL Generation ----------
         SIGNAL_DECLS = "\n\n".join(sections) if sections else "-- (no signals)"
         LAYER_BLOCKS = "\n\n  ".join(layer_blocks) if layer_blocks else "-- (no layers)"
 
-        with open(os.path.join(os.path.dirname(__file__), "templates", "src", "KAN.vhd"), "r") as tf:
+        # Assumes a template file exists at this path
+        template_path = os.path.join(os.path.dirname(__file__), "templates", "src", "KAN.vhd")
+        with open(template_path, "r") as tf:
             tpl = tf.read()
         vhdl_text = tpl.replace("{{SIGNAL_DECLS}}", SIGNAL_DECLS)
         vhdl_text = vhdl_text.replace("{{LAYER_BLOCKS}}", LAYER_BLOCKS)
 
-        #Write the VHDL code to the file
+        # Write the VHDL code to the file
         out_vhd = os.path.join(self.firmware_dir, "src", "KAN.vhd")
         os.makedirs(os.path.dirname(out_vhd), exist_ok=True)
         with open(out_vhd, "w") as f:

@@ -19,7 +19,7 @@ architecture sim of tb_kan is
   signal din  : input_vec_t  := (others => (others => '0'));
   signal dout : output_vec_t;
 
-  constant LATENCY : natural := 3;
+  constant LATENCY : natural := 10;
 
   ---------------------------------------------------------------------------
   -- Helper: integer -> same kind (signed/unsigned) as template
