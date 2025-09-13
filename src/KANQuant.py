@@ -357,7 +357,7 @@ class KANQuant(torch.nn.Module):
         return x
 
     @torch.no_grad()
-    def prune_below_threshold(self, threshold: float = 0.01, epoch: int = 0) -> float:
+    def prune_below_threshold(self, threshold: float = 0.01, epoch: int = 0, target_epoch: int = 20, warmup_epochs: int = 3) -> float:
         """
         The pruning threshold ramps up asymptotically toward `threshold`.
 
@@ -371,8 +371,6 @@ class KANQuant(torch.nn.Module):
         total_remaining = 0
 
         # ---- Asymptotic schedule parameters (adjust if desired) ----
-        warmup_epochs = 3          # keep 0 threshold before this
-        target_epoch = 20           # ~95% of final threshold by this epoch
         t = max(epoch - warmup_epochs, 0)
         # Solve 1 - exp(-k * (target_epoch - warmup_epochs)) = 0.95  ->  k = ln(20) / (target - warmup)
         denom = max(target_epoch - warmup_epochs, 1)

@@ -49,6 +49,9 @@ config = {
     "weight_decay": 1e-4,
 
     "prune_threshold": 1,
+    "target_epoch": 40,
+    "warmup_epochs": 10,
+    "random_seed": seed,
 }
 
 #Create a new directory to save the config and checkpoints
@@ -124,7 +127,7 @@ for epoch in range(config["num_epochs"]):
 
     
     # Prune the model
-    remaining_fraction = model.prune_below_threshold(threshold=config["prune_threshold"], epoch=epoch)
+    remaining_fraction = model.prune_below_threshold(threshold=config["prune_threshold"], epoch=epoch, target_epoch=config["target_epoch"], warmup_epochs=config["warmup_epochs"])
 
     #Validation
     best_remaining_fraction = min(best_remaining_fraction, remaining_fraction)
