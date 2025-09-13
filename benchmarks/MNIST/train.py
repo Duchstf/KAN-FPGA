@@ -157,15 +157,16 @@ for epoch in range(config["num_epochs"]):
     )
 
     # === Save Checkpoint if Best ===
-    if val_accuracy > best_val_accuracy and remaining_fraction < 0.99 and remaining_fraction == best_remaining_fraction:
-        best_val_accuracy = val_accuracy
-        checkpoint_path = f'{model_dir}/MNIST_acc{val_accuracy:.4f}_epoch{epoch + 1}_remaining{best_remaining_fraction:.4f}.pt'
-        torch.save({
-            'epoch': epoch + 1,
-            'model_state_dict': model.state_dict(),
-            'optimizer_state_dict': optimizer.state_dict(),
-            'val_accuracy': val_accuracy,
-            'val_loss': val_loss,
-            'remaining_fraction': remaining_fraction,
-        }, checkpoint_path)
-        logging.info(f"New best model saved with val accuracy: {val_accuracy:.4f}")
+    if remaining_fraction < 0.99:
+        if val_accuracy > best_val_accuracy or remaining_fraction == best_remaining_fraction:
+            best_val_accuracy = val_accuracy
+            checkpoint_path = f'{model_dir}/MNIST_epoch{epoch + 1}_acc{val_accuracy:.4f}_remaining{best_remaining_fraction:.4f}.pt'
+            torch.save({
+                'epoch': epoch + 1,
+                'model_state_dict': model.state_dict(),
+                'optimizer_state_dict': optimizer.state_dict(),
+                'val_accuracy': val_accuracy,
+                'val_loss': val_loss,
+                'remaining_fraction': remaining_fraction,
+            }, checkpoint_path)
+            logging.info(f"New model saved with val accuracy: {val_accuracy:.4f} and remaining fraction: {remaining_fraction:.4f}")
