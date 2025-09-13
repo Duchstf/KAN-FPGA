@@ -201,7 +201,6 @@ class KAN_LUT:
         os.makedirs(os.path.join(self.firmware_dir, "src"), exist_ok=True)
         os.makedirs(os.path.join(self.firmware_dir, "mem"), exist_ok=True)
         os.makedirs(os.path.join(self.firmware_dir, "vivado"), exist_ok=True)
-        os.makedirs(os.path.join(self.firmware_dir, "testbench"), exist_ok=True)
 
         #Copy the top file to src
         shutil.copy(os.path.join(os.path.dirname(__file__), "templates", "src", "top.vhd"), os.path.join(self.firmware_dir, "src", "top.vhd"))
