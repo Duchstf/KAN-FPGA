@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version      : Vivado v.2024.1 (lin64) Build 5076996 Wed May 22 18:36:09 MDT 2024
-| Date              : Fri Sep 12 06:14:37 2025
+| Date              : Fri Sep 12 07:13:50 2025
 | Host              : correlator4.fnal.gov running 64-bit AlmaLinux release 9.4 (Shamrock Pampas Cat)
 | Command           : report_timing_summary -file /data/dhoang/test/KAN-FPGA/benchmarks/JSC_CERNBox/models/20250912_052133/firmware/KAN_FPGA_PROJECT/post_impl_timing.rpt
 | Design            : top
@@ -54,7 +54,7 @@ Table of Contents
 2. checking constant_clock (0)
 3. checking pulse_width_clock (0)
 4. checking unconstrained_internal_endpoints (0)
-5. checking no_input_delay (96)
+5. checking no_input_delay (97)
 6. checking no_output_delay (40)
 7. checking multiple_clock (0)
 8. checking generated_clocks (0)
@@ -85,9 +85,9 @@ Table of Contents
  There are 0 pins that are not constrained for maximum delay due to constant clock.
 
 
-5. checking no_input_delay (96)
+5. checking no_input_delay (97)
 -------------------------------
- There are 96 input ports with no input delay specified. (HIGH)
+ There are 97 input ports with no input delay specified. (HIGH)
 
  There are 0 input ports with no input delay but user has a false path constraint.
 
@@ -139,7 +139,7 @@ Table of Contents
 
     WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS Total Endpoints      WHS(ns)      THS(ns)  THS Failing Endpoints  THS Total Endpoints     WPWS(ns)     TPWS(ns)  TPWS Failing Endpoints  TPWS Total Endpoints  
     -------      -------  ---------------------  -------------------      -------      -------  ---------------------  -------------------     --------     --------  ----------------------  --------------------  
-      4.281        0.000                      0                  253        0.311        0.000                      0                  253        3.725        0.000                       0                   659  
+      6.409        0.000                      0                 1481        0.038        0.000                      0                 1481        3.725        0.000                       0                  1887  
 
 
 All user specified timing constraints are met.
@@ -162,7 +162,7 @@ clk    {0.000 4.000}        8.000           125.000
 
 Clock             WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS Total Endpoints      WHS(ns)      THS(ns)  THS Failing Endpoints  THS Total Endpoints     WPWS(ns)     TPWS(ns)  TPWS Failing Endpoints  TPWS Total Endpoints  
 -----             -------      -------  ---------------------  -------------------      -------      -------  ---------------------  -------------------     --------     --------  ----------------------  --------------------  
-clk                 4.281        0.000                      0                  253        0.311        0.000                      0                  253        3.725        0.000                       0                   659  
+clk                 6.409        0.000                      0                 1481        0.038        0.000                      0                 1481        3.725        0.000                       0                  1887  
 
 
 ------------------------------------------------------------------------------------------------
@@ -193,27 +193,27 @@ Path Group    From Clock    To Clock          WNS(ns)      TNS(ns)  TNS Failing 
 From Clock:  clk
   To Clock:  clk
 
-Setup :            0  Failing Endpoints,  Worst Slack        4.281ns,  Total Violation        0.000ns
-Hold  :            0  Failing Endpoints,  Worst Slack        0.311ns,  Total Violation        0.000ns
+Setup :            0  Failing Endpoints,  Worst Slack        6.409ns,  Total Violation        0.000ns
+Hold  :            0  Failing Endpoints,  Worst Slack        0.038ns,  Total Violation        0.000ns
 PW    :            0  Failing Endpoints,  Worst Slack        3.725ns,  Total Violation        0.000ns
 ---------------------------------------------------------------------------------------------------
 
 
 Max Delay Paths
 --------------------------------------------------------------------------------------
-Slack (MET) :             4.281ns  (required time - arrival time)
-  Source:                 kan_inst/gen_l0c3.i06/rom_i/xpm_memory_base_inst/gen_rd_a.gen_rd_a_synth_template.gen_rf_narrow_reg.douta_reg_reg[4]/C
+Slack (MET) :             6.409ns  (required time - arrival time)
+  Source:                 kan_inst/sum_pipe_l0_reg[4,7,0][6]/C
                             (rising edge-triggered cell FDRE clocked by clk  {rise@0.000ns fall@4.000ns period=8.000ns})
-  Destination:            kan_inst/gen_l1c4.i03/rom_i/xpm_memory_base_inst/gen_rd_a.gen_rd_a_synth_template.gen_rf_narrow_reg.douta_reg_reg[6]/D
+  Destination:            kan_inst/gen_layer1_channels[1].gen_layer1_luts[7].lut_1_inst/rom_i/xpm_memory_base_inst/gen_rd_a.gen_rd_a_synth_template.gen_rf_narrow_reg.douta_reg_reg[0]/D
                             (rising edge-triggered cell FDRE clocked by clk  {rise@0.000ns fall@4.000ns period=8.000ns})
   Path Group:             clk
   Path Type:              Setup (Max at Slow Process Corner)
   Requirement:            8.000ns  (clk rise@8.000ns - clk rise@0.000ns)
-  Data Path Delay:        3.699ns  (logic 1.015ns (27.438%)  route 2.684ns (72.562%))
-  Logic Levels:           8  (LUT3=2 LUT5=2 LUT6=4)
+  Data Path Delay:        1.571ns  (logic 0.348ns (22.146%)  route 1.223ns (77.854%))
+  Logic Levels:           2  (LUT5=1 LUT6=1)
   Clock Path Skew:        -0.009ns (DCD - SCD + CPR)
-    Destination Clock Delay (DCD):    0.021ns = ( 8.021 - 8.000 ) 
-    Source Clock Delay      (SCD):    0.030ns
+    Destination Clock Delay (DCD):    0.020ns = ( 8.020 - 8.000 ) 
+    Source Clock Delay      (SCD):    0.029ns
     Clock Pessimism Removal (CPR):    0.000ns
   Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
     Total System Jitter     (TSJ):    0.071ns
@@ -225,52 +225,34 @@ Slack (MET) :             4.281ns  (required time - arrival time)
   -------------------------------------------------------------------    -------------------
                          (clock clk rise edge)        0.000     0.000 r  
                                                       0.000     0.000 r  clk (IN)
-                         net (fo=658, unset)          0.030     0.030    kan_inst/gen_l0c3.i06/rom_i/xpm_memory_base_inst/clka
-    SLICE_X31Y91         FDRE                                         r  kan_inst/gen_l0c3.i06/rom_i/xpm_memory_base_inst/gen_rd_a.gen_rd_a_synth_template.gen_rf_narrow_reg.douta_reg_reg[4]/C
+                         net (fo=1886, unset)         0.029     0.029    kan_inst/clk
+    SLICE_X20Y46         FDRE                                         r  kan_inst/sum_pipe_l0_reg[4,7,0][6]/C
   -------------------------------------------------------------------    -------------------
-    SLICE_X31Y91         FDRE (Prop_CFF_SLICEM_C_Q)
-                                                      0.078     0.108 r  kan_inst/gen_l0c3.i06/rom_i/xpm_memory_base_inst/gen_rd_a.gen_rd_a_synth_template.gen_rf_narrow_reg.douta_reg_reg[4]/Q
-                         net (fo=25, routed)          0.409     0.517    kan_inst/gen_l0c3.i03/rom_i/xpm_memory_base_inst_i_63__2_0[1]
-    SLICE_X33Y96         LUT6 (Prop_G6LUT_SLICEM_I3_O)
-                                                      0.100     0.617 r  kan_inst/gen_l0c3.i03/rom_i/xpm_memory_base_inst_i_117__5/O
-                         net (fo=2, routed)           0.310     0.927    kan_inst/gen_l0c3.i03/rom_i/xpm_memory_base_inst_i_117__5_n_0
-    SLICE_X31Y95         LUT6 (Prop_H6LUT_SLICEM_I1_O)
-                                                      0.101     1.028 r  kan_inst/gen_l0c3.i03/rom_i/xpm_memory_base_inst_i_113__1/O
-                         net (fo=2, routed)           0.168     1.196    kan_inst/gen_l0c3.i03/rom_i/xpm_memory_base_inst_i_113__1_n_0
-    SLICE_X33Y95         LUT5 (Prop_A5LUT_SLICEM_I1_O)
-                                                      0.070     1.266 r  kan_inst/gen_l0c3.i03/rom_i/xpm_memory_base_inst_i_71__2/O
-                         net (fo=2, routed)           0.399     1.665    kan_inst/gen_l0c3.i03/rom_i/xpm_memory_base_inst_i_71__2_n_0
-    SLICE_X33Y95         LUT3 (Prop_C5LUT_SLICEM_I0_O)
-                                                      0.099     1.764 f  kan_inst/gen_l0c3.i03/rom_i/xpm_memory_base_inst_i_37__1/O
-                         net (fo=3, routed)           0.193     1.956    kan_inst/gen_l0c3.i03/rom_i/xpm_memory_base_inst_i_37__1_n_0
-    SLICE_X33Y95         LUT3 (Prop_F6LUT_SLICEM_I1_O)
-                                                      0.123     2.079 r  kan_inst/gen_l0c3.i03/rom_i/xpm_memory_base_inst_i_31__2/O
-                         net (fo=2, routed)           0.119     2.198    kan_inst/gen_l0c3.i03/rom_i/xpm_memory_base_inst_i_31__2_n_0
-    SLICE_X33Y93         LUT6 (Prop_A6LUT_SLICEM_I1_O)
-                                                      0.150     2.348 f  kan_inst/gen_l0c3.i03/rom_i/xpm_memory_base_inst_i_9__1/O
-                         net (fo=4, routed)           0.339     2.686    kan_inst/gen_l0c3.i03/rom_i/xpm_memory_base_inst_i_9__1_n_0
-    SLICE_X34Y94         LUT6 (Prop_G6LUT_SLICEL_I4_O)
-                                                      0.149     2.835 r  kan_inst/gen_l0c3.i03/rom_i/xpm_memory_base_inst_i_4__2/O
-                         net (fo=35, routed)          0.677     3.512    kan_inst/gen_l1c4.i03/rom_i/xpm_memory_base_inst/addra[1]
-    SLICE_X35Y76         LUT5 (Prop_D6LUT_SLICEM_I1_O)
-                                                      0.145     3.657 r  kan_inst/gen_l1c4.i03/rom_i/xpm_memory_base_inst/g0_b6/O
-                         net (fo=1, routed)           0.072     3.729    kan_inst/gen_l1c4.i03/rom_i/xpm_memory_base_inst/p_0_out[6]
-    SLICE_X35Y76         FDRE                                         r  kan_inst/gen_l1c4.i03/rom_i/xpm_memory_base_inst/gen_rd_a.gen_rd_a_synth_template.gen_rf_narrow_reg.douta_reg_reg[6]/D
+    SLICE_X20Y46         FDRE (Prop_GFF_SLICEL_C_Q)
+                                                      0.079     0.108 f  kan_inst/sum_pipe_l0_reg[4,7,0][6]/Q
+                         net (fo=4, routed)           0.155     0.263    kan_inst/sum_pipe_l0_reg[4,7,0][6]
+    SLICE_X20Y47         LUT6 (Prop_G6LUT_SLICEL_I1_O)
+                                                      0.123     0.386 f  kan_inst/xpm_memory_base_inst_i_3__6/O
+                         net (fo=33, routed)          1.020     1.405    kan_inst/gen_layer1_channels[1].gen_layer1_luts[7].lut_1_inst/rom_i/xpm_memory_base_inst/addra[2]
+    SLICE_X23Y55         LUT5 (Prop_D6LUT_SLICEL_I2_O)
+                                                      0.146     1.551 r  kan_inst/gen_layer1_channels[1].gen_layer1_luts[7].lut_1_inst/rom_i/xpm_memory_base_inst/g0_b0/O
+                         net (fo=1, routed)           0.049     1.600    kan_inst/gen_layer1_channels[1].gen_layer1_luts[7].lut_1_inst/rom_i/xpm_memory_base_inst/p_0_out[0]
+    SLICE_X23Y55         FDRE                                         r  kan_inst/gen_layer1_channels[1].gen_layer1_luts[7].lut_1_inst/rom_i/xpm_memory_base_inst/gen_rd_a.gen_rd_a_synth_template.gen_rf_narrow_reg.douta_reg_reg[0]/D
   -------------------------------------------------------------------    -------------------
 
                          (clock clk rise edge)        8.000     8.000 r  
                                                       0.000     8.000 r  clk (IN)
-                         net (fo=658, unset)          0.021     8.021    kan_inst/gen_l1c4.i03/rom_i/xpm_memory_base_inst/clka
-    SLICE_X35Y76         FDRE                                         r  kan_inst/gen_l1c4.i03/rom_i/xpm_memory_base_inst/gen_rd_a.gen_rd_a_synth_template.gen_rf_narrow_reg.douta_reg_reg[6]/C
-                         clock pessimism              0.000     8.021    
-                         clock uncertainty           -0.035     7.986    
-    SLICE_X35Y76         FDRE (Setup_DFF_SLICEM_C_D)
-                                                      0.025     8.011    kan_inst/gen_l1c4.i03/rom_i/xpm_memory_base_inst/gen_rd_a.gen_rd_a_synth_template.gen_rf_narrow_reg.douta_reg_reg[6]
+                         net (fo=1886, unset)         0.020     8.020    kan_inst/gen_layer1_channels[1].gen_layer1_luts[7].lut_1_inst/rom_i/xpm_memory_base_inst/clka
+    SLICE_X23Y55         FDRE                                         r  kan_inst/gen_layer1_channels[1].gen_layer1_luts[7].lut_1_inst/rom_i/xpm_memory_base_inst/gen_rd_a.gen_rd_a_synth_template.gen_rf_narrow_reg.douta_reg_reg[0]/C
+                         clock pessimism              0.000     8.020    
+                         clock uncertainty           -0.035     7.985    
+    SLICE_X23Y55         FDRE (Setup_DFF_SLICEL_C_D)
+                                                      0.025     8.010    kan_inst/gen_layer1_channels[1].gen_layer1_luts[7].lut_1_inst/rom_i/xpm_memory_base_inst/gen_rd_a.gen_rd_a_synth_template.gen_rf_narrow_reg.douta_reg_reg[0]
   -------------------------------------------------------------------
-                         required time                          8.011    
-                         arrival time                          -3.729    
+                         required time                          8.010    
+                         arrival time                          -1.600    
   -------------------------------------------------------------------
-                         slack                                  4.281    
+                         slack                                  6.409    
 
 
 
@@ -278,55 +260,49 @@ Slack (MET) :             4.281ns  (required time - arrival time)
 
 Min Delay Paths
 --------------------------------------------------------------------------------------
-Slack (MET) :             0.311ns  (arrival time - required time)
-  Source:                 kan_inst/gen_l0c1.i10/rom_i/xpm_memory_base_inst/gen_rd_a.gen_rd_a_synth_template.gen_rf_narrow_reg.douta_reg_reg[0]/C
+Slack (MET) :             0.038ns  (arrival time - required time)
+  Source:                 kan_inst/gen_layer0_channels[1].gen_layer0_luts[15].lut_0_inst/rom_i/xpm_memory_base_inst/gen_rd_a.gen_rd_a_synth_template.gen_rf_narrow_reg.douta_reg_reg[0]/C
                             (rising edge-triggered cell FDRE clocked by clk  {rise@0.000ns fall@4.000ns period=8.000ns})
-  Destination:            kan_inst/gen_l1c4.i01/rom_i/xpm_memory_base_inst/gen_rd_a.gen_rd_a_synth_template.gen_rf_narrow_reg.douta_reg_reg[5]/D
+  Destination:            kan_inst/sum_pipe_l0_reg[1,1,7][1]/D
                             (rising edge-triggered cell FDRE clocked by clk  {rise@0.000ns fall@4.000ns period=8.000ns})
   Path Group:             clk
   Path Type:              Hold (Min at Fast Process Corner)
   Requirement:            0.000ns  (clk rise@0.000ns - clk rise@0.000ns)
-  Data Path Delay:        0.365ns  (logic 0.112ns (30.649%)  route 0.253ns (69.351%))
-  Logic Levels:           3  (LUT5=1 LUT6=2)
-  Clock Path Skew:        0.007ns (DCD - SCD - CPR)
-    Destination Clock Delay (DCD):    0.019ns
-    Source Clock Delay      (SCD):    0.012ns
+  Data Path Delay:        0.090ns  (logic 0.059ns (65.488%)  route 0.031ns (34.512%))
+  Logic Levels:           1  (LUT4=1)
+  Clock Path Skew:        0.005ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    0.018ns
+    Source Clock Delay      (SCD):    0.013ns
     Clock Pessimism Removal (CPR):    -0.000ns
 
     Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
   -------------------------------------------------------------------    -------------------
                          (clock clk rise edge)        0.000     0.000 r  
                                                       0.000     0.000 r  clk (IN)
-                         net (fo=658, unset)          0.012     0.012    kan_inst/gen_l0c1.i10/rom_i/xpm_memory_base_inst/clka
-    SLICE_X37Y69         FDRE                                         r  kan_inst/gen_l0c1.i10/rom_i/xpm_memory_base_inst/gen_rd_a.gen_rd_a_synth_template.gen_rf_narrow_reg.douta_reg_reg[0]/C
+                         net (fo=1886, unset)         0.013     0.013    kan_inst/gen_layer0_channels[1].gen_layer0_luts[15].lut_0_inst/rom_i/xpm_memory_base_inst/clka
+    SLICE_X20Y60         FDRE                                         r  kan_inst/gen_layer0_channels[1].gen_layer0_luts[15].lut_0_inst/rom_i/xpm_memory_base_inst/gen_rd_a.gen_rd_a_synth_template.gen_rf_narrow_reg.douta_reg_reg[0]/C
   -------------------------------------------------------------------    -------------------
-    SLICE_X37Y69         FDRE (Prop_DFF_SLICEL_C_Q)
-                                                      0.039     0.051 r  kan_inst/gen_l0c1.i10/rom_i/xpm_memory_base_inst/gen_rd_a.gen_rd_a_synth_template.gen_rf_narrow_reg.douta_reg_reg[0]/Q
-                         net (fo=5, routed)           0.073     0.124    kan_inst/gen_l0c1.i03/rom_i/xpm_memory_base_inst_i_5__0_3[0]
-    SLICE_X36Y69         LUT6 (Prop_H6LUT_SLICEM_I5_O)
-                                                      0.035     0.159 f  kan_inst/gen_l0c1.i03/rom_i/xpm_memory_base_inst_i_14/O
-                         net (fo=1, routed)           0.024     0.183    kan_inst/gen_l0c1.i05/rom_i/gen_rd_a.gen_rd_a_synth_template.gen_rf_narrow_reg.douta_reg_reg[0]_1
-    SLICE_X36Y69         LUT6 (Prop_G6LUT_SLICEM_I1_O)
-                                                      0.014     0.197 r  kan_inst/gen_l0c1.i05/rom_i/xpm_memory_base_inst_i_5__0/O
-                         net (fo=27, routed)          0.147     0.344    kan_inst/gen_l1c4.i01/rom_i/xpm_memory_base_inst/addra[0]
-    SLICE_X36Y77         LUT5 (Prop_D5LUT_SLICEM_I0_O)
-                                                      0.024     0.368 r  kan_inst/gen_l1c4.i01/rom_i/xpm_memory_base_inst/g0_b5/O
-                         net (fo=1, routed)           0.009     0.377    kan_inst/gen_l1c4.i01/rom_i/xpm_memory_base_inst/p_0_out[5]
-    SLICE_X36Y77         FDRE                                         r  kan_inst/gen_l1c4.i01/rom_i/xpm_memory_base_inst/gen_rd_a.gen_rd_a_synth_template.gen_rf_narrow_reg.douta_reg_reg[5]/D
+    SLICE_X20Y60         FDRE (Prop_GFF_SLICEL_C_Q)
+                                                      0.039     0.052 r  kan_inst/gen_layer0_channels[1].gen_layer0_luts[15].lut_0_inst/rom_i/xpm_memory_base_inst/gen_rd_a.gen_rd_a_synth_template.gen_rf_narrow_reg.douta_reg_reg[0]/Q
+                         net (fo=4, routed)           0.025     0.077    kan_inst/act_0[15,1][0]
+    SLICE_X20Y60         LUT4 (Prop_D5LUT_SLICEL_I1_O)
+                                                      0.020     0.097 r  kan_inst/sum_pipe_l0[1,1,7][1]_i_1/O
+                         net (fo=1, routed)           0.006     0.103    kan_inst/sum_pipe_l0[1,1,7][1]_i_1_n_0
+    SLICE_X20Y60         FDRE                                         r  kan_inst/sum_pipe_l0_reg[1,1,7][1]/D
   -------------------------------------------------------------------    -------------------
 
                          (clock clk rise edge)        0.000     0.000 r  
                                                       0.000     0.000 r  clk (IN)
-                         net (fo=658, unset)          0.019     0.019    kan_inst/gen_l1c4.i01/rom_i/xpm_memory_base_inst/clka
-    SLICE_X36Y77         FDRE                                         r  kan_inst/gen_l1c4.i01/rom_i/xpm_memory_base_inst/gen_rd_a.gen_rd_a_synth_template.gen_rf_narrow_reg.douta_reg_reg[5]/C
-                         clock pessimism              0.000     0.019    
-    SLICE_X36Y77         FDRE (Hold_DFF2_SLICEM_C_D)
-                                                      0.047     0.066    kan_inst/gen_l1c4.i01/rom_i/xpm_memory_base_inst/gen_rd_a.gen_rd_a_synth_template.gen_rf_narrow_reg.douta_reg_reg[5]
+                         net (fo=1886, unset)         0.018     0.018    kan_inst/clk
+    SLICE_X20Y60         FDRE                                         r  kan_inst/sum_pipe_l0_reg[1,1,7][1]/C
+                         clock pessimism              0.000     0.018    
+    SLICE_X20Y60         FDRE (Hold_DFF2_SLICEL_C_D)
+                                                      0.047     0.065    kan_inst/sum_pipe_l0_reg[1,1,7][1]
   -------------------------------------------------------------------
-                         required time                         -0.066    
-                         arrival time                           0.377    
+                         required time                         -0.065    
+                         arrival time                           0.103    
   -------------------------------------------------------------------
-                         slack                                  0.311    
+                         slack                                  0.038    
 
 
 
@@ -340,9 +316,9 @@ Period(ns):         8.000
 Sources:            { clk }
 
 Check Type        Corner  Lib Pin  Reference Pin  Required(ns)  Actual(ns)  Slack(ns)  Location      Pin
-Min Period        n/a     FDRE/C   n/a            0.550         8.000       7.450      SLICE_X38Y87  kan_inst/gen_l0c0.i00/rom_i/xpm_memory_base_inst/gen_rd_a.gen_rd_a_synth_template.gen_rf_narrow_reg.douta_reg_reg[0]/C
-Low Pulse Width   Slow    FDRE/C   n/a            0.275         4.000       3.725      SLICE_X38Y87  kan_inst/gen_l0c0.i00/rom_i/xpm_memory_base_inst/gen_rd_a.gen_rd_a_synth_template.gen_rf_narrow_reg.douta_reg_reg[0]/C
-High Pulse Width  Slow    FDRE/C   n/a            0.275         4.000       3.725      SLICE_X38Y87  kan_inst/gen_l0c0.i00/rom_i/xpm_memory_base_inst/gen_rd_a.gen_rd_a_synth_template.gen_rf_narrow_reg.douta_reg_reg[0]/C
+Min Period        n/a     FDRE/C   n/a            0.550         8.000       7.450      SLICE_X17Y54  kan_inst/sum_pipe_l0_reg[1,0,0][0]/C
+Low Pulse Width   Slow    FDRE/C   n/a            0.275         4.000       3.725      SLICE_X17Y54  kan_inst/sum_pipe_l0_reg[1,0,0][0]/C
+High Pulse Width  Slow    FDRE/C   n/a            0.275         4.000       3.725      SLICE_X17Y54  kan_inst/sum_pipe_l0_reg[1,0,0][0]/C
 
 
 

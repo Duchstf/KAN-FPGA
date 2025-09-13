@@ -121,7 +121,7 @@ class KAN_LUT:
 
                 for in_index in range(in_features):
                     truth_table = self.truth_tables[f"{i}_{in_index}_{out_index}"]
-                    if truth_table.get("acive", 1) == 0: continue # pruned connection
+                    if truth_table["acive"] == 0: continue # pruned connection
                     lookup_index = sample[in_index] if i == 0 else int(running_accumulator[in_index] + 2**(input_bit_width - 1))
                     acc_out_node += truth_table['values_int'][lookup_index]
 
@@ -182,7 +182,7 @@ class KAN_LUT:
         return max_err
 
     #----------FIRMWARE IMPLEMENTATION----------
-    def generate_firmware(self):
+    def generate_firmware(self, adder_tree_depth=2):
         """
         Generate the firmware for the KAN LUT
         """
@@ -207,7 +207,7 @@ class KAN_LUT:
         shutil.copy(os.path.join(os.path.dirname(__file__), "templates", "src", "top.vhd"), os.path.join(self.firmware_dir, "src", "top.vhd"))
 
         #Write the KAN core HLS file
-        self.write_kan_core()
+        self.write_kan_core(adder_tree_depth=adder_tree_depth)
         self.write_pkg_kan()
         self.write_pkg_lut()
         self.write_lut_vhd()
@@ -215,7 +215,7 @@ class KAN_LUT:
         self.write_build_tcl()
         pass
 
-    def write_kan_core(self, max_per_line=16):
+    def write_kan_core(self, max_per_line=16, adder_tree_depth=2):
         """
         Write the KAN core HLS file
         """
@@ -397,7 +397,7 @@ class KAN_LUT:
             for j in range(layer.in_features):
                 for k in range(layer.out_features):
                     truth_table = self.truth_tables[f"{i}_{j}_{k}"]
-                    if truth_table.get("acive", 1) == 0: continue
+                    if truth_table["acive"] == 0: continue
                     mem_path = os.path.join(self.firmware_dir, "mem", f"lut_{i}_{j}_{k}.mem")
                     with open(mem_path, "w") as f:
                         f.write("\n".join([int_to_hex_word(v, layer.out_precision) for v in truth_table['values_int']]))
