@@ -14,51 +14,52 @@ import logging
 from tqdm import tqdm
 import torch.optim as optim
 
-# === Use YOUR original KAN class ===
-# (with grid_size, spline_order, grid_eps, base_activation, grid_range)
 sys.path.append('../../../src')
-from KAN_QAT import KAN
-from helpers import quantize_dataset, plot_input_features
+from KANQuant import KANQuant
+from quant import QuantBrevitasActivation, ScalarBiasScale
+
+#For quantization
+from brevitas.nn import QuantHardTanh
+from brevitas.core.scaling import ParameterScaling
+from brevitas.core.quant import QuantType
 
 # -------------------------------
 # Reproducibility & Device
 # -------------------------------
-SEED = 42
+SEED = 420
 random.seed(SEED)
 np.random.seed(SEED)
 torch.manual_seed(SEED)
 if torch.cuda.is_available():
     torch.cuda.manual_seed_all(SEED)
 
-device = "cuda" if torch.cuda.is_available() else "cpu"
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print("Device:", device)
 
 # -------------------------------
 # Configuration
 # -------------------------------
-layers_precision = [(6, 3), (7, 5), (8, 6)]  # keep your original precision settings
-grid_size = 6
-spline_order = 3
-
-# Training parameters
-batch_size = 64
-num_epochs = 100
-regularize_clipping = 1e-8
-
-# Save to a config json file
 config = {
-    "layers": [13, 4, 3],                  # <<< adapted to Wine: 13 features -> 3 classes
-    "layers_precision": layers_precision,  # precision is (bit_width, integer_width)
+    "layers": [13, 4, 3],
+    "grid_range": [-8, 8],
+    "layers_bitwidth": [6, 7, 8],
 
-    "grid_size": grid_size,
-    "grid_eps": 0.01,
-    "spline_order": spline_order,
+    "grid_size": 6,
+    "spline_order": 3,
+    "grid_eps": 0.05,
+
     "base_activation": "nn.GELU",
+    
+    "batch_size": 64,
+    "num_epochs": 200,
 
-    "quantize_clip": False,
-    "quantize": True,
-    "regularize_clipping": regularize_clipping,
-    "prune_threshold": 0.1,
+    "learning_rate": 1e-2,
+    "weight_decay": 1e-4,
+
+    "prune_threshold": 0,
+    "target_epoch": 50,
+    "warmup_epochs": 10,
+    "random_seed": SEED,
 }
 
 # Create a new directory to save the config and checkpoints
@@ -91,17 +92,6 @@ X_te_t = torch.from_numpy(X_te).float().to(device)
 y_tr_t = torch.from_numpy(y_tr).long().to(device)
 y_te_t = torch.from_numpy(y_te).long().to(device)
 
-# Plot the distribution of the input features
-plot_input_features(X_tr_t, out_dir="plots", plot_name="features_grid.png")
-
-# Quantize the data (use first precision tuple as in your original script)
-X_tr_t, X_te_t = quantize_dataset(
-    X_tr_t, X_te_t, precision=config["layers_precision"][0], rounding="nearest"
-)
-
-# Plot the distribution of the quantized features
-plot_input_features(X_tr_t, out_dir="plots", plot_name="features_grid_quantized.png")
-
 # Dataset dict to match your metric signatures
 dataset = {
     "train_input": X_tr_t,
@@ -118,23 +108,30 @@ print(f"in_features={in_features}, num_classes={num_classes}, trainN={len(y_tr)}
 # === Create Data Loaders ===
 train_dataset = TensorDataset(X_tr_t, y_tr_t)
 test_dataset = TensorDataset(X_te_t, y_te_t)
-trainloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
-testloader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
+trainloader = DataLoader(train_dataset, batch_size=config["batch_size"], shuffle=True)
+testloader = DataLoader(test_dataset, batch_size=config["batch_size"], shuffle=False)
 
 # -------------------------------
 # Model
 # -------------------------------
-model = KAN(
-    config["layers"],
-    layers_precision=config["layers_precision"],
-    quantize=config["quantize"],
-    quantize_clip=config["quantize_clip"],
-    grid_size=config["grid_size"],
-    spline_order=config["spline_order"],
-    grid_eps=config["grid_eps"],
-    base_activation=eval(config["base_activation"])
-).to(device)
-print("Total params:", sum(p.numel() for p in model.parameters()))
+
+#Build the input layer
+bn_in = nn.BatchNorm1d(config["layers"][0])
+nn.init.constant_(bn_in.weight.data, 1)
+nn.init.constant_(bn_in.bias.data, 0)
+input_bias = ScalarBiasScale(scale=False, bias_init=-0.25)
+Wine_input_layer = QuantBrevitasActivation(
+    QuantHardTanh(bit_width = config["layers_bitwidth"][0],
+    max_val=1.0,
+    min_val=-1.0,
+    act_scaling_impl=ParameterScaling(1.33),
+    quant_type=QuantType.INT,
+    return_quant_tensor = False),
+    pre_transforms=[bn_in, input_bias],
+    cuda=device.type == "cuda").to(device)
+
+#Define the model
+model = KANQuant(config, Wine_input_layer, device).to(device)
 
 optimizer = optim.AdamW(model.parameters(), lr=0.05, weight_decay=1e-3)
 scheduler = optim.lr_scheduler.ExponentialLR(optimizer, gamma=0.9)
@@ -177,7 +174,7 @@ testing_loss = []
 best_val_accuracy = 0.0
 
 criterion = nn.CrossEntropyLoss()
-for epoch in range(num_epochs):
+for epoch in range(config["num_epochs"]):
     # Train
     model.train()
     epoch_train_loss = 0
@@ -236,7 +233,7 @@ for epoch in range(num_epochs):
     # === Save Checkpoint if Best ===
     if val_accuracy > best_val_accuracy:
         best_val_accuracy = val_accuracy
-        checkpoint_path = f'{model_dir}/Wine_grid{grid_size}_spline{spline_order}_acc{val_accuracy:.4f}_epoch{epoch + 1}.pt'
+        checkpoint_path = f'{model_dir}/Wine_acc{val_accuracy:.4f}_epoch{epoch+1}.pt'
         torch.save({
             'epoch': epoch + 1,
             'model_state_dict': model.state_dict(),
