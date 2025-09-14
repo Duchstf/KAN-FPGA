@@ -48,23 +48,24 @@ logging.getLogger().addHandler(console)
 
 # === Configuration ===
 config = {
-    "layers": [16, 8, 5],
-    "grid_range": [-8, 8],
-    "layers_bitwidth": [6, 5, 8],
+    "seed": seed,
+    "layers": [16, 12, 5],
+    "grid_range": [-2, 2],
+    "layers_bitwidth": [8, 8, 6],
 
     "grid_size": 30,
-    "spline_order": 3,
+    "spline_order": 10,
     "grid_eps": 0.05,
 
     "base_activation": "nn.SiLU",
     
-    "batch_size": 64,
+    "batch_size": 512,
     "num_epochs": 200,
 
-    "learning_rate": 2e-4,
-    "weight_decay": 1e-5,
+    "learning_rate": 1e-3,
+    "weight_decay": 1e-4,
 
-    "prune_threshold": 0.5,
+    "prune_threshold": 0.04,
 }
 
 #Create a new directory to save the config and checkpoints

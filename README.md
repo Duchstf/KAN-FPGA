@@ -37,7 +37,7 @@ python convert.py
 Create conda environment:
 
 ```
-micromamba env create -f environment.yml
+micromamba env create -f environment.yml -n kan
 ```
 
 Activate the environment:
