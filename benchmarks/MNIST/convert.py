@@ -58,4 +58,4 @@ kan_lut.quick_match_check() #Test matching of LUT implementation with the base m
 kan_lut.generate_firmware()
 
 #Simulate the firmware
-kan_lut.simulate_firmware()
+kan_lut.simulate_firmware(n_vectors=20)
