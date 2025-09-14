@@ -275,18 +275,31 @@ class KAN_LUT:
                 inst_idx = 0
                 sum_terms = all_sum_terms_in_layer[k]
                 instantiations = []
-                for j in range(in_f):
-                    if self.truth_tables[f"{i}_{j}_{k}"]["acive"] == 0: 
-                        continue
-                    mem = f"lut_{i}_{j}_{k}.mem"
-                    src = f"input({j})" if i == 0 else f"out{i-1}_{j}"
-                    dst = f"act_{i}_{j}_{k}"
-                    instantiations.append(
-                        f"  i{inst_idx:02d} : entity work.LUT_{i} "
-                        f'generic map (MEMFILE=>"{mem}") '
-                        f"port map (clk, {src}, {dst});"
-                    )
-                    inst_idx += 1
+                
+                #FIRST LAYER IS 1 BIT SO DIFFERENT INSTANTIATION
+                if i == 0:
+                    for j in range(in_f):
+                        if self.truth_tables[f"{i}_{j}_{k}"]["acive"] == 0: 
+                            continue
+                        dst = f"act_{i}_{j}_{k}"
+                        instantiations.append(
+                            f"  i{inst_idx:02d} : {dst} <= C_{i}_{j}_{k} "
+                            f"when input({j}) = '1' else (others => '0');"
+                        )
+                        inst_idx += 1
+                else:
+                    for j in range(in_f):
+                        if self.truth_tables[f"{i}_{j}_{k}"]["acive"] == 0: 
+                            continue
+                        mem = f"lut_{i}_{j}_{k}.mem"
+                        src = f"input({j})" if i == 0 else f"out{i-1}_{j}"
+                        dst = f"act_{i}_{j}_{k}"
+                        instantiations.append(
+                            f"  i{inst_idx:02d} : entity work.LUT_{i} "
+                            f'generic map (MEMFILE=>"{mem}") '
+                            f"port map (clk, {src}, {dst});"
+                        )
+                        inst_idx += 1
 
                 # --- Adder Tree Logic ---
                 adder_tree_signals = []
