@@ -11,39 +11,52 @@ import logging
 from tqdm import tqdm
 import torch.optim as optim
 
-# === Use YOUR original KAN class ===
 sys.path.append('../../../src')
-from KAN_QAT import KAN
-from helpers import quantize_dataset, plot_input_features
+from KANQuant import KANQuant
+from quant import QuantBrevitasActivation, ScalarBiasScale
+
+#For quantization
+from brevitas.nn import QuantHardTanh
+from brevitas.core.scaling import ParameterScaling
+from brevitas.core.quant import QuantType
 
 # -------------------------------
 # Reproducibility & Device
 # -------------------------------
-SEED = 42
-random.seed(SEED); np.random.seed(SEED); torch.manual_seed(SEED)
-if torch.cuda.is_available(): torch.cuda.manual_seed_all(SEED)
-device = "cuda" if torch.cuda.is_available() else "cpu"
+SEED = 420
+random.seed(SEED)
+np.random.seed(SEED)
+torch.manual_seed(SEED)
+if torch.cuda.is_available():
+    torch.cuda.manual_seed_all(SEED)
+
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print("Device:", device)
 
 # -------------------------------
-# Config (same scaffold, single-logit head)
+# Configuration
 # -------------------------------
-layers_precision = [(6, 3), (5, 3), (8, 6)]
-grid_size, spline_order = 6, 3
-batch_size, num_epochs = 64, 100
-regularize_clipping = 1e-8
-
 config = {
     "layers": [2, 2, 1],
-    "layers_precision": layers_precision,
-    "grid_size": grid_size,
-    "grid_eps": 0.01,
-    "spline_order": spline_order,
+    "grid_range": [-8, 8],
+    "layers_bitwidth": [6, 5, 8],
+
+    "grid_size": 6,
+    "spline_order": 3,
+    "grid_eps": 0.05,
+
     "base_activation": "nn.GELU",
-    "quantize_clip": False,
-    "quantize": True,
-    "regularize_clipping": regularize_clipping,
-    "prune_threshold": 0.00,
+    
+    "batch_size": 64,
+    "num_epochs": 200,
+
+    "learning_rate": 1e-2,
+    "weight_decay": 1e-4,
+
+    "prune_threshold": 0,
+    "target_epoch": 50,
+    "warmup_epochs": 10,
+    "random_seed": SEED,
 }
 
 model_dir = f'models/{datetime.now().strftime("%Y%m%d_%H%M%S")}'
@@ -66,10 +79,6 @@ X_te_t = torch.from_numpy(X_te).float().to(device)
 y_tr_t = torch.from_numpy(y_tr).float().unsqueeze(1).to(device)  # for BCEWithLogits
 y_te_t = torch.from_numpy(y_te).float().unsqueeze(1).to(device)
 
-plot_input_features(X_tr_t, out_dir="plots", plot_name="moons_features.png")
-X_tr_t, X_te_t = quantize_dataset(X_tr_t, X_te_t, precision=config["layers_precision"][0], rounding="nearest")
-plot_input_features(X_tr_t, out_dir="plots", plot_name="moons_features_quantized.png")
-
 dataset = {
     "train_input": X_tr_t,
     "train_label": y_tr_t,
@@ -79,25 +88,32 @@ dataset = {
 print(f"in_features={X_tr_t.shape[1]}, trainN={len(y_tr)}, testN={len(y_te)}")
 
 # === Data Loaders ===
-trainloader = DataLoader(TensorDataset(X_tr_t, y_tr_t), batch_size=batch_size, shuffle=True)
-testloader  = DataLoader(TensorDataset(X_te_t, y_te_t), batch_size=batch_size, shuffle=False)
+trainloader = DataLoader(TensorDataset(X_tr_t, y_tr_t), batch_size=config["batch_size"], shuffle=True)
+testloader  = DataLoader(TensorDataset(X_te_t, y_te_t), batch_size=config["batch_size"], shuffle=False)
 
 # -------------------------------
 # Model
 # -------------------------------
-model = KAN(
-    config["layers"],
-    layers_precision=config["layers_precision"],
-    quantize=config["quantize"],
-    quantize_clip=config["quantize_clip"],
-    grid_size=config["grid_size"],
-    spline_order=config["spline_order"],
-    grid_eps=config["grid_eps"],
-    base_activation=eval(config["base_activation"])
-).to(device)
-print("Num parameters:", sum(p.numel() for p in model.parameters()))
 
-optimizer = optim.AdamW(model.parameters(), lr=1e-2, weight_decay=1e-4)
+#Build the input layer
+bn_in = nn.BatchNorm1d(config["layers"][0])
+nn.init.constant_(bn_in.weight.data, 1)
+nn.init.constant_(bn_in.bias.data, 0)
+input_bias = ScalarBiasScale(scale=False, bias_init=-0.25)
+Moons_input_layer = QuantBrevitasActivation(
+    QuantHardTanh(bit_width = config["layers_bitwidth"][0],
+    max_val=1.0,
+    min_val=-1.0,
+    act_scaling_impl=ParameterScaling(1.33),
+    quant_type=QuantType.INT,
+    return_quant_tensor = False),
+    pre_transforms=[bn_in, input_bias],
+    cuda=device.type == "cuda").to(device)
+
+#Define the model
+model = KANQuant(config, Moons_input_layer, device).to(device)
+
+optimizer = optim.AdamW(model.parameters(), lr=config["learning_rate"], weight_decay=config["weight_decay"])
 scheduler = optim.lr_scheduler.ExponentialLR(optimizer, gamma=0.9)
 criterion = nn.BCEWithLogitsLoss()
 
@@ -141,7 +157,7 @@ logging.getLogger().addHandler(console)
 training_loss, testing_loss = [], []
 best_val_acc = 0.0
 
-for epoch in range(num_epochs):
+for epoch in range(config["num_epochs"]):
     model.train()
     epoch_train_loss, total_batches = 0.0, 0
     with tqdm(trainloader) as pbar:
@@ -194,8 +210,6 @@ for epoch in range(num_epochs):
             'val_accuracy': val_acc,
             'val_loss': val_loss,
             'remaining_fraction': remaining_fraction,
-        }, f'{model_dir}/TwoMoons_bin_grid{grid_size}_spline{spline_order}_acc{val_acc:.4f}_epoch{epoch+1}.pt')
+        }, f'{model_dir}/TwoMoons_bin_acc{val_acc:.4f}_epoch{epoch+1}.pt')
         logging.info(f"New best model saved with val accuracy: {val_acc:.4f}")
 
-print("Final Train Acc:", float(train_acc()))
-print("Final Test  Acc:", float(test_acc()))
