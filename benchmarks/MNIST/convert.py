@@ -7,7 +7,7 @@ from torch.utils.data import DataLoader
 
 # Local imports
 sys.path.append('../../src')
-from KAN_LUT import KAN_LUT
+from KAN_LUT_MNIST import KAN_LUT
 from quant import ScalarBiasScale, QuantBrevitasActivation
 
 #For quantization
