@@ -182,7 +182,7 @@ class KAN_LUT:
         return max_err
 
     #----------FIRMWARE IMPLEMENTATION----------
-    def generate_firmware(self, adder_tree=True):
+    def generate_firmware(self, adder_tree=True, clock_period: float = 5.0):
         """
         Generate the firmware for the KAN LUT
         """
@@ -211,7 +211,7 @@ class KAN_LUT:
         self.write_pkg_lut()
         self.write_lut_vhd()
         self.write_mem_files()
-        self.write_build_tcl()
+        self.write_build_tcl(clock_period=clock_period)
         pass
 
     def write_kan_core(self, max_per_line=16, adder_tree=True):
@@ -237,9 +237,15 @@ class KAN_LUT:
             in_f, out_f = layer.in_features, layer.out_features
             acts=[f"act_{i}_{j}_{k}" for j in range(in_f) for k in range(out_f) if self.truth_tables[f"{i}_{j}_{k}"]["acive"] == 1]
             outs=[f"out{i}_{k}" for k in range(out_f)] if i != len(self.KAN.layers)-1 else []
+            outs_reg=[f"out{i}_{k}_reg" for k in range(out_f)] if i != len(self.KAN.layers)-1 else [] #Registers for the outputs
             block=[f"-- Layer {i} ({in_f}->{out_f})"]
             if acts: block.append(emit(acts, f"lut_output_t_{i}"))
             if outs: block.append(emit(outs, f"lut_output_t_{i}"))
+            if outs_reg: block.append(emit(outs_reg, f"lut_output_t_{i}"))
+            if not adder_tree:
+                for k in range(out_f):
+                    sum_term=[f"sum_{i}_{k}"]
+                    block.append(emit(sum_term, f"sum_t_{i}_{k}"))
             sections.append("\n".join(block))
 
         # ---------- Build LAYER_BLOCKS ----------
@@ -279,7 +285,7 @@ class KAN_LUT:
                     if self.truth_tables[f"{i}_{j}_{k}"]["acive"] == 0: 
                         continue
                     mem = f"lut_{i}_{j}_{k}.mem"
-                    src = f"input({j})" if i == 0 else f"out{i-1}_{j}"
+                    src = f"input({j})" if i == 0 else f"out{i-1}_{j}_reg"
                     dst = f"act_{i}_{j}_{k}"
                     instantiations.append(
                         f"  i{inst_idx:02d} : entity work.LUT_{i} "
@@ -357,7 +363,6 @@ class KAN_LUT:
                     if adder_tree:
                         blk.extend([f"  {line}" for line in adder_tree_logic])
                     else: # Fallback to original combinational logic
-                        blk.append(f"  signal sum_{i}_{k} : sum_t_{i}_{k};")
                         rhs = " + ".join(sum_terms)
                         blk.append(f"  sum_{i}_{k} <= {rhs};")
 
@@ -374,6 +379,18 @@ class KAN_LUT:
                 
                 blk.append("end block;")
                 layer_blocks.append("\n  ".join(blk))
+
+            #Add the register block for the outputs
+            if i != num_layers - 1:
+                register_block = [
+                    f"-- Register block for layer {i}",
+                    f"out_layer{i}_reg : process(clk)",
+                    f"  begin",
+                    f"    if rising_edge(clk) then"]
+                register_block.extend(f"      out{i}_{k}_reg <= out{i}_{k};" for k in range(out_f))
+                register_block.append(f"    end if;")
+                register_block.append(f"end process;")
+                layer_blocks.append("\n  ".join(register_block))
 
         # ---------- Final VHDL Generation ----------
         SIGNAL_DECLS = "\n\n".join(sections) if sections else "-- (no signals)"
@@ -501,11 +518,19 @@ class KAN_LUT:
         # Small breadcrumb
         print(f"Wrote {written} LUT .mem file(s) to {self.firmware_dir}/mem/")
 
-    def write_build_tcl(self):
-        #Just copy the template file
-        shutil.copy(os.path.join(os.path.dirname(__file__), "templates", "vivado", "build_full.tcl"), os.path.join(self.firmware_dir, "vivado", "build_full.tcl"))
-        shutil.copy(os.path.join(os.path.dirname(__file__), "templates", "vivado", "build_ooc.tcl"), os.path.join(self.firmware_dir, "vivado", "build_ooc.tcl"))
-        shutil.copy(os.path.join(os.path.dirname(__file__), "templates", "vivado", "build_combitorial.tcl"), os.path.join(self.firmware_dir, "vivado", "build_combitorial.tcl"))
+    def write_build_tcl(self, clock_period: float):
+        
+        #Open the template file
+        with open(os.path.join(os.path.dirname(__file__), "templates", "vivado", "build_full.tcl"), "r") as tf: tpl_full = tf.read()
+        with open(os.path.join(os.path.dirname(__file__), "templates", "vivado", "build_ooc.tcl"), "r") as tf: tpl_ooc = tf.read()
+        
+        tpl_full_text = tpl_full.replace("{{CLOCK_PERIOD}}", str(clock_period))
+        tpl_ooc_text = tpl_ooc.replace("{{CLOCK_PERIOD}}", str(clock_period))
+
+        with open(os.path.join(self.firmware_dir, "vivado", "build_full.tcl"), "w") as f:
+            f.write(tpl_full_text)
+        with open(os.path.join(self.firmware_dir, "vivado", "build_ooc.tcl"), "w") as f:
+            f.write(tpl_ooc_text)
     
     #------------------SIMULATION------------------
     def simulate_firmware(self, rtl_dir_rel: str = "./../src", top_name: str = "KAN", n_vectors: int = 2):
