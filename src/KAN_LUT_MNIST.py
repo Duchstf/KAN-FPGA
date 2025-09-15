@@ -235,12 +235,18 @@ class KAN_LUT:
         #Loop through the layers and pick up the signals that exist
         for i, layer in enumerate(self.KAN.layers):
             in_f, out_f = layer.in_features, layer.out_features
-            acts=[f"act_{i}_{j}_{k}" for j in range(in_f) for k in range(out_f) if self.truth_tables[f"{i}_{j}_{k}"]["acive"] == 1]
+            acts=[f"act_{i}_{j}_{k}" for j in range(in_f) for k in range(out_f) if self.truth_tables[f"{i}_{j}_{k}"]["acive"] == 1 and i != 0]
             outs=[f"out{i}_{k}" for k in range(out_f)] if i != len(self.KAN.layers)-1 else []
             block=[f"-- Layer {i} ({in_f}->{out_f})"]
+            if i == 0:
+                for k in range(out_f):
+                    acts_0=[f"act_0_{j}_{k}" for j in range(in_f) if self.truth_tables[f"{i}_{j}_{k}"]["acive"] == 1]
+                    block.append(emit(acts_0, f"act_0_{k}_t"))
             if acts: block.append(emit(acts, f"lut_output_t_{i}"))
             if outs: block.append(emit(outs, f"lut_output_t_{i}"))
             sections.append("\n".join(block))
+
+            
 
         # ---------- Build LAYER_BLOCKS ----------
         num_layers = len(self.KAN.layers)
@@ -258,6 +264,14 @@ class KAN_LUT:
                     for j in range(in_f)
                     if self.truth_tables[f"{i}_{j}_{k_scan}"]["acive"] == 1
                 ]
+                
+                # ----- MODIFICATION START -----
+                # If it's the first layer and there are active inputs, add the bias term.
+                # This assumes a VHDL constant B_{i}_{k} exists for each channel in layer 0.
+                if i == 0 and sum_terms_scan:
+                    sum_terms_scan.append(f"resize(B_{i}_{k_scan}, SUM_WIDTH_{i}_{k_scan})")
+                # ----- MODIFICATION END -----
+
                 all_sum_terms_in_layer.append(sum_terms_scan)
                 max_inputs_in_layer = max(max_inputs_in_layer, len(sum_terms_scan))
             
@@ -273,7 +287,7 @@ class KAN_LUT:
                 
                 # --- Instantiations and collecting sum terms ---
                 inst_idx = 0
-                sum_terms = all_sum_terms_in_layer[k]
+                sum_terms = all_sum_terms_in_layer[k] # This now includes the bias for layer 0
                 instantiations = []
                 
                 #FIRST LAYER IS 1 BIT SO DIFFERENT INSTANTIATION
@@ -284,7 +298,7 @@ class KAN_LUT:
                         dst = f"act_{i}_{j}_{k}"
                         instantiations.append(
                             f"  i{inst_idx:02d} : {dst} <= C_{i}_{j}_{k} "
-                            f"when input({j}) = '1' else (others => '0');"
+                            f"when input({j})(0) = '1' else (others => '0');"
                         )
                         inst_idx += 1
                 else:
@@ -302,6 +316,7 @@ class KAN_LUT:
                         inst_idx += 1
 
                 # --- Adder Tree Logic ---
+                # This section requires no changes, as it generically processes the `sum_terms` list.
                 adder_tree_signals = []
                 adder_tree_logic = []
                 if sum_terms and adder_tree:
@@ -321,7 +336,6 @@ class KAN_LUT:
                         is_last_stage = (stage == layer_depth)
                         adder_tree_logic.append(f"    -- Stage {stage}")
                         
-                        # If we've already summed to a single term, just pipeline it
                         if len(current_stage_terms) == 1:
                             source = current_stage_terms[0]
                             target = f"sum_{i}_{k}" if is_last_stage else f"s{stage}_{k}_pipe"
@@ -331,11 +345,9 @@ class KAN_LUT:
                             current_stage_terms = [target]
                             continue
 
-                        # Otherwise, perform a reduction stage (summing in pairs)
                         num_results_this_stage = ceil(len(current_stage_terms) / 2)
                         next_stage_terms = []
                         
-                        # Declare intermediate signals for this stage if they are not the final sum
                         if not (is_last_stage and num_results_this_stage == 1):
                             stage_sigs = [f"s{stage}_{j}" for j in range(num_results_this_stage)]
                             adder_tree_signals.append(f"signal {', '.join(stage_sigs)} : sum_t_{i}_{k};")
@@ -343,17 +355,15 @@ class KAN_LUT:
                         for j in range(num_results_this_stage):
                             term1 = current_stage_terms[2*j]
                             
-                            # Determine the target signal for this specific addition
                             if is_last_stage and num_results_this_stage == 1:
                                 target = f"sum_{i}_{k}"
                             else:
                                 target = f"s{stage}_{j}"
                             
-                            # Check for the second term in the pair
                             if (2*j + 1) < len(current_stage_terms):
                                 term2 = current_stage_terms[2*j + 1]
                                 adder_tree_logic.append(f"    {target} <= {term1} + {term2};")
-                            else: # Odd term out, passes through
+                            else:
                                 adder_tree_logic.append(f"    {target} <= {term1};")
                             next_stage_terms.append(target)
                             
@@ -362,14 +372,14 @@ class KAN_LUT:
                     adder_tree_logic.extend(["  end if;", "end process;"])
 
                 # --- Assemble the block ---
-                blk.append("\n  ".join(sorted(list(set(adder_tree_signals))))) # Signals first
+                blk.append("\n  ".join(sorted(list(set(adder_tree_signals)))))
                 blk.append("begin")
                 blk.extend(instantiations)
                 
                 if sum_terms:
                     if adder_tree:
                         blk.extend([f"  {line}" for line in adder_tree_logic])
-                    else: # Fallback to original combinational logic
+                    else:
                         blk.append(f"  signal sum_{i}_{k} : sum_t_{i}_{k};")
                         rhs = " + ".join(sum_terms)
                         blk.append(f"  sum_{i}_{k} <= {rhs};")
@@ -379,7 +389,7 @@ class KAN_LUT:
                         blk.append(f"  output({k}) <= saturate({target}, {layer.out_precision});")
                     else:
                         blk.append(f"  out{i}_{k} <= saturate({target}, {layer.out_precision});")
-                else: # No active inputs for this channel
+                else:
                     if i == num_layers - 1:
                         blk.append(f"  output({k}) <= (others => '0');")
                     else:
@@ -448,14 +458,34 @@ class KAN_LUT:
         blocks = []
         for i in range(0, len(self.KAN.layers)):
             layer = self.KAN.layers[i]
-            blocks.append("\n".join([
-                f"  -- Layer {i}",
-                f"  constant LUT_SIZE_{i}        : integer := {1 << layer.in_precision};",
-                f"  constant LUT_ADDR_WIDTH_{i}  : integer := {layer.in_precision};",
-                f"  constant LUT_DATA_WIDTH_{i}  : integer := {layer.out_precision};",
-                f"  subtype  lut_input_t_{i}  is signed(LUT_ADDR_WIDTH_{i}-1 downto 0);" if i !=0 else f"  subtype  lut_input_t_{i}  is unsigned(LUT_ADDR_WIDTH_{i}-1 downto 0);" ,
-                f"  subtype  lut_output_t_{i} is signed(LUT_DATA_WIDTH_{i}-1 downto 0);",
-            ]))
+            if i == 0:
+                blocks.append(f"  -- Layer {i}")
+                blocks.append(f"  subtype  lut_output_t_{i} is signed({layer.out_precision - 1} downto 0);")
+                
+                for k in range(layer.out_features):
+                    active_lut = sum(self.truth_tables[f"{i}_{j}_{k}"]["acive"] == 1 for j in range(layer.in_features))
+                    width = layer.out_precision + ceil(log2(active_lut)) if active_lut > 0 else layer.out_precision
+                    blocks.append(f"  subtype  act_0_{k}_t is signed({width - 1} downto 0);")
+
+                    bias_term = sum([self.truth_tables[f"{i}_{j}_{k}"]["values_int"][0] for j in range(layer.in_features) if self.truth_tables[f"{i}_{j}_{k}"]["acive"] == 1])
+                    delta_definitions = [f"constant B_{i}_{k} : signed({width - 1} downto 0) := to_signed({bias_term}, {width});"]
+
+                    for j in range(layer.in_features):
+                        if self.truth_tables[f"{i}_{j}_{k}"]["acive"] == 1:
+                            diff_term = self.truth_tables[f"{i}_{j}_{k}"]["values_int"][1] - self.truth_tables[f"{i}_{j}_{k}"]["values_int"][0]
+                            delta_definitions.append(f"constant C_{i}_{j}_{k} : signed({width - 1} downto 0) := to_signed({diff_term}, {width});")
+                    
+                    blocks.append("\n".join([*delta_definitions]))
+            else:
+                blocks.append("\n".join([
+                    f"  -- Layer {i}",
+                    f"  constant LUT_SIZE_{i}        : integer := {1 << layer.in_precision};",
+                    f"  constant LUT_ADDR_WIDTH_{i}  : integer := {layer.in_precision};",
+                    f"  constant LUT_DATA_WIDTH_{i}  : integer := {layer.out_precision};",
+                    f"  subtype  lut_input_t_{i}  is signed(LUT_ADDR_WIDTH_{i}-1 downto 0);" ,
+                    f"  subtype  lut_output_t_{i} is signed(LUT_DATA_WIDTH_{i}-1 downto 0);",
+                ]))
+
 
         vhdl_text = tpl.replace("{{LAYER_TYPES_BLOCK}}", "\n\n".join(blocks) or "  -- (no layers)")
 
@@ -472,6 +502,8 @@ class KAN_LUT:
         
         #Loop through the layers and generate the VHDL code
         for i in range(0, len(self.KAN.layers)):
+
+            if i == 0: continue
 
             #Deal with the index signal
             vhdl_text = tpl.replace("{{IDX_SIGNAL_DECLS}}", "" if i == 0 else f"signal idx : unsigned(LUT_ADDR_WIDTH_{i}-1 downto 0);")
