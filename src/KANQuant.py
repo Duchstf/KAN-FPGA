@@ -6,7 +6,7 @@ from quant import QuantBrevitasActivation
 from brevitas.nn import QuantIdentity
 from brevitas.core.scaling import ParameterScaling
 from brevitas.core.quant import QuantType
-from typing import Optional
+from typing import Optional, List
 
 class KANLinear(torch.nn.Module):
     def __init__(
@@ -315,6 +315,61 @@ class KANLinear(torch.nn.Module):
             zero_cols = (next_layer_sparsity_matrix == 0).all(dim=0)
             self.spline_selector[zero_cols, :] = 0
 
+    @torch.no_grad()
+    def prune_top_n(self, n: int, next_layer_sparsity_matrix: Optional[torch.Tensor] = None, input_state_space: Optional[torch.Tensor] = None) -> None:
+        """
+        Prunes the layer by keeping only the top 'n' connections for each output neuron.
+        The importance of a connection is measured by the L2 norm of its spline function
+        evaluated over the input_state_space.
+
+        Args:
+            n (int): The number of incoming connections to keep for each output neuron.
+            next_layer_sparsity_matrix (Optional[torch.Tensor]): The spline_selector from the
+                                                                 next layer, used for backward pruning.
+            input_state_space (Optional[torch.Tensor]): A tensor representing the activation
+                                                        space of the previous layer's outputs.
+        """
+        if input_state_space is None:
+            raise ValueError("`input_state_space` is required for top-n pruning.")
+            
+        x = input_state_space.unsqueeze(0).repeat(self.in_features, 1).T.to(self.device)
+        spline_bases = self.b_splines(x)
+
+        # Calculate importance score (L2 norm) for each connection (out_features, in_features)
+        norms = torch.zeros((self.out_features, self.in_features), device=self.base_weight.device)
+        for out_idx in range(self.out_features):
+            for in_idx in range(self.in_features):
+                spline_output = F.linear(
+                    spline_bases[:, in_idx, :], 
+                    self.scaled_spline_weight[out_idx, in_idx, :]
+                )
+                norms[out_idx, in_idx] = torch.norm(spline_output)
+
+        # Create a new mask initialized to zeros
+        new_mask = torch.zeros_like(self.spline_selector)
+
+        # For each output channel, find the top n connections and set them to 1 in the new mask
+        n_to_keep = min(n, self.in_features) # Cannot keep more connections than available
+        if n_to_keep > 0:
+            # Get the indices of the top 'n_to_keep' connections for each output neuron
+            top_n_indices = torch.topk(norms, k=n_to_keep, dim=1).indices
+            
+            # Use scatter to efficiently create the mask
+            # For each row, it places a 1 at the column indices specified by top_n_indices
+            new_mask.scatter_(1, top_n_indices, 1)
+
+        # Update the layer's spline selector with the new mask
+        self.spline_selector.data = new_mask
+
+        # --- Backward Pruning ---
+        # If an output neuron of this layer is not used by any active neuron in the next layer,
+        # prune that output neuron entirely.
+        if next_layer_sparsity_matrix is not None:
+            # Find which output neurons from this layer have no connections to the next layer
+            zero_cols = (next_layer_sparsity_matrix == 0).all(dim=0)
+            # Prune all incoming connections to these unused output neurons
+            self.spline_selector.data[zero_cols, :] = 0
+
 class KANQuant(torch.nn.Module):
     def __init__(self, config, input_layer, device):
         super(KANQuant, self).__init__()
@@ -398,3 +453,59 @@ class KANQuant(torch.nn.Module):
                 total_remaining += layer.spline_selector.sum()
 
         return total_remaining / total_nodes
+    
+    @torch.no_grad()
+    def prune_connections_by_rank(self, n_per_layer: List[int]) -> float:
+        """
+        Prunes the entire KAN model after a warm-up period. For each layer, it keeps
+        only the top 'n' connections for each output neuron, where 'n' is specified
+        in the `n_per_layer` list.
+
+        Args:
+            n_per_layer (List[int]): A list containing the number of connections to keep
+                                     for each layer. The length of the list must equal
+                                     the number of KANLinear layers in the model.
+                                     Example: [10, 5] for a 2-layer KAN.
+
+        Returns:
+            float: The fraction of connections remaining in the model after pruning.
+        """
+        if len(n_per_layer) != len(self.layers):
+            raise ValueError(
+                f"The length of n_per_layer ({len(n_per_layer)}) must match the "
+                f"number of KAN layers ({len(self.layers)})."
+            )
+
+        total_connections = 0
+        remaining_connections = 0
+
+        with torch.no_grad():
+            # Iterate backwards to handle backward pruning correctly in one pass
+            for i in range(len(self.layers) - 1, -1, -1):
+                layer = self.layers[i]
+                n_to_keep = n_per_layer[i]
+
+                # Determine the input state space for the current layer
+                if i == 0:
+                    input_state_space = self.input_layer.get_state_space(self.is_cuda).to(self.device)
+                else:
+                    input_state_space = self.layers[i - 1].output_quantizer.get_state_space(self.is_cuda).to(self.device)
+
+                # Get the next layer's sparsity matrix (which may have been pruned in a previous step of this loop)
+                next_layer_sparsity = (
+                    self.layers[i + 1].spline_selector if i < len(self.layers) - 1 else None
+                )
+                
+                # Perform the top-n pruning on the current layer
+                layer.prune_top_n(
+                    n=n_to_keep, 
+                    next_layer_sparsity_matrix=next_layer_sparsity, 
+                    input_state_space=input_state_space
+                )
+            
+            # Calculate final sparsity after all layers are pruned
+            for layer in self.layers:
+                total_connections += layer.spline_selector.numel()
+                remaining_connections += layer.spline_selector.sum()
+
+        return remaining_connections / total_connections if total_connections > 0 else 1.0

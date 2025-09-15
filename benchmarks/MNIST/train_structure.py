@@ -1,3 +1,6 @@
+"""
+Training file for structured pruning of KANQuant.
+"""
 import sys, os, logging
 from datetime import datetime
 import matplotlib.pyplot as plt
@@ -5,7 +8,7 @@ import numpy as np
 import json
 
 sys.path.append('../../src')
-from KANQuant_structure import KANQuant
+from KANQuant import KANQuant
 from quant import QuantBrevitasActivation, ScalarBiasScale
 
 # Train on MNIST
@@ -52,7 +55,7 @@ config = {
     "warmup_epochs": 30,
     "random_seed": seed,
 
-    "connections_to_keep": [32, 16],
+    "connections_to_keep": [32, 8],
 }
 
 #Create a new directory to save the config and checkpoints

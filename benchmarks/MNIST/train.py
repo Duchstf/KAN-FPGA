@@ -32,7 +32,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # === Configuration ===
 config = {
-    "layers": [28*28, 62, 10],
+    "layers": [28*28, 32, 10],
     "grid_range": [-8, 8],
     "layers_bitwidth": [1, 6, 6],
 
@@ -49,8 +49,8 @@ config = {
     "weight_decay": 1e-4,
 
     "prune_threshold": 1,
-    "target_epoch": 40,
-    "warmup_epochs": 10,
+    "target_epoch": 25,
+    "warmup_epochs": 5,
     "random_seed": seed,
 }
 
