@@ -36,7 +36,7 @@ set_property top top [current_fileset]
 
 # Run out-of-context synthesis with aggressive optimization
 synth_design -top top -mode out_of_context -directive PerformanceOptimized -retiming
-create_clock -name clk -period 8.0 [get_ports clk]
+create_clock -name clk -period 1.1 [get_ports clk]
 
 # Write synthesized checkpoint
 write_checkpoint -force $OOC_DCP_PATH

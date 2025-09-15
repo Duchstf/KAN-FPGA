@@ -9,8 +9,8 @@ use xpm.vcomponents.all;
 entity LUT_1 is
     generic (
         MEMFILE          : string ;
-        READ_LATENCY     : integer  := 1;
-        MEMORY_PRIMITIVE : string   := "distributed"
+        READ_LATENCY     : integer  := 2;
+        MEMORY_PRIMITIVE : string   := "auto"
     );
     port (
         clk : in std_logic;
@@ -20,12 +20,22 @@ entity LUT_1 is
 end entity;
 
 architecture rtl of LUT_1 is
-    signal idx : unsigned(LUT_ADDR_WIDTH_1-1 downto 0);
-    signal rom_q : std_logic_vector(LUT_DATA_WIDTH_1-1 downto 0);
+    signal idx_unregistered : unsigned(LUT_ADDR_WIDTH_1-1 downto 0);
+    signal idx_registered   : unsigned(LUT_ADDR_WIDTH_1-1 downto 0);
+    signal rom_q            : std_logic_vector(LUT_DATA_WIDTH_1-1 downto 0);
 
     begin
 
-        idx <= unsigned(d + to_signed(2**(LUT_ADDR_WIDTH_1-1), LUT_ADDR_WIDTH_1));
+        -- Step 1: Combinational address calculation (use the optimized version from above)
+        idx_unregistered <= unsigned( (not d(d'left)) & d(d'left-1 downto 0) );
+
+        -- Step 2: Register the address to pipeline the logic
+        process (clk)
+        begin
+            if rising_edge(clk) then
+                idx_registered <= idx_unregistered;
+            end if;
+        end process;
 
         -- Synchronous ROM read
         rom_i : xpm_memory_sprom
@@ -43,7 +53,7 @@ architecture rtl of LUT_1 is
             USE_MEM_INIT        => 1
         )
         port map (
-            addra  => std_logic_vector(idx),
+            addra  => std_logic_vector(idx_registered),
             clka   => clk,
             ena    => '1',
             regcea => '1',
