@@ -22,8 +22,6 @@ import json
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # === Configuration ===
-layers_precision = [(6, 3), (6, 4), (6, 4)]
-
 #Training parameters
 batch_size = 64
 num_epochs = 50
@@ -71,7 +69,7 @@ trainloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
 testloader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
 
 # === Initialize Model ===
-model = KAN([16,8,5], grid_size=30, spline_order=3, grid_eps=0.05, base_activation=nn.GELU, grid_range=[-8,8]).to(device)
+model = KAN([16,12,5], grid_size=30, spline_order=3, grid_eps=0.05, base_activation=nn.GELU, grid_range=[-8,8]).to(device)
 
 optimizer = optim.AdamW(model.parameters(), lr=1e-3, weight_decay=1e-4)
 scheduler = optim.lr_scheduler.ExponentialLR(optimizer, gamma=0.9)
