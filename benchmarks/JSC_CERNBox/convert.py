@@ -56,7 +56,7 @@ kan_lut = KAN_LUT(model_dir, checkpoint, config, JSC_input_layer, device)
 kan_lut.quick_match_check() #Test matching of LUT implementation with the base model KAN
 
 #Generate the firmware
-kan_lut.generate_firmware(clock_period=1.1)
+kan_lut.generate_firmware(clock_period=1.2, n_add=4)
 
 #Simulate the firmware
 kan_lut.simulate_firmware(n_vectors = 10)

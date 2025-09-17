@@ -1,7 +1,7 @@
 import torch
 import sys, os, json, shutil
 import numpy as np
-from math import ceil, log2
+from math import ceil, log2, log
 import torch.nn.functional as F
 from numpy.core.fromnumeric import take
 from KANQuant import KANQuant as KAN
@@ -182,7 +182,7 @@ class KAN_LUT:
         return max_err
 
     #----------FIRMWARE IMPLEMENTATION----------
-    def generate_firmware(self, adder_tree=True, clock_period: float = 5.0):
+    def generate_firmware(self, adder_tree=True, clock_period: float = 5.0, n_add=2):
         """
         Generate the firmware for the KAN LUT
         """
@@ -206,7 +206,7 @@ class KAN_LUT:
         shutil.copy(os.path.join(os.path.dirname(__file__), "templates", "src", "top.vhd"), os.path.join(self.firmware_dir, "src", "top.vhd"))
 
         #Write the KAN core HLS file
-        self.write_kan_core(adder_tree=adder_tree)
+        self.write_kan_core(adder_tree=adder_tree, n_add=n_add)
         self.write_pkg_kan()
         self.write_pkg_lut()
         self.write_lut_vhd()
@@ -214,10 +214,14 @@ class KAN_LUT:
         self.write_build_tcl(clock_period=clock_period)
         pass
 
-    def write_kan_core(self, max_per_line=16, adder_tree=True):
+    def write_kan_core(self, max_per_line=16, adder_tree=True, n_add=2):
         """
         Write the KAN core VHDL file with balanced, pipelined adder trees.
+        n_add is the number of inputs to add at each stage of the adder tree
         """
+        # Add a check to ensure n_add is valid for an adder tree
+        if adder_tree and n_add < 2:
+            raise ValueError("For adder_tree=True, n_add must be 2 or greater.")
 
         # ---------- Build SIGNAL_DECLS ----------
         # Helper function to emit a list of signals
@@ -267,8 +271,9 @@ class KAN_LUT:
                 all_sum_terms_in_layer.append(sum_terms_scan)
                 max_inputs_in_layer = max(max_inputs_in_layer, len(sum_terms_scan))
             
-            # Calculate the fixed pipeline depth for this layer
-            layer_depth = ceil(log2(max_inputs_in_layer)) if max_inputs_in_layer > 1 else 1
+            # --- MODIFICATION: Calculate pipeline depth based on n_add ---
+            # The base of the logarithm is now n_add instead of 2.
+            layer_depth = ceil(log(max_inputs_in_layer, n_add)) if max_inputs_in_layer > 1 else 1
 
             # --- Generate blocks for each channel in the layer ---
             for k in range(out_f):
@@ -324,30 +329,34 @@ class KAN_LUT:
                             current_stage_terms = [target]
                             continue
 
-                        # Otherwise, perform a reduction stage (summing in pairs)
-                        num_results_this_stage = ceil(len(current_stage_terms) / 2)
+                        # --- MODIFICATION: Generalize the reduction stage for n_add inputs ---
+                        num_results_this_stage = ceil(len(current_stage_terms) / n_add)
                         next_stage_terms = []
                         
-                        # Declare intermediate signals for this stage if they are not the final sum
+                        # Declare intermediate signals for this stage
                         if not (is_last_stage and num_results_this_stage == 1):
                             stage_sigs = [f"s{stage}_{j}" for j in range(num_results_this_stage)]
                             adder_tree_signals.append(f"signal {', '.join(stage_sigs)} : sum_t_{i}_{k};")
                         
                         for j in range(num_results_this_stage):
-                            term1 = current_stage_terms[2*j]
-                            
-                            # Determine the target signal for this specific addition
+                            # Determine the target signal for this addition
                             if is_last_stage and num_results_this_stage == 1:
                                 target = f"sum_{i}_{k}"
                             else:
                                 target = f"s{stage}_{j}"
+
+                            # Get the slice of terms for this n-input addition
+                            start_index = j * n_add
+                            end_index = start_index + n_add
+                            terms_to_add = current_stage_terms[start_index:end_index]
                             
-                            # Check for the second term in the pair
-                            if (2*j + 1) < len(current_stage_terms):
-                                term2 = current_stage_terms[2*j + 1]
-                                adder_tree_logic.append(f"    {target} <= {term1} + {term2};")
-                            else: # Odd term out, passes through
-                                adder_tree_logic.append(f"    {target} <= {term1};")
+                            # Generate the VHDL line for the sum or pass-through
+                            if len(terms_to_add) > 1:
+                                rhs = " + ".join(terms_to_add)
+                                adder_tree_logic.append(f"    {target} <= {rhs};")
+                            else: # Odd term out, passes through to the next stage
+                                adder_tree_logic.append(f"    {target} <= {terms_to_add[0]};")
+                            
                             next_stage_terms.append(target)
                             
                         current_stage_terms = next_stage_terms

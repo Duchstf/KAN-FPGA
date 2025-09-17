@@ -1,4 +1,3 @@
-# vivado/build_ooc.tcl
 # Usage:
 #   vivado -mode batch -source vivado/build_ooc.tcl
 

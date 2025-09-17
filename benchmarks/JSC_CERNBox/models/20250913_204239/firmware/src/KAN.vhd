@@ -40,9 +40,7 @@ begin
   -- === auto: layer blocks ===
   -- LAYER 0, ch 0
   gen_l0c0 : block
-  signal s1_0, s1_1, s1_2, s1_3, s1_4, s1_5, s1_6, s1_7 : sum_t_0_0;
-  signal s2_0, s2_1, s2_2, s2_3 : sum_t_0_0;
-  signal s3_0, s3_1 : sum_t_0_0;
+  signal s1_0, s1_1, s1_2, s1_3 : sum_t_0_0;
   signal sum_0_0 : sum_t_0_0;
   begin
     i00 : entity work.LUT_0 generic map (MEMFILE=>"lut_0_0_0.mem") port map (clk, input(0), act_0_0_0);
@@ -64,24 +62,12 @@ begin
     begin
       if rising_edge(clk) then
         -- Stage 1
-        s1_0 <= resize(act_0_0_0, SUM_WIDTH_0_0) + resize(act_0_1_0, SUM_WIDTH_0_0);
-        s1_1 <= resize(act_0_2_0, SUM_WIDTH_0_0) + resize(act_0_3_0, SUM_WIDTH_0_0);
-        s1_2 <= resize(act_0_4_0, SUM_WIDTH_0_0) + resize(act_0_5_0, SUM_WIDTH_0_0);
-        s1_3 <= resize(act_0_6_0, SUM_WIDTH_0_0) + resize(act_0_7_0, SUM_WIDTH_0_0);
-        s1_4 <= resize(act_0_8_0, SUM_WIDTH_0_0) + resize(act_0_10_0, SUM_WIDTH_0_0);
-        s1_5 <= resize(act_0_11_0, SUM_WIDTH_0_0) + resize(act_0_12_0, SUM_WIDTH_0_0);
-        s1_6 <= resize(act_0_13_0, SUM_WIDTH_0_0) + resize(act_0_14_0, SUM_WIDTH_0_0);
-        s1_7 <= resize(act_0_15_0, SUM_WIDTH_0_0);
+        s1_0 <= resize(act_0_0_0, SUM_WIDTH_0_0) + resize(act_0_1_0, SUM_WIDTH_0_0) + resize(act_0_2_0, SUM_WIDTH_0_0) + resize(act_0_3_0, SUM_WIDTH_0_0);
+        s1_1 <= resize(act_0_4_0, SUM_WIDTH_0_0) + resize(act_0_5_0, SUM_WIDTH_0_0) + resize(act_0_6_0, SUM_WIDTH_0_0) + resize(act_0_7_0, SUM_WIDTH_0_0);
+        s1_2 <= resize(act_0_8_0, SUM_WIDTH_0_0) + resize(act_0_10_0, SUM_WIDTH_0_0) + resize(act_0_11_0, SUM_WIDTH_0_0) + resize(act_0_12_0, SUM_WIDTH_0_0);
+        s1_3 <= resize(act_0_13_0, SUM_WIDTH_0_0) + resize(act_0_14_0, SUM_WIDTH_0_0) + resize(act_0_15_0, SUM_WIDTH_0_0);
         -- Stage 2
-        s2_0 <= s1_0 + s1_1;
-        s2_1 <= s1_2 + s1_3;
-        s2_2 <= s1_4 + s1_5;
-        s2_3 <= s1_6 + s1_7;
-        -- Stage 3
-        s3_0 <= s2_0 + s2_1;
-        s3_1 <= s2_2 + s2_3;
-        -- Stage 4
-        sum_0_0 <= s3_0 + s3_1;
+        sum_0_0 <= s1_0 + s1_1 + s1_2 + s1_3;
       end if;
     end process;
     out0_0 <= saturate(sum_0_0, 8);
@@ -89,9 +75,7 @@ begin
 
   -- LAYER 0, ch 1
   gen_l0c1 : block
-  signal s1_0, s1_1, s1_2, s1_3, s1_4, s1_5, s1_6 : sum_t_0_1;
-  signal s2_0, s2_1, s2_2, s2_3 : sum_t_0_1;
-  signal s3_0, s3_1 : sum_t_0_1;
+  signal s1_0, s1_1, s1_2, s1_3 : sum_t_0_1;
   signal sum_0_1 : sum_t_0_1;
   begin
     i00 : entity work.LUT_0 generic map (MEMFILE=>"lut_0_0_1.mem") port map (clk, input(0), act_0_0_1);
@@ -111,23 +95,12 @@ begin
     begin
       if rising_edge(clk) then
         -- Stage 1
-        s1_0 <= resize(act_0_0_1, SUM_WIDTH_0_1) + resize(act_0_1_1, SUM_WIDTH_0_1);
-        s1_1 <= resize(act_0_2_1, SUM_WIDTH_0_1) + resize(act_0_3_1, SUM_WIDTH_0_1);
-        s1_2 <= resize(act_0_4_1, SUM_WIDTH_0_1) + resize(act_0_5_1, SUM_WIDTH_0_1);
-        s1_3 <= resize(act_0_7_1, SUM_WIDTH_0_1) + resize(act_0_9_1, SUM_WIDTH_0_1);
-        s1_4 <= resize(act_0_10_1, SUM_WIDTH_0_1) + resize(act_0_11_1, SUM_WIDTH_0_1);
-        s1_5 <= resize(act_0_12_1, SUM_WIDTH_0_1) + resize(act_0_14_1, SUM_WIDTH_0_1);
-        s1_6 <= resize(act_0_15_1, SUM_WIDTH_0_1);
+        s1_0 <= resize(act_0_0_1, SUM_WIDTH_0_1) + resize(act_0_1_1, SUM_WIDTH_0_1) + resize(act_0_2_1, SUM_WIDTH_0_1) + resize(act_0_3_1, SUM_WIDTH_0_1);
+        s1_1 <= resize(act_0_4_1, SUM_WIDTH_0_1) + resize(act_0_5_1, SUM_WIDTH_0_1) + resize(act_0_7_1, SUM_WIDTH_0_1) + resize(act_0_9_1, SUM_WIDTH_0_1);
+        s1_2 <= resize(act_0_10_1, SUM_WIDTH_0_1) + resize(act_0_11_1, SUM_WIDTH_0_1) + resize(act_0_12_1, SUM_WIDTH_0_1) + resize(act_0_14_1, SUM_WIDTH_0_1);
+        s1_3 <= resize(act_0_15_1, SUM_WIDTH_0_1);
         -- Stage 2
-        s2_0 <= s1_0 + s1_1;
-        s2_1 <= s1_2 + s1_3;
-        s2_2 <= s1_4 + s1_5;
-        s2_3 <= s1_6;
-        -- Stage 3
-        s3_0 <= s2_0 + s2_1;
-        s3_1 <= s2_2 + s2_3;
-        -- Stage 4
-        sum_0_1 <= s3_0 + s3_1;
+        sum_0_1 <= s1_0 + s1_1 + s1_2 + s1_3;
       end if;
     end process;
     out0_1 <= saturate(sum_0_1, 8);
@@ -135,9 +108,7 @@ begin
 
   -- LAYER 0, ch 2
   gen_l0c2 : block
-  signal s1_0, s1_1, s1_2, s1_3, s1_4, s1_5, s1_6, s1_7 : sum_t_0_2;
-  signal s2_0, s2_1, s2_2, s2_3 : sum_t_0_2;
-  signal s3_0, s3_1 : sum_t_0_2;
+  signal s1_0, s1_1, s1_2, s1_3 : sum_t_0_2;
   signal sum_0_2 : sum_t_0_2;
   begin
     i00 : entity work.LUT_0 generic map (MEMFILE=>"lut_0_0_2.mem") port map (clk, input(0), act_0_0_2);
@@ -160,24 +131,12 @@ begin
     begin
       if rising_edge(clk) then
         -- Stage 1
-        s1_0 <= resize(act_0_0_2, SUM_WIDTH_0_2) + resize(act_0_1_2, SUM_WIDTH_0_2);
-        s1_1 <= resize(act_0_2_2, SUM_WIDTH_0_2) + resize(act_0_3_2, SUM_WIDTH_0_2);
-        s1_2 <= resize(act_0_4_2, SUM_WIDTH_0_2) + resize(act_0_5_2, SUM_WIDTH_0_2);
-        s1_3 <= resize(act_0_6_2, SUM_WIDTH_0_2) + resize(act_0_7_2, SUM_WIDTH_0_2);
-        s1_4 <= resize(act_0_8_2, SUM_WIDTH_0_2) + resize(act_0_9_2, SUM_WIDTH_0_2);
-        s1_5 <= resize(act_0_10_2, SUM_WIDTH_0_2) + resize(act_0_11_2, SUM_WIDTH_0_2);
-        s1_6 <= resize(act_0_12_2, SUM_WIDTH_0_2) + resize(act_0_13_2, SUM_WIDTH_0_2);
-        s1_7 <= resize(act_0_14_2, SUM_WIDTH_0_2) + resize(act_0_15_2, SUM_WIDTH_0_2);
+        s1_0 <= resize(act_0_0_2, SUM_WIDTH_0_2) + resize(act_0_1_2, SUM_WIDTH_0_2) + resize(act_0_2_2, SUM_WIDTH_0_2) + resize(act_0_3_2, SUM_WIDTH_0_2);
+        s1_1 <= resize(act_0_4_2, SUM_WIDTH_0_2) + resize(act_0_5_2, SUM_WIDTH_0_2) + resize(act_0_6_2, SUM_WIDTH_0_2) + resize(act_0_7_2, SUM_WIDTH_0_2);
+        s1_2 <= resize(act_0_8_2, SUM_WIDTH_0_2) + resize(act_0_9_2, SUM_WIDTH_0_2) + resize(act_0_10_2, SUM_WIDTH_0_2) + resize(act_0_11_2, SUM_WIDTH_0_2);
+        s1_3 <= resize(act_0_12_2, SUM_WIDTH_0_2) + resize(act_0_13_2, SUM_WIDTH_0_2) + resize(act_0_14_2, SUM_WIDTH_0_2) + resize(act_0_15_2, SUM_WIDTH_0_2);
         -- Stage 2
-        s2_0 <= s1_0 + s1_1;
-        s2_1 <= s1_2 + s1_3;
-        s2_2 <= s1_4 + s1_5;
-        s2_3 <= s1_6 + s1_7;
-        -- Stage 3
-        s3_0 <= s2_0 + s2_1;
-        s3_1 <= s2_2 + s2_3;
-        -- Stage 4
-        sum_0_2 <= s3_0 + s3_1;
+        sum_0_2 <= s1_0 + s1_1 + s1_2 + s1_3;
       end if;
     end process;
     out0_2 <= saturate(sum_0_2, 8);
@@ -185,9 +144,7 @@ begin
 
   -- LAYER 0, ch 3
   gen_l0c3 : block
-  signal s1_0, s1_1, s1_2, s1_3, s1_4, s1_5, s1_6 : sum_t_0_3;
-  signal s2_0, s2_1, s2_2, s2_3 : sum_t_0_3;
-  signal s3_0, s3_1 : sum_t_0_3;
+  signal s1_0, s1_1, s1_2, s1_3 : sum_t_0_3;
   signal sum_0_3 : sum_t_0_3;
   begin
     i00 : entity work.LUT_0 generic map (MEMFILE=>"lut_0_0_3.mem") port map (clk, input(0), act_0_0_3);
@@ -207,23 +164,12 @@ begin
     begin
       if rising_edge(clk) then
         -- Stage 1
-        s1_0 <= resize(act_0_0_3, SUM_WIDTH_0_3) + resize(act_0_1_3, SUM_WIDTH_0_3);
-        s1_1 <= resize(act_0_2_3, SUM_WIDTH_0_3) + resize(act_0_3_3, SUM_WIDTH_0_3);
-        s1_2 <= resize(act_0_4_3, SUM_WIDTH_0_3) + resize(act_0_5_3, SUM_WIDTH_0_3);
-        s1_3 <= resize(act_0_8_3, SUM_WIDTH_0_3) + resize(act_0_10_3, SUM_WIDTH_0_3);
-        s1_4 <= resize(act_0_11_3, SUM_WIDTH_0_3) + resize(act_0_12_3, SUM_WIDTH_0_3);
-        s1_5 <= resize(act_0_13_3, SUM_WIDTH_0_3) + resize(act_0_14_3, SUM_WIDTH_0_3);
-        s1_6 <= resize(act_0_15_3, SUM_WIDTH_0_3);
+        s1_0 <= resize(act_0_0_3, SUM_WIDTH_0_3) + resize(act_0_1_3, SUM_WIDTH_0_3) + resize(act_0_2_3, SUM_WIDTH_0_3) + resize(act_0_3_3, SUM_WIDTH_0_3);
+        s1_1 <= resize(act_0_4_3, SUM_WIDTH_0_3) + resize(act_0_5_3, SUM_WIDTH_0_3) + resize(act_0_8_3, SUM_WIDTH_0_3) + resize(act_0_10_3, SUM_WIDTH_0_3);
+        s1_2 <= resize(act_0_11_3, SUM_WIDTH_0_3) + resize(act_0_12_3, SUM_WIDTH_0_3) + resize(act_0_13_3, SUM_WIDTH_0_3) + resize(act_0_14_3, SUM_WIDTH_0_3);
+        s1_3 <= resize(act_0_15_3, SUM_WIDTH_0_3);
         -- Stage 2
-        s2_0 <= s1_0 + s1_1;
-        s2_1 <= s1_2 + s1_3;
-        s2_2 <= s1_4 + s1_5;
-        s2_3 <= s1_6;
-        -- Stage 3
-        s3_0 <= s2_0 + s2_1;
-        s3_1 <= s2_2 + s2_3;
-        -- Stage 4
-        sum_0_3 <= s3_0 + s3_1;
+        sum_0_3 <= s1_0 + s1_1 + s1_2 + s1_3;
       end if;
     end process;
     out0_3 <= saturate(sum_0_3, 8);
@@ -231,9 +177,7 @@ begin
 
   -- LAYER 0, ch 4
   gen_l0c4 : block
-  signal s1_0, s1_1, s1_2, s1_3, s1_4, s1_5, s1_6 : sum_t_0_4;
-  signal s2_0, s2_1, s2_2, s2_3 : sum_t_0_4;
-  signal s3_0, s3_1 : sum_t_0_4;
+  signal s1_0, s1_1, s1_2, s1_3 : sum_t_0_4;
   signal sum_0_4 : sum_t_0_4;
   begin
     i00 : entity work.LUT_0 generic map (MEMFILE=>"lut_0_0_4.mem") port map (clk, input(0), act_0_0_4);
@@ -254,23 +198,12 @@ begin
     begin
       if rising_edge(clk) then
         -- Stage 1
-        s1_0 <= resize(act_0_0_4, SUM_WIDTH_0_4) + resize(act_0_1_4, SUM_WIDTH_0_4);
-        s1_1 <= resize(act_0_2_4, SUM_WIDTH_0_4) + resize(act_0_3_4, SUM_WIDTH_0_4);
-        s1_2 <= resize(act_0_4_4, SUM_WIDTH_0_4) + resize(act_0_5_4, SUM_WIDTH_0_4);
-        s1_3 <= resize(act_0_7_4, SUM_WIDTH_0_4) + resize(act_0_9_4, SUM_WIDTH_0_4);
-        s1_4 <= resize(act_0_10_4, SUM_WIDTH_0_4) + resize(act_0_11_4, SUM_WIDTH_0_4);
-        s1_5 <= resize(act_0_12_4, SUM_WIDTH_0_4) + resize(act_0_13_4, SUM_WIDTH_0_4);
-        s1_6 <= resize(act_0_14_4, SUM_WIDTH_0_4) + resize(act_0_15_4, SUM_WIDTH_0_4);
+        s1_0 <= resize(act_0_0_4, SUM_WIDTH_0_4) + resize(act_0_1_4, SUM_WIDTH_0_4) + resize(act_0_2_4, SUM_WIDTH_0_4) + resize(act_0_3_4, SUM_WIDTH_0_4);
+        s1_1 <= resize(act_0_4_4, SUM_WIDTH_0_4) + resize(act_0_5_4, SUM_WIDTH_0_4) + resize(act_0_7_4, SUM_WIDTH_0_4) + resize(act_0_9_4, SUM_WIDTH_0_4);
+        s1_2 <= resize(act_0_10_4, SUM_WIDTH_0_4) + resize(act_0_11_4, SUM_WIDTH_0_4) + resize(act_0_12_4, SUM_WIDTH_0_4) + resize(act_0_13_4, SUM_WIDTH_0_4);
+        s1_3 <= resize(act_0_14_4, SUM_WIDTH_0_4) + resize(act_0_15_4, SUM_WIDTH_0_4);
         -- Stage 2
-        s2_0 <= s1_0 + s1_1;
-        s2_1 <= s1_2 + s1_3;
-        s2_2 <= s1_4 + s1_5;
-        s2_3 <= s1_6;
-        -- Stage 3
-        s3_0 <= s2_0 + s2_1;
-        s3_1 <= s2_2 + s2_3;
-        -- Stage 4
-        sum_0_4 <= s3_0 + s3_1;
+        sum_0_4 <= s1_0 + s1_1 + s1_2 + s1_3;
       end if;
     end process;
     out0_4 <= saturate(sum_0_4, 8);
@@ -278,9 +211,7 @@ begin
 
   -- LAYER 0, ch 5
   gen_l0c5 : block
-  signal s1_0, s1_1, s1_2, s1_3, s1_4, s1_5, s1_6, s1_7 : sum_t_0_5;
-  signal s2_0, s2_1, s2_2, s2_3 : sum_t_0_5;
-  signal s3_0, s3_1 : sum_t_0_5;
+  signal s1_0, s1_1, s1_2, s1_3 : sum_t_0_5;
   signal sum_0_5 : sum_t_0_5;
   begin
     i00 : entity work.LUT_0 generic map (MEMFILE=>"lut_0_0_5.mem") port map (clk, input(0), act_0_0_5);
@@ -303,24 +234,12 @@ begin
     begin
       if rising_edge(clk) then
         -- Stage 1
-        s1_0 <= resize(act_0_0_5, SUM_WIDTH_0_5) + resize(act_0_1_5, SUM_WIDTH_0_5);
-        s1_1 <= resize(act_0_2_5, SUM_WIDTH_0_5) + resize(act_0_3_5, SUM_WIDTH_0_5);
-        s1_2 <= resize(act_0_4_5, SUM_WIDTH_0_5) + resize(act_0_5_5, SUM_WIDTH_0_5);
-        s1_3 <= resize(act_0_6_5, SUM_WIDTH_0_5) + resize(act_0_7_5, SUM_WIDTH_0_5);
-        s1_4 <= resize(act_0_8_5, SUM_WIDTH_0_5) + resize(act_0_9_5, SUM_WIDTH_0_5);
-        s1_5 <= resize(act_0_10_5, SUM_WIDTH_0_5) + resize(act_0_11_5, SUM_WIDTH_0_5);
-        s1_6 <= resize(act_0_12_5, SUM_WIDTH_0_5) + resize(act_0_13_5, SUM_WIDTH_0_5);
-        s1_7 <= resize(act_0_14_5, SUM_WIDTH_0_5) + resize(act_0_15_5, SUM_WIDTH_0_5);
+        s1_0 <= resize(act_0_0_5, SUM_WIDTH_0_5) + resize(act_0_1_5, SUM_WIDTH_0_5) + resize(act_0_2_5, SUM_WIDTH_0_5) + resize(act_0_3_5, SUM_WIDTH_0_5);
+        s1_1 <= resize(act_0_4_5, SUM_WIDTH_0_5) + resize(act_0_5_5, SUM_WIDTH_0_5) + resize(act_0_6_5, SUM_WIDTH_0_5) + resize(act_0_7_5, SUM_WIDTH_0_5);
+        s1_2 <= resize(act_0_8_5, SUM_WIDTH_0_5) + resize(act_0_9_5, SUM_WIDTH_0_5) + resize(act_0_10_5, SUM_WIDTH_0_5) + resize(act_0_11_5, SUM_WIDTH_0_5);
+        s1_3 <= resize(act_0_12_5, SUM_WIDTH_0_5) + resize(act_0_13_5, SUM_WIDTH_0_5) + resize(act_0_14_5, SUM_WIDTH_0_5) + resize(act_0_15_5, SUM_WIDTH_0_5);
         -- Stage 2
-        s2_0 <= s1_0 + s1_1;
-        s2_1 <= s1_2 + s1_3;
-        s2_2 <= s1_4 + s1_5;
-        s2_3 <= s1_6 + s1_7;
-        -- Stage 3
-        s3_0 <= s2_0 + s2_1;
-        s3_1 <= s2_2 + s2_3;
-        -- Stage 4
-        sum_0_5 <= s3_0 + s3_1;
+        sum_0_5 <= s1_0 + s1_1 + s1_2 + s1_3;
       end if;
     end process;
     out0_5 <= saturate(sum_0_5, 8);
@@ -328,9 +247,7 @@ begin
 
   -- LAYER 0, ch 6
   gen_l0c6 : block
-  signal s1_0, s1_1, s1_2, s1_3, s1_4, s1_5 : sum_t_0_6;
-  signal s2_0, s2_1, s2_2 : sum_t_0_6;
-  signal s3_0, s3_1 : sum_t_0_6;
+  signal s1_0, s1_1, s1_2 : sum_t_0_6;
   signal sum_0_6 : sum_t_0_6;
   begin
     i00 : entity work.LUT_0 generic map (MEMFILE=>"lut_0_0_6.mem") port map (clk, input(0), act_0_0_6);
@@ -349,21 +266,11 @@ begin
     begin
       if rising_edge(clk) then
         -- Stage 1
-        s1_0 <= resize(act_0_0_6, SUM_WIDTH_0_6) + resize(act_0_1_6, SUM_WIDTH_0_6);
-        s1_1 <= resize(act_0_2_6, SUM_WIDTH_0_6) + resize(act_0_3_6, SUM_WIDTH_0_6);
-        s1_2 <= resize(act_0_4_6, SUM_WIDTH_0_6) + resize(act_0_5_6, SUM_WIDTH_0_6);
-        s1_3 <= resize(act_0_7_6, SUM_WIDTH_0_6) + resize(act_0_8_6, SUM_WIDTH_0_6);
-        s1_4 <= resize(act_0_9_6, SUM_WIDTH_0_6) + resize(act_0_10_6, SUM_WIDTH_0_6);
-        s1_5 <= resize(act_0_14_6, SUM_WIDTH_0_6) + resize(act_0_15_6, SUM_WIDTH_0_6);
+        s1_0 <= resize(act_0_0_6, SUM_WIDTH_0_6) + resize(act_0_1_6, SUM_WIDTH_0_6) + resize(act_0_2_6, SUM_WIDTH_0_6) + resize(act_0_3_6, SUM_WIDTH_0_6);
+        s1_1 <= resize(act_0_4_6, SUM_WIDTH_0_6) + resize(act_0_5_6, SUM_WIDTH_0_6) + resize(act_0_7_6, SUM_WIDTH_0_6) + resize(act_0_8_6, SUM_WIDTH_0_6);
+        s1_2 <= resize(act_0_9_6, SUM_WIDTH_0_6) + resize(act_0_10_6, SUM_WIDTH_0_6) + resize(act_0_14_6, SUM_WIDTH_0_6) + resize(act_0_15_6, SUM_WIDTH_0_6);
         -- Stage 2
-        s2_0 <= s1_0 + s1_1;
-        s2_1 <= s1_2 + s1_3;
-        s2_2 <= s1_4 + s1_5;
-        -- Stage 3
-        s3_0 <= s2_0 + s2_1;
-        s3_1 <= s2_2;
-        -- Stage 4
-        sum_0_6 <= s3_0 + s3_1;
+        sum_0_6 <= s1_0 + s1_1 + s1_2;
       end if;
     end process;
     out0_6 <= saturate(sum_0_6, 8);
@@ -371,9 +278,7 @@ begin
 
   -- LAYER 0, ch 7
   gen_l0c7 : block
-  signal s1_0, s1_1, s1_2, s1_3, s1_4, s1_5, s1_6, s1_7 : sum_t_0_7;
-  signal s2_0, s2_1, s2_2, s2_3 : sum_t_0_7;
-  signal s3_0, s3_1 : sum_t_0_7;
+  signal s1_0, s1_1, s1_2, s1_3 : sum_t_0_7;
   signal sum_0_7 : sum_t_0_7;
   begin
     i00 : entity work.LUT_0 generic map (MEMFILE=>"lut_0_0_7.mem") port map (clk, input(0), act_0_0_7);
@@ -395,24 +300,12 @@ begin
     begin
       if rising_edge(clk) then
         -- Stage 1
-        s1_0 <= resize(act_0_0_7, SUM_WIDTH_0_7) + resize(act_0_1_7, SUM_WIDTH_0_7);
-        s1_1 <= resize(act_0_2_7, SUM_WIDTH_0_7) + resize(act_0_3_7, SUM_WIDTH_0_7);
-        s1_2 <= resize(act_0_4_7, SUM_WIDTH_0_7) + resize(act_0_5_7, SUM_WIDTH_0_7);
-        s1_3 <= resize(act_0_6_7, SUM_WIDTH_0_7) + resize(act_0_7_7, SUM_WIDTH_0_7);
-        s1_4 <= resize(act_0_9_7, SUM_WIDTH_0_7) + resize(act_0_10_7, SUM_WIDTH_0_7);
-        s1_5 <= resize(act_0_11_7, SUM_WIDTH_0_7) + resize(act_0_12_7, SUM_WIDTH_0_7);
-        s1_6 <= resize(act_0_13_7, SUM_WIDTH_0_7) + resize(act_0_14_7, SUM_WIDTH_0_7);
-        s1_7 <= resize(act_0_15_7, SUM_WIDTH_0_7);
+        s1_0 <= resize(act_0_0_7, SUM_WIDTH_0_7) + resize(act_0_1_7, SUM_WIDTH_0_7) + resize(act_0_2_7, SUM_WIDTH_0_7) + resize(act_0_3_7, SUM_WIDTH_0_7);
+        s1_1 <= resize(act_0_4_7, SUM_WIDTH_0_7) + resize(act_0_5_7, SUM_WIDTH_0_7) + resize(act_0_6_7, SUM_WIDTH_0_7) + resize(act_0_7_7, SUM_WIDTH_0_7);
+        s1_2 <= resize(act_0_9_7, SUM_WIDTH_0_7) + resize(act_0_10_7, SUM_WIDTH_0_7) + resize(act_0_11_7, SUM_WIDTH_0_7) + resize(act_0_12_7, SUM_WIDTH_0_7);
+        s1_3 <= resize(act_0_13_7, SUM_WIDTH_0_7) + resize(act_0_14_7, SUM_WIDTH_0_7) + resize(act_0_15_7, SUM_WIDTH_0_7);
         -- Stage 2
-        s2_0 <= s1_0 + s1_1;
-        s2_1 <= s1_2 + s1_3;
-        s2_2 <= s1_4 + s1_5;
-        s2_3 <= s1_6 + s1_7;
-        -- Stage 3
-        s3_0 <= s2_0 + s2_1;
-        s3_1 <= s2_2 + s2_3;
-        -- Stage 4
-        sum_0_7 <= s3_0 + s3_1;
+        sum_0_7 <= s1_0 + s1_1 + s1_2 + s1_3;
       end if;
     end process;
     out0_7 <= saturate(sum_0_7, 8);
@@ -420,9 +313,7 @@ begin
 
   -- LAYER 0, ch 8
   gen_l0c8 : block
-  signal s1_0, s1_1, s1_2, s1_3, s1_4, s1_5, s1_6, s1_7 : sum_t_0_8;
-  signal s2_0, s2_1, s2_2, s2_3 : sum_t_0_8;
-  signal s3_0, s3_1 : sum_t_0_8;
+  signal s1_0, s1_1, s1_2, s1_3 : sum_t_0_8;
   signal sum_0_8 : sum_t_0_8;
   begin
     i00 : entity work.LUT_0 generic map (MEMFILE=>"lut_0_0_8.mem") port map (clk, input(0), act_0_0_8);
@@ -445,24 +336,12 @@ begin
     begin
       if rising_edge(clk) then
         -- Stage 1
-        s1_0 <= resize(act_0_0_8, SUM_WIDTH_0_8) + resize(act_0_1_8, SUM_WIDTH_0_8);
-        s1_1 <= resize(act_0_2_8, SUM_WIDTH_0_8) + resize(act_0_3_8, SUM_WIDTH_0_8);
-        s1_2 <= resize(act_0_4_8, SUM_WIDTH_0_8) + resize(act_0_5_8, SUM_WIDTH_0_8);
-        s1_3 <= resize(act_0_6_8, SUM_WIDTH_0_8) + resize(act_0_7_8, SUM_WIDTH_0_8);
-        s1_4 <= resize(act_0_8_8, SUM_WIDTH_0_8) + resize(act_0_9_8, SUM_WIDTH_0_8);
-        s1_5 <= resize(act_0_10_8, SUM_WIDTH_0_8) + resize(act_0_11_8, SUM_WIDTH_0_8);
-        s1_6 <= resize(act_0_12_8, SUM_WIDTH_0_8) + resize(act_0_13_8, SUM_WIDTH_0_8);
-        s1_7 <= resize(act_0_14_8, SUM_WIDTH_0_8) + resize(act_0_15_8, SUM_WIDTH_0_8);
+        s1_0 <= resize(act_0_0_8, SUM_WIDTH_0_8) + resize(act_0_1_8, SUM_WIDTH_0_8) + resize(act_0_2_8, SUM_WIDTH_0_8) + resize(act_0_3_8, SUM_WIDTH_0_8);
+        s1_1 <= resize(act_0_4_8, SUM_WIDTH_0_8) + resize(act_0_5_8, SUM_WIDTH_0_8) + resize(act_0_6_8, SUM_WIDTH_0_8) + resize(act_0_7_8, SUM_WIDTH_0_8);
+        s1_2 <= resize(act_0_8_8, SUM_WIDTH_0_8) + resize(act_0_9_8, SUM_WIDTH_0_8) + resize(act_0_10_8, SUM_WIDTH_0_8) + resize(act_0_11_8, SUM_WIDTH_0_8);
+        s1_3 <= resize(act_0_12_8, SUM_WIDTH_0_8) + resize(act_0_13_8, SUM_WIDTH_0_8) + resize(act_0_14_8, SUM_WIDTH_0_8) + resize(act_0_15_8, SUM_WIDTH_0_8);
         -- Stage 2
-        s2_0 <= s1_0 + s1_1;
-        s2_1 <= s1_2 + s1_3;
-        s2_2 <= s1_4 + s1_5;
-        s2_3 <= s1_6 + s1_7;
-        -- Stage 3
-        s3_0 <= s2_0 + s2_1;
-        s3_1 <= s2_2 + s2_3;
-        -- Stage 4
-        sum_0_8 <= s3_0 + s3_1;
+        sum_0_8 <= s1_0 + s1_1 + s1_2 + s1_3;
       end if;
     end process;
     out0_8 <= saturate(sum_0_8, 8);
@@ -470,9 +349,7 @@ begin
 
   -- LAYER 0, ch 9
   gen_l0c9 : block
-  signal s1_0, s1_1, s1_2, s1_3, s1_4, s1_5, s1_6, s1_7 : sum_t_0_9;
-  signal s2_0, s2_1, s2_2, s2_3 : sum_t_0_9;
-  signal s3_0, s3_1 : sum_t_0_9;
+  signal s1_0, s1_1, s1_2, s1_3 : sum_t_0_9;
   signal sum_0_9 : sum_t_0_9;
   begin
     i00 : entity work.LUT_0 generic map (MEMFILE=>"lut_0_0_9.mem") port map (clk, input(0), act_0_0_9);
@@ -495,24 +372,12 @@ begin
     begin
       if rising_edge(clk) then
         -- Stage 1
-        s1_0 <= resize(act_0_0_9, SUM_WIDTH_0_9) + resize(act_0_1_9, SUM_WIDTH_0_9);
-        s1_1 <= resize(act_0_2_9, SUM_WIDTH_0_9) + resize(act_0_3_9, SUM_WIDTH_0_9);
-        s1_2 <= resize(act_0_4_9, SUM_WIDTH_0_9) + resize(act_0_5_9, SUM_WIDTH_0_9);
-        s1_3 <= resize(act_0_6_9, SUM_WIDTH_0_9) + resize(act_0_7_9, SUM_WIDTH_0_9);
-        s1_4 <= resize(act_0_8_9, SUM_WIDTH_0_9) + resize(act_0_9_9, SUM_WIDTH_0_9);
-        s1_5 <= resize(act_0_10_9, SUM_WIDTH_0_9) + resize(act_0_11_9, SUM_WIDTH_0_9);
-        s1_6 <= resize(act_0_12_9, SUM_WIDTH_0_9) + resize(act_0_13_9, SUM_WIDTH_0_9);
-        s1_7 <= resize(act_0_14_9, SUM_WIDTH_0_9) + resize(act_0_15_9, SUM_WIDTH_0_9);
+        s1_0 <= resize(act_0_0_9, SUM_WIDTH_0_9) + resize(act_0_1_9, SUM_WIDTH_0_9) + resize(act_0_2_9, SUM_WIDTH_0_9) + resize(act_0_3_9, SUM_WIDTH_0_9);
+        s1_1 <= resize(act_0_4_9, SUM_WIDTH_0_9) + resize(act_0_5_9, SUM_WIDTH_0_9) + resize(act_0_6_9, SUM_WIDTH_0_9) + resize(act_0_7_9, SUM_WIDTH_0_9);
+        s1_2 <= resize(act_0_8_9, SUM_WIDTH_0_9) + resize(act_0_9_9, SUM_WIDTH_0_9) + resize(act_0_10_9, SUM_WIDTH_0_9) + resize(act_0_11_9, SUM_WIDTH_0_9);
+        s1_3 <= resize(act_0_12_9, SUM_WIDTH_0_9) + resize(act_0_13_9, SUM_WIDTH_0_9) + resize(act_0_14_9, SUM_WIDTH_0_9) + resize(act_0_15_9, SUM_WIDTH_0_9);
         -- Stage 2
-        s2_0 <= s1_0 + s1_1;
-        s2_1 <= s1_2 + s1_3;
-        s2_2 <= s1_4 + s1_5;
-        s2_3 <= s1_6 + s1_7;
-        -- Stage 3
-        s3_0 <= s2_0 + s2_1;
-        s3_1 <= s2_2 + s2_3;
-        -- Stage 4
-        sum_0_9 <= s3_0 + s3_1;
+        sum_0_9 <= s1_0 + s1_1 + s1_2 + s1_3;
       end if;
     end process;
     out0_9 <= saturate(sum_0_9, 8);
@@ -520,9 +385,7 @@ begin
 
   -- LAYER 0, ch 10
   gen_l0c10 : block
-  signal s1_0, s1_1, s1_2, s1_3, s1_4, s1_5, s1_6 : sum_t_0_10;
-  signal s2_0, s2_1, s2_2, s2_3 : sum_t_0_10;
-  signal s3_0, s3_1 : sum_t_0_10;
+  signal s1_0, s1_1, s1_2, s1_3 : sum_t_0_10;
   signal sum_0_10 : sum_t_0_10;
   begin
     i00 : entity work.LUT_0 generic map (MEMFILE=>"lut_0_0_10.mem") port map (clk, input(0), act_0_0_10);
@@ -542,23 +405,12 @@ begin
     begin
       if rising_edge(clk) then
         -- Stage 1
-        s1_0 <= resize(act_0_0_10, SUM_WIDTH_0_10) + resize(act_0_2_10, SUM_WIDTH_0_10);
-        s1_1 <= resize(act_0_3_10, SUM_WIDTH_0_10) + resize(act_0_4_10, SUM_WIDTH_0_10);
-        s1_2 <= resize(act_0_5_10, SUM_WIDTH_0_10) + resize(act_0_7_10, SUM_WIDTH_0_10);
-        s1_3 <= resize(act_0_9_10, SUM_WIDTH_0_10) + resize(act_0_10_10, SUM_WIDTH_0_10);
-        s1_4 <= resize(act_0_11_10, SUM_WIDTH_0_10) + resize(act_0_12_10, SUM_WIDTH_0_10);
-        s1_5 <= resize(act_0_13_10, SUM_WIDTH_0_10) + resize(act_0_14_10, SUM_WIDTH_0_10);
-        s1_6 <= resize(act_0_15_10, SUM_WIDTH_0_10);
+        s1_0 <= resize(act_0_0_10, SUM_WIDTH_0_10) + resize(act_0_2_10, SUM_WIDTH_0_10) + resize(act_0_3_10, SUM_WIDTH_0_10) + resize(act_0_4_10, SUM_WIDTH_0_10);
+        s1_1 <= resize(act_0_5_10, SUM_WIDTH_0_10) + resize(act_0_7_10, SUM_WIDTH_0_10) + resize(act_0_9_10, SUM_WIDTH_0_10) + resize(act_0_10_10, SUM_WIDTH_0_10);
+        s1_2 <= resize(act_0_11_10, SUM_WIDTH_0_10) + resize(act_0_12_10, SUM_WIDTH_0_10) + resize(act_0_13_10, SUM_WIDTH_0_10) + resize(act_0_14_10, SUM_WIDTH_0_10);
+        s1_3 <= resize(act_0_15_10, SUM_WIDTH_0_10);
         -- Stage 2
-        s2_0 <= s1_0 + s1_1;
-        s2_1 <= s1_2 + s1_3;
-        s2_2 <= s1_4 + s1_5;
-        s2_3 <= s1_6;
-        -- Stage 3
-        s3_0 <= s2_0 + s2_1;
-        s3_1 <= s2_2 + s2_3;
-        -- Stage 4
-        sum_0_10 <= s3_0 + s3_1;
+        sum_0_10 <= s1_0 + s1_1 + s1_2 + s1_3;
       end if;
     end process;
     out0_10 <= saturate(sum_0_10, 8);
@@ -566,9 +418,7 @@ begin
 
   -- LAYER 0, ch 11
   gen_l0c11 : block
-  signal s1_0, s1_1, s1_2, s1_3, s1_4, s1_5, s1_6, s1_7 : sum_t_0_11;
-  signal s2_0, s2_1, s2_2, s2_3 : sum_t_0_11;
-  signal s3_0, s3_1 : sum_t_0_11;
+  signal s1_0, s1_1, s1_2, s1_3 : sum_t_0_11;
   signal sum_0_11 : sum_t_0_11;
   begin
     i00 : entity work.LUT_0 generic map (MEMFILE=>"lut_0_0_11.mem") port map (clk, input(0), act_0_0_11);
@@ -591,24 +441,12 @@ begin
     begin
       if rising_edge(clk) then
         -- Stage 1
-        s1_0 <= resize(act_0_0_11, SUM_WIDTH_0_11) + resize(act_0_1_11, SUM_WIDTH_0_11);
-        s1_1 <= resize(act_0_2_11, SUM_WIDTH_0_11) + resize(act_0_3_11, SUM_WIDTH_0_11);
-        s1_2 <= resize(act_0_4_11, SUM_WIDTH_0_11) + resize(act_0_5_11, SUM_WIDTH_0_11);
-        s1_3 <= resize(act_0_6_11, SUM_WIDTH_0_11) + resize(act_0_7_11, SUM_WIDTH_0_11);
-        s1_4 <= resize(act_0_8_11, SUM_WIDTH_0_11) + resize(act_0_9_11, SUM_WIDTH_0_11);
-        s1_5 <= resize(act_0_10_11, SUM_WIDTH_0_11) + resize(act_0_11_11, SUM_WIDTH_0_11);
-        s1_6 <= resize(act_0_12_11, SUM_WIDTH_0_11) + resize(act_0_13_11, SUM_WIDTH_0_11);
-        s1_7 <= resize(act_0_14_11, SUM_WIDTH_0_11) + resize(act_0_15_11, SUM_WIDTH_0_11);
+        s1_0 <= resize(act_0_0_11, SUM_WIDTH_0_11) + resize(act_0_1_11, SUM_WIDTH_0_11) + resize(act_0_2_11, SUM_WIDTH_0_11) + resize(act_0_3_11, SUM_WIDTH_0_11);
+        s1_1 <= resize(act_0_4_11, SUM_WIDTH_0_11) + resize(act_0_5_11, SUM_WIDTH_0_11) + resize(act_0_6_11, SUM_WIDTH_0_11) + resize(act_0_7_11, SUM_WIDTH_0_11);
+        s1_2 <= resize(act_0_8_11, SUM_WIDTH_0_11) + resize(act_0_9_11, SUM_WIDTH_0_11) + resize(act_0_10_11, SUM_WIDTH_0_11) + resize(act_0_11_11, SUM_WIDTH_0_11);
+        s1_3 <= resize(act_0_12_11, SUM_WIDTH_0_11) + resize(act_0_13_11, SUM_WIDTH_0_11) + resize(act_0_14_11, SUM_WIDTH_0_11) + resize(act_0_15_11, SUM_WIDTH_0_11);
         -- Stage 2
-        s2_0 <= s1_0 + s1_1;
-        s2_1 <= s1_2 + s1_3;
-        s2_2 <= s1_4 + s1_5;
-        s2_3 <= s1_6 + s1_7;
-        -- Stage 3
-        s3_0 <= s2_0 + s2_1;
-        s3_1 <= s2_2 + s2_3;
-        -- Stage 4
-        sum_0_11 <= s3_0 + s3_1;
+        sum_0_11 <= s1_0 + s1_1 + s1_2 + s1_3;
       end if;
     end process;
     out0_11 <= saturate(sum_0_11, 8);
@@ -635,9 +473,7 @@ begin
 
   -- LAYER 1, ch 0
   gen_l1c0 : block
-  signal s1_0, s1_1, s1_2, s1_3, s1_4, s1_5 : sum_t_1_0;
-  signal s2_0, s2_1, s2_2 : sum_t_1_0;
-  signal s3_0, s3_1 : sum_t_1_0;
+  signal s1_0, s1_1, s1_2 : sum_t_1_0;
   signal sum_1_0 : sum_t_1_0;
   begin
     i00 : entity work.LUT_1 generic map (MEMFILE=>"lut_1_0_0.mem") port map (clk, out0_0_reg, act_1_0_0);
@@ -656,21 +492,11 @@ begin
     begin
       if rising_edge(clk) then
         -- Stage 1
-        s1_0 <= resize(act_1_0_0, SUM_WIDTH_1_0) + resize(act_1_1_0, SUM_WIDTH_1_0);
-        s1_1 <= resize(act_1_2_0, SUM_WIDTH_1_0) + resize(act_1_3_0, SUM_WIDTH_1_0);
-        s1_2 <= resize(act_1_4_0, SUM_WIDTH_1_0) + resize(act_1_5_0, SUM_WIDTH_1_0);
-        s1_3 <= resize(act_1_6_0, SUM_WIDTH_1_0) + resize(act_1_7_0, SUM_WIDTH_1_0);
-        s1_4 <= resize(act_1_8_0, SUM_WIDTH_1_0) + resize(act_1_9_0, SUM_WIDTH_1_0);
-        s1_5 <= resize(act_1_10_0, SUM_WIDTH_1_0) + resize(act_1_11_0, SUM_WIDTH_1_0);
+        s1_0 <= resize(act_1_0_0, SUM_WIDTH_1_0) + resize(act_1_1_0, SUM_WIDTH_1_0) + resize(act_1_2_0, SUM_WIDTH_1_0) + resize(act_1_3_0, SUM_WIDTH_1_0);
+        s1_1 <= resize(act_1_4_0, SUM_WIDTH_1_0) + resize(act_1_5_0, SUM_WIDTH_1_0) + resize(act_1_6_0, SUM_WIDTH_1_0) + resize(act_1_7_0, SUM_WIDTH_1_0);
+        s1_2 <= resize(act_1_8_0, SUM_WIDTH_1_0) + resize(act_1_9_0, SUM_WIDTH_1_0) + resize(act_1_10_0, SUM_WIDTH_1_0) + resize(act_1_11_0, SUM_WIDTH_1_0);
         -- Stage 2
-        s2_0 <= s1_0 + s1_1;
-        s2_1 <= s1_2 + s1_3;
-        s2_2 <= s1_4 + s1_5;
-        -- Stage 3
-        s3_0 <= s2_0 + s2_1;
-        s3_1 <= s2_2;
-        -- Stage 4
-        sum_1_0 <= s3_0 + s3_1;
+        sum_1_0 <= s1_0 + s1_1 + s1_2;
       end if;
     end process;
     output(0) <= saturate(sum_1_0, 6);
@@ -678,9 +504,7 @@ begin
 
   -- LAYER 1, ch 1
   gen_l1c1 : block
-  signal s1_0, s1_1, s1_2, s1_3, s1_4, s1_5 : sum_t_1_1;
-  signal s2_0, s2_1, s2_2 : sum_t_1_1;
-  signal s3_0, s3_1 : sum_t_1_1;
+  signal s1_0, s1_1, s1_2 : sum_t_1_1;
   signal sum_1_1 : sum_t_1_1;
   begin
     i00 : entity work.LUT_1 generic map (MEMFILE=>"lut_1_0_1.mem") port map (clk, out0_0_reg, act_1_0_1);
@@ -699,21 +523,11 @@ begin
     begin
       if rising_edge(clk) then
         -- Stage 1
-        s1_0 <= resize(act_1_0_1, SUM_WIDTH_1_1) + resize(act_1_1_1, SUM_WIDTH_1_1);
-        s1_1 <= resize(act_1_2_1, SUM_WIDTH_1_1) + resize(act_1_3_1, SUM_WIDTH_1_1);
-        s1_2 <= resize(act_1_4_1, SUM_WIDTH_1_1) + resize(act_1_5_1, SUM_WIDTH_1_1);
-        s1_3 <= resize(act_1_6_1, SUM_WIDTH_1_1) + resize(act_1_7_1, SUM_WIDTH_1_1);
-        s1_4 <= resize(act_1_8_1, SUM_WIDTH_1_1) + resize(act_1_9_1, SUM_WIDTH_1_1);
-        s1_5 <= resize(act_1_10_1, SUM_WIDTH_1_1) + resize(act_1_11_1, SUM_WIDTH_1_1);
+        s1_0 <= resize(act_1_0_1, SUM_WIDTH_1_1) + resize(act_1_1_1, SUM_WIDTH_1_1) + resize(act_1_2_1, SUM_WIDTH_1_1) + resize(act_1_3_1, SUM_WIDTH_1_1);
+        s1_1 <= resize(act_1_4_1, SUM_WIDTH_1_1) + resize(act_1_5_1, SUM_WIDTH_1_1) + resize(act_1_6_1, SUM_WIDTH_1_1) + resize(act_1_7_1, SUM_WIDTH_1_1);
+        s1_2 <= resize(act_1_8_1, SUM_WIDTH_1_1) + resize(act_1_9_1, SUM_WIDTH_1_1) + resize(act_1_10_1, SUM_WIDTH_1_1) + resize(act_1_11_1, SUM_WIDTH_1_1);
         -- Stage 2
-        s2_0 <= s1_0 + s1_1;
-        s2_1 <= s1_2 + s1_3;
-        s2_2 <= s1_4 + s1_5;
-        -- Stage 3
-        s3_0 <= s2_0 + s2_1;
-        s3_1 <= s2_2;
-        -- Stage 4
-        sum_1_1 <= s3_0 + s3_1;
+        sum_1_1 <= s1_0 + s1_1 + s1_2;
       end if;
     end process;
     output(1) <= saturate(sum_1_1, 6);
@@ -721,9 +535,7 @@ begin
 
   -- LAYER 1, ch 2
   gen_l1c2 : block
-  signal s1_0, s1_1, s1_2, s1_3, s1_4, s1_5 : sum_t_1_2;
-  signal s2_0, s2_1, s2_2 : sum_t_1_2;
-  signal s3_0, s3_1 : sum_t_1_2;
+  signal s1_0, s1_1, s1_2 : sum_t_1_2;
   signal sum_1_2 : sum_t_1_2;
   begin
     i00 : entity work.LUT_1 generic map (MEMFILE=>"lut_1_0_2.mem") port map (clk, out0_0_reg, act_1_0_2);
@@ -742,21 +554,11 @@ begin
     begin
       if rising_edge(clk) then
         -- Stage 1
-        s1_0 <= resize(act_1_0_2, SUM_WIDTH_1_2) + resize(act_1_1_2, SUM_WIDTH_1_2);
-        s1_1 <= resize(act_1_2_2, SUM_WIDTH_1_2) + resize(act_1_3_2, SUM_WIDTH_1_2);
-        s1_2 <= resize(act_1_4_2, SUM_WIDTH_1_2) + resize(act_1_5_2, SUM_WIDTH_1_2);
-        s1_3 <= resize(act_1_6_2, SUM_WIDTH_1_2) + resize(act_1_7_2, SUM_WIDTH_1_2);
-        s1_4 <= resize(act_1_8_2, SUM_WIDTH_1_2) + resize(act_1_9_2, SUM_WIDTH_1_2);
-        s1_5 <= resize(act_1_10_2, SUM_WIDTH_1_2) + resize(act_1_11_2, SUM_WIDTH_1_2);
+        s1_0 <= resize(act_1_0_2, SUM_WIDTH_1_2) + resize(act_1_1_2, SUM_WIDTH_1_2) + resize(act_1_2_2, SUM_WIDTH_1_2) + resize(act_1_3_2, SUM_WIDTH_1_2);
+        s1_1 <= resize(act_1_4_2, SUM_WIDTH_1_2) + resize(act_1_5_2, SUM_WIDTH_1_2) + resize(act_1_6_2, SUM_WIDTH_1_2) + resize(act_1_7_2, SUM_WIDTH_1_2);
+        s1_2 <= resize(act_1_8_2, SUM_WIDTH_1_2) + resize(act_1_9_2, SUM_WIDTH_1_2) + resize(act_1_10_2, SUM_WIDTH_1_2) + resize(act_1_11_2, SUM_WIDTH_1_2);
         -- Stage 2
-        s2_0 <= s1_0 + s1_1;
-        s2_1 <= s1_2 + s1_3;
-        s2_2 <= s1_4 + s1_5;
-        -- Stage 3
-        s3_0 <= s2_0 + s2_1;
-        s3_1 <= s2_2;
-        -- Stage 4
-        sum_1_2 <= s3_0 + s3_1;
+        sum_1_2 <= s1_0 + s1_1 + s1_2;
       end if;
     end process;
     output(2) <= saturate(sum_1_2, 6);
@@ -764,9 +566,7 @@ begin
 
   -- LAYER 1, ch 3
   gen_l1c3 : block
-  signal s1_0, s1_1, s1_2, s1_3, s1_4, s1_5 : sum_t_1_3;
-  signal s2_0, s2_1, s2_2 : sum_t_1_3;
-  signal s3_0, s3_1 : sum_t_1_3;
+  signal s1_0, s1_1, s1_2 : sum_t_1_3;
   signal sum_1_3 : sum_t_1_3;
   begin
     i00 : entity work.LUT_1 generic map (MEMFILE=>"lut_1_0_3.mem") port map (clk, out0_0_reg, act_1_0_3);
@@ -785,21 +585,11 @@ begin
     begin
       if rising_edge(clk) then
         -- Stage 1
-        s1_0 <= resize(act_1_0_3, SUM_WIDTH_1_3) + resize(act_1_1_3, SUM_WIDTH_1_3);
-        s1_1 <= resize(act_1_2_3, SUM_WIDTH_1_3) + resize(act_1_3_3, SUM_WIDTH_1_3);
-        s1_2 <= resize(act_1_4_3, SUM_WIDTH_1_3) + resize(act_1_5_3, SUM_WIDTH_1_3);
-        s1_3 <= resize(act_1_6_3, SUM_WIDTH_1_3) + resize(act_1_7_3, SUM_WIDTH_1_3);
-        s1_4 <= resize(act_1_8_3, SUM_WIDTH_1_3) + resize(act_1_9_3, SUM_WIDTH_1_3);
-        s1_5 <= resize(act_1_10_3, SUM_WIDTH_1_3) + resize(act_1_11_3, SUM_WIDTH_1_3);
+        s1_0 <= resize(act_1_0_3, SUM_WIDTH_1_3) + resize(act_1_1_3, SUM_WIDTH_1_3) + resize(act_1_2_3, SUM_WIDTH_1_3) + resize(act_1_3_3, SUM_WIDTH_1_3);
+        s1_1 <= resize(act_1_4_3, SUM_WIDTH_1_3) + resize(act_1_5_3, SUM_WIDTH_1_3) + resize(act_1_6_3, SUM_WIDTH_1_3) + resize(act_1_7_3, SUM_WIDTH_1_3);
+        s1_2 <= resize(act_1_8_3, SUM_WIDTH_1_3) + resize(act_1_9_3, SUM_WIDTH_1_3) + resize(act_1_10_3, SUM_WIDTH_1_3) + resize(act_1_11_3, SUM_WIDTH_1_3);
         -- Stage 2
-        s2_0 <= s1_0 + s1_1;
-        s2_1 <= s1_2 + s1_3;
-        s2_2 <= s1_4 + s1_5;
-        -- Stage 3
-        s3_0 <= s2_0 + s2_1;
-        s3_1 <= s2_2;
-        -- Stage 4
-        sum_1_3 <= s3_0 + s3_1;
+        sum_1_3 <= s1_0 + s1_1 + s1_2;
       end if;
     end process;
     output(3) <= saturate(sum_1_3, 6);
@@ -807,9 +597,7 @@ begin
 
   -- LAYER 1, ch 4
   gen_l1c4 : block
-  signal s1_0, s1_1, s1_2, s1_3, s1_4, s1_5 : sum_t_1_4;
-  signal s2_0, s2_1, s2_2 : sum_t_1_4;
-  signal s3_0, s3_1 : sum_t_1_4;
+  signal s1_0, s1_1, s1_2 : sum_t_1_4;
   signal sum_1_4 : sum_t_1_4;
   begin
     i00 : entity work.LUT_1 generic map (MEMFILE=>"lut_1_0_4.mem") port map (clk, out0_0_reg, act_1_0_4);
@@ -828,21 +616,11 @@ begin
     begin
       if rising_edge(clk) then
         -- Stage 1
-        s1_0 <= resize(act_1_0_4, SUM_WIDTH_1_4) + resize(act_1_1_4, SUM_WIDTH_1_4);
-        s1_1 <= resize(act_1_2_4, SUM_WIDTH_1_4) + resize(act_1_3_4, SUM_WIDTH_1_4);
-        s1_2 <= resize(act_1_4_4, SUM_WIDTH_1_4) + resize(act_1_5_4, SUM_WIDTH_1_4);
-        s1_3 <= resize(act_1_6_4, SUM_WIDTH_1_4) + resize(act_1_7_4, SUM_WIDTH_1_4);
-        s1_4 <= resize(act_1_8_4, SUM_WIDTH_1_4) + resize(act_1_9_4, SUM_WIDTH_1_4);
-        s1_5 <= resize(act_1_10_4, SUM_WIDTH_1_4) + resize(act_1_11_4, SUM_WIDTH_1_4);
+        s1_0 <= resize(act_1_0_4, SUM_WIDTH_1_4) + resize(act_1_1_4, SUM_WIDTH_1_4) + resize(act_1_2_4, SUM_WIDTH_1_4) + resize(act_1_3_4, SUM_WIDTH_1_4);
+        s1_1 <= resize(act_1_4_4, SUM_WIDTH_1_4) + resize(act_1_5_4, SUM_WIDTH_1_4) + resize(act_1_6_4, SUM_WIDTH_1_4) + resize(act_1_7_4, SUM_WIDTH_1_4);
+        s1_2 <= resize(act_1_8_4, SUM_WIDTH_1_4) + resize(act_1_9_4, SUM_WIDTH_1_4) + resize(act_1_10_4, SUM_WIDTH_1_4) + resize(act_1_11_4, SUM_WIDTH_1_4);
         -- Stage 2
-        s2_0 <= s1_0 + s1_1;
-        s2_1 <= s1_2 + s1_3;
-        s2_2 <= s1_4 + s1_5;
-        -- Stage 3
-        s3_0 <= s2_0 + s2_1;
-        s3_1 <= s2_2;
-        -- Stage 4
-        sum_1_4 <= s3_0 + s3_1;
+        sum_1_4 <= s1_0 + s1_1 + s1_2;
       end if;
     end process;
     output(4) <= saturate(sum_1_4, 6);
