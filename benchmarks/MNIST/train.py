@@ -34,7 +34,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 config = {
     "layers": [28*28, 62, 10],
     "grid_range": [-8, 8],
-    "layers_bitwidth": [1, 6, 6],
+    "layers_bitwidth": [1, 4, 6],
 
     "grid_size": 30,
     "spline_order": 3,
@@ -48,9 +48,9 @@ config = {
     "learning_rate": 0.01,
     "weight_decay": 1e-4,
 
-    "prune_threshold": 1,
-    "target_epoch": 40,
-    "warmup_epochs": 10,
+    "prune_threshold": 0.1,
+    "target_epoch": 23,
+    "warmup_epochs": 3,
     "random_seed": seed,
 }
 
