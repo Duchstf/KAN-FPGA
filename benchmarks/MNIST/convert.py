@@ -18,7 +18,7 @@ from brevitas.core.quant import QuantType
 device = "cuda" if torch.cuda.is_available() else "cpu"
 is_cuda = device == "cuda"
 
-model_tag = "20250914_192512"
+model_tag = "20250917_114552"
 
 # --- 1. List all model files and find the one with best accuracy ---
 model_dir = f"models/{model_tag}"
@@ -28,7 +28,7 @@ if not files:
     raise FileNotFoundError(f"No model checkpoint files found in '{model_dir}' folder.")
 
 # Sort files by accuracy descending
-files.sort(key=lambda x: float(x.split('_acc')[1].split('_epoch')[0]), reverse=True)
+files.sort(key=lambda x: float(x.split('_acc')[1].split('_remaining')[0]), reverse=True)
 
 #Load the config
 with open(os.path.join(model_dir, "config.json"), "r") as f: config = json.load(f)

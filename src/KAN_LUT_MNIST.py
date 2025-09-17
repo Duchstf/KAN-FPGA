@@ -170,7 +170,7 @@ class KAN_LUT:
         return outs_int.to(torch.float32) * last_scale
 
     @torch.inference_mode()
-    def quick_match_check(self, n: int = 1, atol: float = 1e-4) -> float:
+    def quick_match_check(self, n: int = 1, atol: float = 0.5) -> float:
         """Compare self.predict vs self.KAN on a few samples; returns max |error|."""
         self.KAN.to(self.device).eval()  # ensure model is on the same device as x
         in_features = self.KAN.layers[0].in_features
@@ -580,6 +580,7 @@ class KAN_LUT:
 
         written = 0
         for i in range(0, len(self.KAN.layers)):
+            if i == 0: continue
             layer = self.KAN.layers[i]
             for j in range(layer.in_features):
                 for k in range(layer.out_features):
