@@ -1,7 +1,7 @@
 # KAN-FPGA
 Implementations of KAN on FPGA Paper
 
-Authors: Aarush Gupta (MIT), Duc Hoang (MIT)
+Authors:  Duc Hoang, Aarush Gupta, Philip Harris. MIT
 
 # Train and evaluate the models on our benchmarks
 
