@@ -245,14 +245,21 @@ class KAN_LUT:
             block=[f"-- Layer {i} ({in_f}->{out_f})"]
             if i == 0:
                 for k in range(out_f):
-                    acts_0=[f"act_0_{j}_{k}" for j in range(in_f) if self.truth_tables[f"{i}_{j}_{k}"]["acive"] == 1]
-                    block.append(emit(acts_0, f"act_0_{k}_t"))
+                    # The sum width is now defined in the package, no need to redefine act_0_k_t here
+                    # Instead, we just need the signals for the delta terms
+                    acts_0=[f"act_0_{j}_{k}" for j in range(in_f) if self.truth_tables[f"0_{j}_{k}"]["acive"] == 1]
+                    # Assuming SUM_WIDTH_0_k is available or can be inferred, for now using a placeholder type if needed
+                    # The type `act_0_k_t` from your package is what will be used.
+                    if acts_0:
+                        block.append(emit(acts_0, f"act_0_{k}_t")) # Using the subtype from PkgLUT
             if acts: block.append(emit(acts, f"lut_output_t_{i}"))
             if outs: block.append(emit(outs, f"lut_output_t_{i}"))
             if outs_reg: block.append(emit(outs_reg, f"lut_output_t_{i}"))
             if not adder_tree:
                 for k in range(out_f):
                     sum_term=[f"sum_{i}_{k}"]
+                    # The sum type `sum_t_i_k` must accommodate the bias and deltas
+                    blocks.append(f"subtype  sum_t_{i}_{k} is signed({width - 1} downto 0);") # Example
                     block.append(emit(sum_term, f"sum_t_{i}_{k}"))
             sections.append("\n".join(block))
 
@@ -267,15 +274,30 @@ class KAN_LUT:
             max_inputs_in_layer = 0
             all_sum_terms_in_layer = []
             for k_scan in range(out_f):
-                sum_terms_scan = [
-                    f"resize(act_{i}_{j}_{k_scan}, SUM_WIDTH_{i}_{k_scan})"
+                
+                # --- MODIFICATION START ---
+                # For layer 0, initialize the list of terms with the bias B_0_k.
+                # For other layers, start with an empty list.
+                if i == 0:
+                    # The bias B_0_k is the starting point for the summation.
+                    # NOTE: Ensure SUM_WIDTH_{i}_{k_scan} is defined in your VHDL package.
+                    # Based on your PkgLUT code, this would be the width of `act_0_k_t`.
+                    sum_terms_scan = [f"resize(B_{i}_{k_scan}, SUM_WIDTH_{i}_{k_scan})"] if i != 0 else [f"B_{i}_{k_scan}"]
+                else:
+                    sum_terms_scan = []
+
+                # Add the active activation terms (these are the delta terms for layer 0)
+                sum_terms_scan.extend([
+                    f"resize(act_{i}_{j}_{k_scan}, SUM_WIDTH_{i}_{k_scan})" if i != 0 else f"act_{i}_{j}_{k_scan}"
                     for j in range(in_f)
                     if self.truth_tables[f"{i}_{j}_{k_scan}"]["acive"] == 1
-                ]
+                ])
+                # --- MODIFICATION END ---
+                
                 all_sum_terms_in_layer.append(sum_terms_scan)
                 max_inputs_in_layer = max(max_inputs_in_layer, len(sum_terms_scan))
             
-            # --- MODIFICATION: Calculate pipeline depth based on n_add ---
+            # Determine the pipeline depth based on the max number of terms to be added
             # The base of the logarithm is now n_add instead of 2.
             layer_depth = ceil(log(max_inputs_in_layer, n_add)) if max_inputs_in_layer > 1 else 1
 
@@ -291,7 +313,7 @@ class KAN_LUT:
                 sum_terms = all_sum_terms_in_layer[k]
                 instantiations = []
 
-                #First layer is  1 bit so different instantiation
+                # First layer uses the delta-representation (C_i_j_k constants)
                 if i == 0:
                     for j in range(in_f):
                         if self.truth_tables[f"{i}_{j}_{k}"]["acive"] == 0: 
@@ -302,12 +324,12 @@ class KAN_LUT:
                             f"when input({j})(0) = '1' else (others => '0');"
                         )
                         inst_idx += 1
-                else:
+                else: # Other layers use LUTs
                     for j in range(in_f):
                         if self.truth_tables[f"{i}_{j}_{k}"]["acive"] == 0: 
                             continue
                         mem = f"lut_{i}_{j}_{k}.mem"
-                        src = f"input({j})" if i == 0 else f"out{i-1}_{j}_reg"
+                        src = f"out{i-1}_{j}_reg" # Input comes from previous layer's registered output
                         dst = f"act_{i}_{j}_{k}"
                         instantiations.append(
                             f"  i{inst_idx:02d} : entity work.LUT_{i} "
@@ -321,6 +343,7 @@ class KAN_LUT:
                 adder_tree_logic = []
                 if sum_terms and adder_tree:
                     # Declare the final sum signal locally
+                    # NOTE: Ensure `sum_t_i_k` is defined in your VHDL package to be wide enough.
                     adder_tree_signals.append(f"signal sum_{i}_{k} : sum_t_{i}_{k};")
                     
                     # Start the clocked process
@@ -346,7 +369,7 @@ class KAN_LUT:
                             current_stage_terms = [target]
                             continue
 
-                        # --- MODIFICATION: Generalize the reduction stage for n_add inputs ---
+                        # Generalize the reduction stage for n_add inputs
                         num_results_this_stage = ceil(len(current_stage_terms) / n_add)
                         next_stage_terms = []
                         
@@ -426,6 +449,11 @@ class KAN_LUT:
         template_path = os.path.join(os.path.dirname(__file__), "templates", "src", "KAN.vhd")
         with open(template_path, "r") as tf:
             tpl = tf.read()
+        
+        # You will need to define how SUM_WIDTH is determined and passed to the template
+        # For now, this example assumes it is handled elsewhere or is a known constant in VHDL
+        # For layer 0, `SUM_WIDTH_0_k` would be the width of `act_0_k_t` from PkgLUT.
+        # You may need to add a `{{SUM_WIDTH_DEFS}}` section to your template.
         vhdl_text = tpl.replace("{{SIGNAL_DECLS}}", SIGNAL_DECLS)
         vhdl_text = vhdl_text.replace("{{LAYER_BLOCKS}}", LAYER_BLOCKS)
 
