@@ -239,10 +239,14 @@ class KAN_LUT:
         #Loop through the layers and pick up the signals that exist
         for i, layer in enumerate(self.KAN.layers):
             in_f, out_f = layer.in_features, layer.out_features
-            acts=[f"act_{i}_{j}_{k}" for j in range(in_f) for k in range(out_f) if self.truth_tables[f"{i}_{j}_{k}"]["acive"] == 1]
+            acts=[f"act_{i}_{j}_{k}" for j in range(in_f) for k in range(out_f) if self.truth_tables[f"{i}_{j}_{k}"]["acive"] == 1 and i != 0]
             outs=[f"out{i}_{k}" for k in range(out_f)] if i != len(self.KAN.layers)-1 else []
             outs_reg=[f"out{i}_{k}_reg" for k in range(out_f)] if i != len(self.KAN.layers)-1 else [] #Registers for the outputs
             block=[f"-- Layer {i} ({in_f}->{out_f})"]
+            if i == 0:
+                for k in range(out_f):
+                    acts_0=[f"act_0_{j}_{k}" for j in range(in_f) if self.truth_tables[f"{i}_{j}_{k}"]["acive"] == 1]
+                    block.append(emit(acts_0, f"act_0_{k}_t"))
             if acts: block.append(emit(acts, f"lut_output_t_{i}"))
             if outs: block.append(emit(outs, f"lut_output_t_{i}"))
             if outs_reg: block.append(emit(outs_reg, f"lut_output_t_{i}"))
@@ -295,7 +299,7 @@ class KAN_LUT:
                         dst = f"act_{i}_{j}_{k}"
                         instantiations.append(
                             f"  i{inst_idx:02d} : {dst} <= C_{i}_{j}_{k} "
-                            f"when input({j}) = '1' else (others => '0');"
+                            f"when input({j})(0) = '1' else (others => '0');"
                         )
                         inst_idx += 1
                 else:
@@ -474,14 +478,33 @@ class KAN_LUT:
         blocks = []
         for i in range(0, len(self.KAN.layers)):
             layer = self.KAN.layers[i]
-            blocks.append("\n".join([
-                f"  -- Layer {i}",
-                f"  constant LUT_SIZE_{i}        : integer := {1 << layer.in_precision};",
-                f"  constant LUT_ADDR_WIDTH_{i}  : integer := {layer.in_precision};",
-                f"  constant LUT_DATA_WIDTH_{i}  : integer := {layer.out_precision};",
-                f"  subtype  lut_input_t_{i}  is signed(LUT_ADDR_WIDTH_{i}-1 downto 0);" if i !=0 else f"  subtype  lut_input_t_{i}  is unsigned(LUT_ADDR_WIDTH_{i}-1 downto 0);" ,
-                f"  subtype  lut_output_t_{i} is signed(LUT_DATA_WIDTH_{i}-1 downto 0);",
-            ]))
+            if i == 0:
+                blocks.append(f"-- Layer {i}")
+                blocks.append(f"subtype  lut_output_t_{i} is signed({layer.out_precision - 1} downto 0);")
+                
+                for k in range(layer.out_features):
+                    active_lut = sum(self.truth_tables[f"{i}_{j}_{k}"]["acive"] == 1 for j in range(layer.in_features))
+                    width = layer.out_precision + ceil(log2(active_lut)) if active_lut > 0 else layer.out_precision
+                    blocks.append(f"subtype  act_0_{k}_t is signed({width - 1} downto 0);")
+
+                    bias_term = sum([self.truth_tables[f"{i}_{j}_{k}"]["values_int"][0] for j in range(layer.in_features) if self.truth_tables[f"{i}_{j}_{k}"]["acive"] == 1])
+                    delta_definitions = [f"constant B_{i}_{k} : signed({width - 1} downto 0) := to_signed({bias_term}, {width});"]
+
+                    for j in range(layer.in_features):
+                        if self.truth_tables[f"{i}_{j}_{k}"]["acive"] == 1:
+                            diff_term = self.truth_tables[f"{i}_{j}_{k}"]["values_int"][1] - self.truth_tables[f"{i}_{j}_{k}"]["values_int"][0]
+                            delta_definitions.append(f"constant C_{i}_{j}_{k} : signed({width - 1} downto 0) := to_signed({diff_term}, {width});")
+                    
+                    blocks.append("\n".join([*delta_definitions]))
+            else:
+                blocks.append("\n".join([
+                    f"  -- Layer {i}",
+                    f"  constant LUT_SIZE_{i}        : integer := {1 << layer.in_precision};",
+                    f"  constant LUT_ADDR_WIDTH_{i}  : integer := {layer.in_precision};",
+                    f"  constant LUT_DATA_WIDTH_{i}  : integer := {layer.out_precision};",
+                    f"  subtype  lut_input_t_{i}  is signed(LUT_ADDR_WIDTH_{i}-1 downto 0);" ,
+                    f"  subtype  lut_output_t_{i} is signed(LUT_DATA_WIDTH_{i}-1 downto 0);",
+                ]))
 
         vhdl_text = tpl.replace("{{LAYER_TYPES_BLOCK}}", "\n\n".join(blocks) or "  -- (no layers)")
 
@@ -498,6 +521,8 @@ class KAN_LUT:
         
         #Loop through the layers and generate the VHDL code
         for i in range(0, len(self.KAN.layers)):
+
+            if i == 0: continue
 
             #Deal with the index signal
             vhdl_text = tpl.replace("{{IDX_SIGNAL_DECLS}}", "" if i == 0 else f"signal idx : unsigned(LUT_ADDR_WIDTH_{i}-1 downto 0);")
