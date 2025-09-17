@@ -1,4 +1,3 @@
-# vivado/ooc_build.tcl
 # Usage:
 #   vivado -mode batch -source vivado/build_full.tcl
 
@@ -45,7 +44,7 @@ current_run -synthesis [get_runs synth_1]
 open_run synth_1
 
 # Create clock
-create_clock -name clk -period 5.0 [get_ports clk]
+create_clock -name clk -period {{CLOCK_PERIOD}} [get_ports clk]
 
 # Run implementation
 set_property strategy "Vivado Implementation Defaults" [get_runs impl_1]
