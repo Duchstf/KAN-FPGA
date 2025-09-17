@@ -18,7 +18,7 @@ from brevitas.core.quant import QuantType
 device = "cuda" if torch.cuda.is_available() else "cpu"
 is_cuda = device == "cuda"
 
-model_tag = "20250912_062633"
+model_tag = "20250914_192512"
 
 # --- 1. List all model files and find the one with best accuracy ---
 model_dir = f"models/{model_tag}"
