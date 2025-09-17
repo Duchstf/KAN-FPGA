@@ -7,7 +7,7 @@ from torch.utils.data import DataLoader
 
 # Local imports
 sys.path.append('../../src')
-from KAN_LUT import KAN_LUT
+from KAN_LUT_MNIST import KAN_LUT
 from quant import ScalarBiasScale, QuantBrevitasActivation
 
 #For quantization
@@ -55,7 +55,7 @@ kan_lut = KAN_LUT(model_dir, checkpoint, config, MNIST_input_layer, device)
 kan_lut.quick_match_check() #Test matching of LUT implementation with the base model KAN
 
 #Generate the firmware
-kan_lut.generate_firmware(clock_period=1.1)
+kan_lut.generate_firmware(clock_period=1.1, n_add=4)
 
 #Simulate the firmware
 kan_lut.simulate_firmware(n_vectors=20)
