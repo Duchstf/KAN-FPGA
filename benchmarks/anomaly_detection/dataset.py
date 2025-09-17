@@ -6,6 +6,7 @@ import torch
 import numpy
 from tqdm import tqdm
 import common as com
+import numpy as np
 
 def list_to_vector_array(file_list,
                          msg="calc...",
@@ -72,8 +73,33 @@ def file_list_generator(target_dir,
     com.logger.info(f"{dir_name}_file num : {len(files)}")
     return files
 
-def get_train_data():
+def get_AD_data_for_split(split="train"):
 
     param = com.yaml_load()
 
-    dirs = com.select_dirs(param=param, mode=mode)
+    data_dir = com.select_dirs(param=param, mode=True)[0]
+
+    files = file_list_generator(data_dir, dir_name=split)
+
+    if split == "test":
+        res = np.array([
+            com.file_to_vector_array(file,
+                n_mels=param["feature"]["n_mels"],
+                frames=param["feature"]["frames"],
+                n_fft=param["feature"]["n_fft"],
+                hop_length=param["feature"]["hop_length"],
+                power=param["feature"]["power"]
+            )
+            for file in files
+        ])
+        
+        return res, np.array([int("anomaly" in file) for file in files])
+    else:
+        res = com.list_to_vector_array(files,
+                                        msg="generate trai_dataset",
+                                        n_mels=param["feature"]["n_mels"],
+                                        frames=param["feature"]["frames"],
+                                        n_fft=param["feature"]["n_fft"],
+                                        hop_length=param["feature"]["hop_length"],
+                                        power=param["feature"]["power"])
+        return res, np.array([0 for _ in range(len(res))])
