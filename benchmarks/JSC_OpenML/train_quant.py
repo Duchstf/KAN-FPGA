@@ -48,7 +48,7 @@ logging.getLogger().addHandler(console)
 # === Configuration ===
 config = {
     "seed": seed,
-    "layers": [16, 8, 5],
+    "layers": [16, 12, 5],
     "grid_range": [-2, 2],
     "layers_bitwidth": [6, 6, 8],
 
@@ -64,7 +64,10 @@ config = {
     "learning_rate": 1e-3,
     "weight_decay": 1e-4,
 
-    "prune_threshold": 0.5,
+    "prune_threshold": 0.8,
+    "target_epoch": 25,
+    "warmup_epochs": 4,
+    "random_seed": seed,
 }
 
 #Create a new directory to save the config and checkpoints
@@ -141,7 +144,7 @@ for epoch in range(config["num_epochs"]):
     training_loss.append(average_train_loss)  # Record the average training loss
 
     # Prune the model
-    remaining_fraction = model.prune_below_threshold(threshold=config["prune_threshold"])
+    remaining_fraction = model.prune_below_threshold(threshold=config["prune_threshold"], epoch=epoch, target_epoch=config["target_epoch"], warmup_epochs=config["warmup_epochs"])
     print(f"Remaining fraction: {remaining_fraction}")
 
     # Validation
@@ -172,15 +175,16 @@ for epoch in range(config["num_epochs"]):
     )
 
     # === Save Checkpoint if Best ===
-    if val_accuracy > best_val_accuracy:
-        best_val_accuracy = val_accuracy
-        checkpoint_path = f'{model_dir}/JSC_OpenML_acc{val_accuracy:.4f}_epoch{epoch + 1}.pt'
-        torch.save({
-            'epoch': epoch + 1,
-            'model_state_dict': model.state_dict(),
-            'optimizer_state_dict': optimizer.state_dict(),
-            'val_accuracy': val_accuracy,
-            'val_loss': val_loss,
-            'remaining_fraction': remaining_fraction,
-        }, checkpoint_path)
-        logging.info(f"New best model saved with val accuracy: {val_accuracy:.4f}")
+    if remaining_fraction < 0.99:
+        if val_accuracy > best_val_accuracy:
+            best_val_accuracy = val_accuracy
+            checkpoint_path = f'{model_dir}/JSC_OpenML_acc{val_accuracy:.4f}_epoch{epoch + 1}_remaining{remaining_fraction:.4f}.pt'
+            torch.save({
+                'epoch': epoch + 1,
+                'model_state_dict': model.state_dict(),
+                'optimizer_state_dict': optimizer.state_dict(),
+                'val_accuracy': val_accuracy,
+                'val_loss': val_loss,
+                'remaining_fraction': remaining_fraction,
+            }, checkpoint_path)
+            logging.info(f"New best model saved with val accuracy: {val_accuracy:.4f}, remaining fraction: {remaining_fraction:.4f}")
