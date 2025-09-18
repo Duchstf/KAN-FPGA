@@ -182,7 +182,7 @@ class KAN_LUT:
         return max_err
 
     #----------FIRMWARE IMPLEMENTATION----------
-    def generate_firmware(self, adder_tree=True, clock_period: float = 5.0, n_add=2):
+    def generate_firmware(self, adder_tree=True, clock_period: float = 5.0, n_add=2, fpga_part: str = "xcvu9p-flgb2104-2-i"):
         """
         Generate the firmware for the KAN LUT
         """
@@ -211,7 +211,7 @@ class KAN_LUT:
         self.write_pkg_lut()
         self.write_lut_vhd()
         self.write_mem_files()
-        self.write_build_tcl(clock_period=clock_period)
+        self.write_build_tcl(clock_period=clock_period, fpga_part=fpga_part)
         pass
 
     def write_kan_core(self, max_per_line=16, adder_tree=True, n_add=2):
@@ -527,14 +527,16 @@ class KAN_LUT:
         # Small breadcrumb
         print(f"Wrote {written} LUT .mem file(s) to {self.firmware_dir}/mem/")
 
-    def write_build_tcl(self, clock_period: float):
+    def write_build_tcl(self, clock_period: float, fpga_part: str = "xcvu9p-flgb2104-2-i"):
         
         #Open the template file
         with open(os.path.join(os.path.dirname(__file__), "templates", "vivado", "build_full.tcl"), "r") as tf: tpl_full = tf.read()
         with open(os.path.join(os.path.dirname(__file__), "templates", "vivado", "build_ooc.tcl"), "r") as tf: tpl_ooc = tf.read()
         
         tpl_full_text = tpl_full.replace("{{CLOCK_PERIOD}}", str(clock_period))
+        tpl_full_text = tpl_full_text.replace("{{FPGA_PART}}", str(fpga_part))
         tpl_ooc_text = tpl_ooc.replace("{{CLOCK_PERIOD}}", str(clock_period))
+        tpl_ooc_text = tpl_ooc_text.replace("{{FPGA_PART}}", str(fpga_part))
 
         with open(os.path.join(self.firmware_dir, "vivado", "build_full.tcl"), "w") as f:
             f.write(tpl_full_text)

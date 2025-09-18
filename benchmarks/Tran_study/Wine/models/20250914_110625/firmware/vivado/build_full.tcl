@@ -1,11 +1,10 @@
-# vivado/ooc_build.tcl
 # Usage:
 #   vivado -mode batch -source vivado/build_full.tcl
 
 # Define project name and paths
 set PROJ "KAN_FPGA_PROJECT"
 set DIR  [file normalize [pwd]]
-set PART "xcvu9p-flgb2104-2-i"
+set PART "xczu7ev-ffvc1156-2-e"
 
 # Create in-memory project with the specified part
 create_project -name $PROJ -part $PART -force
@@ -45,7 +44,7 @@ current_run -synthesis [get_runs synth_1]
 open_run synth_1
 
 # Create clock
-create_clock -name clk -period 5.0 [get_ports clk]
+create_clock -name clk -period 1.0 [get_ports clk]
 
 # Run implementation
 set_property strategy "Vivado Implementation Defaults" [get_runs impl_1]
