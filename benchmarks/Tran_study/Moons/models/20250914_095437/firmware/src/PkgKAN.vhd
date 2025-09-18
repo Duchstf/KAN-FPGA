@@ -31,16 +31,19 @@ end package PkgKAN;
 
 package body PkgKAN is
   -- Function to saturate a signed value into W-bit signed range
-  -- Input x can be wider than W
   function saturate(x : signed; W : positive) return signed is
+      constant MAX_W_BITS : signed(W-1 downto 0) := (W-1 => '0', others => '1');
+      constant MIN_W_BITS : signed(W-1 downto 0) := (W-1 => '1', others => '0');
+
+      variable max_for_comp : signed(x'length-1 downto 0) := resize(MAX_W_BITS, x'length);
+      variable min_for_comp : signed(x'length-1 downto 0) := resize(MIN_W_BITS, x'length);
+      
       variable result : signed(W-1 downto 0);
-      constant MAXVAL : signed(x'length-1 downto 0) := to_signed( 2**(W-1)-1, x'length);
-      constant MINVAL : signed(x'length-1 downto 0) := to_signed(-2**(W-1),   x'length);
   begin
-      if x > MAXVAL then
-          result := to_signed( 2**(W-1)-1, W);
-      elsif x < MINVAL then
-          result := to_signed(-2**(W-1),   W);
+      if x > max_for_comp then
+          result := MAX_W_BITS;
+      elsif x < min_for_comp then
+          result := MIN_W_BITS;
       else
           result := resize(x, W);
       end if;

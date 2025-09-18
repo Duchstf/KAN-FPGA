@@ -18,6 +18,7 @@ architecture rtl of KAN is
   -- Layer 0 (2->2)
   signal act_0_0_0, act_0_0_1, act_0_1_0, act_0_1_1 : lut_output_t_0;
   signal out0_0, out0_1 : lut_output_t_0;
+  signal out0_0_reg, out0_1_reg : lut_output_t_0;
 
 -- Layer 1 (2->1)
   signal act_1_0_0, act_1_1_0 : lut_output_t_1;
@@ -56,12 +57,21 @@ begin
     out0_1 <= saturate(sum_0_1, 5);
   end block;
 
+  -- Register block for layer 0
+  out_layer0_reg : process(clk)
+    begin
+      if rising_edge(clk) then
+        out0_0_reg <= out0_0;
+        out0_1_reg <= out0_1;
+      end if;
+  end process;
+
   -- LAYER 1, ch 0
   gen_l1c0 : block
   signal sum_1_0 : sum_t_1_0;
   begin
-    i00 : entity work.LUT_1 generic map (MEMFILE=>"lut_1_0_0.mem") port map (clk, out0_0, act_1_0_0);
-    i01 : entity work.LUT_1 generic map (MEMFILE=>"lut_1_1_0.mem") port map (clk, out0_1, act_1_1_0);
+    i00 : entity work.LUT_1 generic map (MEMFILE=>"lut_1_0_0.mem") port map (clk, out0_0_reg, act_1_0_0);
+    i01 : entity work.LUT_1 generic map (MEMFILE=>"lut_1_1_0.mem") port map (clk, out0_1_reg, act_1_1_0);
     adder_tree : process(clk)
     begin
       if rising_edge(clk) then
