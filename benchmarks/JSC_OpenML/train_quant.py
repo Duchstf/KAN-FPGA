@@ -24,7 +24,7 @@ from brevitas.core.scaling import ParameterScaling
 from brevitas.core.quant import QuantType
 
 #Set the seed
-seed = 0
+seed = 321983
 torch.manual_seed(seed)
 np.random.seed(seed)
 
@@ -48,11 +48,11 @@ logging.getLogger().addHandler(console)
 # === Configuration ===
 config = {
     "seed": seed,
-    "layers": [16, 12, 5],
+    "layers": [16, 8, 5],
     "grid_range": [-2, 2],
     "layers_bitwidth": [6, 6, 8],
 
-    "grid_size": 30,
+    "grid_size": 40,
     "spline_order": 10,
     "grid_eps": 0.05,
 
@@ -64,7 +64,7 @@ config = {
     "learning_rate": 1e-3,
     "weight_decay": 1e-4,
 
-    "prune_threshold": 0.8,
+    "prune_threshold": 0.9,
     "target_epoch": 25,
     "warmup_epochs": 4,
     "random_seed": seed,
@@ -109,7 +109,7 @@ testloader = DataLoader(test_dataset, batch_size=config["batch_size"], shuffle=F
 model = KANQuant(config, JSC_input_layer, device).to(device)
 
 optimizer = optim.AdamW(model.parameters(), lr=config["learning_rate"], weight_decay=config["weight_decay"])
-scheduler = optim.lr_scheduler.ExponentialLR(optimizer, gamma=0.9)
+scheduler = optim.lr_scheduler.ExponentialLR(optimizer, gamma=0.999)
 criterion = nn.CrossEntropyLoss()
 
 # === Training Loop ===
