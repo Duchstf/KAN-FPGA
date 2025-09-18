@@ -1,0 +1,1 @@
+{"base_activation": "nn.SiLU", "batch_size": 1024, "num_epochs": 200, "learning_rate": 0.1, "weight_decay": 0.0001}

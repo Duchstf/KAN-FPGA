@@ -65,7 +65,7 @@ logging.getLogger().addHandler(console)
 config = {
     "layers": [593, 1],
     "grid_range": [-1, 1],
-    "layers_bitwidth": [1, 4],
+    "layers_bitwidth": [1, 2],
 
     "grid_size": 30,
     "spline_order": 3,
@@ -79,7 +79,7 @@ config = {
     "learning_rate": 1e-2,
     "weight_decay": 1e-4,
 
-    "prune_threshold": 0,
+    "prune_threshold": 3,
     "target_epoch": 23,
     "warmup_epochs": 3,
     "random_seed": seed,
