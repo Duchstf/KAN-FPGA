@@ -125,7 +125,7 @@ def train(total_timesteps=1_000_000):
 
         "grid_size": 5,
         "spline_order": 3,
-        "grid_range": [-1, 1],
+        "grid_range": [-2, 2],
         "grid_eps": 0.05,
         
         "base_activation": "nn.GELU",
