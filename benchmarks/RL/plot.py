@@ -1,6 +1,7 @@
 # plot.py
 import os
 import glob
+import json
 import numpy as np
 import pandas as pd
 import matplotlib as mpl
@@ -8,15 +9,17 @@ import matplotlib.pyplot as plt
 from matplotlib.ticker import EngFormatter, MaxNLocator
 import matplotlib.patheffects as pe
 
-WINDOW = 50  # moving average window
+WINDOW = 50  # moving-average window (episodes)
 
 
-# ---------- keep your original calculation helpers ----------
-def moving_average(x, w=50):
-    return np.convolve(x, np.ones(w), "valid") / w
+# ---------- helpers ----------
+def moving_average(y: np.ndarray, w: int) -> np.ndarray:
+    """Return a length-(len(y)-w+1) moving average when w>1; else y unchanged."""
+    if w is None or w <= 1 or len(y) < w:
+        return y
+    return np.convolve(y, np.ones(w), mode="valid") / w
 
 
-# ---------- small utilities for nicer visuals ----------
 def _desaturate(hex_color, factor=0.25):
     rgb = mpl.colors.to_rgb(hex_color)
     return tuple(1 - factor * (1 - c) for c in rgb)
@@ -36,7 +39,6 @@ def _try_enable_usetex():
         pass
 
 
-# ---------- aesthetics only ----------
 def setup_paper_style(single_column: bool = True):
     width_in = 3.54 if single_column else 7.28
     height_in = 2.3 if single_column else 3.6
@@ -91,105 +93,178 @@ def setup_paper_style(single_column: bool = True):
     _try_enable_usetex()
 
 
-# ---------- IO helpers ----------
-def _collect_monitor_files(path_like: str):
+# ---------- IO & reconstruction ----------
+def _is_monitor_file(path: str) -> bool:
+    name = os.path.basename(path)
+    return (
+        name.endswith(".monitor.csv")
+        or name.endswith(".monitor.csv.gz")
+        or name == "monitor.csv"
+        or name == "monitor.csv.gz"
+    )
+
+
+def _read_monitor_with_tstart(path: str) -> pd.DataFrame:
     """
-    Accepts:
-      - a direct file path to monitor.csv
-      - a directory containing subdirs each with monitor.csv
-      - a glob pattern to monitor files or run dirs
-    Returns list of absolute monitor.csv file paths.
+    Read a single monitor file, parse the JSON header to get t_start,
+    and return a DataFrame with ['r','l','t','abs_time'].
     """
-    paths = []
-    # Glob first so users can pass wildcards
+    t_start = None
+    opener = open
+    if path.endswith(".gz"):
+        import gzip
+        opener = gzip.open
+
+    with opener(path, "rt") as f:
+        header = f.readline().strip()
+        if header.startswith("#"):
+            try:
+                t_start = json.loads(header[1:]).get("t_start", None)
+            except Exception:
+                t_start = None
+
+    df = pd.read_csv(path, comment="#")  # skip JSON header lines
+    if not {"r", "l", "t"}.issubset(df.columns):
+        raise ValueError(f"Malformed monitor file: {path}")
+    if t_start is None:
+        t_start = os.path.getmtime(path)
+
+    df["abs_time"] = t_start + df["t"].astype(float)
+    return df[["r", "l", "t", "abs_time"]]
+
+
+def _collect_runs(path_like: str):
+    """
+    Returns a list of runs, each run is a LIST of monitor-file paths.
+
+    Accepted path_like:
+      - direct monitor file
+      - directory with *.monitor.csv (one run)
+      - directory with subdirs, each containing *.monitor.csv (multiple runs)
+      - glob pattern matching any of the above
+    """
+    runs = []
+
     for p in glob.glob(path_like):
         p = os.path.abspath(p)
         if os.path.isfile(p):
-            # file might be monitor.csv or any csv with same schema
-            if p.endswith(".csv"):
-                paths.append(p)
+            if _is_monitor_file(p) or p.endswith(".csv"):
+                runs.append([p])
         elif os.path.isdir(p):
-            # either the dir itself has monitor.csv, or its subdirs do
-            direct_csv = os.path.join(p, "monitor.csv")
-            if os.path.exists(direct_csv):
-                paths.append(direct_csv)
+            # Prefer subdirectories as separate runs
+            subdir_runs = []
+            for sub in sorted(os.listdir(p)):
+                subpath = os.path.join(p, sub)
+                if os.path.isdir(subpath):
+                    files = [
+                        os.path.join(subpath, f)
+                        for f in os.listdir(subpath)
+                        if os.path.isfile(os.path.join(subpath, f)) and _is_monitor_file(os.path.join(subpath, f))
+                    ]
+                    if files:
+                        subdir_runs.append(sorted(files))
+            if subdir_runs:
+                runs.extend(subdir_runs)
             else:
-                for sub in sorted(os.listdir(p)):
-                    candidate = os.path.join(p, sub, "monitor.csv")
-                    if os.path.exists(candidate):
-                        paths.append(candidate)
-    return paths
-
-
-def _load_runs(monitor_paths):
-    """Load runs as (timesteps, reward) DataFrames."""
-    runs = []
-    for f in monitor_paths:
-        try:
-            df = pd.read_csv(f, skiprows=1)
-            df["timesteps"] = df["l"].cumsum()
-            runs.append(df[["timesteps", "r"]].rename(columns={"r": "reward"}))
-        except Exception:
-            # Skip malformed files; keep plotting robust
-            continue
+                # No subdir runs → treat files in this dir as one run
+                files = [
+                    os.path.join(p, f)
+                    for f in os.listdir(p)
+                    if os.path.isfile(os.path.join(p, f)) and _is_monitor_file(os.path.join(p, f))
+                ]
+                if files:
+                    runs.append(sorted(files))
     return runs
 
 
-# ---------- core plotting ----------
+def _load_run(files_for_one_run):
+    """
+    Merge all worker monitor files of a single run:
+      - read each worker file
+      - compute abs_time = t_start + t
+      - concat all episodes and sort by abs_time
+      - timesteps = cumsum(l)  (global across workers)
+    Returns DataFrame with columns: ['timesteps','reward'].
+    """
+    parts = []
+    for f in files_for_one_run:
+        try:
+            parts.append(_read_monitor_with_tstart(f))
+        except Exception:
+            continue
+    if not parts:
+        return None
+
+    df = pd.concat(parts, ignore_index=True)
+    df.sort_values("abs_time", inplace=True)
+    df["timesteps"] = df["l"].cumsum()
+    out = df[["timesteps", "r"]].rename(columns={"r": "reward"}).reset_index(drop=True)
+    return out
+
+
+def _load_runs_any(path_like: str):
+    """Given a path/glob, return a list of run DataFrames for that model."""
+    runs = []
+    for files in _collect_runs(path_like):
+        run_df = _load_run(files)
+        if run_df is not None and not run_df.empty:
+            runs.append(run_df)
+    return runs
+
+
+# ---------- plotting ----------
 def _plot_one_model(ax, runs, label, window=WINDOW):
     if not runs:
         return
 
-    # Align to shortest run length
+    # Align to the shortest run length for fair averaging
     min_len = min(len(r) for r in runs)
     x = runs[0]["timesteps"].values[:min_len]
     y_stack = np.stack([r["reward"].values[:min_len] for r in runs])
     y_mean = y_stack.mean(axis=0)
+    y_std = y_stack.std(axis=0)
 
-    ma_x = moving_average(x, window)
-    ma_y = moving_average(y_mean, window)
+    # Smooth y and trim x accordingly
+    if window and window > 1 and len(y_mean) >= window:
+        ma_y = moving_average(y_mean, window)
+        ma_x = x[window - 1:]
+        ma_std = moving_average(y_std, window) if len(y_std) >= window else y_std[: len(ma_y)]
+    else:
+        ma_y = y_mean
+        ma_x = x
+        ma_std = y_std[: len(ma_y)]
 
-    # constant-width band per model (from across-run variability)
-    band = y_mean.std() / 2.0
-
-    # pick color from cycle by asking for next color via plotting an empty line
+    # pick color from cycle
     tmp, = ax.plot([], [])
     line_color = tmp.get_color()
     tmp.remove()
     fill_color = _desaturate(line_color, factor=0.15)
 
-    line, = ax.plot(
-        ma_x,
-        ma_y,
-        label=label,
-        color=line_color,
+    ax.plot(
+        ma_x, ma_y, label=label, color=line_color,
         path_effects=[pe.Stroke(linewidth=1.9, foreground="white"), pe.Normal()],
         zorder=3,
     )
-    ax.fill_between(
-        ma_x,
-        ma_y - band,
-        ma_y + band,
-        facecolor=fill_color,
-        alpha=0.35,
-        linewidth=0,
-        zorder=1,
-    )
 
-    try:
+    if len(runs) > 1:
+        band = float(np.nanmean(ma_std)) if len(ma_std) else 0.0
+        if band > 0:
+            ax.fill_between(
+                ma_x, ma_y - band, ma_y + band,
+                facecolor=fill_color, alpha=0.35, linewidth=0, zorder=1
+            )
+
+    # annotate last value
+    if len(ma_x) and len(ma_y):
         ax.annotate(
             f"{ma_y[-1]:.1f}",
             xy=(ma_x[-1], ma_y[-1]),
             xytext=(6, 0),
             textcoords="offset points",
-            va="center",
-            ha="left",
-            fontsize=7,
-            color=line_color,
+            va="center", ha="left",
+            fontsize=7, color=line_color,
             path_effects=[pe.Stroke(linewidth=1.5, foreground="white"), pe.Normal()],
         )
-    except Exception:
-        pass
 
 
 def plot_models(
@@ -205,37 +280,31 @@ def plot_models(
 
     models: list of tuples (path_like, label)
       - path_like can be:
-          * direct path to a monitor.csv
-          * directory with subdirs each containing monitor.csv
+          * direct path to a monitor file
+          * directory with *.monitor.csv (one run)
+          * directory with subdirs each containing *.monitor.csv (multiple runs)
           * glob pattern
     """
     setup_paper_style(single_column)
     fig, ax = plt.subplots()
 
-    # Draw each model
     for path_like, label in models:
-        files = _collect_monitor_files(path_like)
-        runs = _load_runs(files)
+        runs = _load_runs_any(path_like)
         _plot_one_model(ax, runs, label=label, window=window)
 
-    # Axes labels/title & cosmetics (unchanged)
     ax.set_xlabel("Training steps")
-    ax.set_ylabel("Average return")
+    ax.set_ylabel("Episode return")
     ax.set_title(env_name)
     ax.xaxis.set_major_locator(MaxNLocator(5))
     ax.yaxis.set_major_locator(MaxNLocator(5))
     ax.xaxis.set_minor_locator(MaxNLocator(10))
-    # ax.yaxis.set_minor_locator(MaxNLocator(10))
     ax.xaxis.set_major_formatter(EngFormatter(sep="\N{THIN SPACE}"))
     ax.grid(True, which="minor", linewidth=0.3, alpha=0.15)
     ax.legend(frameon=False, loc="lower right", handlelength=1.6, borderaxespad=0.5, labelspacing=0.4)
     ax.margins(x=0.02, y=0.05)
 
-    # Save
     os.makedirs("plots", exist_ok=True)
-    base = (
-        f"plots/{(out_name or env_name).lower().replace(' ', '_')}"
-    )
+    base = f"plots/{(out_name or env_name).lower().replace(' ', '_')}"
     plt.savefig(base + ".pdf")
     if export_png:
         plt.savefig(base + ".png", dpi=600)
@@ -243,11 +312,11 @@ def plot_models(
     return fig, ax
 
 
-# ---------- legacy single-model convenience (kept API-compatible) ----------
+# ---------- single-model convenience ----------
 def plot_training_results(
     log_folder: str,
     env_name="HalfCheetah-v4",
-    label="MLP [17, 64, 64, 6]",
+    label="Model",
     single_column=True,
     export_png=True,
 ):
@@ -261,19 +330,18 @@ def plot_training_results(
 
 
 if __name__ == "__main__":
-    # EXAMPLES:
-    # 1) Single model from a directory of runs
-    # plot_training_results("logs/MLP_runs", env_name="HalfCheetah-v4", label="MLP")
-
-    # 2) Multiple models: mix of directory, glob, and direct file
+    # Examples:
+    # - A parent dir with subdirs PPO_1, PPO_2, ... each containing worker monitor files
+    # - A single run directory with 0.monitor.csv ... N.monitor.csv
+    # - A single monitor file
+    # - Or glob patterns
     plot_models(
         models=[
-            ("logs/HalfCheetah-v4_seed_42", "MLP FP: [17, 64, 64, 6]"),
-            ("logs_kan_direct/monitor.csv", "KAN FP: [17, 6]"),
-            # ("logs_kan_quant_10/monitor.csv", "KAN Quantized - 10 bits: [17, 6]"),
-            ("logs_kan_quant_8_2/1.monitor.csv", "KAN Quantized - 8 bits: [17, 6]"),
+            ("logs_mlp", "MLP (all runs)"),
+            # ("logs_kan_direct", "KAN FP: [17, 6]"),
+            # ("logs_kan_quant_8_2", "KAN Quantized 8-bit"),
         ],
-        env_name="HalfCheetah-v4",
+        env_name="HalfCheetah-v5",
         out_name="halfcheetah_comparison",
+        window=WINDOW,
     )
-    pass
