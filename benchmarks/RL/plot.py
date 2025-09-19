@@ -221,40 +221,46 @@ def _plot_one_model(ax, runs, label, window=WINDOW):
     min_len = min(len(r) for r in runs)
     x = runs[0]["timesteps"].values[:min_len]
     y_stack = np.stack([r["reward"].values[:min_len] for r in runs])
+    
+    # Calculate mean and standard deviation across runs
     y_mean = y_stack.mean(axis=0)
     y_std = y_stack.std(axis=0)
 
-    # Smooth y and trim x accordingly
-    if window and window > 1 and len(y_mean) >= window:
-        ma_y = moving_average(y_mean, window)
-        ma_x = x[window - 1:]
-        ma_std = moving_average(y_std, window) if len(y_std) >= window else y_std[: len(ma_y)]
-    else:
-        ma_y = y_mean
-        ma_x = x
-        ma_std = y_std[: len(ma_y)]
-
-    # pick color from cycle
+    # Smooth the mean and std curves
+    ma_y = moving_average(y_mean, window)
+    # Adjust x-axis to match the length of the smoothed data
+    ma_x = x[window - 1 :] if window > 1 else x
+    
+    # Pick color from cycle
     tmp, = ax.plot([], [])
     line_color = tmp.get_color()
     tmp.remove()
     fill_color = _desaturate(line_color, factor=0.15)
 
+    # Plot the smoothed mean line
     ax.plot(
         ma_x, ma_y, label=label, color=line_color,
         path_effects=[pe.Stroke(linewidth=1.9, foreground="white"), pe.Normal()],
         zorder=3,
     )
 
+    # --- START: UNCERTAINTY BAND FIX ---
     if len(runs) > 1:
-        band = float(np.nanmean(ma_std)) if len(ma_std) else 0.0
-        if band > 0:
+        # 1. Calculate Standard Error of the Mean (SEM)
+        y_sem = y_std / np.sqrt(len(runs))
+        
+        # 2. Smooth the SEM curve
+        ma_sem = moving_average(y_sem, window)
+
+        # 3. Use the smoothed SEM array directly for the band
+        if len(ma_sem) == len(ma_x):
             ax.fill_between(
-                ma_x, ma_y - band, ma_y + band,
+                ma_x, ma_y - ma_sem, ma_y + ma_sem,
                 facecolor=fill_color, alpha=0.35, linewidth=0, zorder=1
             )
+    # --- END: UNCERTAINTY BAND FIX ---
 
-    # annotate last value
+    # Annotate last value
     if len(ma_x) and len(ma_y):
         ax.annotate(
             f"{ma_y[-1]:.1f}",
