@@ -6,6 +6,9 @@ from stable_baselines3 import PPO
 from stable_baselines3.common.monitor import Monitor
 from stable_baselines3.common.policies import ActorCriticPolicy
 
+from stable_baselines3.common.env_util import make_vec_env
+from stable_baselines3.common.vec_env import VecNormalize
+
 sys.path.append('../../src')
 from KANQuant import KANQuant
 
@@ -15,9 +18,12 @@ from brevitas.core.scaling import ParameterScaling
 from brevitas.core.quant import QuantType
 from quant import QuantBrevitasActivation, ScalarBiasScale
 
+NUM_BITS = 8
+VERSION = "2"
+
 ENV_ID = "HalfCheetah-v4"
-LOG_DIR = "logs_kan_quant"
-SEED = 42
+LOG_DIR = f"logs_kan_quant_{NUM_BITS}_{VERSION}"
+SEED = 123123
 
 #Set the device
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -115,15 +121,15 @@ def train(total_timesteps=1_000_000):
 
     # Logging
     os.makedirs(LOG_DIR, exist_ok=True)
-    env = gym.make(ENV_ID)
-    env = Monitor(env, LOG_DIR)
+    env = make_vec_env(ENV_ID, n_envs=4, seed=SEED, monitor_dir=LOG_DIR)
+    env = VecNormalize(env, norm_reward=True, norm_obs=True, gamma=0.99)
 
     kan_config = {
         "seed": SEED,
         "layers": [17, 6],
-        "layers_bitwidth": [8, 8],
+        "layers_bitwidth": [NUM_BITS, NUM_BITS],
 
-        "grid_size": 5,
+        "grid_size": 10,
         "spline_order": 3,
         "grid_range": [-2, 2],
         "grid_eps": 0.05,
@@ -156,6 +162,7 @@ def train(total_timesteps=1_000_000):
     kan_model = model.policy.mlp_extractor.policy_net
     checkpoint = {'model_state_dict': kan_model.state_dict()}
     torch.save(checkpoint, f"{LOG_DIR}/kan_model.pt")
+    env.save(f"{LOG_DIR}/vec_normalize.pkl")
 
 if __name__ == "__main__":
     train(total_timesteps=1_000_000)

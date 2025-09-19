@@ -270,7 +270,8 @@ if __name__ == "__main__":
         models=[
             ("logs/HalfCheetah-v4_seed_42", "MLP FP: [17, 64, 64, 6]"),
             ("logs_kan_direct/monitor.csv", "KAN FP: [17, 6]"),
-            ("logs_kan_quant/monitor.csv", "KAN Quantized - 8 bits: [17, 6]"),
+            # ("logs_kan_quant_10/monitor.csv", "KAN Quantized - 10 bits: [17, 6]"),
+            ("logs_kan_quant_8_2/1.monitor.csv", "KAN Quantized - 8 bits: [17, 6]"),
         ],
         env_name="HalfCheetah-v4",
         out_name="halfcheetah_comparison",

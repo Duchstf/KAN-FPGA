@@ -1,1 +1,0 @@
-{"seed": 42, "layers": [17, 6], "layers_bitwidth": [8, 8], "grid_size": 5, "spline_order": 3, "grid_range": [-2, 2], "grid_eps": 0.05, "base_activation": "nn.GELU"}

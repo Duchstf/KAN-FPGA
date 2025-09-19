@@ -4,26 +4,26 @@ import gymnasium as gym
 from stable_baselines3 import PPO
 from stable_baselines3.common.monitor import Monitor
 
+from stable_baselines3.common.env_util import make_vec_env
+from stable_baselines3.common.vec_env import VecNormalize
+
 # --- Configuration ---
-ENV_ID = "HalfCheetah-v4"
-TOTAL_TIMESTEPS = 1_000_000
-LOGS_BASE_DIR = "logs" # Use a different log directory
+ENV_ID = "HalfCheetah-v5"
+TOTAL_TIMESTEPS = 5_000_000
+LOG_DIR = "logs_mlp" # Use a different log directory
 SEED = 42
 
 def train_ppo_agent():
     """
     Sets up and trains a PPO agent with a custom MLP architecture.
     """
-    run_name = f"{ENV_ID}_seed_{SEED}"
-    log_dir = os.path.join(LOGS_BASE_DIR, run_name)
+    log_dir = os.path.join(LOG_DIR)
     os.makedirs(log_dir, exist_ok=True)
-
-    print(f"Starting PPO training for {run_name}")
     print(f"Logs will be saved to: {log_dir}")
 
     # 1. Create and wrap the environment for logging
-    env = gym.make(ENV_ID)
-    env = Monitor(env, log_dir)
+    env = make_vec_env(ENV_ID, n_envs=5, seed=SEED, monitor_dir=LOG_DIR)
+    env = VecNormalize(env, norm_reward=True, norm_obs=True, gamma=0.99)
 
     # 2. Define the custom MLP architecture for Actor (pi) and Critic (vf)
     # For PPO, the critic is the Value Function ('vf').
