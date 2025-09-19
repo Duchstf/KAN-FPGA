@@ -9,9 +9,9 @@ from stable_baselines3.common.policies import ActorCriticPolicy
 sys.path.append('../../src')
 from KAN_OG import KAN
 
-ENV_ID = "HalfCheetah-v4"
-LOG_DIR = "logs_kan_direct"
-SEED = 42
+ENV_ID = "HalfCheetah-v5"
+TOTAL_TIMESTEPS = 1_000_000
+LOG_DIR = "logs_kan_float"
 
 # -----------------------
 # Custom extractor: uses KAN as the actor "backbone"
@@ -92,45 +92,49 @@ class KANDirectPolicy(ActorCriticPolicy):
 # -----------------------
 # Training wrapper
 # -----------------------
-def train(total_timesteps=1_000_000):
+def train():
 
     # Logging
     os.makedirs(LOG_DIR, exist_ok=True)
-    env = gym.make(ENV_ID)
-    env = Monitor(env, LOG_DIR)
 
-    # Define KAN hyperparameters
-    kan_hyperparams = dict(
-        grid_size=5,
-        spline_order=3,
-        grid_range=[-2, 2],
-        grid_eps=0.05,
-        base_activation=nn.GELU,
-    )
+    for seed in [0,1,2,3,4]:
+        env = gym.make(ENV_ID)
+        env.reset(seed=seed)
+        env = Monitor(env, os.path.join(LOG_DIR, f"seed_{seed}"))
 
-    # Define model
-    model = PPO(
-        policy=KANDirectPolicy,
-        env=env,
-        policy_kwargs=dict(
-            # Critic MLP hidden sizes
-            critic_layers=[64, 64],
-            # KAN hyperparameters passed into KANAsActorExtractor
-            kan_kwargs=kan_hyperparams,
-            # Leave the normal features extractor (flatten) so features_dim == obs_dim
-        ),
-        verbose=1,
-        seed=SEED,
-        n_steps=2048,
-        batch_size=64,
-        n_epochs=10,
-        gamma=0.99,
-        tensorboard_log=LOG_DIR,
-    )
+        # Define KAN hyperparameters
+        kan_hyperparams = dict(
+            grid_size=20,
+            spline_order=3,
+            grid_range=[-10, 10],
+            grid_eps=0.05,
+            base_activation=nn.GELU,
+        )
 
-    # Train model
-    model.learn(total_timesteps=total_timesteps)
-    env.close()
+        # Define model
+        model = PPO(
+            policy=KANDirectPolicy,
+            env=env,
+            policy_kwargs=dict(
+                critic_layers=[64, 64],
+                kan_kwargs=kan_hyperparams,
+            ),
+            learning_rate=3e-4,     # LR
+            clip_range=0.2,         # Clip parameter ε
+            n_epochs=10,            # Number of epochs
+            batch_size=64,          # Batch size
+            gamma=0.99,             # Discount factor γ
+            gae_lambda=0.95,        # GAE λ
+            n_steps=2048,           # rollout size (not in figure; your choice)
+            verbose=1,
+            seed=seed,
+            device="cpu",           # Device
+            tensorboard_log=os.path.join(LOG_DIR, f"seed_{seed}")
+        )
+
+        # Train model
+        model.learn(total_timesteps=TOTAL_TIMESTEPS)
+        env.close()
 
 if __name__ == "__main__":
-    train(total_timesteps=1_000_000)
+    train()

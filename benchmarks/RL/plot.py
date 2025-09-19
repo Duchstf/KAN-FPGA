@@ -135,13 +135,8 @@ def _read_monitor_with_tstart(path: str) -> pd.DataFrame:
 
 def _collect_runs(path_like: str):
     """
-    Returns a list of runs, each run is a LIST of monitor-file paths.
-
-    Accepted path_like:
-      - direct monitor file
-      - directory with *.monitor.csv (one run)
-      - directory with subdirs, each containing *.monitor.csv (multiple runs)
-      - glob pattern matching any of the above
+    Returns a list of runs, where each run is a LIST of monitor-file paths.
+    This version treats each monitor file in a directory as a separate run (seed).
     """
     runs = []
 
@@ -166,14 +161,17 @@ def _collect_runs(path_like: str):
             if subdir_runs:
                 runs.extend(subdir_runs)
             else:
-                # No subdir runs → treat files in this dir as one run
+                # --- MODIFICATION START ---
+                # No subdir runs -> treat each monitor file in this dir as a separate run.
                 files = [
                     os.path.join(p, f)
                     for f in os.listdir(p)
                     if os.path.isfile(os.path.join(p, f)) and _is_monitor_file(os.path.join(p, f))
                 ]
                 if files:
-                    runs.append(sorted(files))
+                    for f in sorted(files):
+                        runs.append([f]) # Create a new run for each file
+                # --- MODIFICATION END ---
     return runs
 
 
@@ -226,7 +224,7 @@ def _plot_one_model(ax, runs, label, window=WINDOW):
     y_mean = y_stack.mean(axis=0)
     y_std = y_stack.std(axis=0)
 
-    # Smooth the mean and std curves
+    # Smooth the mean curve
     ma_y = moving_average(y_mean, window)
     # Adjust x-axis to match the length of the smoothed data
     ma_x = x[window - 1 :] if window > 1 else x
@@ -244,7 +242,7 @@ def _plot_one_model(ax, runs, label, window=WINDOW):
         zorder=3,
     )
 
-    # --- START: UNCERTAINTY BAND FIX ---
+    # Plot the uncertainty band (mean +/- standard error of the mean)
     if len(runs) > 1:
         # 1. Calculate Standard Error of the Mean (SEM)
         y_sem = y_std / np.sqrt(len(runs))
@@ -258,7 +256,6 @@ def _plot_one_model(ax, runs, label, window=WINDOW):
                 ma_x, ma_y - ma_sem, ma_y + ma_sem,
                 facecolor=fill_color, alpha=0.35, linewidth=0, zorder=1
             )
-    # --- END: UNCERTAINTY BAND FIX ---
 
     # Annotate last value
     if len(ma_x) and len(ma_y):
@@ -296,6 +293,7 @@ def plot_models(
 
     for path_like, label in models:
         runs = _load_runs_any(path_like)
+        print(f"Found {len(runs)} runs for '{label}' in '{path_like}'")
         _plot_one_model(ax, runs, label=label, window=window)
 
     ax.set_xlabel("Training steps")
@@ -336,18 +334,15 @@ def plot_training_results(
 
 
 if __name__ == "__main__":
-    # Examples:
-    # - A parent dir with subdirs PPO_1, PPO_2, ... each containing worker monitor files
-    # - A single run directory with 0.monitor.csv ... N.monitor.csv
-    # - A single monitor file
-    # - Or glob patterns
+    # The script will now correctly identify each seed_*.monitor.csv file
+    # in 'logs_mlp' as an individual run and plot the mean with SEM.
     plot_models(
         models=[
-            ("logs_mlp", "MLP (all runs)"),
-            # ("logs_kan_direct", "KAN FP: [17, 6]"),
-            # ("logs_kan_quant_8_2", "KAN Quantized 8-bit"),
+            ("logs_mlp", "MLP"),
+            # Add another model for comparison if you have one, e.g.:
+            # ("logs_kan", "KAN"),
         ],
-        env_name="HalfCheetah-v5",
+        env_name="HalfCheetah-v4", # Or your specific environment
         out_name="halfcheetah_comparison",
         window=WINDOW,
     )
