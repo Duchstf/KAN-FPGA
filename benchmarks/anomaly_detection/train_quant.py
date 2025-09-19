@@ -49,9 +49,9 @@ logging.getLogger().addHandler(console)
 
 config = {
     "seed": seed,
-    "layers": [640, 32, 8, 32, 640],  # Updated to match actual feature dimensions (128 n_mels * 5 frames = 640)
-    "grid_range": [-2, 2],
-    "layers_bitwidth": [8, 8, 8, 8, 8],  # Updated bitwidth array to match new layer count
+    "layers": [128, 32, 8, 32, 128],  
+    "grid_range": [-4, 4],
+    "layers_bitwidth": [8, 8, 8, 8, 8],  
 
     "grid_size": 30,
     "spline_order": 10,
@@ -81,8 +81,8 @@ nn.init.constant_(bn_in.bias.data, 0)
 input_bias = ScalarBiasScale(scale=False, bias_init=-0.25)
 AD_input_layer = QuantBrevitasActivation(
     QuantHardTanh(bit_width = config["layers_bitwidth"][0],
-    max_val=1.0,
-    min_val=-1.0,
+    max_val=100.0,
+    min_val=-100.0,
     act_scaling_impl=ParameterScaling(1.33),
     quant_type=QuantType.INT,
     return_quant_tensor = False),
@@ -158,31 +158,39 @@ for epoch in range(config["num_epochs"]):
 
     y_pred = []
     y_true = []
+
+    y_pred_curr = []
+    y_true_curr = []
+
+    samples_per_file = 200
     
     with torch.no_grad():
-        for inputs, labels in testloader:
-            inputs = inputs.to(device)
-            batch_size, samples_per_file, num_features = inputs.shape
-            
-            # Reshape to 2D for model
-            inputs_reshaped = inputs.reshape(-1, num_features)
-            output_reshaped = model(inputs_reshaped)
+        with tqdm(testloader) as pbar:
+            for i, (inputs, labels) in enumerate(pbar):
+                if i != 0 and (i * config["batch_size"]) % samples_per_file == 0:
+                    # take mean of y_pred and y_true for past samples_per_file samples
+                    y_pred.append(np.mean(y_pred_curr))
+                    y_true.append(int(np.mean(y_true_curr)))
+                    y_pred_curr = []
+                    y_true_curr = []
 
-            val_loss += criterion(output_reshaped, inputs_reshaped).item()
-            
-            # Reshape output back to match input shape
-            output = output_reshaped.reshape(batch_size, samples_per_file, num_features)
-            
-            # For AUC calculation
-            errors = torch.mean(torch.square(inputs - output), dim=(1,2))
-            y_pred.extend(errors.cpu().numpy())
-            y_true.extend(labels.cpu().numpy())
+                inputs = inputs.to(device)
+                output = model(inputs)
+
+                val_loss += criterion(output, inputs).item()
+                
+                # For AUC calculation
+                y_pred_curr.append(torch.mean(torch.square(inputs - output)).cpu().numpy())
+                y_true_curr.append(int(labels[0].cpu().numpy()))
     
     val_loss /= len(testloader)
     testing_loss.append(val_loss)
-    
+
     # Calculate AUC
-    auc = roc_auc_score(y_true, y_pred) if len(set(y_true)) > 1 else 0.0
+    print(len(y_true))
+    print(len(y_pred))
+    auc = roc_auc_score(y_true, y_pred) if len(y_true) > 1 else 0.0
+    p_auc = roc_auc_score(y_true, y_pred, max_fpr=0.1) if len(y_true) > 1 else 0.0
 
     # Update learning rate
     scheduler.step()
@@ -192,6 +200,7 @@ for epoch in range(config["num_epochs"]):
         f"Train Loss: {average_train_loss:.4f} | "
         f"Val Loss: {val_loss:.4f} | "
         f"Val AUC: {auc:.4f} | "
+        f"Val pAUC: {p_auc:.4f} | "
         f"Remaining Fraction: {remaining_fraction:.4f}"
     )
 

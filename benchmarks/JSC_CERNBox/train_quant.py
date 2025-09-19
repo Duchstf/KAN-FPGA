@@ -112,7 +112,7 @@ y_test = dataset["test"].y.float().argmax(dim=1).to(device)
 train_dataset = TensorDataset(X_train, y_train)
 test_dataset = TensorDataset(X_test, y_test)
 trainloader = DataLoader(train_dataset, batch_size=config["batch_size"], shuffle=True)
-testloader = DataLoader(test_dataset, batch_size=config["batch_size"], shuffle=False)
+testloader = DataLoader(test_dataset, batch_size=1, shuffle=False)
 
 # === Initialize Model ===
 #Define the model

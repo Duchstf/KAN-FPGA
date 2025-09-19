@@ -81,25 +81,14 @@ def get_AD_data_for_split(split="train"):
 
     files = file_list_generator(data_dir, dir_name=split)
 
-    if split == "test":
-        res = np.array([
-            com.file_to_vector_array(file,
-                n_mels=param["feature"]["n_mels"],
-                frames=param["feature"]["frames"],
-                n_fft=param["feature"]["n_fft"],
-                hop_length=param["feature"]["hop_length"],
-                power=param["feature"]["power"]
-            )
-            for file in files
-        ])
-        
-        return res, np.array([int("anomaly" in file) for file in files])
-    else:
-        res = com.list_to_vector_array(files,
-                                        msg="generate trai_dataset",
-                                        n_mels=param["feature"]["n_mels"],
-                                        frames=param["feature"]["frames"],
-                                        n_fft=param["feature"]["n_fft"],
-                                        hop_length=param["feature"]["hop_length"],
-                                        power=param["feature"]["power"])
-        return res, np.array([0 for _ in range(len(res))])
+    res = com.list_to_vector_array(files,
+                                    msg="generate trai_dataset",
+                                    n_mels=param["feature"]["n_mels"],
+                                    frames=param["feature"]["frames"],
+                                    n_fft=param["feature"]["n_fft"],
+                                    hop_length=param["feature"]["hop_length"],
+                                    power=param["feature"]["power"])
+
+    samples_per_file = res.shape[0] // len(files) 
+
+    return res, np.repeat([1 if "anomaly" in file.split("/")[-1] else 0 for file in files], samples_per_file)
