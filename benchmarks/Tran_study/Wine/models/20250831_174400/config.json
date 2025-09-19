@@ -1,1 +1,0 @@
-{"layers": [13, 4, 3], "layers_precision": [[6, 3], [7, 5], [8, 6]], "grid_size": 6, "grid_eps": 0.01, "spline_order": 3, "base_activation": "nn.GELU", "quantize_clip": false, "quantize": true, "regularize_clipping": 1e-08, "prune_threshold": 0.1}
