@@ -225,10 +225,10 @@ def plot_models(
     ax.xaxis.set_major_locator(MaxNLocator(5))
     ax.yaxis.set_major_locator(MaxNLocator(5))
     ax.xaxis.set_minor_locator(MaxNLocator(10))
-    ax.yaxis.set_minor_locator(MaxNLocator(10))
+    # ax.yaxis.set_minor_locator(MaxNLocator(10))
     ax.xaxis.set_major_formatter(EngFormatter(sep="\N{THIN SPACE}"))
     ax.grid(True, which="minor", linewidth=0.3, alpha=0.15)
-    ax.legend(frameon=False, loc="upper left", handlelength=1.6, borderaxespad=0.5, labelspacing=0.4)
+    ax.legend(frameon=False, loc="lower right", handlelength=1.6, borderaxespad=0.5, labelspacing=0.4)
     ax.margins(x=0.02, y=0.05)
 
     # Save
@@ -270,6 +270,7 @@ if __name__ == "__main__":
         models=[
             ("logs/HalfCheetah-v4_seed_42", "MLP FP: [17, 64, 64, 6]"),
             ("logs_kan_direct/monitor.csv", "KAN FP: [17, 6]"),
+            ("logs_kan_quant/monitor.csv", "KAN Quantized - 8 bits: [17, 6]"),
         ],
         env_name="HalfCheetah-v4",
         out_name="halfcheetah_comparison",
