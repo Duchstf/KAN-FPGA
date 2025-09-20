@@ -64,14 +64,14 @@ config = {
     "learning_rate": 1e-3,
     "weight_decay": 1e-3,
 
-    "prune_threshold": 0.95,
-    "target_epoch": 25,
-    "warmup_epochs": 4,
+    "prune_threshold": 5,
+    "target_epoch": 5,
+    "warmup_epochs": 0,
     "random_seed": seed,
 }
 
 #Create a new directory to save the config and checkpoints
-model_dir = f'models/{datetime.now().strftime("%Y%m%d_%H%M%S")}'
+model_dir = f'prune/{datetime.now().strftime("%Y%m%d_%H%M%S")}'
 os.makedirs(model_dir, exist_ok=True)
 with open(f'{model_dir}/config.json', 'w') as f:
     json.dump(config, f)
