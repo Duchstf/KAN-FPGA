@@ -6,9 +6,6 @@ from stable_baselines3 import PPO
 from stable_baselines3.common.monitor import Monitor
 from stable_baselines3.common.policies import ActorCriticPolicy
 
-from stable_baselines3.common.env_util import make_vec_env
-from stable_baselines3.common.vec_env import VecNormalize
-
 sys.path.append('../../src')
 from KANQuant import KANQuant
 
@@ -18,12 +15,12 @@ from brevitas.core.scaling import ParameterScaling
 from brevitas.core.quant import QuantType
 from quant import QuantBrevitasActivation, ScalarBiasScale
 
-NUM_BITS = 8
-VERSION = "2"
 
-ENV_ID = "HalfCheetah-v4"
-LOG_DIR = f"logs_kan_quant_{NUM_BITS}_{VERSION}"
-SEED = 123123
+# --- Configuration ---
+ENV_ID = "HalfCheetah-v5"
+TOTAL_TIMESTEPS = 1_000_000
+LOG_DIR = "logs_kan_quant" # Use a different log directory
+NUM_BITS = 8
 
 #Set the device
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -117,15 +114,12 @@ class KANDirectPolicy(ActorCriticPolicy):
 # -----------------------
 # Training wrapper
 # -----------------------
-def train(total_timesteps=1_000_000):
+def train():
 
     # Logging
     os.makedirs(LOG_DIR, exist_ok=True)
-    env = make_vec_env(ENV_ID, n_envs=4, seed=SEED, monitor_dir=LOG_DIR)
-    env = VecNormalize(env, norm_reward=True, norm_obs=True, gamma=0.99)
 
     kan_config = {
-        "seed": SEED,
         "layers": [17, 6],
         "layers_bitwidth": [NUM_BITS, NUM_BITS],
 
@@ -140,29 +134,38 @@ def train(total_timesteps=1_000_000):
     #Dump the config to a json file
     with open(f"{LOG_DIR}/config.json", "w") as f: json.dump(kan_config, f)
 
-    # Define model
-    model = PPO(
-        policy=KANDirectPolicy,
-        env=env,
-        policy_kwargs=dict(critic_layers=[64, 64], kan_config=kan_config),
-        verbose=1,
-        seed=SEED,
-        n_steps=2048,
-        batch_size=64,
-        n_epochs=10,
-        gamma=0.99,
-        tensorboard_log=LOG_DIR,
-    )
+    for seed in [0,1,2,3,4]:
+        env = gym.make(ENV_ID)
+        env.reset(seed=seed)
+        env = Monitor(env, os.path.join(LOG_DIR, f"seed_{seed}"))
 
-    # Train model
-    model.learn(total_timesteps=total_timesteps)
-    env.close()
 
-    # Save the model
-    kan_model = model.policy.mlp_extractor.policy_net
-    checkpoint = {'model_state_dict': kan_model.state_dict()}
-    torch.save(checkpoint, f"{LOG_DIR}/kan_model.pt")
-    env.save(f"{LOG_DIR}/vec_normalize.pkl")
+        # Define model
+        model = PPO(
+            policy=KANDirectPolicy,
+            env=env,
+            policy_kwargs=dict(critic_layers=[64, 64], kan_config=kan_config),
+            learning_rate=3e-4,     # LR
+            clip_range=0.2,         # Clip parameter ε
+            n_epochs=10,            # Number of epochs
+            batch_size=64,          # Batch size
+            gamma=0.99,             # Discount factor γ
+            gae_lambda=0.95,        # GAE λ
+            n_steps=2048,           # rollout size (not in figure; your choice)
+            verbose=1,
+            seed=seed,
+            device="cpu",           # Device
+            tensorboard_log=os.path.join(LOG_DIR, f"seed_{seed}")
+        )
+
+        # Train model
+        model.learn(total_timesteps=TOTAL_TIMESTEPS)
+        env.close()
+
+        # Save the model
+        kan_model = model.policy.mlp_extractor.policy_net
+        checkpoint = {'model_state_dict': kan_model.state_dict()}
+        torch.save(checkpoint, f"{LOG_DIR}/kan_model_{seed}.pt")
 
 if __name__ == "__main__":
-    train(total_timesteps=1_000_000)
+    train()

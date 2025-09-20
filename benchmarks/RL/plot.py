@@ -338,11 +338,10 @@ if __name__ == "__main__":
     # in 'logs_mlp' as an individual run and plot the mean with SEM.
     plot_models(
         models=[
-            ("logs_mlp", "MLP"),
-            # Add another model for comparison if you have one, e.g.:
-            # ("logs_kan", "KAN"),
+            ("logs_mlp", "MLP FP: [17, 64, 64, 6]"),
+            ("logs_kan_float", "KAN FP: [17, 6]"),
         ],
-        env_name="HalfCheetah-v4", # Or your specific environment
+        env_name="HalfCheetah-v5",
         out_name="halfcheetah_comparison",
         window=WINDOW,
     )
