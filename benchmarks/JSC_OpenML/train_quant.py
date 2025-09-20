@@ -19,12 +19,12 @@ from tqdm import tqdm
 import json
 
 #For quantization
-from brevitas.nn import QuantHardTanh
+from brevitas.nn import QuantHardTanh, QuantIdentity
 from brevitas.core.scaling import ParameterScaling
 from brevitas.core.quant import QuantType
 
 #Set the seed
-seed = 321983
+seed = 1283
 torch.manual_seed(seed)
 np.random.seed(seed)
 
@@ -62,9 +62,9 @@ config = {
     "num_epochs": 200,
 
     "learning_rate": 1e-3,
-    "weight_decay": 1e-4,
+    "weight_decay": 1e-3,
 
-    "prune_threshold": 0.9,
+    "prune_threshold": 0.95,
     "target_epoch": 25,
     "warmup_epochs": 4,
     "random_seed": seed,
@@ -83,8 +83,8 @@ nn.init.constant_(bn_in.bias.data, 0)
 input_bias = ScalarBiasScale(scale=False, bias_init=-0.25)
 JSC_input_layer = QuantBrevitasActivation(
     QuantHardTanh(bit_width = config["layers_bitwidth"][0],
-    max_val=1.0,
-    min_val=-1.0,
+    max_val=1.5,
+    min_val=-1.5,
     act_scaling_impl=ParameterScaling(1.33),
     quant_type=QuantType.INT,
     return_quant_tensor = False),
@@ -175,16 +175,14 @@ for epoch in range(config["num_epochs"]):
     )
 
     # === Save Checkpoint if Best ===
-    if remaining_fraction < 0.99:
-        if val_accuracy > best_val_accuracy:
-            best_val_accuracy = val_accuracy
-            checkpoint_path = f'{model_dir}/JSC_OpenML_acc{val_accuracy:.4f}_epoch{epoch + 1}_remaining{remaining_fraction:.4f}.pt'
-            torch.save({
-                'epoch': epoch + 1,
-                'model_state_dict': model.state_dict(),
-                'optimizer_state_dict': optimizer.state_dict(),
-                'val_accuracy': val_accuracy,
-                'val_loss': val_loss,
-                'remaining_fraction': remaining_fraction,
-            }, checkpoint_path)
-            logging.info(f"New best model saved with val accuracy: {val_accuracy:.4f}, remaining fraction: {remaining_fraction:.4f}")
+    #Always save the model
+    checkpoint_path = f'{model_dir}/JSC_OpenML_acc{val_accuracy:.4f}_epoch{epoch + 1}_remaining{remaining_fraction:.4f}.pt'
+    torch.save({
+        'epoch': epoch + 1,
+        'model_state_dict': model.state_dict(),
+        'optimizer_state_dict': optimizer.state_dict(),
+        'val_accuracy': val_accuracy,
+        'val_loss': val_loss,
+        'remaining_fraction': remaining_fraction,
+    }, checkpoint_path)
+    logging.info(f"New best model saved with val accuracy: {val_accuracy:.4f}, remaining fraction: {remaining_fraction:.4f}")
