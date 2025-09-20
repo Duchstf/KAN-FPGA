@@ -52,7 +52,7 @@ def setup_paper_style(single_column: bool = True):
             "lines.solid_capstyle": "round",
             "lines.solid_joinstyle": "round",
             "axes.linewidth": 0.8,
-            "axes.spines.top": False,
+            "axes.spines.top": True,
             "axes.spines.right": False,  # primary axes; we'll enable right spine only on twin
             "axes.grid": True,
             "axes.grid.which": "major",
@@ -124,25 +124,26 @@ def plot_accuracy_vs_lut_ff(
     ax1.yaxis.set_major_locator(MaxNLocator(5))
     ax2.yaxis.set_major_locator(MaxNLocator(5))
     ax1.grid(True, which="minor", linewidth=0.3, alpha=0.15)
-    ax1.margins(x=0.02, y=0.05)
+    # Add margins so lines don’t overlap with axes
+    ax1.margins(x=0.05, y=0.1)   # was (0.02, 0.05)
 
     # Annotate last values
     if len(accuracy):
         ax1.annotate(
             f"{lut[-1]:.0f}",
             xy=(accuracy[-1], lut[-1]),
-            xytext=(6, 0),
+            xytext=(-5, -16),   # <-- added vertical offset
             textcoords="offset points",
-            va="center", ha="left",
+            va="bottom", ha="left",
             fontsize=7, color=lut_color,
             path_effects=[pe.Stroke(linewidth=1.5, foreground="white"), pe.Normal()],
         )
         ax2.annotate(
             f"{ff[-1]:.0f}",
             xy=(accuracy[-1], ff[-1]),
-            xytext=(6, 0),
+            xytext=(-20, 4),   # <-- shifted down instead of up
             textcoords="offset points",
-            va="center", ha="left",
+            va="top", ha="left",
             fontsize=7, color=ff_color,
             path_effects=[pe.Stroke(linewidth=1.5, foreground="white"), pe.Normal()],
         )
