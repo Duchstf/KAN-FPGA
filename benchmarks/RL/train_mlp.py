@@ -48,9 +48,30 @@ def train_ppo_agent():
             tensorboard_log=os.path.join(LOG_DIR, f"seed_{seed}")
         )
 
-        model.learn(total_timesteps=TOTAL_TIMESTEPS)
+        policy = model.policy
 
-        env.close()
+        # Actor (your KAN backbone)
+        mlp_params = sum(p.numel() for p in policy.mlp_extractor.policy_net.parameters() if p.requires_grad)
+
+        # Critic parts
+        critic_mlp_params = sum(p.numel() for p in policy.mlp_extractor.value_net.parameters() if p.requires_grad)
+        value_head_params = sum(p.numel() for p in policy.value_net.parameters() if p.requires_grad)
+
+        # SB3's learnable log std (Gaussian policy)
+        log_std_params = sum(p.numel() for n, p in policy.named_parameters() if "log_std" in n and p.requires_grad)
+
+        total_params = sum(p.numel() for p in policy.parameters() if p.requires_grad)
+
+        print(f"MLP actor params: {mlp_params}")
+        print(f"Critic MLP params: {critic_mlp_params}")
+        print(f"Value head params: {value_head_params}")
+        print(f"Log-std params: {log_std_params}")
+        print(f"Check (non-actor total): {critic_mlp_params + value_head_params + log_std_params}  (expected 5383)")
+        print(f"TOTAL trainable params: {total_params}")
+
+        # model.learn(total_timesteps=TOTAL_TIMESTEPS)
+
+        # env.close()
 
 if __name__ == "__main__":
     train_ppo_agent()

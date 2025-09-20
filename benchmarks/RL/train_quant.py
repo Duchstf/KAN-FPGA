@@ -10,7 +10,7 @@ sys.path.append('../../src')
 from KANQuant import KANQuant
 
 #For quantization
-from brevitas.nn import QuantHardTanh
+from brevitas.nn import QuantHardTanh, QuantIdentity
 from brevitas.core.scaling import ParameterScaling
 from brevitas.core.quant import QuantType
 from quant import QuantBrevitasActivation, ScalarBiasScale
@@ -42,8 +42,8 @@ class KANAsActorExtractor(nn.Module):
         #Build the input layer
         input_layer = QuantBrevitasActivation(
             QuantHardTanh(bit_width = kan_config["layers_bitwidth"][0],
-            max_val=1.0,
-            min_val=-1.0,
+            max_val=2.0,
+            min_val=-2.0,
             act_scaling_impl=ParameterScaling(1.33),
             quant_type=QuantType.INT,
             return_quant_tensor = False),
