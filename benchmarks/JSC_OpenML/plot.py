@@ -1,214 +1,109 @@
-# plot_all_resources_2x2_outer_ylabels.py
-import os
-import matplotlib as mpl
 import matplotlib.pyplot as plt
-from matplotlib.ticker import MaxNLocator, EngFormatter
-import matplotlib.patheffects as pe
-from typing import Tuple
+import numpy as np
+import matplotlib.ticker as mticker
 
-# ---------- style ----------
-def _try_enable_usetex():
-    try:
-        import shutil
-        if shutil.which("latex") and shutil.which("dvipng"):
-            mpl.rcParams.update(
-                {
-                    "text.usetex": True,
-                    "text.latex.preamble": r"\usepackage{amsmath,amssymb}",
-                }
-            )
-    except Exception:
-        pass
+# --- Set Style for Academic Publications ---
+# Using a common style sheet for consistency.
+# 'seaborn-v0_8-paper' is a good choice for papers.
+plt.style.use('seaborn-v0_8-paper')
+# You can also set font properties globally
+plt.rcParams.update({
+    'font.family': 'serif',  # Or 'sans-serif'
+    'font.size': 10,         # Adjust as needed
+    'axes.labelsize': 10,
+    'axes.titlesize': 12,
+    'xtick.labelsize': 8,
+    'ytick.labelsize': 8,
+    'legend.fontsize': 8,
+    'figure.titlesize': 14
+})
 
-def setup_paper_style(single_column: bool = False) -> Tuple[float, float]:
-    """
-    Use two-column width by default to keep everything readable at the same page count.
-    """
-    width_in = 7.28 if not single_column else 3.54
-    height_in = 3.9  # taller to fit two rows
-    oi_cycle = [
-        "#0072B2", "#E69F00", "#009E73", "#D55E00",
-        "#CC79A7", "#56B4E9", "#F0E442", "#000000",
-    ]
-    mpl.rcParams.update(
-        {
-            "figure.figsize": (width_in, height_in),
-            "figure.dpi": 300,
-            "savefig.bbox": "tight",
-            "savefig.pad_inches": 0.01,
-            "pdf.fonttype": 42,
-            "ps.fonttype": 42,
 
-            # Fonts
-            "font.size": 8.6,
-            "axes.titlesize": 8.6,
-            "axes.labelsize": 8.6,
-            "xtick.labelsize": 8.0,
-            "ytick.labelsize": 8.0,
-            "legend.fontsize": 8.0,
-            "font.family": "sans-serif",
-            "font.sans-serif": ["Helvetica", "Arial", "DejaVu Sans"],
-            "mathtext.fontset": "stixsans",
+# --- Data for Plots ---
 
-            # Lines & axes
-            "lines.linewidth": 1.3,
-            "lines.solid_capstyle": "round",
-            "axes.linewidth": 0.85,
-            "axes.spines.top": True,
-            "axes.spines.right": False,  # right spine shown only on twin
-            "axes.grid": True,
-            "axes.grid.which": "major",
-            "grid.linestyle": "-",
-            "grid.linewidth": 0.45,
-            "grid.alpha": 0.22,
+# Data for Plot 1
+ACCURACY = [69.6, 73.13, 74.53, 75.27, 75.73]
+LUT_1 = [166, 403, 625, 709, 949]
+FF_1 = [135, 342, 517, 652, 857]
 
-            # Ticks
-            "xtick.direction": "out",
-            "ytick.direction": "out",
-            "xtick.major.size": 3.0,
-            "ytick.major.size": 3.0,
-            "xtick.major.width": 0.85,
-            "ytick.major.width": 0.85,
+# Data for Plot 2
+REMAINING = [1, 0.7381, 0.4762, 0.3393, 0.1488, 0.0417]
+# Calculate the percentage of pruned weights for a more intuitive x-axis
+PRUNED = [(1 - x) * 100 for x in REMAINING]
+LUT_2 = [1570, 1263, 930, 668, 220, 48]
+FF_2 = [1248, 1075, 827, 604, 296, 72]
 
-            # Layout
-            "figure.constrained_layout.use": True,
-            "axes.titlepad": 2.0,
-        }
-    )
-    mpl.rcParams["axes.prop_cycle"] = mpl.cycler(color=oi_cycle)
-    _try_enable_usetex()
-    return width_in, height_in
+# Data for Plot 3
+LAYER_WIDTH = [1, 2, 4, 8, 16, 32, 64]
+LUT_3 = [158, 377, 821, 1629, 3044, 6210, 12455]
+FF_3 = [178, 319, 640, 1284, 2417, 4941, 9464]
 
-def _next_cycle_color(ax):
-    tmp, = ax.plot([], [])
-    c = tmp.get_color()
-    tmp.remove()
-    return c
+# Data for Plot 4
+BITWIDTH = [12, 10, 8, 6, 4, 2]
+LUT_4 = [61297, 14403, 4025, 1496, 859, 338]
+FF_4 = [2930, 2018, 1567, 1191, 720, 378]
 
-def _panel_label(ax, label: str):
-    ax.text(0.02, 0.96, label, transform=ax.transAxes,
-            ha="left", va="top", fontweight="bold")
 
-def _format_compact_ticks(axis):
-    """
-    Use engineering formatter to shorten tick labels (e.g., 61 k instead of 61297).
-    Keep 0 decimals for a clean look.
-    """
-    axis.set_major_formatter(EngFormatter(places=0, sep="\N{THIN SPACE}"))
+# --- Create the Figure and Subplots ---
+# Create a figure with 1 row and 4 columns of subplots.
+# `figsize` is set to be wide and short, suitable for a paper's width. (width, height in inches)
+# `sharey=True` so that all plots share the same y-axis labels.
+fig, axes = plt.subplots(1, 4, figsize=(12, 3), sharey=False)
 
-# ---------- one panel (with twins) ----------
-def plot_panel(
-    ax, x, y_lut, y_ff, xlabel,
-    show_left_ylabel: bool, show_right_ylabel: bool, panel_tag: str
-):
-    # Left axis: LUT
-    lut_color = _next_cycle_color(ax)
-    l1, = ax.plot(
-        x, y_lut, marker="o", label="LUT", color=lut_color,
-        path_effects=[pe.Stroke(linewidth=1.8, foreground="white"), pe.Normal()],
-        zorder=3,
-    )
-    ax.set_xlabel(xlabel)
-    if show_left_ylabel:
-        ax.set_ylabel("LUT", color=lut_color)
-    ax.tick_params(axis="y", labelcolor=lut_color)
-    ax.yaxis.set_major_locator(MaxNLocator(4))
-    ax.xaxis.set_major_locator(MaxNLocator(4))
-    _format_compact_ticks(ax.yaxis)
-    ax.margins(x=0.05, y=0.12)
+# --- Plot 1: Accuracy vs. Resources ---
+ax1 = axes[0]
+ax1.plot(ACCURACY, LUT_1, marker='o', linestyle='-', label='LUT')
+ax1.plot(ACCURACY, FF_1, marker='^', linestyle='--', label='FF')
+ax1.set_title('(a)')
+ax1.set_xlabel('Accuracy (%)', fontsize=12)
+ax1.set_ylabel('Resource Count', fontsize=14)
+ax1.legend(fontsize=10)
+ax1.grid(True, linestyle='--', alpha=0.6)
 
-    # Right axis: FF
-    ax2 = ax.twinx()
-    ax2.spines["right"].set_visible(True)
-    ff_color = _next_cycle_color(ax)
-    l2, = ax2.plot(
-        x, y_ff, marker="s", linestyle="--", label="FF", color=ff_color,
-        path_effects=[pe.Stroke(linewidth=1.8, foreground="white"), pe.Normal()],
-        zorder=3,
-    )
-    if show_right_ylabel:
-        ax2.set_ylabel("FF", color=ff_color)
-    ax2.tick_params(axis="y", labelcolor=ff_color)
-    ax2.yaxis.set_major_locator(MaxNLocator(4))
-    _format_compact_ticks(ax2.yaxis)
+# --- Plot 2: Pruning vs. Resources ---
+ax2 = axes[1]
+ax2.plot(PRUNED, LUT_2, marker='o', linestyle='-', label='LUT')
+ax2.plot(PRUNED, FF_2, marker='^', linestyle='--', label='FF')
+ax2.set_title('(b)')
+ax2.set_xlabel('Pruning Percentage (%)', fontsize=12)
+ax2.legend(fontsize=10)
+ax2.grid(True, linestyle='--', alpha=0.6)
 
-    # Panel tag
-    _panel_label(ax, panel_tag)
-    return l1, l2
+# --- Plot 3: Layer Width vs. Resources ---
+ax3 = axes[2]
+ax3.plot(LAYER_WIDTH, LUT_3, marker='o', linestyle='-', label='LUT')
+ax3.plot(LAYER_WIDTH, FF_3, marker='^', linestyle='--', label='FF')
+ax3.set_title('(c)')
+ax3.set_xlabel('Hidden Layer Width', fontsize=12)
+# Use a logarithmic scale for the x-axis since the values are powers of 2
+ax3.set_xscale('log', base=2)
+# Ensure all x-ticks are shown
+ax3.set_xticks(LAYER_WIDTH)
+ax3.get_xaxis().set_major_formatter(plt.ScalarFormatter()) # show numbers instead of scientific notation
+ax3.yaxis.set_major_formatter(mticker.EngFormatter())
+ax3.legend(fontsize=10)
+ax3.grid(True, linestyle='--', alpha=0.6)
 
-# ---------- main combined figure ----------
-def plot_all_four(export_png=True, out_name="resources_2x2_outer_ylabels", two_column=True):
-    setup_paper_style(single_column=not two_column)
+# --- Plot 4: Bitwidth vs. Resources ---
+ax4 = axes[3]
+ax4.plot(BITWIDTH, LUT_4, marker='o', linestyle='-', label='LUT')
+ax4.plot(BITWIDTH, FF_4, marker='^', linestyle='--', label='FF')
+ax4.set_title('(d)')
+ax4.set_xlabel('Model Bitwidth', fontsize=12)
+# Invert x-axis to show decreasing bitwidth from left to right, which is standard
+ax4.invert_xaxis()
+ax4.yaxis.set_major_formatter(mticker.EngFormatter())
+ax4.legend(fontsize=10)
+ax4.grid(True, linestyle='--', alpha=0.6)
 
-    fig, axes = plt.subplots(2, 2)
+# --- Final Adjustments & Saving ---
+# Adjust layout to prevent labels from overlapping.
+plt.tight_layout()
 
-    # ---- Data ----
-    # (a) Accuracy
-    ACCURACY = [69.6, 73.13, 74.53, 75.27, 75.73]
-    LUT_acc = [166, 403, 625, 709, 949]
-    FF_acc  = [135, 342, 517, 652, 857]
+# Save the figure to a file.
+# Using a vector format like PDF or SVG is recommended for publications.
+# You can also use a high-DPI PNG.
+plt.savefig('combined_plots.pdf', format='pdf', bbox_inches='tight')
+plt.savefig('combined_plots.png', format='png', dpi=300, bbox_inches='tight')
 
-    # (b) Pruned ratio
-    REMAINING = [1, 0.7381, 0.4762, 0.3393, 0.1488, 0.0417]
-    PRUNED = [1 - x for x in REMAINING]
-    LUT_prune = [1570, 1263, 930, 668, 220, 48]
-    FF_prune  = [1248, 1075, 827, 604, 296, 72]
 
-    # (c) Width
-    LAYER_WIDTH = [1, 2, 4, 8, 16, 32, 64]
-    LUT_width = [158, 377, 821, 1629, 3044, 6210, 12455]
-    FF_width  = [178, 319, 640, 1284, 2417, 4941, 9464]
-
-    # (d) Bitwidth
-    BITWIDTH = [12, 10, 8, 6, 4, 2]
-    LUT_bw = [61297, 14403, 4025, 1496, 859, 338]
-    FF_bw  = [2930, 2018, 1567, 1191, 720, 378]
-
-    # ---- Panels (only outer y-labels per row) ----
-    # Row 1: (a) left shows "LUT", (b) right shows "FF"
-    h1 = plot_panel(
-        axes[0, 0], ACCURACY, LUT_acc, FF_acc,
-        xlabel="Accuracy (%)",
-        show_left_ylabel=True, show_right_ylabel=False, panel_tag="(a)"
-    )
-    h2 = plot_panel(
-        axes[0, 1], [p*100 for p in PRUNED], LUT_prune, FF_prune,
-        xlabel="Pruned Ratio (%)",
-        show_left_ylabel=False, show_right_ylabel=True, panel_tag="(b)"
-    )
-    # Row 2: (c) left shows "LUT", (d) right shows "FF"
-    h3 = plot_panel(
-        axes[1, 0], LAYER_WIDTH, LUT_width, FF_width,
-        xlabel="Middle Layer Width",
-        show_left_ylabel=True, show_right_ylabel=False, panel_tag="(c)"
-    )
-    h4 = plot_panel(
-        axes[1, 1], BITWIDTH, LUT_bw, FF_bw,
-        xlabel="Bitwidth",
-        show_left_ylabel=False, show_right_ylabel=True, panel_tag="(d)"
-    )
-
-    # Ticks: a bit cleaner for percent panel
-    axes[0, 1].xaxis.set_major_locator(MaxNLocator(5))
-
-    # Shared legend
-    handles = [h1[0], h1[1]]
-    labels = ["LUT", "FF"]
-    fig.legend(
-        handles, labels, ncol=2, frameon=False, bbox_to_anchor=(0.5, 1.02),
-        loc="lower center", columnspacing=1.0, handlelength=1.6
-    )
-
-    # Save
-    os.makedirs("plots", exist_ok=True)
-    base = f"plots/{out_name.lower().replace(' ', '_')}"
-    fig.savefig(base + ".pdf")
-    if export_png:
-        fig.savefig(base + ".png", dpi=600)
-    plt.show()
-    return fig, axes
-
-# ---------- script entry ----------
-if __name__ == "__main__":
-    # Two-column width by default; set two_column=False for single-column.
-    plot_all_four(export_png=True, out_name="resources_2x2_outer_ylabels", two_column=True)
