@@ -45,12 +45,14 @@ formatter = logging.Formatter('%(message)s')
 console.setFormatter(formatter)
 logging.getLogger().addHandler(console)
 
+BITWIDTH = 2
+
 # === Configuration ===
 config = {
     "seed": seed,
     "layers": [16, 8, 5],
     "grid_range": [-2, 2],
-    "layers_bitwidth": [6, 6, 8],
+    "layers_bitwidth": [BITWIDTH, BITWIDTH, BITWIDTH],
 
     "grid_size": 40,
     "spline_order": 10,
@@ -64,14 +66,14 @@ config = {
     "learning_rate": 1e-3,
     "weight_decay": 1e-3,
 
-    "prune_threshold": 5,
+    "prune_threshold": 0,
     "target_epoch": 5,
     "warmup_epochs": 0,
     "random_seed": seed,
 }
 
 #Create a new directory to save the config and checkpoints
-model_dir = f'prune/{datetime.now().strftime("%Y%m%d_%H%M%S")}'
+model_dir = f'bitwidth/{datetime.now().strftime("%Y%m%d_%H%M%S")}'
 os.makedirs(model_dir, exist_ok=True)
 with open(f'{model_dir}/config.json', 'w') as f:
     json.dump(config, f)
