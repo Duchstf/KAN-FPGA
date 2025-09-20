@@ -339,7 +339,7 @@ if __name__ == "__main__":
     plot_models(
         models=[
             ("logs_mlp", "MLP FP: [17, 64, 64, 6]"),
-            ("logs_kan_float", "KAN FP: [17, 6]"),
+            ("logs_kan_float_v2", "KAN FP: [17, 6]"),
         ],
         env_name="HalfCheetah-v5",
         out_name="halfcheetah_comparison",

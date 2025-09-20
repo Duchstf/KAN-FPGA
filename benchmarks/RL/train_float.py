@@ -11,7 +11,7 @@ from KAN_OG import KAN
 
 ENV_ID = "HalfCheetah-v5"
 TOTAL_TIMESTEPS = 1_000_000
-LOG_DIR = "logs_kan_float"
+LOG_DIR = "logs_kan_float_v2"
 
 # -----------------------
 # Custom extractor: uses KAN as the actor "backbone"
@@ -104,9 +104,9 @@ def train():
 
         # Define KAN hyperparameters
         kan_hyperparams = dict(
-            grid_size=20,
+            grid_size=5,
             spline_order=3,
-            grid_range=[-10, 10],
+            grid_range=[-2, 2],
             grid_eps=0.05,
             base_activation=nn.GELU,
         )
