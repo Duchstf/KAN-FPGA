@@ -5,7 +5,6 @@ from datetime import datetime
 sys.path.append('../../src')
 from KANQuant import KANQuant
 from quant import QuantBrevitasActivation, ScalarBiasScale
-from dataset import JetSubstructureDataset
 
 import numpy as np
 import torch
@@ -76,32 +75,33 @@ logging.getLogger().addHandler(console)
 
 # === Configuration ===
 # Note: added "resume" and "resume_path".
+# === Configuration ===
 config = {
     "seed": seed,
     "layers": [16, 8, 5],
     "grid_range": [-2, 2],
-    "layers_bitwidth": [6, 6, 8],
+    "layers_bitwidth": [6, 7, 6],
 
     "grid_size": 40,
     "spline_order": 10,
     "grid_eps": 0.05,
 
     "base_activation": "nn.SiLU",
-
+    
     "batch_size": 512,
-    "num_epochs": 1000,  # total target epochs (not just additional)
+    "num_epochs": 1000,
 
     "learning_rate": 1e-3,
     "weight_decay": 1e-4,
 
-    "prune_threshold": 0.9,
-    "target_epoch": 25,
-    "warmup_epochs": 4,
+    "prune_threshold": 0.7,
+    "target_epoch": 12,
+    "warmup_epochs": 5,
     "random_seed": seed,
 
     # --- NEW ---
     "resume": True,                 # set True to resume
-    "resume_path": "models/20250918_102257/JSC_OpenML_acc0.7573_epoch99_remaining0.4583.pt",         # file .pt OR a directory to auto-pick latest
+    "resume_path": "layerwidth/20250918_102257/JSC_OpenML_acc0.7591_epoch517_remaining0.4940.pt",         # file .pt OR a directory to auto-pick latest
 }
 
 # ---------------------------
@@ -150,28 +150,17 @@ JSC_input_layer = QuantBrevitasActivation(
 ).to(device)
 
 # === Load Data ===
-dataset = {}
-dataset["test"] = JetSubstructureDataset(
-    "data/processed-pythia82-lhc13-all-pt1-50k-r1_h022_e0175_t220_nonu_truth.z",
-    "config.yml",
-    split="test"
-)
-dataset["train"] = JetSubstructureDataset(
-    "data/processed-pythia82-lhc13-all-pt1-50k-r1_h022_e0175_t220_nonu_truth.z",
-    "config.yml",
-    split="train"
-)
-
-X_train = dataset["train"].X.to(device)
-y_train = dataset["train"].y.float().argmax(dim=1).to(device)
-X_test  = dataset["test"].X.to(device)
-y_test  = dataset["test"].y.float().argmax(dim=1).to(device)
+data_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data')
+X_train = torch.from_numpy(np.load(os.path.join(data_dir, 'X_train.npy'))).float().to(device)
+y_train = torch.from_numpy(np.load(os.path.join(data_dir, 'y_train.npy'))).float().to(device).argmax(dim=1)
+X_test = torch.from_numpy(np.load(os.path.join(data_dir, 'X_test.npy'))).float().to(device)
+y_test = torch.from_numpy(np.load(os.path.join(data_dir, 'y_test.npy'))).float().to(device).argmax(dim=1)
 
 # === Create Data Loaders ===
 train_dataset = TensorDataset(X_train, y_train)
-test_dataset  = TensorDataset(X_test, y_test)
+test_dataset = TensorDataset(X_test, y_test)
 trainloader = DataLoader(train_dataset, batch_size=config["batch_size"], shuffle=True)
-testloader  = DataLoader(test_dataset,  batch_size=config["batch_size"], shuffle=False)
+testloader = DataLoader(test_dataset, batch_size=config["batch_size"], shuffle=False)
 
 # === Initialize Model ===
 model = KANQuant(config, JSC_input_layer, device).to(device)
