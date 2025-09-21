@@ -24,7 +24,7 @@ from brevitas.core.scaling import ParameterScaling
 from brevitas.core.quant import QuantType
 
 #Set the seed
-seed = 1283
+seed = 4332142
 torch.manual_seed(seed)
 np.random.seed(seed)
 
@@ -62,9 +62,9 @@ config = {
     "num_epochs": 200,
 
     "learning_rate": 1e-3,
-    "weight_decay": 1e-3,
+    "weight_decay": 1e-4,
 
-    "prune_threshold": 0.95,
+    "prune_threshold": 1,
     "target_epoch": 25,
     "warmup_epochs": 4,
     "random_seed": seed,
@@ -83,8 +83,8 @@ nn.init.constant_(bn_in.bias.data, 0)
 input_bias = ScalarBiasScale(scale=False, bias_init=-0.25)
 JSC_input_layer = QuantBrevitasActivation(
     QuantHardTanh(bit_width = config["layers_bitwidth"][0],
-    max_val=1.5,
-    min_val=-1.5,
+    max_val=1.25,
+    min_val=-1.25,
     act_scaling_impl=ParameterScaling(1.33),
     quant_type=QuantType.INT,
     return_quant_tensor = False),

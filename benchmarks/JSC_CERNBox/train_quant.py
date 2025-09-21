@@ -25,7 +25,7 @@ from brevitas.core.scaling import ParameterScaling
 from brevitas.core.quant import QuantType
 
 #Set the seed
-seed = 0
+seed = 3252
 torch.manual_seed(seed)
 np.random.seed(seed)
 
@@ -60,12 +60,15 @@ config = {
     "base_activation": "nn.SiLU",
     
     "batch_size": 512,
-    "num_epochs": 200,
+    "num_epochs": 500,
 
     "learning_rate": 1e-3,
-    "weight_decay": 1e-4,
+    "weight_decay": 1e-5,
 
-    "prune_threshold": 0.04,
+    "prune_threshold": 0.14,
+    "target_epoch": 12,
+    "warmup_epochs": 5,
+    "random_seed": seed,
 }
 
 #Create a new directory to save the config and checkpoints
@@ -119,7 +122,7 @@ testloader = DataLoader(test_dataset, batch_size=config["batch_size"], shuffle=F
 model = KANQuant(config, JSC_input_layer, device).to(device)
 
 optimizer = optim.Adam(model.parameters(), lr=config["learning_rate"], weight_decay=config["weight_decay"])
-scheduler = optim.lr_scheduler.ExponentialLR(optimizer, gamma=0.9)
+scheduler = optim.lr_scheduler.ExponentialLR(optimizer, gamma=0.998)
 criterion = nn.CrossEntropyLoss()
 
 # === Training Loop ===
@@ -154,7 +157,7 @@ for epoch in range(config["num_epochs"]):
     training_loss.append(average_train_loss)  # Record the average training loss
 
     # Prune the model
-    remaining_fraction = model.prune_below_threshold(threshold=config["prune_threshold"])
+    remaining_fraction = model.prune_below_threshold(threshold=config["prune_threshold"], epoch=epoch, target_epoch=config["target_epoch"], warmup_epochs=config["warmup_epochs"])
     print(f"Remaining fraction: {remaining_fraction}")
 
     # Validation
@@ -184,16 +187,14 @@ for epoch in range(config["num_epochs"]):
         f"Remaining Fraction: {remaining_fraction:.4f}"
     )
 
-    # === Save Checkpoint if Best ===
-    if val_accuracy > best_val_accuracy:
-        best_val_accuracy = val_accuracy
-        checkpoint_path = f'{model_dir}/JSC_CERNBox_acc{val_accuracy:.4f}_epoch{epoch + 1}.pt'
-        torch.save({
-            'epoch': epoch + 1,
-            'model_state_dict': model.state_dict(),
-            'optimizer_state_dict': optimizer.state_dict(),
-            'val_accuracy': val_accuracy,
-            'val_loss': val_loss,
-            'remaining_fraction': remaining_fraction,
-        }, checkpoint_path)
-        logging.info(f"New best model saved with val accuracy: {val_accuracy:.4f}")
+    # === Save Checkpoint for each epoch ===
+    checkpoint_path = f'{model_dir}/JSC_CERNBox_acc{val_accuracy:.4f}_epoch{epoch + 1}_remaining{remaining_fraction:.4f}.pt'
+    torch.save({
+        'epoch': epoch + 1,
+        'model_state_dict': model.state_dict(),
+        'optimizer_state_dict': optimizer.state_dict(),
+        'val_accuracy': val_accuracy,
+        'val_loss': val_loss,
+        'remaining_fraction': remaining_fraction,
+    }, checkpoint_path)
+    logging.info(f"New model saved with val accuracy: {val_accuracy:.4f} and remaining fraction: {remaining_fraction:.4f}")
