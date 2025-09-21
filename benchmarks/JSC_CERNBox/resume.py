@@ -89,7 +89,7 @@ config = {
     "base_activation": "nn.SiLU",
 
     "batch_size": 512,
-    "num_epochs": 500,  # total target epochs (not just additional)
+    "num_epochs": 1000,  # total target epochs (not just additional)
 
     "learning_rate": 1e-3,
     "weight_decay": 1e-5,
@@ -101,7 +101,7 @@ config = {
 
     # --- NEW ---
     "resume": True,                 # set True to resume
-    "resume_path": "models/20250920_175126/JSC_CERNBox_acc0.7493_epoch193_remaining0.7460.pt",         # file .pt OR a directory to auto-pick latest
+    "resume_path": "models/20250920_175126/JSC_CERNBox_acc0.7502_epoch488_remaining0.7302.pt",         # file .pt OR a directory to auto-pick latest
 }
 
 # ---------------------------

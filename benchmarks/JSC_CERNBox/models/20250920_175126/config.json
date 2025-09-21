@@ -19,7 +19,7 @@
   "grid_eps": 0.05,
   "base_activation": "nn.SiLU",
   "batch_size": 512,
-  "num_epochs": 500,
+  "num_epochs": 1000,
   "learning_rate": 0.001,
   "weight_decay": 1e-05,
   "prune_threshold": 0.14,
@@ -27,5 +27,5 @@
   "warmup_epochs": 5,
   "random_seed": 3252,
   "resume": true,
-  "resume_path": "models/20250920_175126/JSC_CERNBox_acc0.7493_epoch193_remaining0.7460.pt"
+  "resume_path": "models/20250920_175126/JSC_CERNBox_acc0.7502_epoch488_remaining0.7302.pt"
 }
