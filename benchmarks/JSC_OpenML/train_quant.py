@@ -45,10 +45,12 @@ formatter = logging.Formatter('%(message)s')
 console.setFormatter(formatter)
 logging.getLogger().addHandler(console)
 
+LAYER_WIDTH = 64
+
 # === Configuration ===
 config = {
     "seed": seed,
-    "layers": [16, 8, 5],
+    "layers": [16, LAYER_WIDTH, 5],
     "grid_range": [-2, 2],
     "layers_bitwidth": [6, 6, 8],
 
@@ -71,7 +73,7 @@ config = {
 }
 
 #Create a new directory to save the config and checkpoints
-model_dir = f'models/{datetime.now().strftime("%Y%m%d_%H%M%S")}'
+model_dir = f'layerwidth/{datetime.now().strftime("%Y%m%d_%H%M%S")}'
 os.makedirs(model_dir, exist_ok=True)
 with open(f'{model_dir}/config.json', 'w') as f:
     json.dump(config, f)
