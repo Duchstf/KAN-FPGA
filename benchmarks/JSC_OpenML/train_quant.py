@@ -71,7 +71,10 @@ config = {
     "quantize_clip": False,
     "quantize": True,
     "regularize_clipping": regularize_clipping,
-    "prune_threshold": 0.5,
+
+    "prune_threshold": 0.1,
+    "warmup_epochs": 2,
+    "target_epoch": 10,
 }
 
 #Create a new directory to save the config and checkpoints
@@ -158,7 +161,7 @@ for epoch in range(num_epochs):
     training_loss.append(average_train_loss)  # Record the average training loss
 
     # Prune the model
-    remaining_fraction = model.prune_below_threshold(threshold=config["prune_threshold"])
+    remaining_fraction = model.prune_below_threshold(threshold=config["prune_threshold"], epoch=epoch, target_epoch=config["target_epoch"], warmup_epochs=config["warmup_epochs"])
     print(f"Remaining fraction: {remaining_fraction}")
 
     # Validation

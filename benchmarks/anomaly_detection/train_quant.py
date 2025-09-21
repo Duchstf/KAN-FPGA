@@ -49,9 +49,9 @@ logging.getLogger().addHandler(console)
 
 config = {
     "seed": seed,
-    "layers": [128, 32, 8, 32, 128],  
+    "layers": [128, 8, 8, 8, 128],  
     "grid_range": [-4, 4],
-    "layers_bitwidth": [8, 8, 8, 8, 8],  
+    "layers_bitwidth": [6, 6, 6, 6, 6],  
 
     "grid_size": 30,
     "spline_order": 10,
@@ -65,7 +65,9 @@ config = {
     "learning_rate": 1e-3,
     "weight_decay": 1e-4,
 
-    "prune_threshold": 0.04,
+    "prune_threshold": 0.1,
+    "warmup_epochs": 2,
+    "target_epoch": 10,
 }
 
 #Create a new directory to save the config and checkpoints
@@ -122,6 +124,7 @@ criterion = nn.MSELoss()
 training_loss = []
 testing_loss = []
 best_val_auc = 0.0
+best_remaining_fraction = 1.0
 
 # Define loss - using MSE for autoencoder reconstruction
 criterion = nn.MSELoss()
@@ -149,7 +152,7 @@ for epoch in range(config["num_epochs"]):
     training_loss.append(average_train_loss)  # Record the average training loss
 
     # Prune the model
-    remaining_fraction = model.prune_below_threshold(threshold=config["prune_threshold"])
+    remaining_fraction = model.prune_below_threshold(threshold=config["prune_threshold"], epoch=epoch, target_epoch=config["target_epoch"], warmup_epochs=config["warmup_epochs"])
     print(f"Remaining fraction: {remaining_fraction}")
 
     # Validation
@@ -167,12 +170,12 @@ for epoch in range(config["num_epochs"]):
     with torch.no_grad():
         with tqdm(testloader) as pbar:
             for i, (inputs, labels) in enumerate(pbar):
-                if i != 0 and (i * config["batch_size"]) % samples_per_file == 0:
+                if len(y_pred_curr) >= samples_per_file:
                     # take mean of y_pred and y_true for past samples_per_file samples
-                    y_pred.append(np.mean(y_pred_curr))
-                    y_true.append(int(np.mean(y_true_curr)))
-                    y_pred_curr = []
-                    y_true_curr = []
+                    y_pred.append(np.mean(y_pred_curr[:samples_per_file]))
+                    y_true.append(int(np.mean(y_true_curr[:samples_per_file])))
+                    y_pred_curr = y_pred_curr[samples_per_file:]
+                    y_true_curr = y_true_curr[samples_per_file:]
 
                 inputs = inputs.to(device)
                 output = model(inputs)
@@ -205,8 +208,9 @@ for epoch in range(config["num_epochs"]):
     )
 
     # === Save Checkpoint if Best ===
-    if auc > best_val_auc:
-        best_val_auc = auc
+    if auc > best_val_auc or remaining_fraction < best_remaining_fraction:
+        best_val_auc = max(best_val_auc, auc)
+        best_remaining_fraction = min(best_remaining_fraction, remaining_fraction)
         checkpoint_path = f'{model_dir}/Anomaly_Detection_auc{auc:.4f}_epoch{epoch + 1}.pt'
         torch.save({
             'epoch': epoch + 1,

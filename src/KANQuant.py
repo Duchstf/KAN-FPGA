@@ -265,7 +265,7 @@ class KANLinear(torch.nn.Module):
         self.grid.copy_(grid.T)
         self.spline_weight.data.copy_(self.curve2coeff(x, unreduced_spline_output))
 
-    def regularization_loss(self, regularize_activation=1.0, regularize_entropy=1.0):
+    def regularization_loss(self, regularize_activation=1.0, regularize_entropy=10.0):
         """
         Compute the regularization loss.
 
@@ -305,9 +305,10 @@ class KANLinear(torch.nn.Module):
                     self.scaled_spline_weight[out_idx, in_idx, :]
                 )
                 norms[out_idx, in_idx] = self.spline_selector[out_idx, in_idx] * torch.norm(spline_output)
-
+        
         # Apply threshold-based pruning
-        self.spline_selector *= (norms > threshold).float()
+        # Calculate and print percentiles
+        self.spline_selector *= ((norms / torch.max(norms)) > threshold).float()
 
         # Apply backward pruning if next layer sparsity is provided
         if next_layer_sparsity_matrix is not None:
