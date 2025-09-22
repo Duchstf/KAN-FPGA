@@ -101,7 +101,7 @@ config = {
 
     # --- NEW ---
     "resume": True,                 # set True to resume
-    "resume_path": "layerwidth/20250918_102257/JSC_OpenML_acc0.7591_epoch517_remaining0.4940.pt",         # file .pt OR a directory to auto-pick latest
+    "resume_path": "layerwidth/20250921_103135/JSC_OpenML_acc0.7591_epoch517_remaining0.4940.pt",         # file .pt OR a directory to auto-pick latest
 }
 
 # ---------------------------

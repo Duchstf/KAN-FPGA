@@ -27,5 +27,5 @@
   "warmup_epochs": 5,
   "random_seed": 321983,
   "resume": true,
-  "resume_path": "layerwidth/20250921_103135/JSC_OpenML_acc0.7591_epoch517_remaining0.4940.pt"
+  "resume_path": "layerwidth/20250918_102257/JSC_OpenML_acc0.7591_epoch517_remaining0.4940.pt"
 }
