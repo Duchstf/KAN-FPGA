@@ -300,7 +300,7 @@ if __name__ == "__main__":
         models=[
             ("logs_mlp", "MLP FP: [17, 64, 64, 6]"),
             ("logs_kan_float", "KAN FP: [17, 6]"),
-            ("logs_kan_quant", "KAN Quant - 8 bits: [17, 6]"),
+            ("logs_kan_quant", "KAN 8-bit: [17, 6]"),
         ],
         env_name="HalfCheetah-v5",
         out_name="halfcheetah_comparison",
