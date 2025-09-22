@@ -4,7 +4,7 @@
 # Define project name and paths
 set PROJ "KAN_FPGA_PROJECT"
 set DIR  [file normalize [pwd]]
-set PART "xcvu9p-flgb2104-2-i"
+set PART "xczu7ev-ffvc1156-2-e"
 
 # Create in-memory project with the specified part
 create_project -name $PROJ -part $PART -force

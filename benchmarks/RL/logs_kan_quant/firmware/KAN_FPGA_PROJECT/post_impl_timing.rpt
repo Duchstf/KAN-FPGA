@@ -1,14 +1,14 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version      : Vivado v.2024.1 (lin64) Build 5076996 Wed May 22 18:36:09 MDT 2024
-| Date              : Sun Sep 21 08:23:47 2025
+| Date              : Mon Sep 22 08:10:36 2025
 | Host              : correlator4.fnal.gov running 64-bit AlmaLinux release 9.4 (Shamrock Pampas Cat)
 | Command           : report_timing_summary -file /data/dhoang/test/KAN-FPGA/benchmarks/RL/logs_kan_quant/firmware/KAN_FPGA_PROJECT/post_impl_timing.rpt
 | Design            : top
-| Device            : xcvu9p-flgb2104
-| Speed File        : -2  PRODUCTION 1.28 03-30-2022
+| Device            : xczu7ev-ffvc1156
+| Speed File        : -2  PRODUCTION 1.30 05-15-2022
 | Design State      : Physopt postRoute
-| Temperature Grade : I
+| Temperature Grade : E
 ---------------------------------------------------------------------------------------------------------------------------------------------------------
 
 Timing Summary Report
@@ -139,7 +139,7 @@ Table of Contents
 
     WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS Total Endpoints      WHS(ns)      THS(ns)  THS Failing Endpoints  THS Total Endpoints     WPWS(ns)     TPWS(ns)  TPWS Failing Endpoints  TPWS Total Endpoints  
     -------      -------  ---------------------  -------------------      -------      -------  ---------------------  -------------------     --------     --------  ----------------------  --------------------  
-     -0.117       -4.314                     90                  492        0.045        0.000                      0                  492        0.225        0.000                       0                  1136  
+     -0.132       -3.182                     72                  492        0.043        0.000                      0                  492        0.225        0.000                       0                  1136  
 
 
 Timing constraints are not met.
@@ -162,7 +162,7 @@ clk    {0.000 0.500}        1.000           1000.000
 
 Clock             WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS Total Endpoints      WHS(ns)      THS(ns)  THS Failing Endpoints  THS Total Endpoints     WPWS(ns)     TPWS(ns)  TPWS Failing Endpoints  TPWS Total Endpoints  
 -----             -------      -------  ---------------------  -------------------      -------      -------  ---------------------  -------------------     --------     --------  ----------------------  --------------------  
-clk                -0.117       -4.314                     90                  492        0.045        0.000                      0                  492        0.225        0.000                       0                  1136  
+clk                -0.132       -3.182                     72                  492        0.043        0.000                      0                  492        0.225        0.000                       0                  1136  
 
 
 ------------------------------------------------------------------------------------------------
@@ -193,24 +193,24 @@ Path Group    From Clock    To Clock          WNS(ns)      TNS(ns)  TNS Failing 
 From Clock:  clk
   To Clock:  clk
 
-Setup :           90  Failing Endpoints,  Worst Slack       -0.117ns,  Total Violation       -4.314ns
-Hold  :            0  Failing Endpoints,  Worst Slack        0.045ns,  Total Violation        0.000ns
+Setup :           72  Failing Endpoints,  Worst Slack       -0.132ns,  Total Violation       -3.182ns
+Hold  :            0  Failing Endpoints,  Worst Slack        0.043ns,  Total Violation        0.000ns
 PW    :            0  Failing Endpoints,  Worst Slack        0.225ns,  Total Violation        0.000ns
 ---------------------------------------------------------------------------------------------------
 
 
 Max Delay Paths
 --------------------------------------------------------------------------------------
-Slack (VIOLATED) :        -0.117ns  (required time - arrival time)
-  Source:                 kan_inst/gen_l0c5.i09/rom_i/xpm_memory_base_inst/gen_rd_a.gen_rd_a_synth_template.gen_rf_narrow_reg.douta_reg_reg[3]/C
+Slack (VIOLATED) :        -0.132ns  (required time - arrival time)
+  Source:                 kan_inst/gen_l0c5.i11/rom_i/xpm_memory_base_inst/gen_rd_a.gen_rd_a_synth_template.gen_rf_narrow_reg.douta_reg_reg[7]/C
                             (rising edge-triggered cell FDRE clocked by clk  {rise@0.000ns fall@0.500ns period=1.000ns})
   Destination:            kan_inst/gen_l0c5.s1_2_reg[10]/D
                             (rising edge-triggered cell FDRE clocked by clk  {rise@0.000ns fall@0.500ns period=1.000ns})
   Path Group:             clk
   Path Type:              Setup (Max at Slow Process Corner)
   Requirement:            1.000ns  (clk rise@1.000ns - clk rise@0.000ns)
-  Data Path Delay:        1.098ns  (logic 0.439ns (39.996%)  route 0.659ns (60.004%))
-  Logic Levels:           4  (CARRY8=2 LUT3=1 LUT5=1)
+  Data Path Delay:        1.112ns  (logic 0.557ns (50.073%)  route 0.555ns (49.927%))
+  Logic Levels:           5  (CARRY8=2 LUT3=1 LUT5=1 LUT6=1)
   Clock Path Skew:        -0.009ns (DCD - SCD + CPR)
     Destination Clock Delay (DCD):    0.020ns = ( 1.020 - 1.000 ) 
     Source Clock Delay      (SCD):    0.029ns
@@ -225,40 +225,43 @@ Slack (VIOLATED) :        -0.117ns  (required time - arrival time)
   -------------------------------------------------------------------    -------------------
                          (clock clk rise edge)        0.000     0.000 r  
                                                       0.000     0.000 r  clk (IN)
-                         net (fo=1135, unset)         0.029     0.029    kan_inst/gen_l0c5.i09/rom_i/xpm_memory_base_inst/clka
-    SLICE_X32Y88         FDRE                                         r  kan_inst/gen_l0c5.i09/rom_i/xpm_memory_base_inst/gen_rd_a.gen_rd_a_synth_template.gen_rf_narrow_reg.douta_reg_reg[3]/C
+                         net (fo=1135, unset)         0.029     0.029    kan_inst/gen_l0c5.i11/rom_i/xpm_memory_base_inst/clka
+    SLICE_X62Y87         FDRE                                         r  kan_inst/gen_l0c5.i11/rom_i/xpm_memory_base_inst/gen_rd_a.gen_rd_a_synth_template.gen_rf_narrow_reg.douta_reg_reg[7]/C
   -------------------------------------------------------------------    -------------------
-    SLICE_X32Y88         FDRE (Prop_HFF_SLICEL_C_Q)
-                                                      0.079     0.108 r  kan_inst/gen_l0c5.i09/rom_i/xpm_memory_base_inst/gen_rd_a.gen_rd_a_synth_template.gen_rf_narrow_reg.douta_reg_reg[3]/Q
-                         net (fo=3, routed)           0.184     0.292    kan_inst/gen_l0c5.i11/rom_i/gen_l0c5.s1_2[7]_i_9_0[2]
-    SLICE_X29Y88         LUT3 (Prop_C6LUT_SLICEL_I1_O)
-                                                      0.123     0.415 r  kan_inst/gen_l0c5.i11/rom_i/gen_l0c5.s1_2[7]_i_20/O
-                         net (fo=2, routed)           0.177     0.592    kan_inst/gen_l0c5.i11/rom_i/gen_rd_a.gen_rd_a_synth_template.gen_rf_narrow_reg.douta_reg_reg[3]
-    SLICE_X29Y88         LUT5 (Prop_E5LUT_SLICEL_I1_O)
-                                                      0.070     0.662 r  kan_inst/gen_l0c5.i11/rom_i/gen_l0c5.s1_2[7]_i_5/O
-                         net (fo=2, routed)           0.247     0.909    kan_inst/gen_l0c5.i11_n_12
-    SLICE_X29Y87         CARRY8 (Prop_CARRY8_SLICEL_DI[4]_CO[7])
-                                                      0.091     1.000 r  kan_inst/gen_l0c5.s1_2_reg[7]_i_1/CO[7]
-                         net (fo=1, routed)           0.026     1.026    kan_inst/gen_l0c5.s1_2_reg[7]_i_1_n_0
-    SLICE_X29Y88         CARRY8 (Prop_CARRY8_SLICEL_CI_O[1])
-                                                      0.076     1.102 r  kan_inst/gen_l0c5.s1_2_reg[10]_i_1/O[1]
-                         net (fo=1, routed)           0.025     1.127    kan_inst/gen_l0c5.s1_2_reg[10]_i_1_n_14
-    SLICE_X29Y88         FDRE                                         r  kan_inst/gen_l0c5.s1_2_reg[10]/D
+    SLICE_X62Y87         FDRE (Prop_GFF2_SLICEL_C_Q)
+                                                      0.081     0.110 r  kan_inst/gen_l0c5.i11/rom_i/xpm_memory_base_inst/gen_rd_a.gen_rd_a_synth_template.gen_rf_narrow_reg.douta_reg_reg[7]/Q
+                         net (fo=6, routed)           0.099     0.209    kan_inst/gen_l0c5.i11/rom_i/douta[6]
+    SLICE_X62Y88         LUT3 (Prop_D5LUT_SLICEL_I0_O)
+                                                      0.110     0.319 r  kan_inst/gen_l0c5.i11/rom_i/gen_l0c5.s1_2[7]_i_17/O
+                         net (fo=2, routed)           0.270     0.589    kan_inst/gen_l0c5.i11/rom_i/gen_rd_a.gen_rd_a_synth_template.gen_rf_narrow_reg.douta_reg_reg[7]
+    SLICE_X61Y88         LUT5 (Prop_E5LUT_SLICEM_I1_O)
+                                                      0.139     0.728 r  kan_inst/gen_l0c5.i11/rom_i/gen_l0c5.s1_2[7]_i_2/O
+                         net (fo=2, routed)           0.125     0.853    kan_inst/gen_l0c5.i11/rom_i/DI[4]
+    SLICE_X60Y88         LUT6 (Prop_H6LUT_SLICEL_I0_O)
+                                                      0.036     0.889 r  kan_inst/gen_l0c5.i11/rom_i/gen_l0c5.s1_2[7]_i_9/O
+                         net (fo=1, routed)           0.010     0.899    kan_inst/gen_l0c5.i11_n_8
+    SLICE_X60Y88         CARRY8 (Prop_CARRY8_SLICEL_S[7]_CO[7])
+                                                      0.115     1.014 r  kan_inst/gen_l0c5.s1_2_reg[7]_i_1/CO[7]
+                         net (fo=1, routed)           0.026     1.040    kan_inst/gen_l0c5.s1_2_reg[7]_i_1_n_0
+    SLICE_X60Y89         CARRY8 (Prop_CARRY8_SLICEL_CI_O[1])
+                                                      0.076     1.116 r  kan_inst/gen_l0c5.s1_2_reg[10]_i_1/O[1]
+                         net (fo=1, routed)           0.025     1.141    kan_inst/gen_l0c5.s1_2_reg[10]_i_1_n_14
+    SLICE_X60Y89         FDRE                                         r  kan_inst/gen_l0c5.s1_2_reg[10]/D
   -------------------------------------------------------------------    -------------------
 
                          (clock clk rise edge)        1.000     1.000 r  
                                                       0.000     1.000 r  clk (IN)
                          net (fo=1135, unset)         0.020     1.020    kan_inst/clk
-    SLICE_X29Y88         FDRE                                         r  kan_inst/gen_l0c5.s1_2_reg[10]/C
+    SLICE_X60Y89         FDRE                                         r  kan_inst/gen_l0c5.s1_2_reg[10]/C
                          clock pessimism              0.000     1.020    
                          clock uncertainty           -0.035     0.985    
-    SLICE_X29Y88         FDRE (Setup_BFF_SLICEL_C_D)
+    SLICE_X60Y89         FDRE (Setup_BFF_SLICEL_C_D)
                                                       0.025     1.010    kan_inst/gen_l0c5.s1_2_reg[10]
   -------------------------------------------------------------------
                          required time                          1.010    
-                         arrival time                          -1.127    
+                         arrival time                          -1.141    
   -------------------------------------------------------------------
-                         slack                                 -0.117    
+                         slack                                 -0.132    
 
 
 
@@ -266,18 +269,18 @@ Slack (VIOLATED) :        -0.117ns  (required time - arrival time)
 
 Min Delay Paths
 --------------------------------------------------------------------------------------
-Slack (MET) :             0.045ns  (arrival time - required time)
-  Source:                 kan_inst/gen_l0c0.s1_4_reg[5]/C
+Slack (MET) :             0.043ns  (arrival time - required time)
+  Source:                 kan_inst/gen_l0c1.i16/rom_i/xpm_memory_base_inst/gen_rd_a.gen_rd_a_synth_template.gen_rf_narrow_reg.douta_reg_reg[7]/C
                             (rising edge-triggered cell FDRE clocked by clk  {rise@0.000ns fall@0.500ns period=1.000ns})
-  Destination:            kan_inst/gen_l0c0.s2_1_reg[5]/D
+  Destination:            kan_inst/gen_l0c1.s1_4_reg[6]/D
                             (rising edge-triggered cell FDRE clocked by clk  {rise@0.000ns fall@0.500ns period=1.000ns})
   Path Group:             clk
   Path Type:              Hold (Min at Fast Process Corner)
   Requirement:            0.000ns  (clk rise@0.000ns - clk rise@0.000ns)
-  Data Path Delay:        0.098ns  (logic 0.038ns (38.776%)  route 0.060ns (61.224%))
+  Data Path Delay:        0.095ns  (logic 0.039ns (41.191%)  route 0.056ns (58.809%))
   Logic Levels:           0  
-  Clock Path Skew:        0.006ns (DCD - SCD - CPR)
-    Destination Clock Delay (DCD):    0.019ns
+  Clock Path Skew:        0.005ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    0.018ns
     Source Clock Delay      (SCD):    0.013ns
     Clock Pessimism Removal (CPR):    -0.000ns
 
@@ -285,27 +288,27 @@ Slack (MET) :             0.045ns  (arrival time - required time)
   -------------------------------------------------------------------    -------------------
                          (clock clk rise edge)        0.000     0.000 r  
                                                       0.000     0.000 r  clk (IN)
-                         net (fo=1135, unset)         0.013     0.013    kan_inst/clk
-    SLICE_X43Y80         FDRE                                         r  kan_inst/gen_l0c0.s1_4_reg[5]/C
+                         net (fo=1135, unset)         0.013     0.013    kan_inst/gen_l0c1.i16/rom_i/xpm_memory_base_inst/clka
+    SLICE_X59Y100        FDRE                                         r  kan_inst/gen_l0c1.i16/rom_i/xpm_memory_base_inst/gen_rd_a.gen_rd_a_synth_template.gen_rf_narrow_reg.douta_reg_reg[7]/C
   -------------------------------------------------------------------    -------------------
-    SLICE_X43Y80         FDRE (Prop_AFF_SLICEM_C_Q)
-                                                      0.038     0.051 r  kan_inst/gen_l0c0.s1_4_reg[5]/Q
-                         net (fo=1, routed)           0.060     0.111    kan_inst/gen_l0c0.s1_4[5]
-    SLICE_X43Y80         FDRE                                         r  kan_inst/gen_l0c0.s2_1_reg[5]/D
+    SLICE_X59Y100        FDRE (Prop_FFF_SLICEL_C_Q)
+                                                      0.039     0.052 r  kan_inst/gen_l0c1.i16/rom_i/xpm_memory_base_inst/gen_rd_a.gen_rd_a_synth_template.gen_rf_narrow_reg.douta_reg_reg[7]/Q
+                         net (fo=3, routed)           0.056     0.108    kan_inst/act_0_16_1[6]
+    SLICE_X59Y100        FDRE                                         r  kan_inst/gen_l0c1.s1_4_reg[6]/D
   -------------------------------------------------------------------    -------------------
 
                          (clock clk rise edge)        0.000     0.000 r  
                                                       0.000     0.000 r  clk (IN)
-                         net (fo=1135, unset)         0.019     0.019    kan_inst/clk
-    SLICE_X43Y80         FDRE                                         r  kan_inst/gen_l0c0.s2_1_reg[5]/C
-                         clock pessimism              0.000     0.019    
-    SLICE_X43Y80         FDRE (Hold_AFF2_SLICEM_C_D)
-                                                      0.047     0.066    kan_inst/gen_l0c0.s2_1_reg[5]
+                         net (fo=1135, unset)         0.018     0.018    kan_inst/clk
+    SLICE_X59Y100        FDRE                                         r  kan_inst/gen_l0c1.s1_4_reg[6]/C
+                         clock pessimism              0.000     0.018    
+    SLICE_X59Y100        FDRE (Hold_BFF2_SLICEL_C_D)
+                                                      0.047     0.065    kan_inst/gen_l0c1.s1_4_reg[6]
   -------------------------------------------------------------------
-                         required time                         -0.066    
-                         arrival time                           0.111    
+                         required time                         -0.065    
+                         arrival time                           0.108    
   -------------------------------------------------------------------
-                         slack                                  0.045    
+                         slack                                  0.043    
 
 
 
@@ -319,9 +322,9 @@ Period(ns):         1.000
 Sources:            { clk }
 
 Check Type        Corner  Lib Pin  Reference Pin  Required(ns)  Actual(ns)  Slack(ns)  Location      Pin
-Min Period        n/a     FDRE/C   n/a            0.550         1.000       0.450      SLICE_X43Y86  kan_inst/gen_l0c0.s1_0_reg[0]/C
-Low Pulse Width   Slow    FDRE/C   n/a            0.275         0.500       0.225      SLICE_X43Y86  kan_inst/gen_l0c0.s1_0_reg[0]/C
-High Pulse Width  Slow    FDRE/C   n/a            0.275         0.500       0.225      SLICE_X43Y86  kan_inst/gen_l0c0.s1_0_reg[0]/C
+Min Period        n/a     FDRE/C   n/a            0.550         1.000       0.450      SLICE_X54Y99  kan_inst/gen_l0c0.s1_0_reg[0]/C
+Low Pulse Width   Slow    FDRE/C   n/a            0.275         0.500       0.225      SLICE_X54Y99  kan_inst/gen_l0c0.s1_0_reg[0]/C
+High Pulse Width  Slow    FDRE/C   n/a            0.275         0.500       0.225      SLICE_X54Y99  kan_inst/gen_l0c0.s1_0_reg[0]/C
 
 
 

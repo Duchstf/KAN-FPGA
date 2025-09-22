@@ -4,7 +4,7 @@
 # Define project name and paths
 set PROJ "KAN_FPGA_PROJECT"
 set DIR  [file normalize [pwd]]
-set PART "xcvu9p-flgb2104-2-i"
+set PART "xczu7ev-ffvc1156-2-e"
 
 # Create in-memory project with the specified part
 create_project -name $PROJ -part $PART -in_memory
@@ -49,3 +49,4 @@ phys_opt_design
 # Post-implementation utilization and timing
 report_utilization -file "$DIR/$PROJ/post_impl_util.rpt"
 report_timing_summary -file "$DIR/$PROJ/post_impl_timing.rpt"
+report_power           -file "$DIR/$PROJ/post_impl_power.rpt"
