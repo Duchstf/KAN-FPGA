@@ -67,11 +67,8 @@ trainloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
 testloader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
 
 # === Initialize Model ===
-# MLP (same size as KAN)
-model = nn.Sequential(
-    nn.Linear(16, 8), nn.ReLU(),
-    nn.Linear(8, 5)
-)
+model = KAN([16,8,5], grid_size=3, spline_order=2, grid_eps=0.05, base_activation=nn.GELU, grid_range=[-1,1]).to(device)
+
 optimizer = optim.AdamW(model.parameters(), lr=1e-3, weight_decay=1e-4)
 scheduler = optim.lr_scheduler.ExponentialLR(optimizer, gamma=0.9)
 criterion = nn.CrossEntropyLoss()
