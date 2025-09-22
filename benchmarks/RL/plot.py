@@ -25,72 +25,28 @@ def _desaturate(hex_color, factor=0.25):
     return tuple(1 - factor * (1 - c) for c in rgb)
 
 
-def _try_enable_usetex():
-    try:
-        import shutil
-        if shutil.which("latex") and shutil.which("dvipng"):
-            mpl.rcParams.update(
-                {
-                    "text.usetex": True,
-                    "text.latex.preamble": r"\usepackage{amsmath,amssymb}",
-                }
-            )
-    except Exception:
-        pass
-
-
-def setup_paper_style(single_column: bool = True):
-    width_in = 3.54 if single_column else 7.28
-    height_in = 2.3 if single_column else 3.6
-    oi_cycle = [
-        "#0072B2", "#E69F00", "#009E73", "#D55E00",
-        "#CC79A7", "#56B4E9", "#F0E442", "#000000",
-    ]
-    mpl.rcParams.update(
-        {
-            "figure.figsize": (width_in, height_in),
-            "figure.dpi": 300,
-            "savefig.bbox": "tight",
-            "savefig.pad_inches": 0.02,
-            "savefig.transparent": False,
-            "pdf.fonttype": 42,
-            "ps.fonttype": 42,
-            "font.size": 8,
-            "font.family": "sans-serif",
-            "font.sans-serif": ["Helvetica", "Arial", "DejaVu Sans"],
-            "mathtext.fontset": "stixsans",
-            "axes.titlesize": 8,
-            "axes.labelsize": 8,
-            "xtick.labelsize": 7,
-            "ytick.labelsize": 7,
-            "legend.fontsize": 7,
-            "lines.linewidth": 1.3,
-            "lines.solid_capstyle": "round",
-            "lines.solid_joinstyle": "round",
-            "axes.linewidth": 0.8,
-            "axes.spines.top": False,
-            "axes.spines.right": False,
-            "axes.grid": True,
-            "axes.grid.which": "major",
-            "grid.linestyle": "-",
-            "grid.linewidth": 0.4,
-            "grid.alpha": 0.25,
-            "xtick.direction": "out",
-            "ytick.direction": "out",
-            "xtick.major.size": 3,
-            "ytick.major.size": 3,
-            "xtick.major.width": 0.8,
-            "ytick.major.width": 0.8,
-            "xtick.minor.size": 2,
-            "ytick.minor.size": 2,
-            "xtick.minor.width": 0.6,
-            "ytick.minor.width": 0.6,
-            "figure.constrained_layout.use": True,
-            "axes.titlepad": 4,
-        }
-    )
-    mpl.rcParams["axes.prop_cycle"] = mpl.cycler(color=oi_cycle)
-    _try_enable_usetex()
+# --- Style block from the first script ---
+def apply_academic_style():
+    """
+    Applies the plotting style from the first script for academic publications.
+    """
+    # Using a common style sheet for consistency.
+    plt.style.use('seaborn-v0_8-paper')
+    # You can also set font properties globally
+    plt.rcParams.update({
+        'font.family': 'serif',
+        'font.size': 10,
+        'axes.labelsize': 10,
+        'axes.titlesize': 12,
+        'xtick.labelsize': 8,
+        'ytick.labelsize': 8,
+        'legend.fontsize': 8,
+        'figure.titlesize': 14,
+        # Incorporate the grid style directly into rcParams for consistency
+        'axes.grid': True,
+        'grid.linestyle': '--',
+        'grid.alpha': 0.3
+    })
 
 
 # ---------- IO & reconstruction ----------
@@ -161,7 +117,6 @@ def _collect_runs(path_like: str):
             if subdir_runs:
                 runs.extend(subdir_runs)
             else:
-                # --- MODIFICATION START ---
                 # No subdir runs -> treat each monitor file in this dir as a separate run.
                 files = [
                     os.path.join(p, f)
@@ -171,7 +126,6 @@ def _collect_runs(path_like: str):
                 if files:
                     for f in sorted(files):
                         runs.append([f]) # Create a new run for each file
-                # --- MODIFICATION END ---
     return runs
 
 
@@ -229,7 +183,7 @@ def _plot_one_model(ax, runs, label, window=WINDOW):
     # Adjust x-axis to match the length of the smoothed data
     ma_x = x[window - 1 :] if window > 1 else x
     
-    # Pick color from cycle
+    # Pick color from the active style's color cycle
     tmp, = ax.plot([], [])
     line_color = tmp.get_color()
     tmp.remove()
@@ -254,7 +208,7 @@ def _plot_one_model(ax, runs, label, window=WINDOW):
         if len(ma_sem) == len(ma_x):
             ax.fill_between(
                 ma_x, ma_y - ma_sem, ma_y + ma_sem,
-                facecolor=fill_color, alpha=0.35, linewidth=0, zorder=1
+                facecolor=fill_color, alpha=0.9, linewidth=0, zorder=1
             )
 
     # Annotate last value
@@ -288,30 +242,36 @@ def plot_models(
           * directory with subdirs each containing *.monitor.csv (multiple runs)
           * glob pattern
     """
-    setup_paper_style(single_column)
-    fig, ax = plt.subplots()
+    # Apply the new academic style
+    apply_academic_style()
+    
+    # Define figure size
+    width_in = 3.54 if single_column else 7.28
+    height_in = 2.3 if single_column else 3.6
+    fig, ax = plt.subplots(figsize=(width_in, height_in))
 
     for path_like, label in models:
         runs = _load_runs_any(path_like)
         print(f"Found {len(runs)} runs for '{label}' in '{path_like}'")
         _plot_one_model(ax, runs, label=label, window=window)
 
-    ax.set_xlabel("Training steps")
-    ax.set_ylabel("Episode return")
+    ax.set_xlabel("Training Steps")
+    ax.set_ylabel("Episode Reward")
     ax.set_title(env_name)
     ax.xaxis.set_major_locator(MaxNLocator(5))
     ax.yaxis.set_major_locator(MaxNLocator(5))
     ax.xaxis.set_minor_locator(MaxNLocator(10))
     ax.xaxis.set_major_formatter(EngFormatter(sep="\N{THIN SPACE}"))
-    ax.grid(True, which="minor", linewidth=0.3, alpha=0.15)
-    ax.legend(frameon=False, loc="lower right", handlelength=1.6, borderaxespad=0.5, labelspacing=0.4)
+    # The grid is now controlled by the rcParams set in apply_academic_style()
+    ax.legend(title="Model : Dimension", frameon=False, loc="lower right", handlelength=1.6, borderaxespad=0.5, labelspacing=0.4, title_fontsize=8)
     ax.margins(x=0.02, y=0.05)
 
     os.makedirs("plots", exist_ok=True)
     base = f"plots/{(out_name or env_name).lower().replace(' ', '_')}"
-    plt.savefig(base + ".pdf")
+    # Using a vector format like PDF is recommended for publications.
+    plt.savefig(base + ".pdf", format='pdf', bbox_inches='tight')
     if export_png:
-        plt.savefig(base + ".png", dpi=600)
+        plt.savefig(base + ".png", format='png', dpi=300, bbox_inches='tight')
     plt.show()
     return fig, ax
 
@@ -339,7 +299,7 @@ if __name__ == "__main__":
     plot_models(
         models=[
             ("logs_mlp", "MLP FP: [17, 64, 64, 6]"),
-            ("logs_kan_float_v2", "KAN FP: [17, 6]"),
+            ("logs_kan_float", "KAN FP: [17, 6]"),
             ("logs_kan_quant", "KAN Quant - 8 bits: [17, 6]"),
         ],
         env_name="HalfCheetah-v5",
