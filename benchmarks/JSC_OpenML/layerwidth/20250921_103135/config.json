@@ -11,8 +11,8 @@
   ],
   "layers_bitwidth": [
     6,
-    6,
-    8
+    7,
+    6
   ],
   "grid_size": 40,
   "spline_order": 10,
@@ -22,10 +22,10 @@
   "num_epochs": 1000,
   "learning_rate": 0.001,
   "weight_decay": 0.0001,
-  "prune_threshold": 0.9,
-  "target_epoch": 25,
-  "warmup_epochs": 4,
+  "prune_threshold": 0.7,
+  "target_epoch": 12,
+  "warmup_epochs": 5,
   "random_seed": 321983,
   "resume": true,
-  "resume_path": "models/20250918_102257/JSC_OpenML_acc0.7573_epoch99_remaining0.4583.pt"
+  "resume_path": "layerwidth/20250921_103135/JSC_OpenML_acc0.7591_epoch517_remaining0.4940.pt"
 }

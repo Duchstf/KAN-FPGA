@@ -45,14 +45,12 @@ formatter = logging.Formatter('%(message)s')
 console.setFormatter(formatter)
 logging.getLogger().addHandler(console)
 
-LAYER_WIDTH = 64
-
 # === Configuration ===
 config = {
     "seed": seed,
-    "layers": [16, LAYER_WIDTH, 5],
+    "layers": [16, 8, 5],
     "grid_range": [-2, 2],
-    "layers_bitwidth": [6, 6, 8],
+    "layers_bitwidth": [6, 7, 6],
 
     "grid_size": 40,
     "spline_order": 10,
@@ -61,14 +59,14 @@ config = {
     "base_activation": "nn.SiLU",
     
     "batch_size": 512,
-    "num_epochs": 200,
+    "num_epochs": 700,
 
     "learning_rate": 1e-3,
     "weight_decay": 1e-4,
 
-    "prune_threshold": 1,
-    "target_epoch": 25,
-    "warmup_epochs": 4,
+    "prune_threshold": 0.7,
+    "target_epoch": 12,
+    "warmup_epochs": 5,
     "random_seed": seed,
 }
 
@@ -85,8 +83,8 @@ nn.init.constant_(bn_in.bias.data, 0)
 input_bias = ScalarBiasScale(scale=False, bias_init=-0.25)
 JSC_input_layer = QuantBrevitasActivation(
     QuantHardTanh(bit_width = config["layers_bitwidth"][0],
-    max_val=1.25,
-    min_val=-1.25,
+    max_val=1.0,
+    min_val=-1.0,
     act_scaling_impl=ParameterScaling(1.33),
     quant_type=QuantType.INT,
     return_quant_tensor = False),
@@ -111,7 +109,7 @@ testloader = DataLoader(test_dataset, batch_size=config["batch_size"], shuffle=F
 model = KANQuant(config, JSC_input_layer, device).to(device)
 
 optimizer = optim.AdamW(model.parameters(), lr=config["learning_rate"], weight_decay=config["weight_decay"])
-scheduler = optim.lr_scheduler.ExponentialLR(optimizer, gamma=0.999)
+scheduler = optim.lr_scheduler.ExponentialLR(optimizer, gamma=0.998)
 criterion = nn.CrossEntropyLoss()
 
 # === Training Loop ===
