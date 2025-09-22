@@ -211,7 +211,7 @@ for epoch in range(config["num_epochs"]):
     if auc > best_val_auc or remaining_fraction < best_remaining_fraction:
         best_val_auc = max(best_val_auc, auc)
         best_remaining_fraction = min(best_remaining_fraction, remaining_fraction)
-        checkpoint_path = f'{model_dir}/Anomaly_Detection_auc{auc:.4f}_epoch{epoch + 1}.pt'
+        checkpoint_path = f'{model_dir}/Anomaly_Detection_auc{auc:.4f}_epoch{epoch + 1}_remaining{remaining_fraction:.4f}.pt'
         torch.save({
             'epoch': epoch + 1,
             'model_state_dict': model.state_dict(),
@@ -220,4 +220,4 @@ for epoch in range(config["num_epochs"]):
             'val_loss': val_loss,
             'remaining_fraction': remaining_fraction,
         }, checkpoint_path)
-        logging.info(f"New best model saved with val AUC: {auc:.4f}")
+        logging.info(f"New best model saved with val AUC: {auc:.4f} and remaining fraction: {remaining_fraction:.4f}")
