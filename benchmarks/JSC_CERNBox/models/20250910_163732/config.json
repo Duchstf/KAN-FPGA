@@ -1,1 +1,0 @@
-{"layers": [16, 8, 5], "grid_range": [-8, 8], "layers_bitwidth": [16, 16, 16], "grid_size": 30, "spline_order": 3, "grid_eps": 0.05, "base_activation": "nn.SiLU", "batch_size": 64, "num_epochs": 200, "learning_rate": 0.0002, "weight_decay": 1e-05, "prune_threshold": 0.0}

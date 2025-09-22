@@ -1,11 +1,10 @@
-# vivado/build_ooc.tcl
 # Usage:
 #   vivado -mode batch -source vivado/build_ooc.tcl
 
 # Define project name and paths
 set PROJ "KAN_FPGA_PROJECT"
 set DIR  [file normalize [pwd]]
-set PART "xcvu9p-flgb2104-2-i"
+set PART "xczu7ev-ffvc1156-2-e"
 
 # Create in-memory project with the specified part
 create_project -name $PROJ -part $PART -in_memory
@@ -36,7 +35,7 @@ set_property top top [current_fileset]
 
 # Run out-of-context synthesis with aggressive optimization
 synth_design -top top -mode out_of_context -directive PerformanceOptimized -retiming
-create_clock -name clk -period 8.0 [get_ports clk]
+create_clock -name clk -period 1.2 [get_ports clk]
 
 # Write synthesized checkpoint
 write_checkpoint -force $OOC_DCP_PATH
