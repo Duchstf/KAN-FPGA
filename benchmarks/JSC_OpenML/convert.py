@@ -18,7 +18,7 @@ from brevitas.core.quant import QuantType
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 is_cuda = device == "cuda"
 
-model_tag = "20250920_134608"
+model_tag = "20250921_103135"
 
 # --- 1. List all model files and find the one with best accuracy ---
 model_dir = f"layerwidth/{model_tag}"
@@ -56,7 +56,7 @@ kan_lut = KAN_LUT(model_dir, checkpoint, config, JSC_input_layer, device)
 kan_lut.quick_match_check() #Test matching of LUT implementation with the base model KAN
 
 #Generate the firmware
-kan_lut.generate_firmware(clock_period=1.2, n_add=4)
+kan_lut.generate_firmware(clock_period=1.0, n_add=4)
 
 #Simulate the firmware
 kan_lut.simulate_firmware(n_vectors = 10)
