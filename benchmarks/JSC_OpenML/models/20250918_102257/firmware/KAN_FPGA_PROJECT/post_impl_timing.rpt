@@ -1,7 +1,11 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version      : Vivado v.2024.1 (lin64) Build 5076996 Wed May 22 18:36:09 MDT 2024
+<<<<<<< HEAD
+| Date              : Sat Sep 20 08:02:37 2025
+=======
 | Date              : Thu Sep 18 10:29:36 2025
+>>>>>>> 2f3bc235bda950688a345da788bba1891684ea01
 | Host              : correlator4.fnal.gov running 64-bit AlmaLinux release 9.4 (Shamrock Pampas Cat)
 | Command           : report_timing_summary -file /data/dhoang/test/KAN-FPGA/benchmarks/JSC_OpenML/models/20250918_102257/firmware/KAN_FPGA_PROJECT/post_impl_timing.rpt
 | Design            : top
@@ -139,10 +143,17 @@ Table of Contents
 
     WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS Total Endpoints      WHS(ns)      THS(ns)  THS Failing Endpoints  THS Total Endpoints     WPWS(ns)     TPWS(ns)  TPWS Failing Endpoints  TPWS Total Endpoints  
     -------      -------  ---------------------  -------------------      -------      -------  ---------------------  -------------------     --------     --------  ----------------------  --------------------  
+<<<<<<< HEAD
+      0.095        0.000                      0                  696        0.047        0.000                      0                  696        0.325        0.000                       0                   857  
+
+
+All user specified timing constraints are met.
+=======
      -0.031       -0.042                      2                  696        0.043        0.000                      0                  696        0.225        0.000                       0                   857  
 
 
 Timing constraints are not met.
+>>>>>>> 2f3bc235bda950688a345da788bba1891684ea01
 
 
 ------------------------------------------------------------------------------------------------
@@ -152,7 +163,11 @@ Timing constraints are not met.
 
 Clock  Waveform(ns)         Period(ns)      Frequency(MHz)
 -----  ------------         ----------      --------------
+<<<<<<< HEAD
+clk    {0.000 0.600}        1.200           833.333         
+=======
 clk    {0.000 0.500}        1.000           1000.000        
+>>>>>>> 2f3bc235bda950688a345da788bba1891684ea01
 
 
 ------------------------------------------------------------------------------------------------
@@ -162,7 +177,11 @@ clk    {0.000 0.500}        1.000           1000.000
 
 Clock             WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS Total Endpoints      WHS(ns)      THS(ns)  THS Failing Endpoints  THS Total Endpoints     WPWS(ns)     TPWS(ns)  TPWS Failing Endpoints  TPWS Total Endpoints  
 -----             -------      -------  ---------------------  -------------------      -------      -------  ---------------------  -------------------     --------     --------  ----------------------  --------------------  
+<<<<<<< HEAD
+clk                 0.095        0.000                      0                  696        0.047        0.000                      0                  696        0.325        0.000                       0                   857  
+=======
 clk                -0.031       -0.042                      2                  696        0.043        0.000                      0                  696        0.225        0.000                       0                   857  
+>>>>>>> 2f3bc235bda950688a345da788bba1891684ea01
 
 
 ------------------------------------------------------------------------------------------------

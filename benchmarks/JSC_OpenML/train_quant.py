@@ -19,12 +19,12 @@ from tqdm import tqdm
 import json
 
 #For quantization
-from brevitas.nn import QuantHardTanh
+from brevitas.nn import QuantHardTanh, QuantIdentity
 from brevitas.core.scaling import ParameterScaling
 from brevitas.core.quant import QuantType
 
 #Set the seed
-seed = 321983
+seed = 4332142
 torch.manual_seed(seed)
 np.random.seed(seed)
 
@@ -50,7 +50,7 @@ config = {
     "seed": seed,
     "layers": [16, 8, 5],
     "grid_range": [-2, 2],
-    "layers_bitwidth": [6, 6, 8],
+    "layers_bitwidth": [6, 7, 6],
 
     "grid_size": 40,
     "spline_order": 10,
@@ -59,19 +59,19 @@ config = {
     "base_activation": "nn.SiLU",
     
     "batch_size": 512,
-    "num_epochs": 200,
+    "num_epochs": 700,
 
     "learning_rate": 1e-3,
     "weight_decay": 1e-4,
 
-    "prune_threshold": 0.9,
-    "target_epoch": 25,
-    "warmup_epochs": 4,
+    "prune_threshold": 0.7,
+    "target_epoch": 12,
+    "warmup_epochs": 5,
     "random_seed": seed,
 }
 
 #Create a new directory to save the config and checkpoints
-model_dir = f'models/{datetime.now().strftime("%Y%m%d_%H%M%S")}'
+model_dir = f'layerwidth/{datetime.now().strftime("%Y%m%d_%H%M%S")}'
 os.makedirs(model_dir, exist_ok=True)
 with open(f'{model_dir}/config.json', 'w') as f:
     json.dump(config, f)
@@ -109,7 +109,7 @@ testloader = DataLoader(test_dataset, batch_size=config["batch_size"], shuffle=F
 model = KANQuant(config, JSC_input_layer, device).to(device)
 
 optimizer = optim.AdamW(model.parameters(), lr=config["learning_rate"], weight_decay=config["weight_decay"])
-scheduler = optim.lr_scheduler.ExponentialLR(optimizer, gamma=0.999)
+scheduler = optim.lr_scheduler.ExponentialLR(optimizer, gamma=0.998)
 criterion = nn.CrossEntropyLoss()
 
 # === Training Loop ===
@@ -175,16 +175,14 @@ for epoch in range(config["num_epochs"]):
     )
 
     # === Save Checkpoint if Best ===
-    if remaining_fraction < 0.99:
-        if val_accuracy > best_val_accuracy:
-            best_val_accuracy = val_accuracy
-            checkpoint_path = f'{model_dir}/JSC_OpenML_acc{val_accuracy:.4f}_epoch{epoch + 1}_remaining{remaining_fraction:.4f}.pt'
-            torch.save({
-                'epoch': epoch + 1,
-                'model_state_dict': model.state_dict(),
-                'optimizer_state_dict': optimizer.state_dict(),
-                'val_accuracy': val_accuracy,
-                'val_loss': val_loss,
-                'remaining_fraction': remaining_fraction,
-            }, checkpoint_path)
-            logging.info(f"New best model saved with val accuracy: {val_accuracy:.4f}, remaining fraction: {remaining_fraction:.4f}")
+    #Always save the model
+    checkpoint_path = f'{model_dir}/JSC_OpenML_acc{val_accuracy:.4f}_epoch{epoch + 1}_remaining{remaining_fraction:.4f}.pt'
+    torch.save({
+        'epoch': epoch + 1,
+        'model_state_dict': model.state_dict(),
+        'optimizer_state_dict': optimizer.state_dict(),
+        'val_accuracy': val_accuracy,
+        'val_loss': val_loss,
+        'remaining_fraction': remaining_fraction,
+    }, checkpoint_path)
+    logging.info(f"New best model saved with val accuracy: {val_accuracy:.4f}, remaining fraction: {remaining_fraction:.4f}")
