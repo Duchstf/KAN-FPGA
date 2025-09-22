@@ -71,7 +71,7 @@ config = {
 }
 
 #Create a new directory to save the config and checkpoints
-model_dir = f'layerwidth/{datetime.now().strftime("%Y%m%d_%H%M%S")}'
+model_dir = f'models/{datetime.now().strftime("%Y%m%d_%H%M%S")}'
 os.makedirs(model_dir, exist_ok=True)
 with open(f'{model_dir}/config.json', 'w') as f:
     json.dump(config, f)

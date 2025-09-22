@@ -22,9 +22,9 @@ plt.rcParams.update({
 # --- Data for Plots ---
 
 # Data for Plot 1
-ACCURACY = [69.6, 73.13, 74.53, 75.27, 75.73]
-LUT_1 = [166, 403, 625, 709, 949]
-FF_1 = [135, 342, 517, 652, 857]
+ACCURACY = [69.6, 73.13, 74.53, 75.27, 76.0]
+LUT_1 = [166, 403, 625, 709, 1232]
+FF_1 = [135, 342, 517, 652, 900]
 
 # Data for Plot 2
 REMAINING = [1, 0.7381, 0.4762, 0.3393, 0.1488, 0.0417]
@@ -103,7 +103,7 @@ plt.tight_layout()
 # Save the figure to a file.
 # Using a vector format like PDF or SVG is recommended for publications.
 # You can also use a high-DPI PNG.
-plt.savefig('combined_plots.pdf', format='pdf', bbox_inches='tight')
-plt.savefig('combined_plots.png', format='png', dpi=300, bbox_inches='tight')
+plt.savefig('plots/ablation_plots.pdf', format='pdf', bbox_inches='tight')
+plt.savefig('plots/ablation_plots.png', format='png', dpi=300, bbox_inches='tight')
 
 

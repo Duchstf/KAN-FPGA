@@ -18,10 +18,10 @@ from brevitas.core.quant import QuantType
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 is_cuda = device == "cuda"
 
-model_tag = "20250921_103135"
+model_tag = "official"
 
 # --- 1. List all model files and find the one with best accuracy ---
-model_dir = f"layerwidth/{model_tag}"
+model_dir = f"models/{model_tag}"
 files = [f for f in os.listdir(model_dir) if f.endswith(".pt")]
 
 if not files:
