@@ -49,3 +49,4 @@ phys_opt_design
 # Post-implementation utilization and timing
 report_utilization -file "$DIR/$PROJ/post_impl_util.rpt"
 report_timing_summary -file "$DIR/$PROJ/post_impl_timing.rpt"
+report_power           -file "$DIR/$PROJ/post_impl_power.rpt"
