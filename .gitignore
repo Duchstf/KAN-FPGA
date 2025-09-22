@@ -15,6 +15,7 @@ __pycache__/
 */MNIST/models/*/firmware/
 */JSC_CERNBox/data/*.z
 */anomaly_detection/data/*
+*/anomaly_detection/models/*/firmware/*mem*
 *KAN_SIM*
 *.out
 

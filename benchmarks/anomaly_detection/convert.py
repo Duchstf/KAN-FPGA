@@ -28,23 +28,23 @@ if not files:
     raise FileNotFoundError(f"No model checkpoint files found in '{model_dir}' folder.")
 
 # Sort files by accuracy descending
-files.sort(key=lambda x: float(x.split('_acc')[1].split('_epoch')[0]), reverse=True)
+files.sort(key=lambda x: float(x.split('_auc')[1].split('_epoch')[0]), reverse=True)
 
 #Load the config
 with open(os.path.join(model_dir, "config.json"), "r") as f: config = json.load(f)
 
 # Load the model with the best accuracy
-checkpoint = torch.load(os.path.join(model_dir, files[0]), map_location=torch.device(device))
+checkpoint = torch.load(os.path.join(model_dir, files[0]), map_location=torch.device(device), weights_only=False)
 
 #Build the input layer
 bn_in = nn.BatchNorm1d(config["layers"][0])
 nn.init.constant_(bn_in.weight.data, 1)
 nn.init.constant_(bn_in.bias.data, 0)
 input_bias = ScalarBiasScale(scale=False, bias_init=-0.25)
-JSC_input_layer = QuantBrevitasActivation(
+AD_input_layer = QuantBrevitasActivation(
     QuantHardTanh(bit_width = config["layers_bitwidth"][0],
-    max_val=1.0,
-    min_val=-1.0,
+    max_val=100.0,
+    min_val=-100.0,
     act_scaling_impl=ParameterScaling(1.33),
     quant_type=QuantType.INT,
     return_quant_tensor = False),
@@ -52,11 +52,11 @@ JSC_input_layer = QuantBrevitasActivation(
     cuda=device.type == "cuda").to(device)
 
 # Build the KAN LUT
-kan_lut = KAN_LUT(model_dir, checkpoint, config, JSC_input_layer, device)
+kan_lut = KAN_LUT(model_dir, checkpoint, config, AD_input_layer, device)
 kan_lut.quick_match_check() #Test matching of LUT implementation with the base model KAN
 
 #Generate the firmware
-kan_lut.generate_firmware(clock_period=1.2, n_add=4)
+kan_lut.generate_firmware(clock_period=1.2, n_add=4, fpga_part="xc7a100t-1csg324")
 
 #Simulate the firmware
 kan_lut.simulate_firmware(n_vectors = 10)
