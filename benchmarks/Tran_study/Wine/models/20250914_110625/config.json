@@ -1,0 +1,1 @@
+{"layers": [13, 4, 3], "grid_range": [-8, 8], "layers_bitwidth": [6, 7, 8], "grid_size": 6, "spline_order": 3, "grid_eps": 0.05, "base_activation": "nn.GELU", "batch_size": 64, "num_epochs": 200, "learning_rate": 0.01, "weight_decay": 0.0001, "prune_threshold": 0, "target_epoch": 50, "warmup_epochs": 10, "random_seed": 420}
