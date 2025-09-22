@@ -11,7 +11,7 @@ from KAN_OG import KAN
 
 ENV_ID = "HalfCheetah-v5"
 TOTAL_TIMESTEPS = 1_000_000
-LOG_DIR = "logs_kan_float_v2"
+LOG_DIR = "logs_kan_float"
 
 # -----------------------
 # Custom extractor: uses KAN as the actor "backbone"
