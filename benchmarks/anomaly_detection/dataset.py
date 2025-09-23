@@ -90,5 +90,6 @@ def get_AD_data_for_split(split="train"):
                                     power=param["feature"]["power"])
 
     samples_per_file = res.shape[0] // len(files) 
+    print("Samples per file: ", samples_per_file)
 
     return res, np.repeat([1 if "anomaly" in file.split("/")[-1] else 0 for file in files], samples_per_file)

@@ -308,7 +308,7 @@ class KANLinear(torch.nn.Module):
         
         # Apply threshold-based pruning
         # Calculate and print percentiles
-        self.spline_selector *= ((norms / torch.max(norms)) > threshold).float()
+        self.spline_selector *= (norms > threshold).float()
 
         # Apply backward pruning if next layer sparsity is provided
         if next_layer_sparsity_matrix is not None:

@@ -65,7 +65,7 @@ config = {
     "learning_rate": 1e-3,
     "weight_decay": 1e-4,
 
-    "prune_threshold": 0.1,
+    "prune_threshold": 0.2,
     "warmup_epochs": 2,
     "target_epoch": 10,
 }
