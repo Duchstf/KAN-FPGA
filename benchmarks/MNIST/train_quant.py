@@ -77,7 +77,7 @@ logging.getLogger().addHandler(console)
 config = {
     "layers": [28*28, 62, 10],
     "grid_range": [-8, 8],
-    "layers_bitwidth": [1, 5, 6],
+    "layers_bitwidth": [1, 6, 6],
 
     "grid_size": 30,
     "spline_order": 5,
@@ -88,11 +88,11 @@ config = {
     "batch_size": 512,
     "num_epochs": 700,
 
-    "learning_rate": 1e-3,
+    "learning_rate": 1e-2,
     "weight_decay": 1e-4,
-    "scheduler_gamma": 0.991,
+    "scheduler_gamma": 0.99,
 
-    "prune_threshold": 0.8,
+    "prune_threshold": 0.5,
     "target_epoch": 12,
     "warmup_epochs": 5,
     "random_seed": seed,
@@ -196,9 +196,9 @@ def validate(model, loader, criterion):
     val_loss = 0.0
     val_accuracy = 0.0
     with torch.no_grad():
-        for inputs, labels in loader:
-            inputs = inputs.to(device)
-            output = model(inputs)
+        for images, labels in valloader:
+            images = images.view(-1, 28 * 28).to(device)
+            output = model(images)
             val_loss += criterion(output, labels.to(device)).item()
             val_accuracy += (output.argmax(dim=1) == labels.to(device)).float().mean().item()
     val_loss /= len(loader)
@@ -212,20 +212,16 @@ for epoch in range(resume_start_epoch, config["num_epochs"]):
     total_batches = 0
 
     with tqdm(trainloader, desc=f"Epoch {epoch+1}/{config['num_epochs']}") as pbar:
-        for i, (inputs, labels) in enumerate(pbar):
-            inputs = inputs.to(device)
-            optimizer.zero_grad(set_to_none=True)
+        for i, (images, labels) in enumerate(pbar):
+            images = images.view(-1, 28 * 28).to(device)
+            optimizer.zero_grad()
+            output = model(images)
 
-            output = model(inputs)
-            loss = criterion(output, labels.to(device))
+            loss = criterion(output, labels.to(device)) #+ model.quantization_loss(regularize_clipping=regularize_clipping)
+
             loss.backward()
             optimizer.step()
-
-            epoch_train_loss += loss.item()
-            total_batches += 1
-
-            with torch.no_grad():
-                accuracy = (output.argmax(dim=1) == labels.to(device)).float().mean()
+            accuracy = (output.argmax(dim=1) == labels.to(device)).float().mean()
             pbar.set_postfix(loss=loss.item(), accuracy=accuracy.item(), lr=optimizer.param_groups[0]['lr'])
 
     average_train_loss = epoch_train_loss / max(total_batches, 1)
@@ -241,7 +237,7 @@ for epoch in range(resume_start_epoch, config["num_epochs"]):
     print(f"Remaining fraction: {remaining_fraction}")
 
     # Validation
-    val_loss, val_accuracy = validate(model, testloader, criterion)
+    val_loss, val_accuracy = validate(model, valloader, criterion)
     testing_loss.append(val_loss)
 
     # Update learning rate AFTER validation (keeps parity with your original loop)
