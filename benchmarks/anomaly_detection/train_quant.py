@@ -6,6 +6,7 @@ sys.path.append('../../src')
 from KANQuant import KANQuant
 from quant import QuantBrevitasActivation, ScalarBiasScale
 
+from collections import defaultdict
 import numpy as np
 import torch
 import torch.nn as nn
@@ -24,7 +25,7 @@ from brevitas.core.scaling import ParameterScaling
 from brevitas.core.quant import QuantType
 
 import common as com
-from dataset import get_AD_data_for_split
+from dataset import get_train_AD_data, get_test_AD_data
 
 #Set the seed
 seed = 0
@@ -49,9 +50,9 @@ logging.getLogger().addHandler(console)
 
 config = {
     "seed": seed,
-    "layers": [128, 8, 8, 8, 128],  
+    "layers": [128, 32, 8, 32, 128],  
     "grid_range": [-4, 4],
-    "layers_bitwidth": [6, 6, 6, 6, 6],  
+    "layers_bitwidth": [6, 8, 8, 8, 6],  
 
     "grid_size": 30,
     "spline_order": 10,
@@ -65,9 +66,9 @@ config = {
     "learning_rate": 1e-3,
     "weight_decay": 1e-4,
 
-    "prune_threshold": 0.2,
-    "warmup_epochs": 2,
-    "target_epoch": 10,
+    "prune_threshold": 0.1,
+    "warmup_epochs": 100,
+    "target_epoch": 300,
 }
 
 #Create a new directory to save the config and checkpoints
@@ -83,8 +84,8 @@ nn.init.constant_(bn_in.bias.data, 0)
 input_bias = ScalarBiasScale(scale=False, bias_init=-0.25)
 AD_input_layer = QuantBrevitasActivation(
     QuantHardTanh(bit_width = config["layers_bitwidth"][0],
-    max_val=100.0,
-    min_val=-100.0,
+    max_val=4,
+    min_val=-4,
     act_scaling_impl=ParameterScaling(1.33),
     quant_type=QuantType.INT,
     return_quant_tensor = False),
@@ -93,18 +94,19 @@ AD_input_layer = QuantBrevitasActivation(
 
 # === Load Data ===
 
-X_train, y_train = get_AD_data_for_split("train")
-X_test, y_test = get_AD_data_for_split("test")
+X_train, y_train = get_train_AD_data()
+X_test, y_test = get_test_AD_data()
 
-print(X_train[0].shape)
-print(X_test[0].shape)
-print(y_train[0].shape)
-print(y_test[0].shape)
 
 X_train = torch.from_numpy(X_train).float().to(device)
 X_test = torch.from_numpy(X_test).float().to(device)
-y_train = torch.from_numpy(y_train).long().to(device)
-y_test = torch.from_numpy(y_test).long().to(device)
+y_train = torch.from_numpy(y_train).int().to(device)
+y_test = torch.from_numpy(y_test).int().to(device)
+
+print(y_test[0].shape)
+print(X_train[0].shape)
+print(X_test[0].shape)
+print(y_train[0].shape)
 
 # === Create Data Loaders ===
 train_dataset = TensorDataset(X_train, y_train)
@@ -133,18 +135,25 @@ for epoch in range(config["num_epochs"]):
     model.train()
     epoch_train_loss = 0  # Initialize loss for the epoch
     total_batches = 0
-    with tqdm(trainloader) as pbar:
-        for i, (inputs, labels) in enumerate(pbar):
-            inputs = inputs.to(device)
-            optimizer.zero_grad()
-            output = model(inputs)
-            loss = criterion(output, inputs)
-            loss.backward()
-            optimizer.step()
+    if sys.stdout.isatty():
+        # Use tqdm if outputting to terminal
+        pbar = tqdm(trainloader)
+    else:
+        # Otherwise just iterate normally
+        pbar = trainloader
 
-            epoch_train_loss += loss.item()
-            total_batches += 1
+    for i, (inputs, labels) in enumerate(pbar):
+        inputs = inputs.to(device)
+        optimizer.zero_grad()
+        output = model(inputs)
+        loss = criterion(output, inputs)
+        loss.backward()
+        optimizer.step()
 
+        epoch_train_loss += loss.item()
+        total_batches += 1
+
+        if sys.stdout.isatty():
             pbar.set_postfix(loss=loss.item(), lr=optimizer.param_groups[0]['lr'])
 
     
@@ -153,47 +162,59 @@ for epoch in range(config["num_epochs"]):
 
     # Prune the model
     remaining_fraction = model.prune_below_threshold(threshold=config["prune_threshold"], epoch=epoch, target_epoch=config["target_epoch"], warmup_epochs=config["warmup_epochs"])
-    print(f"Remaining fraction: {remaining_fraction}")
+    print(f"Epoch {epoch + 1:02d} | Train Loss: {average_train_loss:.4f} | Remaining Fraction: {remaining_fraction}")
 
     # Validation
     model.eval()
     val_loss = 0
 
-    y_pred = []
-    y_true = []
+    y_pred_by_id_str = defaultdict(list)
+    y_true_by_id_str = defaultdict(list)
 
-    y_pred_curr = []
-    y_true_curr = []
-
-    samples_per_file = 200
-    
     with torch.no_grad():
-        with tqdm(testloader) as pbar:
-            for i, (inputs, labels) in enumerate(pbar):
-                if len(y_pred_curr) >= samples_per_file:
-                    # take mean of y_pred and y_true for past samples_per_file samples
-                    y_pred.append(np.mean(y_pred_curr[:samples_per_file]))
-                    y_true.append(int(np.mean(y_true_curr[:samples_per_file])))
-                    y_pred_curr = y_pred_curr[samples_per_file:]
-                    y_true_curr = y_true_curr[samples_per_file:]
+        if sys.stdout.isatty():
+            # Use tqdm if outputting to terminal
+            pbar = tqdm(testloader)
+        else:
+            # Otherwise just iterate normally
+            pbar = testloader
 
-                inputs = inputs.to(device)
-                output = model(inputs)
+        for i, (inputs, labels) in enumerate(pbar):
+
+                y_trues, _ids = labels[:, 0], labels[:, 1]
+
+                orig_shape = inputs.shape
+                inputs_reshaped = inputs.to(device).reshape(-1, orig_shape[-1])
+                output = model(inputs_reshaped).reshape(orig_shape)
+                error = torch.mean(torch.square(inputs - output), axis=(1, 2))
+
+                for _id, y_true, err in zip(_ids.cpu().numpy(), y_trues.cpu().numpy(), error.cpu().numpy()):
+                    y_pred_by_id_str[_id].append(err)
+                    y_true_by_id_str[_id].append(int(y_true))
 
                 val_loss += criterion(output, inputs).item()
                 
-                # For AUC calculation
-                y_pred_curr.append(torch.mean(torch.square(inputs - output)).cpu().numpy())
-                y_true_curr.append(int(labels[0].cpu().numpy()))
-    
     val_loss /= len(testloader)
     testing_loss.append(val_loss)
 
     # Calculate AUC
-    print(len(y_true))
-    print(len(y_pred))
-    auc = roc_auc_score(y_true, y_pred) if len(y_true) > 1 else 0.0
-    p_auc = roc_auc_score(y_true, y_pred, max_fpr=0.1) if len(y_true) > 1 else 0.0
+    auc_list = []
+    p_auc_list = []
+    for _id in y_true_by_id_str.keys():
+        y_true = y_true_by_id_str[_id]
+        y_pred = y_pred_by_id_str[_id]
+
+        auc = roc_auc_score(y_true, y_pred) if len(y_true) > 1 else 0.0
+        p_auc = roc_auc_score(y_true, y_pred, max_fpr=0.1) if len(y_true) > 1 else 0.0
+        logging.info(f"Val AUC for {_id}: {auc:.4f} | pAUC: {p_auc:.4f}")
+
+        auc_list.append(auc)
+        p_auc_list.append(p_auc)
+
+    auc = np.mean(auc_list)
+    p_auc = np.mean(p_auc_list)
+
+    print(f"Epoch {epoch + 1:02d} | Val Loss: {val_loss:.4f} | Val avg AUC: {auc:.4f} | Val avg pAUC: {p_auc:.4f} | Remaining Fraction: {remaining_fraction:.4f}")
 
     # Update learning rate
     scheduler.step()
@@ -202,8 +223,8 @@ for epoch in range(config["num_epochs"]):
         f"Epoch {epoch + 1:02d} | "
         f"Train Loss: {average_train_loss:.4f} | "
         f"Val Loss: {val_loss:.4f} | "
-        f"Val AUC: {auc:.4f} | "
-        f"Val pAUC: {p_auc:.4f} | "
+        f"Val avg AUC: {auc:.4f} | "
+        f"Val avg pAUC: {p_auc:.4f} | "
         f"Remaining Fraction: {remaining_fraction:.4f}"
     )
 
