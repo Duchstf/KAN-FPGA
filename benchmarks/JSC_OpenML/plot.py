@@ -75,10 +75,8 @@ ax3.plot(LAYER_WIDTH, LUT_3, marker='o', linestyle='-', label='LUT')
 ax3.plot(LAYER_WIDTH, FF_3, marker='^', linestyle='--', label='FF')
 ax3.set_title('(c)')
 ax3.set_xlabel('Hidden Layer Width', fontsize=12)
-# Use a logarithmic scale for the x-axis since the values are powers of 2
-ax3.set_xscale('log', base=2)
 # Ensure all x-ticks are shown
-ax3.set_xticks(LAYER_WIDTH)
+# ax3.set_xticks(LAYER_WIDTH)
 ax3.get_xaxis().set_major_formatter(plt.ScalarFormatter()) # show numbers instead of scientific notation
 ax3.yaxis.set_major_formatter(mticker.EngFormatter())
 ax3.legend(fontsize=10)
