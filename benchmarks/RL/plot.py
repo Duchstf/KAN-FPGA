@@ -263,7 +263,7 @@ def plot_models(
     ax.xaxis.set_minor_locator(MaxNLocator(10))
     ax.xaxis.set_major_formatter(EngFormatter(sep="\N{THIN SPACE}"))
     # The grid is now controlled by the rcParams set in apply_academic_style()
-    ax.legend(title="Model : Dimension", frameon=False, loc="lower right", handlelength=1.6, borderaxespad=0.5, labelspacing=0.4, title_fontsize=8)
+    ax.legend(title="Model : Dimension", frameon=False, loc="lower right", handlelength=1.6, borderaxespad=0.5, labelspacing=0.4, title_fontsize=6, fontsize=6)
     ax.margins(x=0.02, y=0.05)
 
     os.makedirs("plots", exist_ok=True)
@@ -299,6 +299,7 @@ if __name__ == "__main__":
     plot_models(
         models=[
             ("logs_mlp", "MLP FP: [17, 64, 64, 6]"),
+            ("logs_mlp8_quant", "MLP 8-bit: [17, 64, 64, 6]"),
             ("logs_kan_float", "KAN FP: [17, 6]"),
             ("logs_kan_quant", "KAN 8-bit: [17, 6]"),
         ],

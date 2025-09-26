@@ -1,0 +1,18 @@
+{
+  "arch": [
+    17,
+    64,
+    64,
+    6
+  ],
+  "num_bits": 8,
+  "input_quantizer": {
+    "type": "QuantHardTanh",
+    "max_val": 2.0,
+    "min_val": -2.0,
+    "act_scaling_impl": "ParameterScaling(1.33)",
+    "quant_type": "INT"
+  },
+  "hidden_activation": "QuantHardTanh",
+  "weight_quant": "QuantLinear(INT, 8-bit)"
+}
