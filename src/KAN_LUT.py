@@ -25,7 +25,7 @@ class KAN_LUT:
         self.KAN.load_state_dict(self.checkpoint["model_state_dict"])
 
         #Print some basic info about the model
-        if 'remaining_fraction' in self.checkpoint:
+        if 'remaining_fraction' in self.checkpoint and 'val_accuracy' in self.checkpoint:
             print(f"Creating KAN LUT reprentation. Quantization: {self.config['layers_bitwidth']}, Remaining sparsity: {self.checkpoint['remaining_fraction']}, Accuracy: {self.checkpoint['val_accuracy']}")
         else:
             print(f"Creating KAN LUT reprentation. Quantization: {self.config['layers_bitwidth']}")
