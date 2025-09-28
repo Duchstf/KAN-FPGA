@@ -6,8 +6,11 @@ result_file: result.csv
 max_fpr : 0.1
 
 feature:
-  n_mels: 128
-  frames : 1
-  n_fft: 1024
+  frames: 5
   hop_length: 512
+  n_fft: 1024
+  n_mels: 128
   power: 2.0
+  downsample: True
+model:
+  input_dim: 64

@@ -25,11 +25,6 @@ import librosa.feature
 import yaml
 from tqdm import tqdm
 
-import matplotlib
-matplotlib.use('Agg')  # No pictures displayed
-import pylab
-import librosa.display
-
 ########################################################################
 
 
@@ -65,31 +60,21 @@ __versions__ = "1.0.0"
 def command_line_chk():
     parser = argparse.ArgumentParser(description='Without option argument, it will not run properly.')
     parser.add_argument('-v', '--version', action='store_true', help="show application version")
-    parser.add_argument('-e', '--eval', action='store_true', help="run mode Evaluation")
-    parser.add_argument('-d', '--dev', action='store_true', help="run mode Development")
+    parser.add_argument('-c', '--config', type=str, default = "ad08.yml", help="specify yml config")
     args = parser.parse_args()
     if args.version:
         print("===============================")
-        print("DCASE 2020 task 2 baseline\nversion {}".format(__versions__))
+        print("HLS4ML TOYADMOS ANOMALY DETECTION\nversion {}".format(__versions__))
         print("===============================\n")
-    if args.eval ^ args.dev:
-        if args.dev:
-            flag = True
-        else:
-            flag = False
-    else:
-        flag = None
-        print("incorrect argument")
-        print("please set option argument '--dev' or '--eval'")
-    return flag
+    return args
 ########################################################################
 
 
 ########################################################################
 # load parameter.yaml
 ########################################################################
-def yaml_load():
-    with open("baseline.yaml") as stream:
+def yaml_load(config="baseline.yaml"):
+    with open(config) as stream:
         param = yaml.safe_load(stream)
     return param
 
@@ -125,6 +110,8 @@ def save_csv(save_file_path,
         writer = csv.writer(f, lineterminator='\n')
         writer.writerows(save_data)
 
+def save_dat(data, filename):
+    numpy.savetxt(filename, data, delimiter=' ', newline='\n', fmt='%g')
 
 ########################################################################
 
@@ -138,11 +125,8 @@ def file_to_vector_array(file_name,
                          n_fft=1024,
                          hop_length=512,
                          power=2.0,
-                         method="librosa",
-                         save_png=False,
-                         save_hist=False,
-                         save_bin=False,
-                         save_parts=False):
+                         downsample=True,
+                         input_dim=640):
     """
     convert file_name to a vector array.
 
@@ -156,92 +140,68 @@ def file_to_vector_array(file_name,
     # 01 calculate the number of dimensions
     dims = n_mels * frames
 
-    # 02 generate melspectrogram
+
+    # 02 generate melspectrogram using librosa
     y, sr = file_load(file_name)
-
-    if method == "librosa":
-        # 02a generate melspectrogram using librosa
-        mel_spectrogram = librosa.feature.melspectrogram(y=y,
-                                                         sr=sr,
-                                                         n_fft=n_fft,
-                                                         hop_length=hop_length,
-                                                         n_mels=n_mels,
-                                                         power=power)
-
-        # 03 convert melspectrogram to log mel energy
-        log_mel_spectrogram = 20.0 / power * numpy.log10(mel_spectrogram + sys.float_info.epsilon)
+    mel_spectrogram = librosa.feature.melspectrogram(y=y,
+                                                     sr=sr,
+                                                     n_fft=n_fft,
+                                                     hop_length=hop_length,
+                                                     n_mels=n_mels,
+                                                     power=power)
+    mel_spectrogram = mel_spectrogram[:,50:250]
 
 
-    else:
-        logger.error("spectrogram method not supported: {}".format(method))
-        return numpy.empty((0, dims))
-
-    # 3b take central part only
-    log_mel_spectrogram = log_mel_spectrogram[:,50:250];
+    # 03 convert melspectrogram to log mel energy
+    log_mel_spectrogram = 20.0 / power * numpy.log10(mel_spectrogram + sys.float_info.epsilon)
+    
+    #03.5 trim to 50 to 250
+    
 
     # 04 calculate total vector size
     vector_array_size = len(log_mel_spectrogram[0, :]) - frames + 1
+
 
     # 05 skip too short clips
     if vector_array_size < 1:
         return numpy.empty((0, dims))
 
     # 06 generate feature vectors by concatenating multiframes
-    vector_array = numpy.zeros((vector_array_size, dims))
-    for t in range(frames):
-        vector_array[:, n_mels * t: n_mels * (t + 1)] = log_mel_spectrogram[:, t: t + vector_array_size].T
+    
+    #downsample mel spectrogram
+    if downsample:
+        new_mels = 32
+        new_frames = int(input_dim/new_mels)
+        increment = int(n_mels / new_mels) #value by which to sample the full 128 mels for each discrete time instant in each frame. 
+        offset = n_mels - new_mels*increment #ensures all vector arrays have equal size
+        assert(input_dim % new_mels == 0)
 
-    # 07 (optional) save histogram in png
-    if save_png:
-        save_path = file_name.replace('.wav', '_hist_' + method + '.png')
-        librosa.display.specshow(log_mel_spectrogram)
-        pylab.savefig(save_path, bbox_inches=None, pad_inches=0)
-        pylab.close()
+        vector_array = numpy.zeros((vector_array_size, new_mels*new_frames))
 
-    # 08 (optional) save histogram
-    if save_hist:
-        save_path = file_name.replace('.wav', '_hist_' + method + '.txt')
-        # transpose to obtain correct order
-        numpy.swapaxes(log_mel_spectrogram, 0, 1).tofile(save_path, sep=",")
+        for t in range(new_frames):
+            new_vec = log_mel_spectrogram[:, t: t + vector_array_size].T
+            vector_array[:, new_mels * t: new_mels * (t + 1)] = new_vec[:,offset::increment]
 
-    # 08 (optional) save bin
-    if save_bin:
-        save_path = file_name.replace('.wav', '_hist_' + method + '.bin')
-        # transpose to obtain correct order
-        numpy.swapaxes(log_mel_spectrogram, 0, 1).astype('float32').tofile(save_path)
-
-    # 08 (optional) save parts (sliding window)
-    if save_parts:
-        for i in range(vector_array_size):
-            save_path = file_name.replace('.wav', '_hist_' + method + '_part{0:03d}'.format(i) + '.bin')
-            # transpose to obtain correct order?
-            vector_array[i].astype('float32').tofile(save_path)
-
-    return vector_array
-
+        return vector_array
+    else:
+        vector_array = numpy.zeros((vector_array_size, dims))
+        for t in range(frames):
+            vector_array[:, n_mels * t: n_mels * (t + 1)] = log_mel_spectrogram[:, t: t + vector_array_size].T
+        return vector_array
 
 # load dataset
-def select_dirs(param, mode):
+def select_dirs(param):
     """
     param : dict
         baseline.yaml data
 
     return :
-        if active type the development :
-            dirs :  list [ str ]
-                load base directory list of dev_data
-        if active type the evaluation :
-            dirs : list [ str ]
-                load base directory list of eval_data
+        dirs :  list [ str ]
+            load base directory list of dev_data
     """
-    if mode:
-        logger.info("load_directory <- development")
-        dir_path = os.path.abspath("{base}/*".format(base=param["dev_directory"]))
-        dirs = sorted(glob.glob(dir_path))
-    else:
-        logger.info("load_directory <- evaluation")
-        dir_path = os.path.abspath("{base}/*".format(base=param["eval_directory"]))
-        dirs = sorted(glob.glob(dir_path))
+    logger.info("load_directory <- development")
+    dir_path = os.path.abspath("{base}/*".format(base=param["dev_directory"]))
+    dirs = sorted(glob.glob(dir_path))
     return dirs
 
 ########################################################################
@@ -264,6 +224,7 @@ def get_machine_id_list_for_test(target_dir,
     """
     # create test files
     dir_path = os.path.abspath("{dir}/{dir_name}/*.{ext}".format(dir=target_dir, dir_name=dir_name, ext=ext))
+    print('dir_path: {}'.format(dir_path))
     file_paths = sorted(glob.glob(dir_path))
     # extract id
     machine_id_list = sorted(list(set(itertools.chain.from_iterable(
@@ -273,7 +234,6 @@ def get_machine_id_list_for_test(target_dir,
 
 def test_file_list_generator(target_dir,
                              id_name,
-                             mode,
                              dir_name="test",
                              prefix_normal="normal",
                              prefix_anomaly="anomaly",
@@ -306,40 +266,26 @@ def test_file_list_generator(target_dir,
     logger.info("target_dir : {}".format(target_dir+"_"+id_name))
 
     # development
-    if mode:
-        normal_files = sorted(
-            glob.glob("{dir}/{dir_name}/{prefix_normal}_{id_name}*.{ext}".format(dir=target_dir,
-                                                                                 dir_name=dir_name,
-                                                                                 prefix_normal=prefix_normal,
-                                                                                 id_name=id_name,
-                                                                                 ext=ext)))
-        normal_labels = numpy.zeros(len(normal_files))
-        anomaly_files = sorted(
-            glob.glob("{dir}/{dir_name}/{prefix_anomaly}_{id_name}*.{ext}".format(dir=target_dir,
-                                                                                  dir_name=dir_name,
-                                                                                  prefix_anomaly=prefix_anomaly,
-                                                                                  id_name=id_name,
-                                                                                  ext=ext)))
-        anomaly_labels = numpy.ones(len(anomaly_files))
-        files = numpy.concatenate((normal_files, anomaly_files), axis=0)
-        labels = numpy.concatenate((normal_labels, anomaly_labels), axis=0)
-        logger.info("test_file  num : {num}".format(num=len(files)))
-        if len(files) == 0:
-            logger.exception("no_wav_file!!")
-        print("\n========================================")
-
-    # evaluation
-    else:
-        files = sorted(
-            glob.glob("{dir}/{dir_name}/*{id_name}*.{ext}".format(dir=target_dir,
-                                                                  dir_name=dir_name,
-                                                                  id_name=id_name,
-                                                                  ext=ext)))
-        labels = None
-        logger.info("test_file  num : {num}".format(num=len(files)))
-        if len(files) == 0:
-            logger.exception("no_wav_file!!")
-        print("\n=========================================")
+    normal_files = sorted(
+        glob.glob("{dir}/{dir_name}/{prefix_normal}_{id_name}*.{ext}".format(dir=target_dir,
+                                                                                dir_name=dir_name,
+                                                                                prefix_normal=prefix_normal,
+                                                                                id_name=id_name,
+                                                                                ext=ext)))
+    normal_labels = numpy.zeros(len(normal_files))
+    anomaly_files = sorted(
+        glob.glob("{dir}/{dir_name}/{prefix_anomaly}_{id_name}*.{ext}".format(dir=target_dir,
+                                                                                dir_name=dir_name,
+                                                                                prefix_anomaly=prefix_anomaly,
+                                                                                id_name=id_name,
+                                                                                ext=ext)))
+    anomaly_labels = numpy.ones(len(anomaly_files))
+    files = numpy.concatenate((normal_files, anomaly_files), axis=0)
+    labels = numpy.concatenate((normal_labels, anomaly_labels), axis=0)
+    logger.info("test_file  num : {num}".format(num=len(files)))
+    if len(files) == 0:
+        logger.exception("no_wav_file!!")
+    print("\n========================================")
 
     return files, labels
 ########################################################################
@@ -350,7 +296,9 @@ def list_to_vector_array(file_list,
                          frames=5,
                          n_fft=1024,
                          hop_length=512,
-                         power=2.0):
+                         power=2.0,
+                         downsample=False,
+                         input_dims=640):
     """
     convert the file_list to a vector array.
     file_to_vector_array() is iterated, and the output vector array is concatenated.
@@ -367,6 +315,8 @@ def list_to_vector_array(file_list,
     """
     # calculate the number of dimensions
     dims = n_mels * frames
+    mels = 32
+    print(f'length of files_list is {len(file_list)}')
 
     # iterate file_to_vector_array()
     for idx in tqdm(range(len(file_list)), desc=msg):
@@ -375,11 +325,16 @@ def list_to_vector_array(file_list,
                                                 frames=frames,
                                                 n_fft=n_fft,
                                                 hop_length=hop_length,
-                                                power=power)
+                                                power=power,
+                                                downsample=downsample,
+                                                input_dim=input_dims)
         if idx == 0:
-            dataset = numpy.zeros((vector_array.shape[0] * len(file_list), dims), float)
+            if downsample:
+                dataset = numpy.zeros((vector_array.shape[0] * len(file_list), input_dims), float)
+            else:
+                dataset = numpy.zeros((vector_array.shape[0] * len(file_list), dims), float)
         dataset[vector_array.shape[0] * idx: vector_array.shape[0] * (idx + 1), :] = vector_array
-
+    print("Shape of dataset: {}".format(dataset.shape))
     return dataset
 
 

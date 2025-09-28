@@ -50,9 +50,12 @@ logging.getLogger().addHandler(console)
 
 config = {
     "seed": seed,
-    "layers": [128, 32, 8, 32, 128],  
-    "grid_range": [-4, 4],
-    "layers_bitwidth": [6, 8, 8, 8, 6],  
+    "layers": [64, 16, 8, 16, 64],  
+    "grid_range": [-2, 2],
+    "layers_bitwidth": [7, 7, 7, 7, 7],  
+
+    "min_val": -1,
+    "max_val": 1,
 
     "grid_size": 30,
     "spline_order": 10,
@@ -63,7 +66,7 @@ config = {
     "batch_size": 32,
     "num_epochs": 200,
 
-    "learning_rate": 1e-3,
+    "learning_rate": 5e-4,
     "weight_decay": 1e-4,
 
     "prune_threshold": 0.1,
@@ -84,8 +87,8 @@ nn.init.constant_(bn_in.bias.data, 0)
 input_bias = ScalarBiasScale(scale=False, bias_init=-0.25)
 AD_input_layer = QuantBrevitasActivation(
     QuantHardTanh(bit_width = config["layers_bitwidth"][0],
-    max_val=4,
-    min_val=-4,
+    max_val=config["max_val"],
+    min_val=config["min_val"],
     act_scaling_impl=ParameterScaling(1.33),
     quant_type=QuantType.INT,
     return_quant_tensor = False),
@@ -129,7 +132,7 @@ best_val_auc = 0.0
 best_remaining_fraction = 1.0
 
 # Define loss - using MSE for autoencoder reconstruction
-criterion = nn.MSELoss()
+criterion = nn.MSELoss(reduction='none')
 for epoch in range(config["num_epochs"]):
     # Train
     model.train()
@@ -146,7 +149,7 @@ for epoch in range(config["num_epochs"]):
         inputs = inputs.to(device)
         optimizer.zero_grad()
         output = model(inputs)
-        loss = criterion(output, inputs)
+        loss = criterion(output, inputs).mean()
         loss.backward()
         optimizer.step()
 
@@ -166,7 +169,7 @@ for epoch in range(config["num_epochs"]):
 
     # Validation
     model.eval()
-    val_loss = 0
+    val_loss_diff = 0
 
     y_pred_by_id_str = defaultdict(list)
     y_true_by_id_str = defaultdict(list)
@@ -191,11 +194,11 @@ for epoch in range(config["num_epochs"]):
                 for _id, y_true, err in zip(_ids.cpu().numpy(), y_trues.cpu().numpy(), error.cpu().numpy()):
                     y_pred_by_id_str[_id].append(err)
                     y_true_by_id_str[_id].append(int(y_true))
-
-                val_loss += criterion(output, inputs).item()
                 
-    val_loss /= len(testloader)
-    testing_loss.append(val_loss)
+                val_loss_diff += ((2 * y_trues - 1) * criterion(output, inputs).mean(dim=(1, 2))).mean().item()
+                
+    val_loss_diff /= len(testloader)
+    testing_loss.append(val_loss_diff)
 
     # Calculate AUC
     auc_list = []
@@ -214,7 +217,7 @@ for epoch in range(config["num_epochs"]):
     auc = np.mean(auc_list)
     p_auc = np.mean(p_auc_list)
 
-    print(f"Epoch {epoch + 1:02d} | Val Loss: {val_loss:.4f} | Val avg AUC: {auc:.4f} | Val avg pAUC: {p_auc:.4f} | Remaining Fraction: {remaining_fraction:.4f}")
+    print(f"Epoch {epoch + 1:02d} | Val Loss Diff: {val_loss_diff:.4f} | Val avg AUC: {auc:.4f} | Val avg pAUC: {p_auc:.4f} | Remaining Fraction: {remaining_fraction:.4f}")
 
     # Update learning rate
     scheduler.step()
@@ -222,23 +225,20 @@ for epoch in range(config["num_epochs"]):
     logging.info(
         f"Epoch {epoch + 1:02d} | "
         f"Train Loss: {average_train_loss:.4f} | "
-        f"Val Loss: {val_loss:.4f} | "
+        f"Val Loss Diff: {val_loss_diff:.4f} | "
         f"Val avg AUC: {auc:.4f} | "
         f"Val avg pAUC: {p_auc:.4f} | "
         f"Remaining Fraction: {remaining_fraction:.4f}"
     )
 
-    # === Save Checkpoint if Best ===
-    if auc > best_val_auc or remaining_fraction < best_remaining_fraction:
-        best_val_auc = max(best_val_auc, auc)
-        best_remaining_fraction = min(best_remaining_fraction, remaining_fraction)
-        checkpoint_path = f'{model_dir}/Anomaly_Detection_auc{auc:.4f}_epoch{epoch + 1}_remaining{remaining_fraction:.4f}.pt'
-        torch.save({
-            'epoch': epoch + 1,
-            'model_state_dict': model.state_dict(),
-            'optimizer_state_dict': optimizer.state_dict(),
-            'val_auc': auc,
-            'val_loss': val_loss,
-            'remaining_fraction': remaining_fraction,
-        }, checkpoint_path)
-        logging.info(f"New best model saved with val AUC: {auc:.4f} and remaining fraction: {remaining_fraction:.4f}")
+    # === Save Checkpoint for each epoch ===
+    checkpoint_path = f'{model_dir}/Anomaly_Detection_auc{auc:.4f}_epoch{epoch + 1}_remaining{remaining_fraction:.4f}.pt'
+    torch.save({
+        'epoch': epoch + 1,
+        'model_state_dict': model.state_dict(),
+        'optimizer_state_dict': optimizer.state_dict(),
+        'val_auc': auc,
+        'val_loss_diff': val_loss_diff,
+        'remaining_fraction': remaining_fraction,
+    }, checkpoint_path)
+    logging.info(f"New best model saved with val AUC: {auc:.4f} and remaining fraction: {remaining_fraction:.4f}")
