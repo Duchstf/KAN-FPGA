@@ -55,29 +55,7 @@ formatter = logging.Formatter('%(message)s')
 console.setFormatter(formatter)
 logging.getLogger().addHandler(console)
 
-config = {"seed": seed, "layers": [64, 16, 8, 16, 64], "grid_range": [-2, 2], "layers_bitwidth": [7, 8, 8, 7, 8], "min_val": -1.0, "max_val": 1.0, "grid_size": 30, "spline_order": 10, "grid_eps": 0.05, "base_activation": "nn.SiLU", "batch_size": 256, "num_epochs": 200, "learning_rate": 0.001, "weight_decay": 0.0001, "gamma": 0.85, "prune_threshold": 0.1, "warmup_epochs": 10, "target_epoch": 30}
-
-#Create a new directory to save the config and checkpoints
-model_dir = f'models/{datetime.now().strftime("%Y%m%d_%H%M%S")}'
-os.makedirs(model_dir, exist_ok=True)
-with open(f'{model_dir}/config.json', 'w') as f:
-    json.dump(config, f)
-
-#Build the input layer
-bn_in = nn.BatchNorm1d(config["layers"][0])
-nn.init.constant_(bn_in.weight.data, 1)
-nn.init.constant_(bn_in.bias.data, 0)
-input_bias = ScalarBiasScale(scale=False, bias_init=-0.25)
-AD_input_layer = QuantBrevitasActivation(
-    QuantHardTanh(bit_width = config["layers_bitwidth"][0],
-    max_val=config["max_val"],
-    min_val=config["min_val"],
-    act_scaling_impl=ParameterScaling(1.33),
-    quant_type=QuantType.INT,
-    return_quant_tensor = False),
-    pre_transforms=[bn_in, input_bias],
-    cuda=device.type == "cuda").to(device)
-
+config = {"seed": seed, "layers": [64, 16, 8, 16, 64], "grid_range": [-2, 2], "layers_bitwidth": [7, 8, 8, 7, 8], "min_val": -1.0, "max_val": 1.0, "grid_size": 30, "spline_order": 10, "grid_eps": 0.05, "base_activation": "nn.SiLU", "batch_size": 256, "num_epochs": 200, "learning_rate": 0.001, "weight_decay": 0.0001, "gamma": 0.85, "prune_threshold": 0.1, "warmup_epochs": 100, "target_epoch": 300}
 # === Load Data ===
 
 data_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data', 'ToyCar')
@@ -95,22 +73,27 @@ testloader = DataLoader(test_dataset, batch_size=config["batch_size"], shuffle=F
 
 # === Initialize Model ===
 #Define the model
-model = KANQuant(config, AD_input_layer, device).to(device)
+model = nn.Sequential(
+    nn.Linear(64, 16), 
+    nn.BatchNorm1d(16), 
+    nn.ReLU(),
+    nn.Linear(16, 8), 
+    nn.BatchNorm1d(8), 
+    nn.ReLU(),
+    nn.Linear(8, 16), 
+    nn.BatchNorm1d(16), 
+    nn.ReLU(),
+    nn.Linear(16, 64)
+).to(device)
 
-optimizer = optim.AdamW(model.parameters(), lr=config["learning_rate"], weight_decay=config["weight_decay"])
-scheduler = optim.lr_scheduler.ExponentialLR(optimizer, gamma=config["gamma"])
+optimizer = optim.AdamW(model.parameters(), lr=1e-3, weight_decay=1e-4)
+scheduler = optim.lr_scheduler.ExponentialLR(optimizer, gamma=0.9)
 criterion = nn.MSELoss()
 
 # === Training Loop ===
 training_loss = []
 testing_loss = []
 best_val_auc = 0.0
-best_remaining_fraction = 1.0
-
-print(f"First batch checksum: {X_train[:10].sum().item()}")
-print(f"Model param checksum: {sum(p.sum().item() for p in model.parameters())}")
-print(f"Test random value: {torch.randn(1).item()}")
-print(f"Test numpy random: {np.random.randn()}")
 
 # Define loss - using MSE for autoencoder reconstruction
 criterion = nn.MSELoss(reduction='none')
@@ -143,10 +126,6 @@ for epoch in range(config["num_epochs"]):
     
     average_train_loss = epoch_train_loss / total_batches
     training_loss.append(average_train_loss)  # Record the average training loss
-
-    # Prune the model
-    remaining_fraction = model.prune_below_threshold(threshold=config["prune_threshold"], epoch=epoch, target_epoch=config["target_epoch"], warmup_epochs=config["warmup_epochs"])
-    print(f"Epoch {epoch + 1:02d} | Train Loss: {average_train_loss:.4f} | Remaining Fraction: {remaining_fraction}")
 
     # Validation
     model.eval()
@@ -198,7 +177,9 @@ for epoch in range(config["num_epochs"]):
     auc = np.mean(auc_list)
     p_auc = np.mean(p_auc_list)
 
-    print(f"Epoch {epoch + 1:02d} | Val Loss Diff: {val_loss_diff:.4f} | Val avg AUC: {auc:.4f} | Val avg pAUC: {p_auc:.4f} | Remaining Fraction: {remaining_fraction:.4f}")
+    print(f"Epoch {epoch + 1:02d} | Val Loss Diff: {val_loss_diff:.4f} | Val avg AUC: {auc:.4f} | Val avg pAUC: {p_auc:.4f}")
+
+    best_val_auc = max(best_val_auc, auc)
 
     # Update learning rate
     scheduler.step()
@@ -209,17 +190,7 @@ for epoch in range(config["num_epochs"]):
         f"Val Loss Diff: {val_loss_diff:.4f} | "
         f"Val avg AUC: {auc:.4f} | "
         f"Val avg pAUC: {p_auc:.4f} | "
-        f"Remaining Fraction: {remaining_fraction:.4f}"
     )
 
     # === Save Checkpoint for each epoch ===
-    checkpoint_path = f'{model_dir}/Anomaly_Detection_auc{auc:.4f}_epoch{epoch + 1}_remaining{remaining_fraction:.4f}.pt'
-    torch.save({
-        'epoch': epoch + 1,
-        'model_state_dict': model.state_dict(),
-        'optimizer_state_dict': optimizer.state_dict(),
-        'val_auc': auc,
-        'val_loss_diff': val_loss_diff,
-        'remaining_fraction': remaining_fraction,
-    }, checkpoint_path)
-    logging.info(f"New best model saved with val AUC: {auc:.4f} and remaining fraction: {remaining_fraction:.4f}")
+    print("Best AUC:", best_val_auc)
