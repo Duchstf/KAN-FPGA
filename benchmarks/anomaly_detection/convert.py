@@ -18,7 +18,7 @@ from brevitas.core.quant import QuantType
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 is_cuda = device == "cuda"
 
-model_tag = "20250920_183600"
+model_tag = "20250930_124253"
 
 # --- 1. List all model files and find the one with best accuracy ---
 model_dir = f"models/{model_tag}"
@@ -43,8 +43,8 @@ nn.init.constant_(bn_in.bias.data, 0)
 input_bias = ScalarBiasScale(scale=False, bias_init=-0.25)
 AD_input_layer = QuantBrevitasActivation(
     QuantHardTanh(bit_width = config["layers_bitwidth"][0],
-    max_val=100.0,
-    min_val=-100.0,
+    max_val=config["max_val"],
+    min_val=config["min_val"],
     act_scaling_impl=ParameterScaling(1.33),
     quant_type=QuantType.INT,
     return_quant_tensor = False),
@@ -56,7 +56,7 @@ kan_lut = KAN_LUT(model_dir, checkpoint, config, AD_input_layer, device)
 kan_lut.quick_match_check() #Test matching of LUT implementation with the base model KAN
 
 #Generate the firmware
-kan_lut.generate_firmware(clock_period=1.2, n_add=4, fpga_part="xc7a100t-1csg324")
+kan_lut.generate_firmware(clock_period=4.0, n_add=4, fpga_part="xc7a100t-1csg324")
 
 #Simulate the firmware
 kan_lut.simulate_firmware(n_vectors = 10)
