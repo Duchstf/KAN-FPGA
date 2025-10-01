@@ -1,0 +1,16 @@
+dev_directory : ./data
+model_directory: ./model
+result_directory: ./result
+result_file: result.csv
+
+max_fpr : 0.1
+
+feature:
+  frames: 5
+  hop_length: 512
+  n_fft: 1024
+  n_mels: 128
+  power: 2.0
+  downsample: True
+model:
+  input_dim: 64

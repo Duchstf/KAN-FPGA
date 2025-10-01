@@ -1,0 +1,711 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version     : Vivado v.2024.1 (lin64) Build 5076996 Wed May 22 18:36:09 MDT 2024
+| Date             : Tue Sep 30 13:56:42 2025
+| Host             : correlator4.fnal.gov running 64-bit AlmaLinux release 9.4 (Shamrock Pampas Cat)
+| Command          : report_power -file /data/dhoang/test/KAN-FPGA/benchmarks/anomaly_detection/models/20250930_124253/firmware/KAN_FPGA_PROJECT/post_impl_power.rpt
+| Design           : top
+| Device           : xc7a100tcsg324-1
+| Design State     : routed
+| Grade            : commercial
+| Process          : typical
+| Characterization : Production
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Power Report
+
+Table of Contents
+-----------------
+1. Summary
+1.1 On-Chip Components
+1.2 Power Supply Summary
+1.3 Confidence Level
+2. Settings
+2.1 Environment
+2.2 Clock Constraints
+3. Detailed Reports
+3.1 By Hierarchy
+
+1. Summary
+----------
+
++--------------------------+--------------+
+| Total On-Chip Power (W)  | 2.327        |
+| Design Power Budget (W)  | Unspecified* |
+| Power Budget Margin (W)  | NA           |
+| Dynamic (W)              | 2.234        |
+| Device Static (W)        | 0.093        |
+| Effective TJA (C/W)      | 4.6          |
+| Max Ambient (C)          | 74.4         |
+| Junction Temperature (C) | 35.6         |
+| Confidence Level         | Medium       |
+| Setting File             | ---          |
+| Simulation Activity File | ---          |
+| Design Nets Matched      | NA           |
++--------------------------+--------------+
+* Specify Design Power Budget using, set_operating_conditions -design_power_budget <value in Watts>
+
+
+1.1 On-Chip Components
+----------------------
+
++----------------+-----------+----------+-----------+-----------------+
+| On-Chip        | Power (W) | Used     | Available | Utilization (%) |
++----------------+-----------+----------+-----------+-----------------+
+| Clocks         |     0.229 |        3 |       --- |             --- |
+| Slice Logic    |     0.970 |    65473 |       --- |             --- |
+|   LUT as Logic |     0.887 |    29981 |     63400 |           47.29 |
+|   Register     |     0.037 |    17643 |    126800 |           13.91 |
+|   CARRY4       |     0.036 |     2470 |     15850 |           15.58 |
+|   F7/F8 Muxes  |     0.010 |     3076 |     63400 |            4.85 |
+|   Others       |     0.000 |     5756 |       --- |             --- |
+| Signals        |     1.035 |    34337 |       --- |             --- |
+| Static Power   |     0.093 |          |           |                 |
+| Total          |     2.327 |          |           |                 |
++----------------+-----------+----------+-----------+-----------------+
+
+
+1.2 Power Supply Summary
+------------------------
+
++-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
+| Source    | Voltage (V) | Total (A) | Dynamic (A) | Static (A) | Powerup (A) | Budget (A)  | Margin (A) |
++-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
+| Vccint    |       1.000 |     2.257 |       2.234 |      0.022 |       NA    | Unspecified | NA         |
+| Vccaux    |       1.800 |     0.019 |       0.000 |      0.019 |       NA    | Unspecified | NA         |
+| Vcco33    |       3.300 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
+| Vcco25    |       2.500 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
+| Vcco18    |       1.800 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
+| Vcco15    |       1.500 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
+| Vcco135   |       1.350 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
+| Vcco12    |       1.200 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
+| Vccaux_io |       1.800 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
+| Vccbram   |       1.000 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
+| MGTAVcc   |       1.000 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
+| MGTAVtt   |       1.200 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
+| Vccadc    |       1.800 |     0.020 |       0.000 |      0.020 |       NA    | Unspecified | NA         |
++-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
+
+
+1.3 Confidence Level
+--------------------
+
++-----------------------------+------------+------------------------------------------------+------------------------------------------------------------------------------------------------------------+
+| User Input Data             | Confidence | Details                                        | Action                                                                                                     |
++-----------------------------+------------+------------------------------------------------+------------------------------------------------------------------------------------------------------------+
+| Design implementation state | High       | Design is routed                               |                                                                                                            |
+| Clock nodes activity        | High       | User specified more than 95% of clocks         |                                                                                                            |
+| I/O nodes activity          | High       | User specified more than 95% of inputs         |                                                                                                            |
+| Internal nodes activity     | Medium     | User specified less than 25% of internal nodes | Provide missing internal nodes activity with simulation results or by editing the "By Resource Type" views |
+| Device models               | High       | Device models are Production                   |                                                                                                            |
+|                             |            |                                                |                                                                                                            |
+| Overall confidence level    | Medium     |                                                |                                                                                                            |
++-----------------------------+------------+------------------------------------------------+------------------------------------------------------------------------------------------------------------+
+
+
+2. Settings
+-----------
+
+2.1 Environment
+---------------
+
++-----------------------+--------------------------+
+| Ambient Temp (C)      | 25.0                     |
+| ThetaJA (C/W)         | 4.6                      |
+| Airflow (LFM)         | 250                      |
+| Heat Sink             | medium (Medium Profile)  |
+| ThetaSA (C/W)         | 4.6                      |
+| Board Selection       | medium (10"x10")         |
+| # of Board Layers     | 12to15 (12 to 15 Layers) |
+| Board Temperature (C) | 25.0                     |
++-----------------------+--------------------------+
+
+
+2.2 Clock Constraints
+---------------------
+
++-------+--------+-----------------+
+| Clock | Domain | Constraint (ns) |
++-------+--------+-----------------+
+| clk   | clk    |             4.0 |
++-------+--------+-----------------+
+
+
+3. Detailed Reports
+-------------------
+
+3.1 By Hierarchy
+----------------
+
++-------------------+-----------+
+| Name              | Power (W) |
++-------------------+-----------+
+| top               |     2.234 |
+|   kan_inst        |     2.234 |
+|     gen_l1c0.i01  |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l1c0.i07  |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l1c0.i11  |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l1c0.i13  |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l1c0.i15  |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l1c1.i05  |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l1c1.i07  |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l1c1.i10  |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l1c1.i11  |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l1c1.i15  |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l1c2.i01  |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l1c2.i02  |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l1c2.i07  |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l1c2.i10  |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l1c2.i11  |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l1c2.i14  |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l1c2.i15  |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l1c3.i05  |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l1c3.i07  |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l1c3.i08  |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l1c3.i11  |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l1c3.i12  |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l1c3.i13  |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l1c3.i15  |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l1c4.i01  |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l1c4.i04  |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l1c4.i07  |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l1c4.i09  |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l1c4.i13  |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l1c4.i14  |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l1c4.i15  |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l1c5.i03  |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l1c5.i07  |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l1c5.i15  |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l1c6.i02  |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l1c6.i03  |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l1c6.i05  |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l1c6.i09  |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l1c6.i12  |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l1c6.i13  |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l1c6.i15  |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l1c7.i01  |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l1c7.i07  |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l1c7.i08  |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l1c7.i11  |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l1c7.i13  |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l1c7.i15  |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l2c0.i03  |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l2c0.i07  |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l2c10.i00 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l2c10.i03 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l2c10.i07 |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l2c11.i03 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l2c11.i07 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l2c12.i02 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l2c12.i03 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l2c12.i07 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l2c13.i07 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l2c14.i00 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l2c4.i00  |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l2c4.i02  |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l2c5.i00  |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l2c6.i00  |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l2c6.i03  |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l2c6.i07  |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l2c7.i02  |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l2c7.i03  |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l2c8.i03  |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l2c8.i06  |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l2c8.i07  |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l2c9.i03  |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l2c9.i07  |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c0.i03  |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c0.i07  |     0.003 |
+|       rom_i       |     0.003 |
+|     gen_l3c0.i11  |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c0.i15  |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c1.i03  |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c1.i07  |     0.003 |
+|       rom_i       |     0.003 |
+|     gen_l3c1.i11  |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c1.i15  |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c10.i03 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c10.i07 |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c10.i11 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c10.i15 |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c11.i03 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c11.i07 |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c11.i15 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c12.i03 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c12.i07 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c13.i01 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c13.i15 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c14.i03 |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c14.i07 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c14.i11 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c14.i15 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c15.i01 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c15.i07 |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c15.i11 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c16.i02 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c16.i07 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c16.i11 |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c16.i14 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c17.i03 |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c17.i07 |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c17.i11 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c17.i15 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c18.i03 |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c18.i06 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c18.i07 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c18.i11 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c18.i15 |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c19.i03 |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c19.i06 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c19.i11 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c19.i15 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c2.i03  |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c2.i11  |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c20.i03 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c20.i07 |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c21.i03 |     0.003 |
+|       rom_i       |     0.003 |
+|     gen_l3c21.i07 |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c21.i11 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c21.i15 |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c22.i03 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c22.i07 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c22.i11 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c22.i15 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c23.i03 |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c23.i07 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c23.i15 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c24.i03 |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c24.i07 |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c24.i11 |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c24.i15 |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c25.i03 |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c25.i15 |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c26.i03 |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c26.i06 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c26.i11 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c26.i15 |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c27.i03 |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c27.i07 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c27.i11 |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c27.i15 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c28.i03 |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c28.i07 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c28.i11 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c28.i15 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c29.i01 |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c29.i03 |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c29.i07 |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c29.i08 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c29.i09 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c29.i10 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c29.i11 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c29.i12 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c29.i13 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c29.i14 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c3.i07  |     0.003 |
+|       rom_i       |     0.003 |
+|     gen_l3c3.i11  |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c30.i03 |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c30.i07 |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c31.i03 |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c31.i07 |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c31.i11 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c32.i03 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c32.i07 |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c32.i11 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c32.i15 |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c33.i03 |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c33.i11 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c33.i15 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c34.i11 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c35.i05 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c35.i11 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c36.i03 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c36.i07 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c36.i11 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c36.i15 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c37.i07 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c37.i11 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c37.i15 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c38.i03 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c38.i07 |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c38.i11 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c38.i15 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c39.i03 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c39.i07 |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c39.i11 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c39.i15 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c4.i03  |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c4.i07  |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c4.i11  |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c40.i07 |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c40.i11 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c40.i15 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c41.i03 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c41.i11 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c41.i15 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c42.i11 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c43.i03 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c43.i15 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c44.i01 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c44.i07 |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c44.i10 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c44.i15 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c45.i01 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c45.i03 |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c45.i11 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c45.i15 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c46.i03 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c46.i11 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c47.i03 |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c47.i07 |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c47.i11 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c48.i03 |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c48.i05 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c48.i11 |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c48.i15 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c49.i03 |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c49.i07 |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c49.i11 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c49.i15 |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c5.i07  |     0.003 |
+|       rom_i       |     0.003 |
+|     gen_l3c5.i11  |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c5.i15  |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c50.i03 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c50.i07 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c50.i11 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c51.i03 |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c51.i11 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c51.i15 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c52.i03 |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c52.i07 |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c53.i03 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c53.i07 |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c53.i11 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c53.i15 |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c54.i03 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c54.i07 |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c54.i15 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c55.i07 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c55.i15 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c56.i03 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c56.i06 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c56.i11 |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c56.i15 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c57.i03 |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c57.i15 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c58.i03 |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c58.i06 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c58.i15 |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c59.i03 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c59.i07 |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c59.i11 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c59.i15 |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c6.i03  |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c6.i07  |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c6.i11  |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c60.i03 |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c60.i07 |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c60.i11 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c60.i15 |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c61.i03 |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c61.i07 |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c61.i15 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c62.i03 |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c62.i07 |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c62.i15 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c63.i03 |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c63.i11 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c63.i15 |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c7.i03  |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c7.i07  |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c7.i11  |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c7.i15  |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c8.i01  |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c8.i07  |     0.002 |
+|       rom_i       |     0.002 |
+|     gen_l3c8.i11  |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c8.i15  |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c9.i07  |     0.001 |
+|       rom_i       |     0.001 |
+|     gen_l3c9.i11  |     0.001 |
+|       rom_i       |     0.001 |
++-------------------+-----------+
+
+
