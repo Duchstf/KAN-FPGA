@@ -19,8 +19,8 @@ from quant import QuantBrevitasActivation, ScalarBiasScale
 # --- Configuration ---
 ENV_ID = "HalfCheetah-v5"
 TOTAL_TIMESTEPS = 1_000_000
-LOG_DIR = "logs_kan_quant" # Use a different log directory
-NUM_BITS = 8
+LOG_DIR = "logs_kan_quant_16bit" # Use a different log directory
+NUM_BITS = 16
 
 #Set the device
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
